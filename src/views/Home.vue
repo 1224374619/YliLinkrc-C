@@ -977,15 +977,15 @@ export default {
     this.positionCatalogList = positionCatalog.data;
     this.industryList = industrys.data;
     this.city = citys.data;
-    this.brief();
-    // this.allpositionCatalog();
-    // this.industry();
-    // this.carousel();
-    // this.hotcompany();
-    // this.hotkeyword();
-    // this.hotposition();
-    this.new();
-    this.citises();
+    // this.brief();
+    // // this.allpositionCatalog();
+    // // this.industry();
+    // // this.carousel();
+    // // this.hotcompany();
+    // // this.hotkeyword();
+    // // this.hotposition();
+    // this.new();
+    // this.citises();
     // this.recommendation();
     // this.allposition();
     // this.cits()
