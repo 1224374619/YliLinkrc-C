@@ -16,7 +16,6 @@ module.exports = {
         open: true,
         proxy: {
             '/api': {
-                // target: 'http://47.102.145.186',// target host
                 target: 'https://www.yinlinkrc.com/api/v1',// target host
                 // target: 'http://192.168.1.114:8081', // target host
                 ws: true, // proxy websockets
