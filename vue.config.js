@@ -15,14 +15,14 @@ module.exports = {
         https: false,
         open: true,
         proxy: {
-            '/api': {
+            '/api/v1/': {
                 // target: 'https://www.yinlinkrc.com/api/v1',// target host
                 // target: 'https://www.yinlinkrc.com/api/v1',// target host
-                target: 'https://www.yinlinkrc.com/api/v1', // target host
+                target: 'https://www.yinlinkrc.com', // target host
                 ws: true, // proxy websockets
                 changeOrigin: true, // needed for virtual hosted sites
                 pathRewrite: {  
-                    '^/api': '' // rewrite path
+                    '^/api/v1/': '/api/v1/' // rewrite path
                 }
             },
         },
