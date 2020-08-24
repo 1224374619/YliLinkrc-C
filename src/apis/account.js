@@ -5,7 +5,7 @@ import Vue from '../main'
 
 
 //获取简历简讯
-export const brief = () => axios.get('/consumer-core/resume/brief');
+export const brief = () => axios.get('http://47.102.145.186/consumer-core/resume/brief');
 
 
 //resume add commit
