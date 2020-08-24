@@ -106,9 +106,9 @@ export const positionCatalogs = (id) => axios.get(`/consumer-core/company/${id}/
 //joblist
 
 //公司搜索
-export const companySearch = (params) => axios.post('/api/vi/consumer-core/company/search',params);
+export const companySearch = (params) => axios.post('/consumer-core/company/search',params);
 //职位搜索
-export const positionSearch = (params) => axios.post('/api/vi/consumer-core/position/search',params);
+export const positionSearch = (params) => axios.post('/consumer-core/position/search',params);
 //获取简单选项信息
 export const option = () => axios.get('http://localhost:8081/option.json');
 

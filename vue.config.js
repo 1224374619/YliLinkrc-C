@@ -10,18 +10,19 @@ module.exports = {
     publicPath: './',
     lintOnSave: true,
     devServer: {
-        port: 8080,
+        port: 443,
         host: 'localhost',
         https: false,
         open: true,
         proxy: {
-            '/api/vi': {
-                target: 'https://www.yinlinkrc.com',// target host
+            '/api': {
+                target: 'https://www.yinlinkrc.com/api/v1',// target host
+                // target: 'https://www.yinlinkrc.com/api/v1',// target host
                 // target: 'http://192.168.1.114:8081', // target host
                 ws: true, // proxy websockets
                 changeOrigin: true, // needed for virtual hosted sites
                 pathRewrite: {  
-                    '^/api/vi': '/api/vi' // rewrite path
+                    '^/api': '' // rewrite path
                 }
             },
         },
