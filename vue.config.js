@@ -18,7 +18,7 @@ module.exports = {
             '/api': {
                 // target: 'https://www.yinlinkrc.com/api/v1',// target host
                 // target: 'https://www.yinlinkrc.com/api/v1',// target host
-                target: 'https://www.yinlinkrc.com', // target host
+                target: 'https://www.yinlinkrc.com/api/v1', // target host
                 ws: true, // proxy websockets
                 changeOrigin: true, // needed for virtual hosted sites
                 pathRewrite: {  
