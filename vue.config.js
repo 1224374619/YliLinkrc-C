@@ -22,7 +22,7 @@ module.exports = {
                 ws: true, // proxy websockets
                 changeOrigin: true, // needed for virtual hosted sites
                 pathRewrite: {  
-                    '^/api/v1': '/api/v1' // rewrite path
+                    '^/api/v1': '/api/v1/' // rewrite path
                 }
             },
         },
