@@ -1,0 +1,301 @@
+{
+    "success": true,
+    "code": 200,
+    "message": "请求成功",
+    "data": {
+        "salaryRange": [
+            {
+                "code": 0,
+                "tag": "1K以下",
+                "min": 0,
+                "max": 1
+            },
+            {
+                "code": 1,
+                "tag": "1K-2K",
+                "min": 1,
+                "max": 2
+            },
+            {
+                "code": 2,
+                "tag": "2K-4K",
+                "min": 2,
+                "max": 4
+            },
+            {
+                "code": 3,
+                "tag": "4K-6K",
+                "min": 4,
+                "max": 6
+            },
+            {
+                "code": 4,
+                "tag": "6K-8K",
+                "min": 6,
+                "max": 8
+            },
+            {
+                "code": 5,
+                "tag": "8K-10K",
+                "min": 8,
+                "max": 10
+            },
+            {
+                "code": 6,
+                "tag": "10K-15K",
+                "min": 10,
+                "max": 15
+            },
+            {
+                "code": 7,
+                "tag": "15K-25K",
+                "min": 15,
+                "max": 25
+            },
+            {
+                "code": 8,
+                "tag": "25K-35K",
+                "min": 25,
+                "max": 35
+            },
+            {
+                "code": 9,
+                "tag": "35K以上",
+                "min": 35,
+                "max": null
+            }
+        ],
+        "resumeProcessedState": [
+            {
+                "code": 0,
+                "tag": "待处理"
+            },
+            {
+                "code": 1,
+                "tag": "处理中"
+            },
+            {
+                "code": 2,
+                "tag": "录用"
+            },
+            {
+                "code": 3,
+                "tag": "不合格"
+            },
+            {
+                "code": 4,
+                "tag": "已入职"
+            }
+        ],
+        "masterLevel": [
+            {
+                "code": 0,
+                "tag": "一般"
+            },
+            {
+                "code": 1,
+                "tag": "良好"
+            },
+            {
+                "code": 2,
+                "tag": "熟练"
+            },
+            {
+                "code": 3,
+                "tag": "精通"
+            }
+        ],
+        "eduDegree": [
+            {
+                "code": 0,
+                "tag": "初中及以下"
+            },
+            {
+                "code": 1,
+                "tag": "中专/中技"
+            },
+            {
+                "code": 2,
+                "tag": "高中"
+            },
+            {
+                "code": 3,
+                "tag": "大专"
+            },
+            {
+                "code": 4,
+                "tag": "本科"
+            },
+            {
+                "code": 5,
+                "tag": "硕士"
+            },
+            {
+                "code": 6,
+                "tag": "博士"
+            }
+        ],
+        "politicalStatus": [
+            {
+                "code": 0,
+                "tag": "群众"
+            },
+            {
+                "code": 1,
+                "tag": "团员"
+            },
+            {
+                "code": 2,
+                "tag": "民主党派"
+            },
+            {
+                "code": 3,
+                "tag": "预备党员"
+            },
+            {
+                "code": 4,
+                "tag": "中共党员"
+            }
+        ],
+        "sex": [
+            {
+                "code": 0,
+                "tag": "女"
+            },
+            {
+                "code": 1,
+                "tag": "男"
+            }
+        ],
+        "companyNature": [
+            {
+                "code": 0,
+                "tag": "国有企业"
+            },
+            {
+                "code": 1,
+                "tag": "民营企业"
+            },
+            {
+                "code": 2,
+                "tag": "合资企业"
+            },
+            {
+                "code": 3,
+                "tag": "外资企业"
+            },
+            {
+                "code": 4,
+                "tag": "事业单位"
+            }
+        ],
+        "workAgeRange": [
+            {
+                "code": 0,
+                "tag": "无",
+                "min": 0,
+                "max": 0
+            },
+            {
+                "code": 1,
+                "tag": "1-3年",
+                "min": 1,
+                "max": 3
+            },
+            {
+                "code": 2,
+                "tag": "3-5年",
+                "min": 3,
+                "max": 5
+            },
+            {
+                "code": 3,
+                "tag": "5-10年",
+                "min": 5,
+                "max": 10
+            },
+            {
+                "code": 4,
+                "tag": "10年以上",
+                "min": 10,
+                "max": null
+            }
+        ],
+        "jobSearchStatus": [
+            {
+                "code": 0,
+                "tag": "离职-随时到岗"
+            },
+            {
+                "code": 1,
+                "tag": "离职-延时到岗"
+            },
+            {
+                "code": 2,
+                "tag": "在职-考虑机会"
+            },
+            {
+                "code": 3,
+                "tag": "在职-暂不考虑"
+            }
+        ],
+        "positionState": [
+            {
+                "code": 0,
+                "tag": "已下线"
+            },
+            {
+                "code": 1,
+                "tag": "已上线"
+            },
+            {
+                "code": 2,
+                "tag": "待上线"
+            },
+            {
+                "code": 3,
+                "tag": "编辑中"
+            },
+            {
+                "code": 4,
+                "tag": "审核中"
+            },
+            {
+                "code": 5,
+                "tag": "审核失败"
+            }
+        ],
+        "companySize": [
+            {
+                "code": 0,
+                "tag": "小于10人"
+            },
+            {
+                "code": 1,
+                "tag": "10-100人"
+            },
+            {
+                "code": 2,
+                "tag": "100-500人"
+            },
+            {
+                "code": 3,
+                "tag": "500人以上"
+            }
+        ],
+        "jobType": [
+            {
+                "code": 0,
+                "tag": "全职"
+            },
+            {
+                "code": 1,
+                "tag": "兼职"
+            },
+            {
+                "code": 2,
+                "tag": "实习"
+            }
+        ]
+    }
+}
