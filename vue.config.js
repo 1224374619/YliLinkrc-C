@@ -10,7 +10,7 @@ module.exports = {
     publicPath: './',
     lintOnSave: true,
     devServer: {
-        port: 8082,
+        port: 8080,
         host: 'localhost',
         https: false,
         open: true,
