@@ -35,7 +35,7 @@
             <router-link tag="button" :to="{name:'register'}" index="2">注册</router-link>
           </div>
           <div class="user-operations" v-else>
-            <el-dropdown trigger="click" style="margin:0 10px 0 0">
+            <el-dropdown trigger="hover" style="margin:0 10px 0 0">
               <el-badge :value="this.value" class="item" size="mini" style="margin:5px 40px 0 0">
                 <img style="width:22px;height:22px" :src="require('../assets/images/ling.png')" />
               </el-badge>
@@ -97,7 +97,7 @@
 
 <script>
 import { mapState } from "vuex";
-import Cookies from 'js-cookie'
+import Cookies from "js-cookie";
 export default {
   name: "customized-nav",
   props: {
@@ -115,7 +115,7 @@ export default {
       tok: this.$store.state.token,
       shown: true,
       value: "",
-      token:'',
+      token: "",
       notificationlist: []
     };
   },
@@ -124,30 +124,55 @@ export default {
       return state.hasLogin;
     }
   }),
-  //  watch: {
-  //     //使用这个可以监听data中指定数据的变化,然后触发watch中对应的function的处理
-  //     'tok': function () {
-  //       this.$store.state.token = true
-  //     },
-  // },
   methods: {
     initList() {
       // this.value = window.sessionStorage.getItem('value')
       this.myInterval = window.setInterval(() => {
         setTimeout(() => {
           // const token = this.$store.state.token
-            this.Message(); //调用接口的方法
+          this.Message(); //调用接口的方法
         }, 1);
       }, 5000);
     },
-
+    //用户通知
+    notification() {
+      let params = {
+        isRead: false,
+        pageNum: 1,
+        pageSize: 10,
+        sortBy: null,
+        sortOrder: null
+      };
+      this.$http
+        .get("/cms-notification/message", { params: params })
+        .then(res => {
+          if (res.data.code == "200") {
+            this.notificationlist = res.data.data.list;
+            this.value = res.data.data.total;
+          } else {
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
     //消息click
     NewsDetail() {
       this.$router.push({ path: "/NewsDetail" });
     },
     //全部标记
     chorusle() {
-      this.chorus = false;
+      this.$http
+        .get("/cms-notification/message/read")
+        .then(res => {
+          if (res.data.code == "200") {
+            this.chorus = false;
+          } else {
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
     },
     //退出
     detrusion() {
@@ -179,10 +204,10 @@ export default {
         })
         .catch(error => {
           // const token = this.$store.state.token;
-            // this.$message({
-            //   message: error.response.data.message,
-            //   type: "error"
-            // });
+          // this.$message({
+          //   message: error.response.data.message,
+          //   type: "error"
+          // });
         });
     },
     gotoHomeUI() {
@@ -200,30 +225,22 @@ export default {
     personal() {
       this.$router.push({ path: "/personal" });
     },
-    //用户通知
-    notification() {
-      this.$http.get("/notification/recent");
-      // .then(res => {
-      //   if (res.data.code == 200) {
-      //     // console.log(res);
-      //   }
-      // });
-    },
     //获取简历简讯
     brief() {
-      this.$http.get("/consumer-core/resume/brief").then(res => {
-        console.log(res)
-        if (res.statusCode === 200) {
-          this.defaultResumeId = res.data.data.defaultResumeId;
-          this.fullName = res.data.data.base.fullName;
-          this.avatarUrl = res.data.data.avatarUrl;
-        }else {
-        }
-      })
-      .catch(error => {
-        this.$http.post("/consumer-core/resume").then(res => {
-                    });
-      });
+      this.$http
+        .get("/consumer-core/resume/brief")
+        .then(res => {
+          console.log(res);
+          if (res.statusCode === 200) {
+            this.defaultResumeId = res.data.data.defaultResumeId;
+            this.fullName = res.data.data.base.fullName;
+            this.avatarUrl = res.data.data.avatarUrl;
+          } else {
+          }
+        })
+        .catch(error => {
+          this.$http.post("/consumer-core/resume").then(res => {});
+        });
     }
   },
   // //利用计算属性
@@ -239,12 +256,13 @@ export default {
     }
   },
   created() {
-    this.brief()
-    this.token = Cookies.get('token')
+    this.brief();
+    this.notification();
+    this.token = Cookies.get("token");
     this.fullName = window.sessionStorage.getItem("username");
-    if (this.notificationlist.length > 0) {
-      this.chorus = true;
-    }
+    // if (this.notificationlist.length > 0) {
+    //   this.chorus = true;
+    // }
   }
 };
 </script>

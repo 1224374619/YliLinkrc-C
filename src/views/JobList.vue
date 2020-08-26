@@ -1381,6 +1381,7 @@ export default {
           ],
           this.city
         );
+        console.log(this.district)
         let paramsPosition = {
           addresses:
             this.district === "50"
@@ -1411,13 +1412,13 @@ export default {
                     secondary: null
                   }
                 ],
-          isGraduate: false,
+          isGraduate: null,
           industryCodes: this.dutyOne === "1000" ? null : [this.dutyOne],
           jobType:
             this.workState === "15"
               ? null
               : timeUtil.jobType(parseInt(this.workState)),
-          keywords: this.searchContent,
+          keywords: this.searchContent?this.searchContent:null,
           pageNum: 1,
           // natures:  this.qualityOne[0] === "5" ? null : this.quality
           //   that.data.checkValueQua.length === 0
