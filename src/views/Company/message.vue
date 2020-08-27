@@ -492,7 +492,7 @@ export default {
   },
   computed: {
     uploadUrl() {
-      return '/file-service/files/upload';
+      return '/api/v2/file-service/files/upload';
     }
   },
   created() {
