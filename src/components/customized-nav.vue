@@ -37,7 +37,7 @@
           <div class="user-operations" v-else>
             <el-dropdown trigger="hover" style="margin:0 10px 0 0">
               <el-badge :value="this.value" class="item" size="mini" style="margin:5px 40px 0 0">
-                <img style="width:22px;height:22px" :src="require('../assets/images/ling.png')" />
+                <img style="width:22px;height:22px" @click="NewsDetail" :src="require('../assets/images/ling.png')" />
               </el-badge>
               <el-dropdown-menu slot="dropdown" style="width:412px;height:258px;">
                 <div
@@ -47,7 +47,7 @@
                     class="badge"
                     v-for="(item,index) in notificationlist"
                     :key="index"
-                    @click="NewsDetail"
+                    
                   >
                     <span style="color:#6C6C6C;font-size:14px;margin-left:24px;">{{item.title}}</span>
                     <span
@@ -144,7 +144,7 @@ export default {
         sortOrder: null
       };
       this.$http
-        .get("/cms-notification/message", { params: params })
+        .get("/consumer-notification/message", { params: params })
         .then(res => {
           if (res.data.code == "200") {
             this.notificationlist = res.data.data.list;
@@ -163,7 +163,7 @@ export default {
     //全部标记
     chorusle() {
       this.$http
-        .get("/cms-notification/message/read")
+        .get("/consumer-notification/message/read")
         .then(res => {
           if (res.data.code == "200") {
             this.chorus = false;
@@ -194,7 +194,7 @@ export default {
     //未读
     Message() {
       this.$http
-        .get("/consumer-core/message", { params: { isRead: true } })
+        .get("/consumer-notification/message", { params: { isRead: true } })
         .then(res => {
           if (res.data.code == 200) {
             this.notificationlist = res.data.data.list;

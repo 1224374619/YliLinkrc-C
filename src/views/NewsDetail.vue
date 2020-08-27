@@ -5,12 +5,10 @@
     </div>
     <div class="aside">
       <div>
-        <div v-if="activeName === 'first'" class="tab-operations" @click='allRead'>
+        <div v-if="activeName === 'first'" class="tab-operations" @click="allRead">
           <el-button style="color:#FF7152;" type="text">全部已读</el-button>
         </div>
-        <div v-else class="tab-operations">
-          
-        </div>
+        <div v-else class="tab-operations"></div>
         <el-tabs
           v-model="activeName"
           type="card"
@@ -90,17 +88,17 @@ export default {
         pageSize: 10,
         current: 1,
         pageSizeOpts: [10, 20, 30]
-      },
+      }
     };
   },
   methods: {
     //全部已读
     allRead() {
       this.$http
-        .put("/cms-notification/message/read")
+        .put("/consumer-notification/message/read")
         .then(res => {
           if (res.data.code == "200") {
-            this.notification()
+            this.notification();
           } else {
           }
         })
@@ -108,28 +106,28 @@ export default {
           console.log(error);
         });
     },
-   //跳转
-    handleClick (tab) {
-      console.log(tab)
-      if (tab.paneName === 'first') {
-        this.activeName = 'first'
-        this.notification()
-      }else {
-        this.activeName = 'second'
-        this.notification()
+    //跳转
+    handleClick(tab) {
+      console.log(tab);
+      if (tab.paneName === "first") {
+        this.activeName = "first";
+        this.notification();
+      } else {
+        this.activeName = "second";
+        this.notification();
       }
     },
-     //用户通知
+    //用户通知
     notification() {
       let params = {
-        isRead: this.activeName === 'first'?false:true,
+        isRead: this.activeName === "first" ? false : true,
         pageNum: this.page.current,
         pageSize: this.page.pageSize,
         sortBy: null,
         sortOrder: null
       };
       this.$http
-        .get("/cms-notification/message", { params: params })
+        .get("/consumer-notification/message", { params: params })
         .then(res => {
           if (res.data.code == "200") {
             this.tableData = res.data.data.list;
@@ -143,16 +141,16 @@ export default {
     },
     handleSizeChange(val) {
       this.page.pageSize = val;
-      this.page.current = 1
-      this.notification()
+      this.page.current = 1;
+      this.notification();
     },
     handleCurrentChange(val) {
       this.page.current = val;
-      this.notification()
-    },
+      this.notification();
+    }
   },
   created() {
-    this.notification()
+    this.notification();
   }
 };
 </script>
@@ -180,7 +178,7 @@ export default {
   .tab-operations {
     position: absolute;
     margin: 7px 0 0 860px;
-    z-index:999
+    z-index: 999;
   }
 
   .aside {
@@ -191,5 +189,10 @@ export default {
     border: 1px solid rgba(244, 244, 244, 1);
     box-shadow: 0px 2px 10px 0px rgba(245, 245, 245, 1);
   }
+}
+</style>
+<style>
+.el-tabs__item.is-active {
+  color: #409eff;
 }
 </style>
