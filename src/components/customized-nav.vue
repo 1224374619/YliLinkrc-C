@@ -36,7 +36,7 @@
           </div>
           <div class="user-operations" v-else>
             <el-dropdown trigger="hover" style="margin:0 10px 0 0">
-              <el-badge :value="this.value" class="item" size="mini" style="margin:5px 40px 0 0">
+              <el-badge :value="this.value" class="item" size="mini" style="margin:5px 20px 0 0">
                 <img style="width:22px;height:22px" @click="NewsDetail" :src="require('../assets/images/ling.png')" />
               </el-badge>
               <el-dropdown-menu slot="dropdown" style="width:412px;height:258px;">
@@ -64,15 +64,15 @@
               </el-dropdown-menu>
             </el-dropdown>
             <span
-              style="line-height:65px;color:#373737;margin:0 20px 0 0;font-size:18px;"
+              style="line-height:65px;color:#373737;margin:0 20px 0 0;font-size:18px;width:60px;"
             >{{$store.state.user === null?this.fullName:$store.state.user}}</span>
             <el-dropdown placement="bottom-start" class="ada">
-              <img
+              <!-- <img
                 style="margin:10px 0 0 0;height:47px;width:47px"
                 v-if="this.avatarUrl === ''"
                 :src="require('../assets/images/156.png')"
-              />
-              <img style="margin:10px 0 0 0;height:47px;width:47px" v-else :src="this.avatarUrl" />
+              /> -->
+              <img style="margin:10px 0 0 0;height:47px;width:47px" :src="this.avatarUrl" />
               <el-dropdown-menu slot="dropdown" style="font-size:14px">
                 <el-dropdown-item id="personals" @click.native="personal">个人中心</el-dropdown-item>
                 <el-dropdown-item
@@ -231,10 +231,11 @@ export default {
         .get("/consumer-core/resume/brief")
         .then(res => {
           console.log(res);
-          if (res.statusCode === 200) {
+          if (res.status === 200) {
             this.defaultResumeId = res.data.data.defaultResumeId;
             this.fullName = res.data.data.base.fullName;
-            this.avatarUrl = res.data.data.avatarUrl;
+            this.avatarUrl = res.data.data.base.avatarUrl;
+            console.log(this.avatarUrl)
           } else {
           }
         })

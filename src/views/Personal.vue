@@ -134,13 +134,12 @@
     <div class="personal-right">
       <div class="right-nav">
         <span class="span-hover" @click="edit">编辑</span>
-        <img
+        <!-- <img
           v-if="this.avatarUrl == ''"
           :src="require('../assets/images/156.png')"
           style="border-radius:53px;margin:-20px auto;width:82px;"
-        />
+        /> -->
         <img
-          v-else
           :src="this.avatarUrl"
           style="border-radius:40px;margin:-20px auto;width:82px;height:82px"
         />
@@ -353,7 +352,7 @@ export default {
             this.showWarn = false;
             this.showInfor = true;
           }
-          this.avatarUrl = res.data.data.avatarUrl;
+          this.avatarUrl = res.data.data.base.avatarUrl;
           this.defaultResumeId = res.data.data.defaultResumeId;
           this.fullName = res.data.data.base.fullName;
           this.city = res.data.data.base.province + res.data.data.base.city;

@@ -1032,7 +1032,6 @@ export default {
 <style lang="stylus">
 .home {
   cursor: default;
-
   .dialog {
     display: flex;
     flex-direction: column;

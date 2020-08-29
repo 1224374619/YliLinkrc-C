@@ -117,9 +117,9 @@ export default {
       this.$refs['form'].validate((valid) => {
         if (valid) {
           this.$local.post('consumer-user/account/register',{phone:this.form.tel,password:this.form.password,vcode:this.form.captcha,agree:true}).then(res => {
-          if (res.data.code == 200) {
+          if (res.data.code == "201") {
             this.open2();
-            // this.$router.push({ path: '/login' });
+            this.$router.push({ path: '/login' });
           }
         }).catch(error =>{
           this.$message({

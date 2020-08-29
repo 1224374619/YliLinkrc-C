@@ -5,6 +5,7 @@ import axios from "axios";
 import queryString from 'querystring'
 import store from '../store/index'
 import Cookies from 'js-cookie'
+import router from '../router/index.js'
 
 // application/x-www-from-urlencode mime
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
@@ -35,6 +36,20 @@ _axios.interceptors.request.use(
     function (error) {
         Promise.reject(error)
     })
+// // http response 拦截器
+// _axios.interceptors.response.use(
+//     response => {
+//         console.log(response.data)
+//         let token = Cookies.get('token')
+//         if (!token) {
+//             router.replace('/login');
+//         }
+//       return response;
+//     },
+//     error => {
+//       return Promise.reject(error);
+//     }
+//   );
 
 // /api/v1/consumer-user
 const instance = axios.create({
