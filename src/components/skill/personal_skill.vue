@@ -102,8 +102,6 @@ export default {
             if (res.data.code == 201) {
               this.perId = res.data.data.addedModule.id;
               skilladdurl(this.professionalDegree, this.perId);
-
-              alert(131);
             }
           });
           this.$emit("skillEmit", false, true);

@@ -1852,7 +1852,7 @@ export default {
     };
     return {
       uploadData: {
-        label: "resume-avatar",
+        label: "resume-avatar"
       },
       myHeaders: { "Auth-Token": token },
       monthPayList: [],
@@ -2382,7 +2382,7 @@ export default {
               }
             ],
             salaryMin: this.salaryMin,
-            salaryMax: this.salaryMax,
+            salaryMax: this.salaryMax
           };
           jobintensionkeep(this.resumesId, params)
             .then(res => {
@@ -2392,10 +2392,22 @@ export default {
               }
             })
             .catch(error => {
-              this.$message({
-                message: error.response.data.message,
-                type: "error"
-              });
+              if (error.response.status === 404) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "页面丢失，请重新加载"
+                });
+              } else if (error.response.status === 403) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "登陆超时，请重新登录"
+                });
+              } else {
+                this.$notify.error({
+                  title: "错误",
+                  message: error.response.data.message
+                });
+              }
             });
         } else {
           return false;
@@ -2487,10 +2499,22 @@ export default {
               }
             })
             .catch(error => {
-              this.$message({
-                message: error.response.data.message,
-                type: "error"
-              });
+              if (error.response.status === 404) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "页面丢失，请重新加载"
+                });
+              } else if (error.response.status === 403) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "登陆超时，请重新登录"
+                });
+              } else {
+                this.$notify.error({
+                  title: "错误",
+                  message: error.response.data.message
+                });
+              }
             });
         }
       });
@@ -2510,10 +2534,22 @@ export default {
               }
             })
             .catch(error => {
-              this.$message({
-                message: error.response.data.message,
-                type: "error"
-              });
+              if (error.response.status === 404) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "页面丢失，请重新加载"
+                });
+              } else if (error.response.status === 403) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "登陆超时，请重新登录"
+                });
+              } else {
+                this.$notify.error({
+                  title: "错误",
+                  message: error.response.data.message
+                });
+              }
             });
         } else {
           return false;
@@ -2550,10 +2586,22 @@ export default {
               }
             })
             .catch(error => {
-              this.$message({
-                message: error.response.data.message,
-                type: "error"
-              });
+              if (error.response.status === 404) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "页面丢失，请重新加载"
+                });
+              } else if (error.response.status === 403) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "登陆超时，请重新登录"
+                });
+              } else {
+                this.$notify.error({
+                  title: "错误",
+                  message: error.response.data.message
+                });
+              }
             });
         } else {
           return false;
@@ -2585,10 +2633,22 @@ export default {
               }
             })
             .catch(error => {
-              this.$message({
-                message: error.response.data.message,
-                type: "error"
-              });
+              if (error.response.status === 404) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "页面丢失，请重新加载"
+                });
+              } else if (error.response.status === 403) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "登陆超时，请重新登录"
+                });
+              } else {
+                this.$notify.error({
+                  title: "错误",
+                  message: error.response.data.message
+                });
+              }
             });
         } else {
           return false;
@@ -2601,8 +2661,12 @@ export default {
         if (valid) {
           let params = {
             language: this.formlanguage.languages,
-            listenAndSpeak: timeUtil.levels(parseInt(this.formlanguage.listenAbility)),
-            readAndWrite: timeUtil.levels(parseInt(this.formlanguage.readAbility)),
+            listenAndSpeak: timeUtil.levels(
+              parseInt(this.formlanguage.listenAbility)
+            ),
+            readAndWrite: timeUtil.levels(
+              parseInt(this.formlanguage.readAbility)
+            )
           };
           languagekeep(this.resumesId, this.languageId, params)
             .then(res => {
@@ -2612,10 +2676,22 @@ export default {
               }
             })
             .catch(error => {
-              this.$message({
-                message: error.response.data.message,
-                type: "error"
-              });
+              if (error.response.status === 404) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "页面丢失，请重新加载"
+                });
+              } else if (error.response.status === 403) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "登陆超时，请重新登录"
+                });
+              } else {
+                this.$notify.error({
+                  title: "错误",
+                  message: error.response.data.message
+                });
+              }
             });
         } else {
           return false;
@@ -2637,10 +2713,22 @@ export default {
               }
             })
             .catch(error => {
-              this.$message({
-                message: error.response.data.message,
-                type: "error"
-              });
+              if (error.response.status === 404) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "页面丢失，请重新加载"
+                });
+              } else if (error.response.status === 403) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "登陆超时，请重新登录"
+                });
+              } else {
+                this.$notify.error({
+                  title: "错误",
+                  message: error.response.data.message
+                });
+              }
             });
         } else {
           return false;
@@ -2650,14 +2738,21 @@ export default {
     //培训经历保存
     trainingkeep(formName) {
       this.$refs[formName].validate(valid => {
-        this.til = this.formtraining.trainTime[0].getTime();
-        this.till = this.formtraining.trainTime[1].getTime();
+        let til = new Date(this.formtraining.trainTime[0]).getTime();
+        let till = new Date(this.formtraining.trainTime[1]).getTime();
+        let ti = this.$moment(till).format("YYYY-MM");
+        let end = this.$moment(new Date().getTime()).format("YYYY-MM");
+        if (ti === end) {
+          var eduTime = null;
+        } else {
+          eduTime = till;
+        }
         if (valid) {
           let params = {
             lesson: this.formtraining.trainCourse,
             institution: this.formtraining.trainCours,
-            beginTime: this.til,
-            endTime: this.till
+            beginTime: til,
+            endTime: eduTime,
           };
           trainingkeep(this.resumesId, this.trainId, params)
             .then(res => {
@@ -2667,10 +2762,22 @@ export default {
               }
             })
             .catch(error => {
-              this.$message({
-                message: error.response.data.message,
-                type: "error"
-              });
+              if (error.response.status === 404) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "页面丢失，请重新加载"
+                });
+              } else if (error.response.status === 403) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "登陆超时，请重新登录"
+                });
+              } else {
+                this.$notify.error({
+                  title: "错误",
+                  message: error.response.data.message
+                });
+              }
             });
         } else {
           return false;
@@ -2706,10 +2813,22 @@ export default {
               }
             })
             .catch(error => {
-              this.$message({
-                message: error.response.data.message,
-                type: "error"
-              });
+              if (error.response.status === 404) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "页面丢失，请重新加载"
+                });
+              } else if (error.response.status === 403) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "登陆超时，请重新登录"
+                });
+              } else {
+                this.$notify.error({
+                  title: "错误",
+                  message: error.response.data.message
+                });
+              }
             });
         } else {
           return false;
@@ -2745,10 +2864,22 @@ export default {
               }
             })
             .catch(error => {
-              this.$message({
-                message: error.response.data.message,
-                type: "error"
-              });
+              if (error.response.status === 404) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "页面丢失，请重新加载"
+                });
+              } else if (error.response.status === 403) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "登陆超时，请重新登录"
+                });
+              } else {
+                this.$notify.error({
+                  title: "错误",
+                  message: error.response.data.message
+                });
+              }
             });
         } else {
           return false;
@@ -2786,7 +2917,9 @@ export default {
           let params = {
             beginTime: til,
             endTime: eduTime,
-            degree: timeUtil.qualifications(parseInt(this.formInformation.educationDegree)),
+            degree: timeUtil.qualifications(
+              parseInt(this.formEducation.educationDegree)
+            ),
             degreeCode: parseInt(this.formEducation.educationDegree),
             major: this.formEducation.educationSpecialty,
             school: this.formEducation.educationName,
@@ -2800,10 +2933,22 @@ export default {
               }
             })
             .catch(error => {
-              this.$message({
-                message: error.response.data.message,
-                type: "error"
-              });
+              if (error.response.status === 404) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "页面丢失，请重新加载"
+                });
+              } else if (error.response.status === 403) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "登陆超时，请重新登录"
+                });
+              } else {
+                this.$notify.error({
+                  title: "错误",
+                  message: error.response.data.message
+                });
+              }
             });
         } else {
           return false;
@@ -2896,13 +3041,25 @@ export default {
           }
         })
         .catch(error => {
-          this.$message({
-            message: error.response.data.message,
-            type: "error"
-          });
-          this.$router.push({ path: "/login" });
-          this.personalinformation = true;
-          this.showjobintension = false;
+          if (error.response.status === 404) {
+            this.$notify.error({
+              title: "错误",
+              message: "页面丢失，请重新加载"
+            });
+          } else if (error.response.status === 403) {
+            this.$notify.error({
+              title: "错误",
+              message: "登陆超时，请重新登录"
+            });
+          } else {
+            this.$message({
+              message: error.response.data.message,
+              type: "error"
+            });
+            this.$router.push({ path: "/login" });
+            this.personalinformation = true;
+            this.showjobintension = false;
+          }
         });
     },
     // //上传附件简历
@@ -2924,10 +3081,22 @@ export default {
           }
         })
         .catch(error => {
-          this.$message({
-            message: error.response.data.message,
-            type: "error"
-          });
+          if (error.response.status === 404) {
+            this.$notify.error({
+              title: "错误",
+              message: "页面丢失，请重新加载"
+            });
+          } else if (error.response.status === 403) {
+            this.$notify.error({
+              title: "错误",
+              message: "登陆超时，请重新登录"
+            });
+          } else {
+            this.$notify.error({
+              title: "错误",
+              message: error.response.data.message
+            });
+          }
         });
     },
     //职称等级删除
@@ -2940,10 +3109,22 @@ export default {
           }
         })
         .catch(error => {
-          this.$message({
-            message: error.response.data.message,
-            type: "error"
-          });
+          if (error.response.status === 404) {
+            this.$notify.error({
+              title: "错误",
+              message: "页面丢失，请重新加载"
+            });
+          } else if (error.response.status === 403) {
+            this.$notify.error({
+              title: "错误",
+              message: "登陆超时，请重新登录"
+            });
+          } else {
+            this.$notify.error({
+              title: "错误",
+              message: error.response.data.message
+            });
+          }
         });
     },
     //工作经历删除
@@ -2956,10 +3137,22 @@ export default {
           }
         })
         .catch(error => {
-          this.$message({
-            message: error.response.data.message,
-            type: "error"
-          });
+          if (error.response.status === 404) {
+            this.$notify.error({
+              title: "错误",
+              message: "页面丢失，请重新加载"
+            });
+          } else if (error.response.status === 403) {
+            this.$notify.error({
+              title: "错误",
+              message: "登陆超时，请重新登录"
+            });
+          } else {
+            this.$notify.error({
+              title: "错误",
+              message: error.response.data.message
+            });
+          }
         });
     },
     //荣誉奖项删除
@@ -2972,10 +3165,22 @@ export default {
           }
         })
         .catch(error => {
-          this.$message({
-            message: error.response.data.message,
-            type: "error"
-          });
+          if (error.response.status === 404) {
+            this.$notify.error({
+              title: "错误",
+              message: "页面丢失，请重新加载"
+            });
+          } else if (error.response.status === 403) {
+            this.$notify.error({
+              title: "错误",
+              message: "登陆超时，请重新登录"
+            });
+          } else {
+            this.$notify.error({
+              title: "错误",
+              message: error.response.data.message
+            });
+          }
         });
     },
     //教育经历删除
@@ -2988,10 +3193,22 @@ export default {
           }
         })
         .catch(error => {
-          this.$message({
-            message: error.response.data.message,
-            type: "error"
-          });
+          if (error.response.status === 404) {
+            this.$notify.error({
+              title: "错误",
+              message: "页面丢失，请重新加载"
+            });
+          } else if (error.response.status === 403) {
+            this.$notify.error({
+              title: "错误",
+              message: "登陆超时，请重新登录"
+            });
+          } else {
+            this.$notify.error({
+              title: "错误",
+              message: error.response.data.message
+            });
+          }
         });
     },
     //培训经历删除
@@ -3004,10 +3221,22 @@ export default {
           }
         })
         .catch(error => {
-          this.$message({
-            message: error.response.data.message,
-            type: "error"
-          });
+          if (error.response.status === 404) {
+            this.$notify.error({
+              title: "错误",
+              message: "页面丢失，请重新加载"
+            });
+          } else if (error.response.status === 403) {
+            this.$notify.error({
+              title: "错误",
+              message: "登陆超时，请重新登录"
+            });
+          } else {
+            this.$notify.error({
+              title: "错误",
+              message: error.response.data.message
+            });
+          }
         });
     },
     //语言能力删除
@@ -3020,10 +3249,22 @@ export default {
           }
         })
         .catch(error => {
-          this.$message({
-            message: error.response.data.message,
-            type: "error"
-          });
+          if (error.response.status === 404) {
+            this.$notify.error({
+              title: "错误",
+              message: "页面丢失，请重新加载"
+            });
+          } else if (error.response.status === 403) {
+            this.$notify.error({
+              title: "错误",
+              message: "登陆超时，请重新登录"
+            });
+          } else {
+            this.$notify.error({
+              title: "错误",
+              message: error.response.data.message
+            });
+          }
         });
     },
     //项目经历删除
@@ -3036,10 +3277,22 @@ export default {
           }
         })
         .catch(error => {
-          this.$message({
-            message: error.response.data.message,
-            type: "error"
-          });
+          if (error.response.status === 404) {
+            this.$notify.error({
+              title: "错误",
+              message: "页面丢失，请重新加载"
+            });
+          } else if (error.response.status === 403) {
+            this.$notify.error({
+              title: "错误",
+              message: "登陆超时，请重新登录"
+            });
+          } else {
+            this.$notify.error({
+              title: "错误",
+              message: error.response.data.message
+            });
+          }
         });
     },
     //自我评价
@@ -3131,10 +3384,22 @@ export default {
           }
         })
         .catch(error => {
-          this.$message({
-            message: error.response.data.message,
-            type: "error"
-          });
+          if (error.response.status === 404) {
+            this.$notify.error({
+              title: "错误",
+              message: "页面丢失，请重新加载"
+            });
+          } else if (error.response.status === 403) {
+            this.$notify.error({
+              title: "错误",
+              message: "登陆超时，请重新登录"
+            });
+          } else {
+            this.$notify.error({
+              title: "错误",
+              message: error.response.data.message
+            });
+          }
         });
       this.awardsouterVisible = true;
     },
@@ -3142,7 +3407,7 @@ export default {
     editskill(list) {
       this.personalskillouterVisible = true;
       this.skillId = list.id;
-      console.log(this.skillId)
+      console.log(this.skillId);
       this.formPersonalskill.technicalName = list.skill;
       this.formPersonalskill.level = timeUtil.level(list.level);
     },
@@ -3150,9 +3415,9 @@ export default {
     showlanguagesList(list) {
       this.languageouterVisible = true;
       this.formlanguage.languages = list.language;
-      this.formlanguage.listenAbility = timeUtil.level(list.listenAndSpeak), 
-      this.formlanguage.readAbility = timeUtil.level(list.readAndWrite), 
-      this.languageId = list.id;
+      (this.formlanguage.listenAbility = timeUtil.level(list.listenAndSpeak)),
+        (this.formlanguage.readAbility = timeUtil.level(list.readAndWrite)),
+        (this.languageId = list.id);
     },
     //培训经历
     showtrainList(list) {
@@ -3160,6 +3425,17 @@ export default {
       this.trainId = list.id;
       this.formtraining.trainCourse = list.lesson;
       this.formtraining.trainCours = list.institution;
+      // if (list.endTime == null) {
+      //   var date = new Date();
+      //   var dataOne = new Date(list.endTime).getTime();
+      //   var end = this.$moment(date.getTime()).format("YYYY-MM");
+      // } else {
+      //   end = this.$moment(dataOne).format("YYYY-MM");
+      // }
+      this.formtraining.trainTime = [
+        this.$moment(list.beginTime).format("YYYY-MM-DD"),
+        this.$moment(list.endTime).format("YYYY-MM-DD")
+      ];
     },
     //项目经历编辑
     showprogectperienceList(list) {
@@ -3208,7 +3484,7 @@ export default {
       this.educationouterVisible = true;
       this.formEducation.educationSpecialty = list.major;
       this.formEducation.educationName = list.school;
-      this.formEducation.educationDegree = list.degree
+      this.formEducation.educationDegree = list.degree;
       if (list.endTime == null) {
         var date = new Date();
         var dataOne = new Date(list.endTime).getTime();
@@ -3531,11 +3807,11 @@ export default {
   computed: {
     uploadUrl() {
       // const {VUE_APP_SECRET,VUE_APP_DEV_MODE} = process.env
-      return '/api/v2/file-service/files/upload';
+      return "/api/v2/file-service/files/upload";
     },
     uploadUrlOne() {
       // const {VUE_APP_SECRET,VUE_APP_DEV_MODE} = process.env
-      return '/api/v2/file-service/files/upload';
+      return "/api/v2/file-service/files/upload";
     }
   },
   filters: {

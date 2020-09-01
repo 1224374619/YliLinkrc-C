@@ -199,8 +199,24 @@ export default {
           this.companyIdList = res.data.data;
         }
       })
-      // .catch(error => {
-      // });
+      .catch(error => {
+              if (error.response.status === 404) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "页面丢失，请重新加载"
+                });
+              } else if (error.response.status === 403) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "登陆超时，请重新登录"
+                });
+              } else {
+                this.$notify.error({
+                  title: "错误",
+                  message: error.response.data.message
+                });
+              }
+            });
     },
     //获取所有企业行业
     allposition() {
@@ -210,7 +226,24 @@ export default {
             this.industryList = res.data.data;
           }
         })
-        // .catch(error => {});
+        .catch(error => {
+              if (error.response.status === 404) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "页面丢失，请重新加载"
+                });
+              } else if (error.response.status === 403) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "登陆超时，请重新登录"
+                });
+              } else {
+                this.$notify.error({
+                  title: "错误",
+                  message: error.response.data.message
+                });
+              }
+            });
     },
     //获取岗位列表
     handleClick(e) {
@@ -224,9 +257,24 @@ export default {
             this.page.total = res.data.data.total
           }
       })
-      // .catch(error => {
-        
-      // });
+      .catch(error => {
+              if (error.response.status === 404) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "页面丢失，请重新加载"
+                });
+              } else if (error.response.status === 403) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "登陆超时，请重新登录"
+                });
+              } else {
+                this.$notify.error({
+                  title: "错误",
+                  message: error.response.data.message
+                });
+              }
+            });
       }
     },
     //获取指定岗位列表
@@ -241,9 +289,24 @@ export default {
             this.page.total = res.data.data.total
           }
       })
-      // .catch(error => {
-        
-      // });
+      .catch(error => {
+              if (error.response.status === 404) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "页面丢失，请重新加载"
+                });
+              } else if (error.response.status === 403) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "登陆超时，请重新登录"
+                });
+              } else {
+                this.$notify.error({
+                  title: "错误",
+                  message: error.response.data.message
+                });
+              }
+            });
       
     },
     //岗位分类
@@ -254,9 +317,24 @@ export default {
           // this.positionCatalog = res.data.data.list[0].positionCatalog;
         }
       })
-      // .catch(error => {
-
-      // });
+      .catch(error => {
+              if (error.response.status === 404) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "页面丢失，请重新加载"
+                });
+              } else if (error.response.status === 403) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "登陆超时，请重新登录"
+                });
+              } else {
+                this.$notify.error({
+                  title: "错误",
+                  message: error.response.data.message
+                });
+              }
+            });
     },
     handleSizeChange(val) {
       this.page.pageSize = val
@@ -325,9 +403,24 @@ export default {
             this.posiCatalogList = res.data.data
           }
         })
-        // .catch(error => {
-
-        // });
+        .catch(error => {
+              if (error.response.status === 404) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "页面丢失，请重新加载"
+                });
+              } else if (error.response.status === 403) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "登陆超时，请重新登录"
+                });
+              } else {
+                this.$notify.error({
+                  title: "错误",
+                  message: error.response.data.message
+                });
+              }
+            });
       },
   },
    
@@ -355,9 +448,24 @@ export default {
             this.page.total = res.data.data.total
           }
       })
-      // .catch(error => {
-        
-      // });
+     .catch(error => {
+              if (error.response.status === 404) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "页面丢失，请重新加载"
+                });
+              } else if (error.response.status === 403) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "登陆超时，请重新登录"
+                });
+              } else {
+                this.$notify.error({
+                  title: "错误",
+                  message: error.response.data.message
+                });
+              }
+            });
       this.activeName = 'second'
     }
     

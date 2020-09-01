@@ -53,32 +53,59 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.$http
-            .put(`/consumer-core/resume/${this.professionalDegree}/evaluation`, { content:this.formInline.personalDescription })
+            .put(
+              `/consumer-core/resume/${this.professionalDegree}/evaluation`,
+              { content: this.formInline.personalDescription }
+            )
             .then(res => {
               if (res.data.code == 200) {
                 this.$emit("selfappraisalemit", false, true);
+              }
+            })
+            .catch(error => {
+              if (error.response.status === 404) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "页面丢失，请重新加载"
+                });
+              } else if (error.response.status === 403) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "登陆超时，请重新登录"
+                });
+              } else {
+                this.$notify.error({
+                  title: "错误",
+                  message: error.response.data.message
+                });
               }
             });
         } else {
           return false;
         }
       });
-    },
+    }
   }
 };
 </script>
 
-<style lang="stylus"> 
-  .el-button.is-plain:hover
-    color #327cf3
-    border-color #327cf3 
-  .el-form-item
-    padding 0 0 0 60px
-  .el-button
-    width 94px 
-    height 34px
-    vertical-align middle
-    padding 0px  
-  .element.style
-    height 200px  
+<style lang="stylus">.el-button.is-plain:hover {
+  color: #327cf3;
+  border-color: #327cf3;
+}
+
+.el-form-item {
+  padding: 0 0 0 60px;
+}
+
+.el-button {
+  width: 94px;
+  height: 34px;
+  vertical-align: middle;
+  padding: 0px;
+}
+
+.element.style {
+  height: 200px;
+}
 </style>

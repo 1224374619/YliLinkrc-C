@@ -11,7 +11,7 @@ import Register from '../views/Register.vue'
 import RegisterResult from '../views/RegisterResult.vue'
 import UserLicense from '../views/UserLicense.vue'
 import JobDetail from '../views/JobDetail.vue'
-import {Message} from 'element-ui'
+import { Notification } from 'element-ui';
 // import Resumes from '../views/Resumes.vue'
 import Resume from '../views/Resume.vue'
 import Position from '../views/Position.vue'
@@ -165,15 +165,14 @@ router.beforeEach((to, from, next) => {
       if (token) { // 通过vuex state获取当前的token是否存在
         next()
       } else {
-        Message({
-            message: '请先登录！',
-            type: 'error',
-            duration: 2 * 1000
-        })
+        Notification.error({
+            title: "错误",
+            message: '请先登录'
+          });
         setTimeout(()=>next({
             path: '/login'
             // query: {redirect: to.fullPath} // 将跳转的路由path作为参数，登录成功后跳转到该路由
-          }),1000)
+          }),2000)
         
       }
     } else {

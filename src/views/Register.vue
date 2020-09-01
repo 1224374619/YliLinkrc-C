@@ -117,16 +117,28 @@ export default {
       this.$refs['form'].validate((valid) => {
         if (valid) {
           this.$local.post('consumer-user/account/register',{phone:this.form.tel,password:this.form.password,vcode:this.form.captcha,agree:true}).then(res => {
-          if (res.data.code == "201") {
+          if (res.data.code == "200") {
             this.open2();
             this.$router.push({ path: '/login' });
           }
-        }).catch(error =>{
-          this.$message({
-                message:error.response.data.message,
-                type: 'error'
-              })
-        });
+        }).catch(error => {
+              if (error.response.status === 404) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "页面丢失，请重新加载"
+                });
+              } else if (error.response.status === 403) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "登陆超时，请重新登录"
+                });
+              } else {
+                this.$notify.error({
+                  title: "错误",
+                  message: error.response.data.message
+                });
+              }
+            });
         } else {
           return false;
         }

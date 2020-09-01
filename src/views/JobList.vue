@@ -737,8 +737,24 @@ export default {
             this.joblistJob = true;
           }
         }
-      });
-      // .catch(error => {});
+      }).catch(error => {
+              if (error.response.status === 404) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "页面丢失，请重新加载"
+                });
+              } else if (error.response.status === 403) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "登陆超时，请重新登录"
+                });
+              } else {
+                this.$notify.error({
+                  title: "错误",
+                  message: error.response.data.message
+                });
+              }
+            });
     },
     handleSizeChange1(val) {
       this.page1.pageSize = val;
@@ -761,8 +777,24 @@ export default {
             this.companyNull = false;
           }
         }
-      });
-      // .catch(error => {});
+      }).catch(error => {
+              if (error.response.status === 404) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "页面丢失，请重新加载"
+                });
+              } else if (error.response.status === 403) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "登陆超时，请重新登录"
+                });
+              } else {
+                this.$notify.error({
+                  title: "错误",
+                  message: error.response.data.message
+                });
+              }
+            });
     },
     handleCurrentChange1(val) {
       this.page1.current = val;
@@ -784,8 +816,24 @@ export default {
             this.companyNull = false;
           }
         }
-      });
-      // .catch(error => {});
+      }).catch(error => {
+              if (error.response.status === 404) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "页面丢失，请重新加载"
+                });
+              } else if (error.response.status === 403) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "登陆超时，请重新登录"
+                });
+              } else {
+                this.$notify.error({
+                  title: "错误",
+                  message: error.response.data.message
+                });
+              }
+            });
     },
     more() {
       if (this.isduty === true) {

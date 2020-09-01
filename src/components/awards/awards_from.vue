@@ -42,7 +42,24 @@ export default {
             this.srcList.push(res.data.data.tempUrl);
           } 
         })
-        // .catch(error => {});
+        .catch(error => {
+              if (error.response.status === 404) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "页面丢失，请重新加载"
+                });
+              } else if (error.response.status === 403) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "登陆超时，请重新登录"
+                });
+              } else {
+                this.$notify.error({
+                  title: "错误",
+                  message: error.response.data.message
+                });
+              }
+            });
     },
     onSubmit() {
       //如果每次保存都要存后台，就在这里写发送时间，如果需要整体保存，就在父组件整体操作

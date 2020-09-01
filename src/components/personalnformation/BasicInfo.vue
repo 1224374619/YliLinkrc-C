@@ -336,7 +336,22 @@ export default {
               }
             })
             .catch(error => {
-              this.$message(error.response.data.message);
+              if (error.response.status === 404) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "页面丢失，请重新加载"
+                });
+              } else if (error.response.status === 403) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "登陆超时，请重新登录"
+                });
+              } else {
+                this.$notify.error({
+                  title: "错误",
+                  message: error.response.data.message
+                });
+              }
             });
         }
       });
@@ -364,7 +379,7 @@ export default {
   },
   computed: {
     uploadUrl() {
-      return '/api/v2/file-service/files/upload';
+      return '/api/file-service/files/upload';
     }
   },
   watch: {

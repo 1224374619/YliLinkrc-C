@@ -37,18 +37,17 @@
           <div class="user-operations" v-else>
             <el-dropdown trigger="hover" style="margin:0 10px 0 0">
               <el-badge :value="this.value" class="item" size="mini" style="margin:5px 20px 0 0">
-                <img style="width:22px;height:22px" @click="NewsDetail" :src="require('../assets/images/ling.png')" />
+                <img
+                  style="width:22px;height:22px"
+                  @click="NewsDetail"
+                  :src="require('../assets/images/ling.png')"
+                />
               </el-badge>
               <el-dropdown-menu slot="dropdown" style="width:412px;height:258px;">
                 <div
                   style="width:412px;height:210px;border-bottom:1px solid #fafafa;cursor:default"
                 >
-                  <div
-                    class="badge"
-                    v-for="(item,index) in notificationlist"
-                    :key="index"
-                    
-                  >
+                  <div class="badge" v-for="(item,index) in notificationlist" :key="index">
                     <span style="color:#6C6C6C;font-size:14px;margin-left:24px;">{{item.title}}</span>
                     <span
                       style="color:#909090;font-size:12px;margin-left:35px;"
@@ -71,7 +70,7 @@
                 style="margin:10px 0 0 0;height:47px;width:47px"
                 v-if="this.avatarUrl === ''"
                 :src="require('../assets/images/156.png')"
-              /> -->
+              />-->
               <img style="margin:10px 0 0 0;height:47px;width:47px" :src="this.avatarUrl" />
               <el-dropdown-menu slot="dropdown" style="font-size:14px">
                 <el-dropdown-item id="personals" @click.native="personal">个人中心</el-dropdown-item>
@@ -153,8 +152,23 @@ export default {
           }
         })
         .catch(error => {
-          console.log(error);
-        });
+              if (error.response.status === 404) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "页面丢失，请重新加载"
+                });
+              } else if (error.response.status === 403) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "登陆超时，请重新登录"
+                });
+              } else {
+                this.$notify.error({
+                  title: "错误",
+                  message: error.response.data.message
+                });
+              }
+            });
     },
     //消息click
     NewsDetail() {
@@ -171,8 +185,23 @@ export default {
           }
         })
         .catch(error => {
-          console.log(error);
-        });
+              if (error.response.status === 404) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "页面丢失，请重新加载"
+                });
+              } else if (error.response.status === 403) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "登陆超时，请重新登录"
+                });
+              } else {
+                this.$notify.error({
+                  title: "错误",
+                  message: error.response.data.message
+                });
+              }
+            });
     },
     //退出
     detrusion() {
@@ -203,12 +232,23 @@ export default {
           }
         })
         .catch(error => {
-          // const token = this.$store.state.token;
-          // this.$message({
-          //   message: error.response.data.message,
-          //   type: "error"
-          // });
-        });
+              if (error.response.status === 404) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "页面丢失，请重新加载"
+                });
+              } else if (error.response.status === 403) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "登陆超时，请重新登录"
+                });
+              } else {
+                this.$notify.error({
+                  title: "错误",
+                  message: error.response.data.message
+                });
+              }
+            });
     },
     gotoHomeUI() {
       this.$router.push({ path: "/" });
@@ -235,13 +275,28 @@ export default {
             this.defaultResumeId = res.data.data.defaultResumeId;
             this.fullName = res.data.data.base.fullName;
             this.avatarUrl = res.data.data.base.avatarUrl;
-            console.log(this.avatarUrl)
+
           } else {
           }
         })
         .catch(error => {
-          this.$http.post("/consumer-core/resume").then(res => {});
-        });
+              if (error.response.status === 404) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "页面丢失，请重新加载"
+                });
+              } else if (error.response.status === 403) {
+                this.$notify.error({
+                  title: "错误",
+                  message: "登陆超时，请重新登录"
+                });
+              } else {
+                this.$notify.error({
+                  title: "错误",
+                  message: error.response.data.message
+                });
+              }
+            });
     }
   },
   // //利用计算属性
@@ -257,8 +312,13 @@ export default {
     }
   },
   created() {
-    this.brief();
+    let token = Cookies.get("token");
+    if (token) {
+      this.brief();
     this.notification();
+    }else {
+
+    }
     this.token = Cookies.get("token");
     this.fullName = window.sessionStorage.getItem("username");
     // if (this.notificationlist.length > 0) {

@@ -192,12 +192,12 @@ export default {
           });
         });
     },
-    next() {
-        this.$router.push({path:'/resume'})
-        this.$http.post('/resume')
-      //   .then(res => {
-      // });
-    },
+    // next() {
+    //     this.$router.push({path:'/resume'})
+    //     this.$http.post('/resume')
+    //   //   .then(res => {
+    //   // });
+    // },
     submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {

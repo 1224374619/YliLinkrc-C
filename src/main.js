@@ -36,7 +36,7 @@ Vue.use(ElementUI);
 // Vue.prototype.$Cookies=Cookies;
 Vue.prototype.$moment = Moment;
 
-// Vue.prototype.$message = Message
+Vue.prototype.$message = Message
 Vue.prototype.$cookie = cookie;
 Vue.prototype.$CodeToTag = {
   CodeToTag

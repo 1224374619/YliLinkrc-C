@@ -39,17 +39,34 @@ _axios.interceptors.request.use(
 // // http response 拦截器
 // _axios.interceptors.response.use(
 //     response => {
-//         console.log(response.data)
 //         let token = Cookies.get('token')
-//         if (!token) {
-//             router.replace('/login');
+//         if (token) {
+//             Message({
+//                 showClose: true,
+//                 message: '登录超时，请重新登录',
+//                 type: 'error'
+//             });
+            
 //         }
-//       return response;
+//         return response;
 //     },
 //     error => {
-//       return Promise.reject(error);
+//         if (error.response.status === 403) {
+//             Message.error({
+//                 title: '错误',
+//                 message: '登陆超时，请重新登录'
+//             });
+//             router.replace('/login');
+//         }else {
+//             Message.error({
+//                 title: '错误',
+//                 message: error.response.data.message
+//             });
+//         }
+        
+//         return Promise.reject(error);
 //     }
-//   );
+// );
 
 // /api/v1/consumer-user
 const instance = axios.create({
