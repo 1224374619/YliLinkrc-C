@@ -326,13 +326,14 @@
                   @click="descOne(list.id)"
                   class="desc-second"
                   style="cursor:pointer"
-                  v-if="list.workAgeMax == null"
-                >{{list.catalogThird}} | 10年以上 | {{list.degreeMin}}</div>
+                  v-if="list.workAgeMax == null" 
+                  
+                >{{$CodeToTag.CodeToTag([parseInt(parseInt(list.catalogCode/100)*100/10000)*10000,parseInt(list.catalogCode/100)*100,list.catalogCode],positionCatalogList)[2]}} | 10年以上 | {{list.degreeMin}}</div>
                 <div
                   class="desc-second"
                   v-else
                   style="cursor:pointer"
-                >{{list.catalogThird}} | {{list.workAgeMin}}-{{list.workAgeMax}}年 | {{list.degreeMin}}</div>
+                >{{$CodeToTag.CodeToTag([parseInt(parseInt(list.catalogCode/100)*100/10000)*10000,parseInt(list.catalogCode/100)*100,list.catalogCode],positionCatalogList)[2]}} | {{list.workAgeMin}}-{{list.workAgeMax}}年 | {{list.degreeMin}}</div>
                 <div class="line"></div>
                 <div class="desc-third" @click="desc(list.company.id)">
                   <img
@@ -375,7 +376,7 @@ import {
   // hotposition,
   // hotkeyword,
   // industry,
-  // allpositionCatalog,
+  allpositionCatalog,
   homeSearch,
   companySearch,
   // city,
@@ -1002,7 +1003,6 @@ export default {
     this.industryList = industrys.data;
     this.city = citys.data;
     this.brief();
-    // this.allpositionCatalog();
     // this.industry();
     // this.carousel();
     // this.hotcompany();
