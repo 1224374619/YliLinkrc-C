@@ -177,10 +177,11 @@ export default {
     //全部标记
     chorusle() {
       this.$http
-        .get("/consumer-notification/message/read")
+        .put("/consumer-notification/message/read")
         .then(res => {
           if (res.data.code == "200") {
             this.chorus = false;
+            this.notification()
           } else {
           }
         })

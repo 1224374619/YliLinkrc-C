@@ -11,7 +11,7 @@
       </div>
       <div class="station-nav-content">
         <div class="content-nav" style="width:500px;">
-          <span>{{positionIdList.company.address.province+' ' +' '+positionIdList.company.address.city}} | {{positionIdList.workAgeMin}}-{{positionIdList.workAgeMax}}年 | {{positionIdList.degreeMin}} | {{positionIdList.jobType}}</span>
+          <span>{{positionIdList.company.address.district}} | {{positionIdList.workAgeMin}}-{{positionIdList.workAgeMax}}年 | {{positionIdList.degreeMin}} | {{positionIdList.jobType}}</span>
         </div>
         <div class="content-article">
           <span>发布时间：{{positionIdList.publishedTime | formatDate}}</span>

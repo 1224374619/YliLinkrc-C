@@ -43,7 +43,7 @@
               <div class="content">
                 <span><img style='width:39px' src='../assets/images/di.png'></span>
                 <span>公司地址</span>
-                <span style="width:200px;margin:25px">上海市静安区江场西路299弄15号1613室</span>
+                <span style="width:200px;margin:25px">上海市静安区大众东朔空间1206</span>
               </div>
             </div>
             <div class="cards">
