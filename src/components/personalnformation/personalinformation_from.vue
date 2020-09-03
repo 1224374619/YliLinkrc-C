@@ -3,8 +3,14 @@
     <div class="information">
       <div>
         <img
+          v-if="todo"
           style="width:80px;height:80px;border-radius:47px;margin:30px 0 78px 66px"
           :src='todo'
+        />
+        <img
+          v-else
+          style="width:80px;height:80px;border-radius:47px;margin:30px 0 78px 66px"
+          :src="require('../../assets/images/mo.png')"
         />
       </div>
       <div class="informationright">

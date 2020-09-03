@@ -1128,7 +1128,7 @@
         <div class="personalinformation" v-if="isshowpersonalinformation">
           <div style="margin:20px 0 0 96px;">
             <img style="margin:30px 0 -30px 0" v-if="imageUrl" :src="imageUrl" class="avatar" />
-            <i v-else class="el-icon-plus avatar-upload-icon"></i>
+            <img style="margin:30px 0 -30px 0" class="avatar" v-else :src="require('../assets/images/mo.png')" />
           </div>
           <div class="main-content" style="margin:140px 0 0 0;">
             <div class="main-content-second" @click="ispersonalinformation">
@@ -1864,7 +1864,7 @@ export default {
       imageUrlTwo: "",
       fileOne: "",
       imageUrl:
-        "https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png",
+        "",
       updatedTime: "",
       workStateList: [],
       jobSearchList: [],
