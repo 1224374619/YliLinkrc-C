@@ -84,7 +84,8 @@
                 v-if="this.avatarUrl === ''"
                 :src="require('../assets/images/156.png')"
               />-->
-              <img style="margin:10px 0 0 0;height:47px;width:47px" :src="this.avatarUrl" />
+              <img style="margin:10px 0 0 0;height:47px;width:47px" v-if="this.avatarUrl" :src="this.avatarUrl" />
+              <img style="margin:10px 0 0 0;height:47px;width:47px" v-else :src="require('../assets/images/mo.png')" />
               <el-dropdown-menu slot="dropdown" style="font-size:14px">
                 <el-dropdown-item id="personals" @click.native="personal">个人中心</el-dropdown-item>
                 <el-dropdown-item
