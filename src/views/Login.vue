@@ -88,11 +88,11 @@
 import CustomizedFooter from "components/customized-footer.vue";
 // import CustomizedNav from "components/customized-nav.vue";
 // import PasswordInput from "components/password-input.vue";
-import {brief} from "apis/account";
+import { brief } from "apis/account";
 import { mapMutations } from "vuex";
 import { DONE_LOGIN } from "store/mutation-types";
 import { watch } from "fs";
-import Cookies from 'js-cookie'
+import Cookies from "js-cookie";
 export default {
   name: "login",
   components: {
@@ -103,7 +103,7 @@ export default {
   data() {
     return {
       form: {
-        tel: '',
+        tel: "",
         password: ""
       },
       show: {
@@ -145,20 +145,17 @@ export default {
           // `/login?returnUrl=http://${document.location.host}/api/resume/brief`
           // `/login?returnUrl=/resume/brief`
           this.$_http
-            .post(
-              `/consumer-user/login`,
-              {
-                username: this.form.tel,
-                password: this.form.password
-              },
-            )
+            .post(`/consumer-user/login`, {
+              username: this.form.tel,
+              password: this.form.password
+            })
             .then(res => {
-              console.log(res)
+              console.log(res);
               if (res.request.status == 200) {
                 let token = res.headers["auth-token"];
-                Cookies.set('token',token)
+                Cookies.set("token", token);
                 window.sessionStorage.setItem("user", this.form.tel);
-                this.$router.push({ path: "/home" });
+                this.brief();
               } else {
                 return false;
               }
@@ -173,6 +170,42 @@ export default {
           return false;
         }
       });
+    },
+    //获取简历简讯
+    brief() {
+      this.$http
+        .get("/consumer-core/resume/brief")
+        .then(res => {
+          console.log(res);
+          if (res.status === 200) {
+            this.$router.push({ path: "/home" });
+          } else {
+          }
+        })
+        .catch(error => {
+          console.log('13131313131')
+          this.$http.post("/consumer-core/resume").then(res => {
+            if (res.data.code == '201') {
+              this.$router.push({ path: "/home" });
+            }
+          });
+          // if (error.response.status === 404) {
+          //   this.$notify.error({
+          //     title: "错误",
+          //     message: "页面丢失，请重新加载"
+          //   });
+          // } else if (error.response.status === 403) {
+          //   this.$notify.error({
+          //     title: "错误",
+          //     message: "登陆超时，请重新登录"
+          //   });
+          // } else {
+          //   this.$notify.error({
+          //     title: "错误",
+          //     message: error.response.data.message
+          //   });
+          // }
+        });
     },
     gotoHomeUI() {
       this.$router.push({ path: "/" });

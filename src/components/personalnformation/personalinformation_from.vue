@@ -82,18 +82,18 @@ export default {
     }
   },
   methods: {
-    brief() {
-      this.$http
-        .get("/resume/brief")
-        .then(res => {
-          if (res.data.code == 200) {
+    // brief() {
+    //   this.$http
+    //     .get("/resume/brief")
+    //     .then(res => {
+    //       if (res.data.code == 200) {
 
-            this.avatarUrl = res.data.data.avatarUrl;
-          }
-        })
-        // .catch(error => {
-        // });
-    },
+    //         this.avatarUrl = res.data.data.avatarUrl;
+    //       }
+    //     })
+    //     // .catch(error => {
+    //     // });
+    // },
      //城市
       // citise() {
       //   this.$http.get("/constant/district").then(res => {
@@ -105,7 +105,7 @@ export default {
   },
   created() {
     this.citysal = citys.data;
-    this.brief()
+    // this.brief()
   }
 };
 </script>
