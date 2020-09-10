@@ -99,6 +99,7 @@ export default {
         .then(res => {
           if (res.data.code == "200") {
             this.notification();
+            this.$store.state.value = 0;
           } else {
           }
         })
@@ -147,6 +148,7 @@ export default {
           if (res.data.code == "200") {
             this.tableData = res.data.data.list;
             this.page.total = res.data.data.total;
+            
           } else {
           }
         })

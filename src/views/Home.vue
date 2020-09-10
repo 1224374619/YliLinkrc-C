@@ -192,7 +192,7 @@
                 </swiper-slide>
                 <div class="swiper-pagination" slot="pagination"></div>
               </swiper>
-              <div
+              <!-- <div
                 style="width:30px;height:20px;margin:-10px 0 0 0;"
                 class="swiper-button-prev"
                 slot="button-prev"
@@ -201,7 +201,7 @@
                 style="width:30px;height:20px;margin:-10px 0 0 0"
                 class="swiper-button-next"
                 slot="button-next"
-              ></div>
+              ></div> -->
             </div>
           </md-card-media>
         </md-card>

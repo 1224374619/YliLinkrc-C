@@ -21,6 +21,7 @@
           style="margin-left:0px"
           :show-file-list="false"
           :on-success="handleAvatarSuccess"
+          :on-error="handleAvatarError"
           >
           <img v-if="imageUrl" :src="imageUrl" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -131,7 +132,13 @@ export default {
       handleAvatarSuccess(res, file) {
         this.imageUrl = URL.createObjectURL(file.raw);
         this.file = res.data
-      }
+      },
+      handleAvatarError(err, file, fileList) {
+      this.$notify.error({
+        title: "错误",
+        message: "图片上传失败，请重新上传"
+      });
+    },
   },
   computed: {
       uploadUrl() {

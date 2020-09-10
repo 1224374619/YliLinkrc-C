@@ -17,10 +17,10 @@
         <div class="information-first">
           <span>{{fromData.fullName}}</span>
           <span v-if="fromData.sexCode === 0">
-            <img style="width:20px" :src="require('../../assets/images/nn.svg')" />
+            <img style="width:15px;margin:5px 0 0 0" :src="require('../../assets/images/nan.png')" />
           </span>
           <span v-else>
-            <img style="width:20px" :src="require('../../assets/images/n.svg')" />
+            <img style="width:15px;margin:5px 0 0 0" :src="require('../../assets/images/nv.png')" />
           </span>
         </div>
         <div class="information-second" style="margin:20px 0 0 25px;color:#6C6C6C;font-size:18px">

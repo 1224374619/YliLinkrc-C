@@ -170,7 +170,7 @@
               <div class="company-address">
                 <span>{{companyName}}</span>
 
-                <span>{{$CodeToTag.CodeToTag([list.workAddress.province,list.workAddress.county],citysal)[0]+$CodeToTag.CodeToTag([list.workAddress.province,list.workAddress.county],citysal)[1]}}</span>
+                <span>{{list.workAddress.district}}</span>
               </div>
             </div>
           </div>

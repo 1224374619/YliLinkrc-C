@@ -9,6 +9,7 @@
           :data="uploadData"
           :headers="myHeaders"
           :on-success="handleAvatarSuccess"
+          :on-error="handleAvatarError"
         >
           <img v-if="imageUrl" :src="imageUrl" class="avatar" />
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -368,6 +369,12 @@ export default {
       console.log(res.data);
       this.imageUrl = URL.createObjectURL(file.raw);
       this.file = res.data;
+    },
+    handleAvatarError(err, file, fileList) {
+      this.$notify.error({
+        title: "错误",
+        message: "图片上传失败，请重新上传"
+      });
     },
     cancel() {
       this.$emit("BasicEmit", false, true);

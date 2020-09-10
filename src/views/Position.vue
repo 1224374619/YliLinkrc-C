@@ -99,9 +99,6 @@ import {
   companyDetail,
   positionlist,
   positionCatalogs,
-  // city,
-  // industry,
-  allpositionCatalog
 } from "apis/account";
 // import { error } from 'util';
 export default {

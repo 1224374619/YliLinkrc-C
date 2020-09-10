@@ -36,7 +36,7 @@
           </div>
           <div class="user-operations" v-else>
             <el-dropdown trigger="hover" style="margin:0 10px 0 0">
-              <el-badge :value="this.value" class="item" size="mini" style="margin:5px 20px 0 0">
+              <el-badge :value="this.$store.state.value" class="item" size="mini" style="margin:5px 20px 0 0">
                 <img
                   style="width:22px;height:22px"
                   @click="NewsDetail"
@@ -45,33 +45,24 @@
               </el-badge>
               <el-dropdown-menu slot="dropdown" style="width:412px;height:258px;">
                 <div
-                  style="width:412px;height:210px;border-bottom:1px solid #fafafa;cursor:default"
-                  v-if="notificationlist.length>5"
-                >
-                  <div class="badge" v-for="(item,index) in notificationlist.slice(0,5)" :key="index">
-                    <span style="color:#6C6C6C;font-size:14px;margin-left:24px;">{{item.title}}</span>
-                    <span
-                      style="color:#909090;font-size:12px;margin-left:35px;"
-                    >{{item.releaseTime|formatDate}}</span>
-                  </div>
-                </div>
-
-                <div
-                  style="width:412px;height:210px;border-bottom:1px solid #fafafa;cursor:default"
-                  v-else
+                  style="width:412px;height:210px;border-bottom:1px solid #fafafa;cursor:default;overflow:scroll;overflow-x:hidden;"
                 >
                   <div class="badge" v-for="(item,index) in notificationlist" :key="index">
                     <span style="color:#6C6C6C;font-size:14px;margin-left:24px;">{{item.title}}</span>
-                    <span
-                      style="color:#909090;font-size:12px;margin-left:35px;"
-                    >{{item.releaseTime|formatDate}}</span>
+
+                    <span style="color:#909090;font-size:12px;margin-right:35px;">
+                      <el-badge :is-dot="!item.isRead" class="item">{{item.releaseTime|formatDate}}</el-badge>
+                    </span>
                   </div>
                 </div>
-                <div>
-                  <span
-                    style="font-size:14px;color:#373737;margin-left:24px;line-height:50px;cursor:pointer"
+                <div
+                  style="border: 1px solid rgba(244, 244, 244, 1);box-shadow: 0px 2px 10px 0px rgba(245, 245, 245, 1);height:60px"
+                >
+                  <el-button
+                    style="margin:7px 38%;width:120px;font-size:12px"
                     @click="chorusle"
-                  >全部标为已读</span>
+                    type="primary"
+                  >全部标为已读</el-button>
                 </div>
               </el-dropdown-menu>
             </el-dropdown>
@@ -84,8 +75,16 @@
                 v-if="this.avatarUrl === ''"
                 :src="require('../assets/images/156.png')"
               />-->
-              <img style="margin:10px 0 0 0;height:47px;width:47px" v-if="this.avatarUrl" :src="this.avatarUrl" />
-              <img style="margin:10px 0 0 0;height:47px;width:47px" v-else :src="require('../assets/images/mo.png')" />
+              <img
+                style="margin:10px 0 0 0;height:47px;width:47px"
+                v-if="this.$store.state.avatarUrl"
+                :src="this.$store.state.avatarUrl"
+              />
+              <img
+                style="margin:10px 0 0 0;height:47px;width:47px"
+                v-else
+                :src="require('../assets/images/mo.png')"
+              />
               <el-dropdown-menu slot="dropdown" style="font-size:14px">
                 <el-dropdown-item id="personals" @click.native="personal">个人中心</el-dropdown-item>
                 <el-dropdown-item
@@ -127,7 +126,6 @@ export default {
       defaultResumeId: "",
       tok: this.$store.state.token,
       shown: true,
-      value: "",
       token: "",
       notificationlist: []
     };
@@ -150,7 +148,7 @@ export default {
     //用户通知
     notification() {
       let params = {
-        isRead: false,
+        isRead: null,
         pageNum: 1,
         pageSize: 10,
         sortBy: null,
@@ -161,28 +159,37 @@ export default {
         .then(res => {
           if (res.data.code == "200") {
             this.notificationlist = res.data.data.list;
-            this.value = res.data.data.total;
+            let notificationlist = []
+            this.notificationlist.forEach(function(item, index) {
+              if (item.isRead === false) {
+                notificationlist.push(item.isRead)
+                console.log(notificationlist)
+              }else {
+                return
+              }
+            });
+            this.$store.state.value = notificationlist.length;
           } else {
           }
         })
         .catch(error => {
-              if (error.response.status === 404) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "页面丢失，请重新加载"
-                });
-              } else if (error.response.status === 403) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "登陆超时，请重新登录"
-                });
-              } else {
-                this.$notify.error({
-                  title: "错误",
-                  message: error.response.data.message
-                });
-              }
+          if (error.response.status === 404) {
+            this.$notify.error({
+              title: "错误",
+              message: "页面丢失，请重新加载"
             });
+          } else if (error.response.status === 403) {
+            this.$notify.error({
+              title: "错误",
+              message: "登陆超时，请重新登录"
+            });
+          } else {
+            this.$notify.error({
+              title: "错误",
+              message: error.response.data.message
+            });
+          }
+        });
     },
     //消息click
     NewsDetail() {
@@ -195,28 +202,28 @@ export default {
         .then(res => {
           if (res.data.code == "200") {
             this.chorus = false;
-            this.notification()
+            this.notification();
           } else {
           }
         })
         .catch(error => {
-              if (error.response.status === 404) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "页面丢失，请重新加载"
-                });
-              } else if (error.response.status === 403) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "登陆超时，请重新登录"
-                });
-              } else {
-                this.$notify.error({
-                  title: "错误",
-                  message: error.response.data.message
-                });
-              }
+          if (error.response.status === 404) {
+            this.$notify.error({
+              title: "错误",
+              message: "页面丢失，请重新加载"
             });
+          } else if (error.response.status === 403) {
+            this.$notify.error({
+              title: "错误",
+              message: "登陆超时，请重新登录"
+            });
+          } else {
+            this.$notify.error({
+              title: "错误",
+              message: error.response.data.message
+            });
+          }
+        });
     },
     //退出
     detrusion() {
@@ -247,23 +254,23 @@ export default {
           }
         })
         .catch(error => {
-              if (error.response.status === 404) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "页面丢失，请重新加载"
-                });
-              } else if (error.response.status === 403) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "登陆超时，请重新登录"
-                });
-              } else {
-                this.$notify.error({
-                  title: "错误",
-                  message: error.response.data.message
-                });
-              }
+          if (error.response.status === 404) {
+            this.$notify.error({
+              title: "错误",
+              message: "页面丢失，请重新加载"
             });
+          } else if (error.response.status === 403) {
+            this.$notify.error({
+              title: "错误",
+              message: "登陆超时，请重新登录"
+            });
+          } else {
+            this.$notify.error({
+              title: "错误",
+              message: error.response.data.message
+            });
+          }
+        });
     },
     gotoHomeUI() {
       this.$router.push({ path: "/" });
@@ -289,29 +296,28 @@ export default {
           if (res.status === 200) {
             this.defaultResumeId = res.data.data.defaultResumeId;
             this.fullName = res.data.data.base.fullName;
-            this.avatarUrl = res.data.data.base.avatarUrl;
-
+            this.$store.state.avatarUrl = res.data.data.base.avatarUrl;
           } else {
           }
         })
         .catch(error => {
-              if (error.response.status === 404) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "页面丢失，请重新加载"
-                });
-              } else if (error.response.status === 403) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "登陆超时，请重新登录"
-                });
-              } else {
-                this.$notify.error({
-                  title: "错误",
-                  message: error.response.data.message
-                });
-              }
+          if (error.response.status === 404) {
+            this.$notify.error({
+              title: "错误",
+              message: "页面丢失，请重新加载"
             });
+          } else if (error.response.status === 403) {
+            this.$notify.error({
+              title: "错误",
+              message: "登陆超时，请重新登录"
+            });
+          } else {
+            this.$notify.error({
+              title: "错误",
+              message: error.response.data.message
+            });
+          }
+        });
     }
   },
   // //利用计算属性
@@ -322,6 +328,9 @@ export default {
   // },
   //监听执行
   watch: {
+    "$store.state.avatarUrl": function(val) {
+      console.log(val);
+    },
     "$store.state.value": function(val) {
       console.log(val);
     }
@@ -330,9 +339,8 @@ export default {
     let token = Cookies.get("token");
     if (token) {
       this.brief();
-    this.notification();
-    }else {
-
+      this.notification();
+    } else {
     }
     this.token = Cookies.get("token");
     this.fullName = window.sessionStorage.getItem("username");
@@ -460,6 +468,9 @@ nav {
 .badge {
   height: 40px;
   line-height: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .badge:hover {

@@ -176,16 +176,16 @@ export default {
       this.$http
         .get("/consumer-core/resume/brief")
         .then(res => {
-          console.log(res);
           if (res.status === 200) {
+            this.$store.state.avatarUrl = res.data.data.base.avatarUrl;
             this.$router.push({ path: "/home" });
           } else {
           }
         })
         .catch(error => {
-          console.log('13131313131')
+          console.log("13131313131");
           this.$http.post("/consumer-core/resume").then(res => {
-            if (res.data.code == '201') {
+            if (res.data.code == "201") {
               this.$router.push({ path: "/home" });
             }
           });
@@ -220,6 +220,18 @@ export default {
       window.open("http://47.102.145.186/business/#/login");
     }
   },
+
+  computed: {
+    isFollow() {
+      return this.$store.state.avatarUrl; //需要监听的数据
+    }
+  },
+  watch: {
+    isFollow(newVal, oldVal) {
+      console.log(newVal)
+    }
+  },
+
   created() {
     this.$cookies.get("session");
   },

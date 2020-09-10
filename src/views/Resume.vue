@@ -184,6 +184,7 @@
                   :data="uploadData"
                   :headers="myHeaders"
                   :on-success="handleAvatarSuccessOne"
+                  :on-error="handleAvatarError"
                 >
                   <img
                     style="margin:-10px 0 0 -190px"
@@ -1024,6 +1025,7 @@
                   :action="uploadUrl"
                   :show-file-list="false"
                   :on-success="handleAvatarSuccess"
+                  :on-error="handleAvatarError"
                 >
                   <img v-if="imageUrlOne" :src="imageUrlOne" class="avatar" />
                   <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -1128,7 +1130,12 @@
         <div class="personalinformation" v-if="isshowpersonalinformation">
           <div style="margin:20px 0 0 96px;">
             <img style="margin:30px 0 -30px 0" v-if="imageUrl" :src="imageUrl" class="avatar" />
-            <img style="margin:30px 0 -30px 0" class="avatar" v-else :src="require('../assets/images/mo.png')" />
+            <img
+              style="margin:30px 0 -30px 0"
+              class="avatar"
+              v-else
+              :src="require('../assets/images/mo.png')"
+            />
           </div>
           <div class="main-content" style="margin:140px 0 0 0;">
             <div class="main-content-second" @click="ispersonalinformation">
@@ -1863,8 +1870,7 @@ export default {
       perId: "",
       imageUrlTwo: "",
       fileOne: "",
-      imageUrl:
-        "",
+      imageUrl: "",
       updatedTime: "",
       workStateList: [],
       jobSearchList: [],
@@ -2491,6 +2497,7 @@ export default {
               if (res.data.code == 200) {
                 this.informationouterVisible = false;
                 // window.location.reload();
+
                 this.resumeId();
                 this.$store.commit(
                   "GET_USERNAME",
@@ -2559,6 +2566,12 @@ export default {
     handleAvatarSuccess(res, file) {
       this.imageUrlOne = URL.createObjectURL(file.raw);
       this.file = res.data;
+    },
+    handleAvatarError(err, file, fileList) {
+      this.$notify.error({
+        title: "错误",
+        message: "图片上传失败，请重新上传"
+      });
     },
     handleAvatarSuccessOne(res, file) {
       this.imageUrlTwo = URL.createObjectURL(file.raw);
@@ -2752,7 +2765,7 @@ export default {
             lesson: this.formtraining.trainCourse,
             institution: this.formtraining.trainCours,
             beginTime: til,
-            endTime: eduTime,
+            endTime: eduTime
           };
           trainingkeep(this.resumesId, this.trainId, params)
             .then(res => {
@@ -2959,6 +2972,7 @@ export default {
     resumeId() {
       resumeId(this.resumesId).then(res => {
         if (res.data.code == 200) {
+          this.$store.state.avatarUrl = res.data.data.base.avatarUrl;
           this.resumeIdList = res.data.data.base;
           this.targeIdList = res.data.data.target;
           this.avatarUrl = res.data.data.base.avatarUrl;
@@ -3807,11 +3821,11 @@ export default {
   computed: {
     uploadUrl() {
       // const {VUE_APP_SECRET,VUE_APP_DEV_MODE} = process.env
-      return "/api/v2/file-service/files/upload";
+      return "/api/file-service/files/upload";
     },
     uploadUrlOne() {
       // const {VUE_APP_SECRET,VUE_APP_DEV_MODE} = process.env
-      return "/api/v2/file-service/files/upload";
+      return "/api/file-service/files/upload";
     }
   },
   filters: {
