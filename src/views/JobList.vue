@@ -269,7 +269,7 @@
         </div>
         <div class="content-infor">
           <span>{{item.companyName}}</span>
-          <span>{{item.address.city}} | {{item.size}} | {{item.industrySecondary}}</span>
+          <span>{{item.address.city}} | {{item.size}}人 | {{item.industryFirst}}</span>
         </div>
         <div class="content-job">
           <span>
@@ -315,10 +315,13 @@
             v-if="item.workAgeMax == null"
           >{{item.workAddress.city}} | 10年以上 | {{item.degreeMin}}</span>
           <span
+            v-else-if="item.workAgeMin == 0"
+          >{{item.workAddress.city}} | 无工作经验 | {{item.degreeMin}}</span>
+          <span
             v-else
           >{{item.workAddress.city}} | {{item.workAgeMin}}-{{item.workAgeMax}}年 | {{item.degreeMin}}</span>
 
-          <span>{{item.company.industrySecondary}} | {{item.company.size}}</span>
+          <span>{{item.company.industrySecondary}} | {{item.company.size}}人</span>
           <span>{{item.publishedTime | formatDate}}</span>
         </div>
         <div class="footer-line"></div>

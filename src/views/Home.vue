@@ -105,9 +105,8 @@
       <div class="joblist-search">
         <el-input
           class="CompanySelect"
-          v-model="districtButton"
+          v-model="provinceButton"
           :disabled="true"
-          @focus="next"
           style="width:160px;height:60px;font-size:14px"
         >
           <i
@@ -413,7 +412,7 @@ export default {
       positiId: "",
       cityInput: "",
       positionCatalogList: [],
-      provinceButton: "上海市",
+      provinceButton: "",
       cityButton: "",
       districtButton:'',
       searchContent: "",
@@ -600,7 +599,7 @@ export default {
               o.getCurrentPosition((status, result) => {
                 console.log(result);
                 self.cityButton = result.addressComponent.city;
-                self.districtButton = result.addressComponent.district;
+                self.provinceButton = result.addressComponent.province;
                 if (result && result.position) {
                   // 经纬度
                   self.lng = result.position.lng;
@@ -721,7 +720,7 @@ export default {
         let params = {
           addresses: [
             {
-              city: this.cityButton,
+              city: this.cityButton?this.cityButton:null,
               district: null,
               province: this.provinceButton
             }

@@ -1,6 +1,46 @@
 <template>
   <div class="personal">
-    <div class="personal-left">
+    <el-dialog
+      title
+      :visible.sync="dialogSuccess"
+      :show-close="false"
+      style="width:700px;margin-left:25%;margin-top:5%;border-radius:5px"
+    >
+      <!-- <div style="display:flex;flex-direction:column;">
+            <div>
+              <img :src="require('../assets/images/pjs.png')"
+          />
+            </div>
+            <div style="font-family: PingFangSC-Medium;color: #2C2C2C;font-size:20px">评价失败</div>
+            <div style="font-family: PingFangSC-Regular;color: #565656;font-size:14px;margin:10px 0 70px 0">请稍后有重试~</div>
+            <div><el-button style="width:270px;height:40px;margin:0 0 40px 0" type="primary">确定</el-button></div>
+      </div>-->
+      <div style="display:flex;flex-direction:column;">
+        <div>
+          <img :src="require('../assets/images/pjs.png')" />
+        </div>
+        <div style="font-family: PingFangSC-Medium;color: #2C2C2C;font-size:20px">抱歉，您已失去评价资格！</div>
+        <div
+          style="font-family: PingFangSC-Regular;color: #565656;font-size:14px;margin:10px 0 70px 0"
+        >已失去评价资格～</div>
+        <div>
+          <el-button style="width:270px;height:40px;margin:0 0 40px 0" type="primary">确定</el-button>
+        </div>
+      </div>
+      <!-- <div style="display:flex;flex-direction:column;">
+        <div>
+          <img :src="require('../assets/images/pj.png')" />
+        </div>
+        <div style="font-family: PingFangSC-Medium;color: #2C2C2C;font-size:20px">评价成功</div>
+        <div
+          style="font-family: PingFangSC-Regular;color: #565656;font-size:14px;margin:10px 0 70px 0"
+        >感谢你的点评~</div>
+        <div>
+          <el-button style="width:270px;height:40px;margin:0 0 40px 0" type="primary">返回</el-button>
+        </div>
+      </div>-->
+    </el-dialog>
+    <div class="personal-left" v-if="appraise">
       <el-tabs v-model="activeName" class="personal-tabs" v-if="showTabs">
         <el-tab-pane :label="`投递记录（${throwNum = this.page1.total}）`" name="first">
           <div
@@ -131,6 +171,107 @@
       </el-tabs>
       <div style="font-size:15px;line-height:500px" v-if="isshowTabs">你还没有任何投递记录呦~~</div>
     </div>
+    <div class="personal-left" v-if="appraise">
+      <div class="personal-nav">
+        给你的面试
+        <span>吐个槽</span>吧～
+      </div>
+      <div class="personal-aside">
+        <div>
+          <span>面试进度</span>
+          <el-radio-group v-model="radio1" size="medium">
+            <el-radio-button label="面试中"></el-radio-button>
+            <el-radio-button label="已通过"></el-radio-button>
+            <el-radio-button label="失之交臂"></el-radio-button>
+          </el-radio-group>
+        </div>
+        <div style="margin:20px 0 0 0">
+          <span>面试难度</span>
+          <el-radio-group v-model="radio1" size="medium">
+            <el-radio-button label="容易"></el-radio-button>
+            <el-radio-button label="还行"></el-radio-button>
+            <el-radio-button label="好难"></el-radio-button>
+          </el-radio-group>
+        </div>
+        <div style="margin:20px 0 0 0">
+          <span>面试官</span>
+          <el-radio-group v-model="radio1" size="medium" style="margin:0 0 0 15px">
+            <el-radio-button label="亲切"></el-radio-button>
+            <el-radio-button label="还行"></el-radio-button>
+            <el-radio-button label="专业"></el-radio-button>
+          </el-radio-group>
+        </div>
+        <div style="margin:20px 0 0 0">
+          <span>公司印象</span>
+          <el-radio-group v-model="radio1" size="medium">
+            <el-radio-button label="很好"></el-radio-button>
+            <el-radio-button label="还行"></el-radio-button>
+            <el-radio-button label="不太好"></el-radio-button>
+          </el-radio-group>
+        </div>
+      </div>
+      <div class="personal-select">
+        <div class="personal-selects">
+          <span>面试体验</span>
+          <el-rate style="margin:0 0 0 10px" show-text v-model="value2" :colors="colors"></el-rate>
+        </div>
+      </div>
+      <div class="personal-footer">
+        <div class="personal-footers">
+          <span>面试故事（选填）</span>
+          <el-input
+            type="textarea"
+            style="width:674px"
+            :autosize="{ minRows: 4, maxRows: 8}"
+            placeholder="留下更多你想说的话..."
+            v-model="textarea2"
+          ></el-input>
+        </div>
+      </div>
+      <div class="personal-button">
+        <div class="personal-buttons">
+          <el-button class="button" @click="open" type="primary">匿名发表</el-button>
+          <el-button class="button" type="info" disabled>匿名发表</el-button>
+        </div>
+      </div>
+    </div>
+    <div class="personal-left">
+      <div class="personals-nav">
+        产品经理 面试
+        <span>面试进度：已完成</span>
+      </div>
+      <div class="personals-aside">
+        <div>
+          <span>面试体验：</span>
+          <span>4.0</span>分
+        </div>
+      </div>
+      <div class="personals-select">
+        <div>
+          <span>面试难度：</span>
+          <span>容易</span>
+        </div>
+        <div style="margin:0 0 0 40px">
+          <span>面试官：</span>
+          <span>亲切</span>
+        </div>
+        <div style="margin:0 0 0 40px">
+          <span>公司印象：</span>
+          <span>还行</span>
+        </div>
+      </div>
+      <div class="personal-footer">
+        <div class="personal-footers">
+          <span>面试故事</span>
+          <el-input
+            type="textarea"
+            style="width:674px;font-family: PingFangSC-Regular;color: #737373;font-size:16px"
+            :autosize="{ minRows: 4, maxRows: 8}"
+            v-model="textarea"
+          ></el-input>
+        </div>
+      </div>
+    </div>
     <div class="personal-right">
       <div class="right-nav">
         <span class="span-hover" @click="edit">编辑</span>
@@ -138,7 +279,7 @@
           v-if="this.avatarUrl == ''"
           :src="require('../assets/images/156.png')"
           style="border-radius:53px;margin:-20px auto;width:82px;"
-        /> -->
+        />-->
         <img
           :src="this.avatarUrl"
           style="border-radius:40px;margin:-20px auto;width:82px;height:82px"
@@ -201,6 +342,14 @@ export default {
   components: {},
   data() {
     return {
+      colors: ["#99A9BF", "#F7BA2A", "#FF9900"],
+      dialogError: false,
+      dialogSuccess: true,
+      textarea:
+        "able to work under high pressure and time limitation . able work under high pressure and time limitation. able towork under high pressure and time limitation.able to work under high pressure and time limitation.able to work under high pressure and time limitation.able to work under high pressure and time limitation. to work under pressure and time limitation.able to work under high pressure and time limitation.",
+      value2: null,
+      appraise: false,
+      radio1: "",
       page: {
         total: 0,
         pageSize: 10,
@@ -255,6 +404,18 @@ export default {
     };
   },
   methods: {
+    open() {
+      this.$confirm("请评价面试体验～", "", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        showClose: false,
+        center: true,
+        showCancelButton: false,
+        showConfirmButton: false
+      })
+        .then(() => {})
+        .catch(() => {});
+    },
     handleSizeChange(val) {
       this.page.pageSize = val;
       this.page.current = 1;
@@ -380,54 +541,58 @@ export default {
     },
     //获取收藏的岗位
     favorite() {
-      favorite().then(res => {
-        if (res.status === 200) {
-          this.favoriteList = res.data.data.list;
-          this.page.total = res.data.data.total;
-        }
-      }).catch(error => {
-              if (error.response.status === 404) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "页面丢失，请重新加载"
-                });
-              } else if (error.response.status === 403) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "登陆超时，请重新登录"
-                });
-              } else {
-                this.$notify.error({
-                  title: "错误",
-                  message: error.response.data.message
-                });
-              }
+      favorite()
+        .then(res => {
+          if (res.status === 200) {
+            this.favoriteList = res.data.data.list;
+            this.page.total = res.data.data.total;
+          }
+        })
+        .catch(error => {
+          if (error.response.status === 404) {
+            this.$notify.error({
+              title: "错误",
+              message: "页面丢失，请重新加载"
             });
+          } else if (error.response.status === 403) {
+            this.$notify.error({
+              title: "错误",
+              message: "登陆超时，请重新登录"
+            });
+          } else {
+            this.$notify.error({
+              title: "错误",
+              message: error.response.data.message
+            });
+          }
+        });
     },
     //取消对岗位的收藏
     iscancel(c) {
-      isfavorite(c).then(res => {
-        if (res.data.code === "200") {
-          this.favorite();
-        }
-      }).catch(error => {
-              if (error.response.status === 404) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "页面丢失，请重新加载"
-                });
-              } else if (error.response.status === 403) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "登陆超时，请重新登录"
-                });
-              } else {
-                this.$notify.error({
-                  title: "错误",
-                  message: error.response.data.message
-                });
-              }
+      isfavorite(c)
+        .then(res => {
+          if (res.data.code === "200") {
+            this.favorite();
+          }
+        })
+        .catch(error => {
+          if (error.response.status === 404) {
+            this.$notify.error({
+              title: "错误",
+              message: "页面丢失，请重新加载"
             });
+          } else if (error.response.status === 403) {
+            this.$notify.error({
+              title: "错误",
+              message: "登陆超时，请重新登录"
+            });
+          } else {
+            this.$notify.error({
+              title: "错误",
+              message: error.response.data.message
+            });
+          }
+        });
     },
 
     //城市
@@ -462,35 +627,37 @@ export default {
         workAgeMax: null,
         workAgeMin: null
       };
-      searched(params).then(res => {
-        if (res.data.code === 200) {
-          this.positionList = res.data.data.list;
-          if (res.data.data.total === 0) {
-            this.Tjposition = false;
-            this.QSposition = true;
-          } else {
-            this.Tjposition = true;
-            this.QSposition = false;
+      searched(params)
+        .then(res => {
+          if (res.data.code === 200) {
+            this.positionList = res.data.data.list;
+            if (res.data.data.total === 0) {
+              this.Tjposition = false;
+              this.QSposition = true;
+            } else {
+              this.Tjposition = true;
+              this.QSposition = false;
+            }
           }
-        }
-      }).catch(error => {
-              if (error.response.status === 404) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "页面丢失，请重新加载"
-                });
-              } else if (error.response.status === 403) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "登陆超时，请重新登录"
-                });
-              } else {
-                this.$notify.error({
-                  title: "错误",
-                  message: error.response.data.message
-                });
-              }
+        })
+        .catch(error => {
+          if (error.response.status === 404) {
+            this.$notify.error({
+              title: "错误",
+              message: "页面丢失，请重新加载"
             });
+          } else if (error.response.status === 403) {
+            this.$notify.error({
+              title: "错误",
+              message: "登陆超时，请重新登录"
+            });
+          } else {
+            this.$notify.error({
+              title: "错误",
+              message: error.response.data.message
+            });
+          }
+        });
     }
   },
   created() {
@@ -498,133 +665,17 @@ export default {
     this.submitt();
     this.brief();
     // this.searched();
-  },
-  filters: {
-    level(level) {
-      const map = ["初中及以下", "职中", "大专", "本科", "硕士", "博士"];
-      return map[level];
-    },
-    industry(industry) {
-      if (industry == 1) {
-        const map = [
-          "",
-          "酒店/餐饮",
-          "旅游/度假",
-          "医疗/护理/美容/保健/卫生服务"
-        ];
-        return map[industry];
-      }
-      if (industry == 2) {
-        const map = [
-          "",
-          "计算机软件",
-          "网络游戏",
-          "IT服务(系统/数据/维护)",
-          "计算机硬件",
-          "互联网/电子商务",
-          "电子技术/半导体/集成电路",
-          "通信、电信运营/增值服务",
-          "通信/电信/网络设备"
-        ];
-        return map[industry];
-      }
-      if (industry == 3) {
-        const map = [
-          "",
-          "保险",
-          "银行",
-          "信托/担保/拍卖/典当",
-          "基金/证券/期货/投资"
-        ];
-        return map[industry];
-      }
-      if (industry == 4) {
-        const map = [
-          "",
-          "零售/批发",
-          "贸易/进出口",
-          "快速消费品（食品/饮料/烟酒/日化）",
-          "耐用消耗品",
-          "租赁服务"
-        ];
-        return map[industry];
-      }
-      if (industry == 5) {
-        const map = [
-          "",
-          "文体教育|工艺美术",
-          "教育/培训/院校",
-          "礼品/玩具/工艺美术/收藏品/奢侈品"
-        ];
-        return map[industry];
-      }
-      if (industry == 6) {
-        const map = [
-          "",
-          "办公用品及设备",
-          "航空/航天研究与制造",
-          "医疗设备/器械",
-          "加工制造（原料加工/模具）",
-          "医药/生物工程",
-          "大型设备/机电设备/重工业",
-          "印刷/包装/造纸",
-          "汽车/摩托车",
-          "仪器仪表及工业自动化"
-        ];
-        return map[industry];
-      }
-      if (industry == 7) {
-        const map = [
-          "",
-          "房地产/建筑/建材/工程",
-          "物业管理/商业中心",
-          "家居/室内设计/装饰装潢"
-        ];
-        return map[industry];
-      }
-      if (industry == 8) {
-        const map = [
-          "",
-          "专业服务/咨询(财会/法律/人力资源等)",
-          "广告/会展/公关",
-          "中介服务",
-          "外包服务",
-          "检验/检测/认证"
-        ];
-        return map[industry];
-      }
-      if (industry == 9) {
-        const map = ["", "娱乐/体育/休闲", "媒体/出版/影视/文化传媒"];
-        return map[industry];
-      }
-      if (industry == 10) {
-        const map = ["", "跨领域经营", "农/林/牧/渔", "其他"];
-        return map[industry];
-      }
-      if (industry == 11) {
-        const map = ["", "交通/运输", "物流/仓储"];
-        return map[industry];
-      }
-      if (industry == 12) {
-        const map = [
-          "",
-          "环保",
-          "石油/石化/化工",
-          "能源/矿产/采掘/冶炼",
-          "电气/电力/水利"
-        ];
-        return map[industry];
-      }
-      if (industry == 13) {
-        const map = ["", "学术/科研", "政府/公共事业/非盈利机构"];
-        return map[industry];
-      }
-    }
   }
 };
 </script>
 
 <style lang="stylus">
+.el-message-box__content {
+  font-size: 20px;
+  font-family: PingFangSC-Medium;
+  color: #2C2C2C;
+}
+
 .personal {
   cursor: default;
   display: flex;
@@ -640,6 +691,174 @@ export default {
   .personal-left {
     width: 1010px;
     background: white;
+
+    .personal-nav {
+      margin: 60px 0 0 168px;
+      font-size: 14px;
+      text-align: left;
+
+      span {
+        font-family: PingFangSC-Regular;
+        color: #373737;
+        letter-spacing: 0.7;
+        font-size: 16px;
+      }
+    }
+
+    .personals-nav {
+      margin: 60px 0 0 168px;
+      font-size: 20px;
+      text-align: left;
+      font-family: PingFangSC-Medium;
+      color: #373737;
+
+      span {
+        font-family: PingFangSC-Regular;
+        color: #666666;
+        font-size: 16px;
+      }
+    }
+
+    .personals-aside {
+      margin: 40px 0 0 168px;
+      text-align: left;
+
+      span:nth-child(2) {
+        font-family: PingFangSC-Regular;
+        color: #327CF3;
+      }
+    }
+
+    .personals-select {
+      margin: 25px 0 0 168px;
+      display: flex;
+      flex-direction: row;
+      font-family: PingFangSC-Regular;
+      color: #327CF3;
+      font-size: 16px;
+    }
+
+    .personal-aside {
+      text-align: left;
+      margin: 50px 0 0 168px;
+
+      span {
+        font-family: PingFangSC-Regular;
+        color: #606060;
+        font-size: 16px;
+      }
+
+      .el-radio-button--medium .el-radio-button__inner {
+        padding: 10px 20px;
+        font-size: 14px;
+        border-radius: 20px;
+        margin: 0 0 0 39px;
+        width: 130px;
+      }
+
+      .el-radio-button__inner {
+        line-height: 1;
+        white-space: nowrap;
+        vertical-align: middle;
+        background: #fff;
+        border: 1px solid #dcdfe6;
+        font-weight: 500;
+        border-left: 1;
+        margin: 0 0 0 20px;
+        color: #606266;
+        -webkit-appearance: none;
+        text-align: center;
+        box-sizing: border-box;
+        margin: 0;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+        padding: 12px 20px;
+        font-size: 14px;
+        border-radius: 20px;
+      }
+
+      .el-radio-button__orig-radio:checked+.el-radio-button__inner {
+        color: #fff;
+        background-color: #409eff;
+        border-color: #409eff;
+        box-shadow: -1px 0 0 0 #409eff;
+      }
+    }
+
+    .personal-select {
+      margin: 40px 0 0 168px;
+
+      .personal-selects {
+        display: flex;
+        flex-direction: row;
+
+        .el-icon-star-off:before {
+          content: '\e717';
+          font-size: 26px;
+          padding: 0 0 0 15px;
+        }
+
+        .el-icon-star-on:before {
+          content: '\e797';
+          font-size: 26px;
+          padding: 0 0 0 15px;
+        }
+
+        span {
+          font-family: PingFangSC-Medium;
+          color: #373737;
+          font-size: 20px;
+        }
+      }
+    }
+
+    .personal-footer {
+      margin: 40px 0 0 168px;
+
+      .personal-footers {
+        display: flex;
+        flex-direction: column;
+
+        .el-textarea__inner:focus {
+          outline: none;
+          border-color: #dcdfe6;
+        }
+
+        .el-textarea__inner {
+          display: block;
+          resize: vertical;
+          padding: 5px 15px;
+          line-height: 1.5;
+          box-sizing: border-box;
+          width: 100%;
+          font-size: inherit;
+          color: #606266;
+          background: #FAFAFA;
+          background-image: none;
+          border: 1px solid #FAFAFA;
+          border-radius: 4px;
+          transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+          margin: 20px 0 0 0;
+        }
+
+        span {
+          font-family: PingFangSC-Medium;
+          color: #373737;
+          font-size: 20px;
+          text-align: left;
+        }
+      }
+    }
+
+    .personal-button {
+      font-size: 20px;
+      margin: 40px 0 0 0;
+
+      .button {
+        width: 200px;
+        height: 40px;
+      }
+    }
 
     .personal-tabs {
       margin: 56px 0 0 96px;

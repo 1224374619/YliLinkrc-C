@@ -11,7 +11,7 @@
       </div>
       <div class="station-nav-content">
         <div class="content-nav" style="width:500px;">
-          <span>{{positionIdList.company.address.district}} | {{positionIdList.workAgeMin}}-{{positionIdList.workAgeMax}}年 | {{positionIdList.degreeMin}} | {{positionIdList.jobType}}</span>
+          <span>{{positionIdList.company.address.city}} | {{positionIdList.workAgeMin}}-{{positionIdList.workAgeMax}}年 | {{positionIdList.degreeMin}} | {{positionIdList.jobType}}</span>
         </div>
         <div class="content-article">
           <span>发布时间：{{positionIdList.publishedTime | formatDate}}</span>
@@ -102,14 +102,54 @@
             :plugin="plugin"
             :events="events"
             class="amap"
-            style="width:859px;height:188px;margin:20px 0 70px 96px"
+            style="width:859px;height:188px;margin:20px 0 45px 96px"
             :center="center"
             :zoom="zoom"
           >
             <el-amap-marker :position="center" vid="amapMarker"></el-amap-marker>
           </el-amap>
         </div>
+        <div class="station-appraise">
+          <div class="station-appraise-nav">
+            <div style="margin:30px 0 0 30px">岗位评论</div>
+            <div style="margin:30px 30px 0 0">面试总评分：4.0分</div>
+          </div>
+          <div class="station-appraise-line"></div>
+          <div class="station-appraise-aside">
+            <div>
+              <img style="width:50px;height:50px;margin:0 0 0 30px" src="../assets/images/89.png" />
+            </div>
+            <div class="appraise-nav">
+              <div>匿名用户</div>
+              <div>02月14日</div>
+            </div>
+            <div class="appraise-aside">面试进度：面试中</div>
+            <div class="appraise-aside" style="margin:0 30px 0 0">面试时间：15：20</div>
+          </div>
+          <div class="station-appraise-select">
+            <div>面试体验：4.0分</div>
+            <div style="flex-grow:2">
+              <span>面试难度:容易</span>
+              <span style="margin:0 0 0 30px">面试官:亲切</span>
+              <span style="margin:0 0 0 30px">公司印象:还行</span>
+            </div>
+          </div>
+          <div class="station-appraise-content">
+            <div>able to work under high pressure and time limitation . able work under high pressure and time limitation. able towork under high pressure and time limitation.able to work under high pressure and time limitation.able to work under high pressure and time limitation.able to work under high pressure and time limitation. to work under pressure and time limitation.able to work under high pressure and time limitation.</div>
+          </div>
+          <div class="station-appraise-footer">
+            <div style="display: flex;flex-direction: row;margin:0 35px 0 0">
+              <img style="width:25px;height:25px" src="../assets/images/zan.png" />
+              <span style="line-height:25px">1820</span>
+            </div>
+            <div style="display: flex;flex-direction: row;">
+              <img style="width:25px;height:25px" src="../assets/images/book.png" />
+              <span style="line-height:25px">2</span>
+            </div>
+          </div>
+        </div>
       </div>
+
       <div class="station-foot-aside">
         <div class="station-foot-aside-nav">
           <div class="station-foot-aside-nav-img">
@@ -138,7 +178,7 @@
             <div class="company-num">
               <span>
                 <i class="el-icon-coordinate"></i>
-                {{companyIdList.size}}
+                {{companyIdList.size}}人
               </span>
             </div>
           </div>
@@ -170,7 +210,7 @@
               <div class="company-address">
                 <span>{{companyName}}</span>
 
-                <span>{{list.workAddress.district}}</span>
+                <span>{{list.workAddress.city}}</span>
               </div>
             </div>
           </div>
@@ -935,6 +975,90 @@ export default {
       color: #6a7184;
       font-size: 14px;
       padding: 1% 0 0 0;
+    }
+
+    .station-appraise {
+      margin: 0 55px 0 96px;
+      border: 1px solid rgba(236, 236, 236, 1);
+      height: 500px;
+      border-radius:5px
+
+      .station-appraise-nav {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        font-family: PingFangSC-Medium;
+        color: #373737;
+        font-size: 22px;
+      }
+
+      .station-appraise-line {
+        border: 1px solid #f8f8f8;
+        margin: 20px 30px 0 30px;
+      }
+
+      .station-appraise-aside {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin: 20px 0 0 0;
+
+        .appraise-nav div:nth-child(1) {
+          font-family: PingFangSC-Medium;
+          color: #373737;
+          font-size: 18px;
+        }
+
+        .appraise-nav div:nth-child(2) {
+          font-family: PingFangSC-Medium;
+          color: #666666;
+          font-size: 16px;
+        }
+
+        .appraise-aside {
+          font-family: PingFangSC-Regular;
+          color: #373737;
+          font-size: 16px;
+          margin: 0 390px 0 0;
+        }
+      }
+
+      .station-appraise-select {
+        display: flex;
+        flex-direction: row;
+        margin: 18px 30px 0 30px;
+
+        div:nth-child(1) {
+          font-family: PingFangSC-Regular;
+          color: #424242;
+          font-size: 16px;
+        }
+
+        div:nth-child(2) {
+          margin: 0 0 0 40px;
+
+          span {
+            font-family: PingFangSC-Regular;
+            color: #327CF3;
+            font-size: 16px;
+          }
+        }
+      }
+
+      .station-appraise-content {
+        height: 100px;
+        margin: 30px 30px 0 30px;
+        font-family: PingFangSC-Regular;
+        color: #686868;
+        font-size: 16px;
+      }
+
+      .station-appraise-footer {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        margin: 20px 30px 0 30px;
+      }
     }
 
     .station-foot-foot {
