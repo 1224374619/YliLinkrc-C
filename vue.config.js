@@ -22,7 +22,7 @@ module.exports = {
                 // target: 'http://192.168.1.151:8081', // target host
                 ws: true, // proxy websockets
                 changeOrigin: true, // needed for virtual hosted sites
-                pathRewrite: {  
+                pathRewrite: {
                     '^/api': '' // rewrite path
                 }
             },

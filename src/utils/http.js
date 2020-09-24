@@ -6,6 +6,9 @@ import queryString from 'querystring'
 import store from '../store/index'
 import Cookies from 'js-cookie'
 import router from '../router/index.js'
+import {
+    Notification
+} from 'element-ui';
 
 // application/x-www-from-urlencode mime
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
@@ -16,15 +19,39 @@ import router from '../router/index.js'
 let config = {
     //判断当前开发环境，切换代理配置
     // baseURL: process.env.NODE_ENV === 'production' ? '/api/v1/' : '/api/',
-    baseURL: '/api/',
+    baseURL: '/api/v2/',
     headers: {
         'Cache-Control': 'no-cache'
     },
     timeout: 60 * 1000, // Timeout
     withCredentials: true, // Check cross-site Access-Control
 };
+
+
 const _axios = axios.create(config);
 // 添加request拦截器 
+// http response 拦截器
+_axios.interceptors.response.use(
+    response => {
+        let token = response.headers['auth-token']
+        if (token === undefined) {
+            Cookies.set("token",'');
+        } else {
+            Cookies.set("token", response.headers['auth-token']);
+        }
+        return response;
+    },
+    error => {
+        if (error.response.status === 403) {
+            Notification.error({
+                title: '错误',
+                message: '登录超时，请登录'
+            });
+            router.replace('/login');
+        }
+        return Promise.reject(error);
+    }
+);
 _axios.interceptors.request.use(
     function (config) {
         let token = Cookies.get('token')
@@ -46,7 +73,7 @@ _axios.interceptors.request.use(
 //                 message: '登录超时，请重新登录',
 //                 type: 'error'
 //             });
-            
+
 //         }
 //         return response;
 //     },
@@ -63,7 +90,7 @@ _axios.interceptors.request.use(
 //                 message: error.response.data.message
 //             });
 //         }
-        
+
 //         return Promise.reject(error);
 //     }
 // );
@@ -71,7 +98,7 @@ _axios.interceptors.request.use(
 // /api/v1/consumer-user
 const instance = axios.create({
     // baseURL: process.env.NODE_ENV === 'production' ? '/api/v1/consumer-user' : '/api/',
-    baseURL: '/api/',
+    baseURL: '/api/v2/',
     headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
     },
@@ -79,20 +106,17 @@ const instance = axios.create({
 })
 Vue.prototype.$_http = instance;
 const local = axios.create({
-    baseURL: '/api/', 
+    baseURL: '/api/v2/',
     // headers:{'Auth-Token':store.state.token === ''?'':store.state.token},
     timeout: 60 * 1000, // Timeout
     withCredentials: true, // Check cross-site Access-Control
 })
 Vue.prototype.$local = local;
-_axios.interceptors.response.use(response => {
+local.interceptors.response.use(response => {
+    // let token = response.headers['auth-token']
+    // Cookies.set("token", token);
     return response;
 }, error => {
-    // logger and notification;
-    // Notification.error({
-    //     title: '错误',
-    //     message: error.message
-    // });
     return Promise.reject(error);
 });
 

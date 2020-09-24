@@ -97,7 +97,7 @@
             >{{positionIdList.company.address.province+' ' +' '+positionIdList.company.address.city}} {{positionIdList.workAddress.detail}}</span>
             <!-- <span>查看地图</span> -->
           </div>
-          <el-amap
+          <!-- <el-amap
             vid="amap"
             :plugin="plugin"
             :events="events"
@@ -107,7 +107,15 @@
             :zoom="zoom"
           >
             <el-amap-marker :position="center" vid="amapMarker"></el-amap-marker>
-          </el-amap>
+          </el-amap>-->
+          <baidu-map
+            :center="center"
+            :zoom="zoom"
+            @ready="handler"
+            style="width:859px;height:188px;margin:20px 0 45px 96px"
+            @click="getLocationPoint"
+            :scroll-wheel-zoom="true"
+          ></baidu-map>
         </div>
         <div class="station-appraise">
           <div class="station-appraise-nav">
@@ -224,6 +232,7 @@
 </template>    
 
 <script>
+// import AMap from "AMap";
 import Deliver from "components/Deliver.vue";
 // import BaiduMap from "vue-baidu-map/components/map/Map.vue";
 import positionCatalog from "../assets/positionCatalog.json";
@@ -240,6 +249,7 @@ import {
   showcoll,
   iscollect
 } from "apis/account";
+// let amapManager = new AMapManager();
 import Cookies from "js-cookie";
 // import { error } from 'util';
 export default {
@@ -280,33 +290,53 @@ export default {
       citysal: [],
       resumesId: "",
 
-      nearbyInfo: [], // 周边信息---高德反馈（周边建筑信息）
-      addressInfo: "", // 城市信息---高德反馈（省市区、adcode）
-      center: [121.59996, 31.197646], // 高德地图中心点
-      zoom: 15, // 地图缩放
-      events: {
-        click: e => {
-          // 点击地图的时候，获取点击的经纬度，并将地图中心点移自此处
-          let m = e.lnglat;
-          self.addrInput = "";
-          self.center = [m.lng, m.lat];
-          self.GDmapGetInfoOfNearby(m.lng, m.lat, self); // 获取周边信息
-        }
-      },
-      plugin: [
-        {
-          pName: "Geolocation",
-          noIpLocate: 1, // ios11： 禁止ip定位：ios11之后默认是ip定位，参数为1则是禁止ip定位
-          events: {
-            init: o => {
-              self.GDinit(o, self); // 获取当前位置
-            }
-          }
-        }
-      ]
+      center: { lng: "", lat: "" },
+      zoom: 13
+
+      // nearbyInfo: [], // 周边信息---高德反馈（周边建筑信息）
+      // addressInfo: "", // 城市信息---高德反馈（省市区、adcode）
+      // center: [123, 123], // 高德地图中心点
+      // zoom: 15, // 地图缩放
+      // events: {
+      //   click: e => {
+      //     // 点击地图的时候，获取点击的经纬度，并将地图中心点移自此处
+      //     let m = e.lnglat;
+      //     self.addrInput = "";
+      //     self.center = [m.lng, m.lat];
+      //     self.GDmapGetInfoOfNearby(m.lng, m.lat, self); // 获取周边信息
+      //   }
+      // },
+      // plugin: [
+      //   {
+      //     pName: "Geolocation",
+      //     noIpLocate: 1, // ios11： 禁止ip定位：ios11之后默认是ip定位，参数为1则是禁止ip定位
+      //     events: {
+      //       init: o => {
+      //         self.GDinit(o, self); // 获取当前位置
+      //       }
+      //     }
+      //   }
+      // ]
     };
   },
+
   methods: {
+    getLocationPoint(e) {
+      // this.lng = e.point.lng;
+      // this.lat = e.point.lat;
+      /* 创建地址解析器的实例 */
+      let geoCoder = new BMap.Geocoder();
+      /* 获取位置对应的坐标 */
+      geoCoder.getPoint(this.positionIdList.workAddress.detail, point => {
+        console.log(point);
+        this.center.lng = point.lng;
+        this.center.lat = point.lat;
+      });
+      // /* 利用坐标获取地址的详细信息 */
+      // geoCoder.getLocation(e.point, res=>{
+      //     console.log(res);
+      // })
+    },
     //返回（$emit）
     backEmit(c) {
       this.dialogVisibleOne = c[0];
@@ -397,20 +427,6 @@ export default {
           }
         });
     },
-    // more() {
-    //   this.$router.push({
-    //         path: "/position",
-    //         query: {
-    //           id: id
-    //         }
-    //       });
-    // },
-    // 地图加载完毕事件
-    handler() {
-      this.center.lng = 116.404;
-      this.center.lat = 39.915;
-      this.zoom = 15;
-    },
     //获取公司详情
     comId() {
       companyDetail(this.companyId)
@@ -480,6 +496,7 @@ export default {
           this.companyName = res.data.data.company.companyName;
           if (res.data.code == 200) {
             this.positionIdList = res.data.data;
+            this.getLocationPoint();
             if (res.data.data.company.logoUrl) {
               this.url = res.data.data.company.logoUrl;
             } else {
@@ -701,6 +718,7 @@ export default {
       // this.deliverOne = true;
     }
   },
+
   created() {
     let token = Cookies.get("token");
     this.citysal = citys.data;
@@ -711,6 +729,7 @@ export default {
       this.showcoll();
     }
     this.positionId();
+    
   },
   filters: {
     level(level) {
@@ -981,7 +1000,7 @@ export default {
       margin: 0 55px 0 96px;
       border: 1px solid rgba(236, 236, 236, 1);
       height: 500px;
-      border-radius:5px
+      border-radius: 5px;
 
       .station-appraise-nav {
         display: flex;

@@ -337,6 +337,7 @@
 <script>
 import { submitted, brief, favorite, isfavorite, searched } from "apis/account";
 import citys from "../assets/city.json";
+import Cookies from "js-cookie";
 export default {
   name: "personal",
   components: {},
@@ -661,10 +662,12 @@ export default {
     }
   },
   created() {
-    this.favorite();
-    this.submitt();
-    this.brief();
-    // this.searched();
+    let token = Cookies.get("token");
+    if (token) {
+      this.favorite();
+      this.submitt();
+      this.brief();
+    }
   }
 };
 </script>

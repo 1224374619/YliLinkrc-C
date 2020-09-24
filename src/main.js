@@ -7,15 +7,16 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import scroll from 'vue-seamless-scroll'
-// import Cookies from 'js-cookie'
 import Moment from 'moment'
 import {Message} from 'element-ui'
+import { Notification } from 'element-ui';
 import {CodeToTag} from './cookie';
-import cookie from 'vue-cookie';
+// import cookie from 'vue-cookie';
 import Cookies from 'js-cookie'
 import 'babel-polyfill';
 import './assets/iconfont/iconfont.css'
 import VueAMap from 'vue-amap';
+import BaiduMap from 'vue-baidu-map';
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import '../node_modules/swiper/dist/css/swiper.css'
 import VueFullpage from 'vue-fullpage.js'
@@ -24,6 +25,11 @@ Vue.use(VueAwesomeSwiper)
 
 Vue.use(VueAMap);
 Vue.use(Cookies);
+
+Vue.use(BaiduMap, {
+      /* Visit http://lbsyun.baidu.com/apiconsole/key for details about app key. */
+      ak: 'jv12vuZqCBG30jV4FBDdKrSxcmG4lG0h'
+})
 VueAMap.initAMapApiLoader({
   key: '594f89b2e0fb82adadc7113372876925',
   plugin: ['AMap.Autocomplete', 'AMap.PlaceSearch', 'AMap.Scale', 'AMap.OverView', 'AMap.ToolBar', 'AMap.MapType', 'AMap.PolyEditor', 'AMap.CircleEditor', 'AMap.Geolocation'],
@@ -37,7 +43,8 @@ Vue.use(ElementUI);
 Vue.prototype.$moment = Moment;
 
 Vue.prototype.$message = Message
-Vue.prototype.$cookie = cookie;
+Vue.prototype.$notification = Notification
+// Vue.prototype.$cookie = Cookies;
 Vue.prototype.$CodeToTag = {
   CodeToTag
 }

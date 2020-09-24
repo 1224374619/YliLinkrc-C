@@ -36,7 +36,12 @@
           </div>
           <div class="user-operations" v-else>
             <el-dropdown trigger="hover" style="margin:0 10px 0 0">
-              <el-badge :value="this.$store.state.value" class="item" size="mini" style="margin:5px 20px 0 0">
+              <el-badge
+                :value="this.$store.state.value"
+                class="item"
+                size="mini"
+                style="margin:5px 20px 0 0"
+              >
                 <img
                   style="width:22px;height:22px"
                   @click="NewsDetail"
@@ -159,13 +164,12 @@ export default {
         .then(res => {
           if (res.data.code == "200") {
             this.notificationlist = res.data.data.list;
-            let notificationlist = []
+            let notificationlist = [];
             this.notificationlist.forEach(function(item, index) {
               if (item.isRead === false) {
-                notificationlist.push(item.isRead)
-                console.log(notificationlist)
-              }else {
-                return
+                notificationlist.push(item.isRead);
+              } else {
+                return;
               }
             });
             this.$store.state.value = notificationlist.length;
@@ -292,7 +296,6 @@ export default {
       this.$http
         .get("/consumer-core/resume/brief")
         .then(res => {
-          console.log(res);
           if (res.status === 200) {
             this.defaultResumeId = res.data.data.defaultResumeId;
             this.fullName = res.data.data.base.fullName;
@@ -328,21 +331,17 @@ export default {
   // },
   //监听执行
   watch: {
-    "$store.state.avatarUrl": function(val) {
-      console.log(val);
-    },
-    "$store.state.value": function(val) {
-      console.log(val);
-    }
+    "$store.state.avatarUrl": function(val) {},
+    "$store.state.value": function(val) {}
   },
   created() {
-    let token = Cookies.get("token");
-    if (token) {
+    this.token = Cookies.get("token");
+    if (this.token) {
       this.brief();
       this.notification();
     } else {
     }
-    this.token = Cookies.get("token");
+
     this.fullName = window.sessionStorage.getItem("username");
     // if (this.notificationlist.length > 0) {
     //   this.chorus = true;

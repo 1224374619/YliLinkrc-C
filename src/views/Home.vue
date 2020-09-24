@@ -200,7 +200,7 @@
                 style="width:30px;height:20px;margin:-10px 0 0 0"
                 class="swiper-button-next"
                 slot="button-next"
-              ></div> -->
+              ></div>-->
             </div>
           </md-card-media>
         </md-card>
@@ -325,8 +325,7 @@
                   @click="descOne(list.id)"
                   class="desc-second"
                   style="cursor:pointer"
-                  v-if="list.workAgeMax == null" 
-                  
+                  v-if="list.workAgeMax == null"
                 >{{$CodeToTag.CodeToTag([parseInt(parseInt(list.catalogCode/100)*100/10000)*10000,parseInt(list.catalogCode/100)*100,list.catalogCode],positionCatalogList)[2]}} | 10年以上 | {{list.degreeMin}}</div>
                 <div
                   class="desc-second"
@@ -385,6 +384,7 @@ import { swiper, swiperSlide } from "vue-awesome-swiper";
 import positionCatalog from "../assets/positionCatalog.json";
 import industrys from "../assets/industry.json";
 import citys from "../assets/city.json";
+import Cookies from "js-cookie";
 export default {
   name: "home",
   data() {
@@ -414,7 +414,7 @@ export default {
       positionCatalogList: [],
       provinceButton: "",
       cityButton: "",
-      districtButton:'',
+      districtButton: "",
       searchContent: "",
       animate: false,
       listRecommend: [],
@@ -699,28 +699,28 @@ export default {
             }
           })
           .catch(error => {
-              if (error.response.status === 404) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "页面丢失，请重新加载"
-                });
-              } else if (error.response.status === 403) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "登陆超时，请重新登录"
-                });
-              } else {
-                this.$notify.error({
-                  title: "错误",
-                  message: error.response.data.message
-                });
-              }
-            });
+            if (error.response.status === 404) {
+              this.$notify.error({
+                title: "错误",
+                message: "页面丢失，请重新加载"
+              });
+            } else if (error.response.status === 403) {
+              this.$notify.error({
+                title: "错误",
+                message: "登陆超时，请重新登录"
+              });
+            } else {
+              this.$notify.error({
+                title: "错误",
+                message: error.response.data.message
+              });
+            }
+          });
       } else {
         let params = {
           addresses: [
             {
-              city: this.cityButton?this.cityButton:null,
+              city: this.cityButton ? this.cityButton : null,
               district: null,
               province: this.provinceButton
             }
@@ -768,23 +768,23 @@ export default {
             }
           })
           .catch(error => {
-              if (error.response.status === 404) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "页面丢失，请重新加载"
-                });
-              } else if (error.response.status === 403) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "登陆超时，请重新登录"
-                });
-              } else {
-                this.$notify.error({
-                  title: "错误",
-                  message: error.response.data.message
-                });
-              }
-            });
+            if (error.response.status === 404) {
+              this.$notify.error({
+                title: "错误",
+                message: "页面丢失，请重新加载"
+              });
+            } else if (error.response.status === 403) {
+              this.$notify.error({
+                title: "错误",
+                message: "登陆超时，请重新登录"
+              });
+            } else {
+              this.$notify.error({
+                title: "错误",
+                message: error.response.data.message
+              });
+            }
+          });
       }
     },
     desc(id) {
@@ -998,17 +998,23 @@ export default {
     }
   },
   created() {
+    let token = Cookies.get("token");
+    console.log(token)
+    this.new();
     this.positionCatalogList = positionCatalog.data;
     this.industryList = industrys.data;
     this.city = citys.data;
-    this.brief();
+    if (token) {
+      this.brief();
+    } else {
+    }
+    this.citises();
     // this.industry();
     // this.carousel();
     // this.hotcompany();
     // this.hotkeyword();
     // this.hotposition();
-    this.new();
-    this.citises();
+
     // this.recommendation();
     // this.allposition();
     // this.cits()
@@ -1055,6 +1061,7 @@ export default {
 <style lang="stylus">
 .home {
   cursor: default;
+
   .dialog {
     display: flex;
     flex-direction: column;
