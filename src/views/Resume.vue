@@ -3987,15 +3987,17 @@ export default {
     }
   },
   created() {
+    let token = Cookies.get("token");
     this.industryList = industrys.data;
     this.options = citys.data;
     this.optionList = options.data;
     this.positionCatalogList = positionCatalog.data;
-    this.brief(),
+    if (token) {
+      this.brief()
       // this.allposition(),
       // this.allpositionCatalog(),
-      this.option();
-
+    }
+    this.option();
     datacenterBus.$on("myFun", () => {
       //这里最好用箭头函数，不然this指向有问题
       this.informationouterVisible = false;
