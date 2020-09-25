@@ -40,7 +40,7 @@
         </div>
       </div>-->
     </el-dialog>
-    <div class="personal-left" v-if="appraise">
+    <div class="personal-left">
       <el-tabs v-model="activeName" class="personal-tabs" v-if="showTabs">
         <el-tab-pane :label="`投递记录（${throwNum = this.page1.total}）`" name="first">
           <div
@@ -171,7 +171,7 @@
       </el-tabs>
       <div style="font-size:15px;line-height:500px" v-if="isshowTabs">你还没有任何投递记录呦~~</div>
     </div>
-    <div class="personal-left" v-if="appraise">
+    <!-- <div class="personal-left" v-if="appraise">
       <div class="personal-nav">
         给你的面试
         <span>吐个槽</span>吧～
@@ -271,7 +271,7 @@
           ></el-input>
         </div>
       </div>
-    </div>
+    </div> -->
     <div class="personal-right">
       <div class="right-nav">
         <span class="span-hover" @click="edit">编辑</span>
@@ -345,7 +345,7 @@ export default {
     return {
       colors: ["#99A9BF", "#F7BA2A", "#FF9900"],
       dialogError: false,
-      dialogSuccess: true,
+      dialogSuccess: false,
       textarea:
         "able to work under high pressure and time limitation . able work under high pressure and time limitation. able towork under high pressure and time limitation.able to work under high pressure and time limitation.able to work under high pressure and time limitation.able to work under high pressure and time limitation. to work under pressure and time limitation.able to work under high pressure and time limitation.",
       value2: null,
