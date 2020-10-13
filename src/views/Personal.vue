@@ -41,8 +41,169 @@
       </div>-->
     </el-dialog>
     <div class="personal-left">
+      <el-dialog
+        title="面试邀请"
+        style="text-align:left"
+        :visible.sync="dialogVisible"
+        width="30%"
+        :before-close="handleClose"
+      >
+        <div class="title">张先生 您好！</div>
+        <div class="title">恭喜您获得面试邀请，现邀请您参加面试，面试信息如下：</div>
+        <div class="content" style="margin:20px 0 0 0">
+          面试公司：
+          <span>爱奇艺</span>
+        </div>
+        <div class="content">
+          面试时间：
+          <span>2020年02月14日 14:00</span>
+        </div>
+        <div class="content">
+          面试职位：
+          <span>产品经理 10-15k</span>
+        </div>
+        <div class="content">
+          面试地点：
+          <span>上海市静安区中铁中环时代广场</span>
+        </div>
+        <div class="content">
+          联系人：
+          <span>Estella</span>
+        </div>
+        <div class="content">
+          联系电话：
+          <span>18858688888</span>
+        </div>
+        <div class="content">
+          备注：
+          <span>请携带相关证明</span>
+        </div>
+        <div class="aside">
+          如有疑问或建议，可发送邮件至
+          <el-tooltip placement="top" effect="light">
+            <div slot="content">{{this.linktitle}}</div>
+            <span
+              class="tabs-read"
+              :data-clipboard-text="this.textlink"
+              @click="copy"
+            >service@163.com</span>
+          </el-tooltip>
+        </div>
+        <div class="foot">请您最晚于面试前12小时确认是否参加面试</div>
+        <div style="margin:30px 0 0 150px">
+          <el-button plain>拒绝</el-button>
+          <el-button type="primary" @click="dialogVisible = false">接受</el-button>
+        </div>
+      </el-dialog>
+
+      <el-dialog
+        title
+        style="text-align:left"
+        :visible.sync="dialogVisibleoffer"
+        width="30%"
+        :before-close="handleClose"
+      >
+        <div class="offer-title">选择面试取消原因</div>
+        <div class="offer-radio">
+          <el-radio v-model="radio" label="1">面试时间变更</el-radio>
+          <el-radio style="margin:0 0 0 30px" v-model="radio" label="2">已经接到offer</el-radio>
+        </div>
+        <div class="offer-radio">
+          <el-radio v-model="radio" label="1">面试爽约</el-radio>
+          <el-radio style="margin:0 0 0 62px" v-model="radio" label="2">其他原因</el-radio>
+        </div>
+        <div style="margin:30px 0 0 150px">
+          <el-button plain>取消</el-button>
+          <el-button type="primary" @click="dialogVisible = false">确认</el-button>
+        </div>
+      </el-dialog>
+
+      <el-dialog
+        title
+        style="text-align:left"
+        :visible.sync="dialogVisibleoutoffer"
+        width="30%"
+        :before-close="handleClose"
+      >
+        <div style="text-align:center" class="offer-titles">已超出可取消面试时间</div>
+        <div style="margin:45px 0 35px 200px">
+          <el-button type="primary" @click="dialogVisible = false">确认</el-button>
+        </div>
+      </el-dialog>
+
+      <!-- <el-dialog
+        title
+        style="text-align:left"
+        :visible.sync="dialogVisibleloseoffer"
+        width="30%"
+        :before-close="handleClose"
+      >
+        <div style="text-align:center" class="lose-titles">由于您未在面试时间之前接受面试，面试邀请已失效，如有疑问请联系招聘人员。</div>
+        <div style="text-align:center" class="lose-content">招聘人员：王女士 联系方式：13738366688</div>
+        <div style="margin:45px 0 35px 200px">
+          <el-button type="primary" @click="dialogVisible = false">知道了</el-button>
+        </div>
+      </el-dialog> -->
+
+       <el-dialog
+        title
+        style="text-align:left"
+        :visible.sync="dialogVisibleloseoffer"
+        width="30%"
+        :before-close="handleClose"
+      >
+        <div style="text-align:center" class="lose-titles">我们已将您的答复反馈给面试官！感谢您的使用</div>
+        <div style="margin:45px 0 35px 200px">
+          <el-button type="primary" @click="dialogVisible = false">知道了</el-button>
+        </div>
+      </el-dialog>
+
       <el-tabs v-model="activeName" class="personal-tabs" v-if="showTabs">
-        <el-tab-pane :label="`投递记录（${throwNum = this.page1.total}）`" name="first">
+        <el-tab-pane
+          :label="`投递记录（${throwNum = this.page1.total}）`"
+          name="first"
+          class="personal-first"
+        >
+          <div style="margin:0 60px 40px 0">
+            <el-button
+              style="margin:0 0 0 0"
+              :class="this.index== 'first' ? 'tabs-buttons' : 'tabs-button'"
+              type="text"
+              @click="Tabstatus(1)"
+            >待查看</el-button>
+            <el-button
+              :class="this.index== 'second' ? 'tabs-buttons' : 'tabs-button'"
+              type="text"
+              @click="Tabstatus(2)"
+            >已查看</el-button>
+            <el-dropdown trigger="click">
+              <el-button
+                :class="this.index== 'third' ? 'tabs-buttons' : 'tabs-button'"
+                type="text"
+                @click="Tabstatus(3)"
+              >面试</el-button>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item>全部</el-dropdown-item>
+                <el-dropdown-item>待接收</el-dropdown-item>
+                <el-dropdown-item>已拒绝</el-dropdown-item>
+                <el-dropdown-item>待面试</el-dropdown-item>
+                <el-dropdown-item>取消面试</el-dropdown-item>
+                <el-dropdown-item>已完成</el-dropdown-item>
+                <el-dropdown-item>已失效</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+            <el-button
+              :class="this.index== 'fourth' ? 'tabs-buttons' : 'tabs-button'"
+              type="text"
+              @click="Tabstatus(4)"
+            >已录用</el-button>
+            <el-button
+              :class="this.index== 'fifth' ? 'tabs-buttons' : 'tabs-button'"
+              type="text"
+              @click="Tabstatus(5)"
+            >不合格</el-button>
+          </div>
+
           <div
             style="width:854px;cursor:pointer"
             class="hover"
@@ -51,10 +212,10 @@
             @click="nextjoblist(list.id)"
           >
             <div class="tabs-first">
-              <span v-if="list.positionName.length > 10">
+              <span v-if="list.positionName.length > 8">
                 <el-tooltip placement="bottom" effect="light">
                   <div slot="content">{{list.positionName}}</div>
-                  <span style="margin:0 0 0 0">{{list.positionName.slice(0, 10)+'...'}}</span>
+                  <span style="margin:0 0 0 0">{{list.positionName.slice(0, 8)+'...'}}</span>
                 </el-tooltip>
               </span>
               <span v-else>{{list.positionName}}</span>
@@ -62,7 +223,7 @@
               <span v-else>{{list.salaryMin}}-{{list.salaryMax}}k</span>
             </div>
             <div class="tabs-second">
-              <span v-if="list.company.companyName.length > 10">
+              <span v-if="list.company.companyName.length > 8">
                 <el-tooltip placement="bottom" effect="light">
                   <div slot="content">{{list.company.companyName}}</div>
                   <span style="margin:0 0 0 0">{{list.company.companyName.slice(0, 8)+'...'}}</span>
@@ -77,7 +238,7 @@
               >{{list.workAddress.city}} | {{list.workAgeMin}}-{{list.workAgeMax}}年 | {{list.degreeMin}}</span>
               <span>
                 {{list.operatedHistory[0].operatedTime|formatDate}}
-                <el-tooltip class="item" effect="light" placement="top-end">
+                <!-- <el-tooltip class="item" effect="light" placement="top-end">
                   <div slot="content">
                     <div
                       style="padding:5px 0 5px 0;color:#373737;font-size:12px"
@@ -89,7 +250,7 @@
                     class="sap"
                     style="font-size:18px;color:#373737;"
                   >{{list.operatedHistory[0].operation}}</span>
-                </el-tooltip>
+                </el-tooltip>-->
               </span>
             </div>
             <div class="tabs-line"></div>
@@ -105,6 +266,60 @@
               :total="page1.total"
             ></el-pagination>
           </div>
+
+          <!-- <div
+            style="width:854px;cursor:pointer"
+            class="hover"
+            v-for="(list,index) in submittedList"
+            :key="index"
+            @click="nextjoblist(list.id)"
+          >
+            <div class="tabs-first">
+              <span v-if="list.positionName.length > 8">
+                <el-tooltip placement="bottom" effect="light">
+                  <div slot="content">{{list.positionName}}</div>
+                  <span style="margin:0 0 0 0">{{list.positionName.slice(0, 8)+'...'}}</span>
+                </el-tooltip>
+              </span>
+              <span v-else>{{list.positionName}}</span>
+              <span v-if="list.salaryMin === 35">{{list.salaryMin}}k以上</span>
+              <span v-else>{{list.salaryMin}}-{{list.salaryMax}}k</span>
+            </div>
+            <div class="tabs-second">
+              <span v-if="list.company.companyName.length > 8">
+                <el-tooltip placement="bottom" effect="light">
+                  <div slot="content">{{list.company.companyName}}</div>
+                  <span style="margin:0 0 0 0">{{list.company.companyName.slice(0, 8)+'...'}}</span>
+                </el-tooltip>
+              </span>
+              <span v-else>{{list.company.companyName}}</span>
+              <span
+                v-if="list.workAgeMax == null"
+              >{{list.workAddress.city}} | 10年以上 | {{list.degreeMin}}</span>
+              <span
+                v-else
+              >{{list.workAddress.city}} | {{list.workAgeMin}}-{{list.workAgeMax}}年 | {{list.degreeMin}}</span>
+              <span class="operated">
+                {{list.operatedHistory[0].operatedTime|formatDate}}
+                {{list.operatedHistory[0].operation}}
+              </span>
+              <div class="operatedButton">
+                <button class="button">查看详情</button>
+              </div>
+            </div>
+            <div class="tabs-line"></div>
+          </div>
+          <div class="tabs-pagination">
+            <el-pagination
+              @size-change="handleSizeChange1"
+              @current-change="handleCurrentChange1"
+              :current-page="page1.current"
+              :page-sizes="page1.pageSizeOpts"
+              :page-size="page1.pageSize"
+              layout="total, sizes, prev, pager, next, jumper"
+              :total="page1.total"
+            ></el-pagination>
+          </div>-->
         </el-tab-pane>
         <el-tab-pane :label="`我的收藏（${collectNum = this.page.total}）`" name="second">
           <div
@@ -271,7 +486,7 @@
           ></el-input>
         </div>
       </div>
-    </div> -->
+    </div>-->
     <div class="personal-right">
       <div class="right-nav">
         <span class="span-hover" @click="edit">编辑</span>
@@ -338,11 +553,19 @@
 import { submitted, brief, favorite, isfavorite, searched } from "apis/account";
 import citys from "../assets/city.json";
 import Cookies from "js-cookie";
+import Clipboard from "clipboard";
 export default {
   name: "personal",
   components: {},
   data() {
     return {
+      linktitle: "复制链接",
+      textlink: "service@163.com",
+      dialogVisible: false,
+      dialogVisibleoffer: false,
+      dialogVisibleoutoffer: false,
+      dialogVisibleloseoffer: true,
+      index: "first",
       colors: ["#99A9BF", "#F7BA2A", "#FF9900"],
       dialogError: false,
       dialogSuccess: false,
@@ -370,6 +593,7 @@ export default {
       throwNum: "",
       collectNum: "",
       activeName: "first",
+      activeNames: "1",
       showInfor: true,
       showWarn: true,
       showWarnone: false,
@@ -405,6 +629,37 @@ export default {
     };
   },
   methods: {
+    copy() {
+      var clipboard = new Clipboard(".tabs-read");
+      clipboard.on("success", e => {
+        this.linktitle = "复制成功";
+        // 释放内存
+        setTimeout(() => {
+          this.linktitle = "复制链接";
+        }, 3000);
+        clipboard.destroy();
+      });
+      clipboard.on("error", e => {
+        // 不支持复制
+        console.log("该浏览器不支持自动复制");
+        // 释放内存
+        clipboard.destroy();
+      });
+    },
+    Tabstatus(e) {
+      console.log(e);
+      if (e === 1) {
+        this.index = "first";
+      } else if (e === 2) {
+        this.index = "second";
+      } else if (e === 3) {
+        this.index = "third";
+      } else if (e === 4) {
+        this.index = "fourth";
+      } else {
+        this.index = "fifth";
+      }
+    },
     open() {
       this.$confirm("请评价面试体验～", "", {
         confirmButtonText: "确定",
@@ -687,13 +942,160 @@ export default {
   width: 1440px;
   background: #ffffff;
 
+  .operatedButton {
+    display: none;
+    margin: 0 72px 0 0;
+  }
+
   .hover:hover {
     background: #f7f7f7;
+
+    .operatedButton {
+      display: inline;
+
+      .button {
+        width: 128px;
+        height: 43px;
+        margin: -15px 0 0 0;
+        font-size: 20px;
+        color: #ffffff;
+        background: #327CF3;
+        border: 0.75px solid rgba(50, 124, 243, 1);
+        border-radius: 5px;
+      }
+    }
+
+    .operated {
+      display: none;
+    }
   }
 
   .personal-left {
     width: 1010px;
     background: white;
+
+    .title {
+      font-family: PingFangSC-Regular;
+      color: #222222;
+      font-size: 18px;
+    }
+
+    .content {
+      font-family: PingFangSC-Regular;
+      color: #5A5A5A;
+      font-size: 16px;
+      margin: 12px 0 0 0;
+
+      span {
+        font-family: PingFangSC-Regular;
+        color: #373737;
+        font-size: 16px;
+      }
+    }
+
+    .aside {
+      font-family: PingFangSC-Regular;
+      color: #4C4C4C;
+      font-size: 16px;
+      margin: 20px 0 0 0;
+
+      span {
+        font-family: PingFangSC-Regular;
+        color: #327CF3;
+        font-size: 16px;
+      }
+    }
+
+    .foot {
+      font-family: PingFangSC-Medium;
+      color: #222222;
+      font-size: 16px;
+      margin: 12px 0 0 0;
+
+      span {
+        font-family: PingFangSC-Regular;
+        color: #327CF3;
+        font-size: 16px;
+      }
+    }
+
+    .offer-title {
+      font-family: PingFangSC-Medium;
+      color: #222222;
+      font-size: 20px;
+      margin: 0 0 0 106px;
+    }
+
+    .offer-titles {
+      font-family: PingFangSC-Medium;
+      color: #2C2C2C;
+      font-size: 20px;
+      text-ailgn: center;
+      margin-top: 35px;
+    }
+
+    .lose-titles {
+      font-family: PingFangSC-Medium;
+      color: #2C2C2C;
+      font-size: 20px;
+      text-ailgn: center;
+      margin: 35px 60px 0 60px;
+    }
+
+    .lose-content {
+      font-family: PingFangSC-Regular;
+      color: #5F5F5F;
+      font-size: 18px;
+      margin: 16px 0 0 0;
+    }
+
+    .offer-radio {
+      font-family: PingFangSC-Regular;
+      color: #222222;
+      font-size: 18px;
+      margin: 24px 0 0 106px;
+    }
+
+    .el-dialog__header {
+      padding: 20px 20px 10px;
+      background: #327CF3;
+    }
+
+    .el-icon-close:before {
+      content: '\e6db';
+      font-size: 30px;
+      line-height: 20px;
+      color: #ffffff;
+    }
+
+    .el-dialog__title {
+      line-height: 20px;
+      font-size: 20px;
+      border: 1px solid #327CF3;
+      font-family: PingFangSC-Medium;
+      color: #FFFFFF;
+      text-align: center;
+    }
+
+    .personal-first {
+      .tabs-button {
+        font-family: PingFangSC-Regular;
+        color: #888888;
+        font-size: 20px;
+        margin: 0 0 0 80px;
+      }
+
+      .tabs-button:focus {
+        color: #327CF3;
+      }
+
+      .tabs-buttons {
+        font-family: PingFangSC-Regular;
+        color: #327CF3;
+        font-size: 20px;
+        margin: 0 0 0 80px;
+      }
+    }
 
     .personal-nav {
       margin: 60px 0 0 168px;

@@ -11,7 +11,7 @@ import Moment from 'moment'
 import {Message} from 'element-ui'
 import { Notification } from 'element-ui';
 import {CodeToTag} from './cookie';
-// import cookie from 'vue-cookie';
+// import cookie from 'vue-cookie'; 
 import Cookies from 'js-cookie'
 import 'babel-polyfill';
 import './assets/iconfont/iconfont.css'

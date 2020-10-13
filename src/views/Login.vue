@@ -183,7 +183,6 @@ export default {
           }
         })
         .catch(error => {
-          console.log("13131313131");
           this.$http.post("/consumer-core/resume").then(res => {
             if (res.data.code == "201") {
               this.$router.push({ path: "/home" });

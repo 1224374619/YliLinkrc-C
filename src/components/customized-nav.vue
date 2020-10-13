@@ -336,6 +336,7 @@ export default {
   },
   created() {
     this.token = Cookies.get("token");
+    console.log(this.token)
     if (this.token) {
       this.brief();
       this.notification();

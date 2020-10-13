@@ -99,7 +99,7 @@ import industrys from "../../assets/industry.json";
 import citys from "../../assets/city.json";
 import positionCatalog from "../../assets/positionCatalog.json";
 import options from "../../assets/option.json";
-const timeUtil = require('../../timeUtil.js');
+const timeUtil = require("../../timeUtil.js");
 export default {
   name: "jobintension",
   props: ["JobintenDegree"],
@@ -127,12 +127,12 @@ export default {
       propsOne: {
         value: "tag",
         label: "tag",
-        children: "children",
+        children: "children"
       },
       propsTwo: {
         value: "tag",
         label: "tag",
-        children: "children",
+        children: "children"
       },
       datePicker: false,
       formInline: {
@@ -246,15 +246,17 @@ export default {
           }
         ],
         salaryMin: this.salaryMin,
-        salaryMax: this.salaryMax,
+        salaryMax: this.salaryMax
       };
       this.$refs[formName].validate(valid => {
         if (valid) {
-          jobintensionadd(this.JobintenDegree, params).then(res => {
-            if (res.data.code == 200) {
-              this.$emit("jobintensionEmit", false, true);
-            }
-          }).catch(error => {
+          jobintensionadd(this.JobintenDegree, params)
+            .then(res => {
+              if (res.data.code == 200) {
+                this.$emit("jobintensionEmit", false, true);
+              }
+            })
+            .catch(error => {
               if (error.response.status === 404) {
                 this.$notify.error({
                   title: "错误",
@@ -323,7 +325,8 @@ export default {
 };
 </script>
 
-<style lang="stylus" scoped>.el-form-item {
+<style lang="stylus" scoped>
+.el-form-item {
   padding: 0 0 0 30px;
 }
 

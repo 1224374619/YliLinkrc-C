@@ -26,21 +26,21 @@
           </span>
           <span v-if="msg">
             <el-button
-              type="primary"
+              plain
               icon="el-icon-check"
-              style="width:140px;height:40px;margin:0 70px 0 0;border:0px solid red"
+              style="width:140px;height:40px;margin:0 70px 0 0;border: 1px solid rgba(216,216,216,1);color: #B7B7B7"
             >已投递</el-button>
           </span>
         </div>
         <div v-if="all" class="content-collect">
           <span v-if="isshowCollect">
-            <el-button class="collect" style="width:140px;height:40px" @click="iscollect()" plain>收藏</el-button>
+            <el-button class="collect" style="width:140px;height:40px;background:#327cf3;color:#fff" @click="iscollect()">收藏</el-button>
           </span>
           <span v-if="showCollect">
             <el-button
-              type="primary"
+              plain
               icon="el-icon-star-off"
-              style="width:140px;height:40px;border:0px solid red"
+              style="width:140px;height:40px;border: 1px solid rgba(216,216,216,1);color: #B7B7B7"
             >已收藏</el-button>
           </span>
         </div>
@@ -49,7 +49,7 @@
             <el-button
               style="width:280px;height:40px;background:#9b9b9b;border:1px solid #9b9b9b"
               type="primary"
-            >已失效</el-button>
+            >该职位已下线</el-button>
           </span>
         </div>
       </div>
@@ -186,7 +186,7 @@
             <div class="company-num">
               <span>
                 <i class="el-icon-coordinate"></i>
-                {{companyIdList.size}}人
+                {{companyIdList.size}}
               </span>
             </div>
           </div>

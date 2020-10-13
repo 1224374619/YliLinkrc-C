@@ -2,7 +2,7 @@
   <Scroll ref="scroll">
     <div class="resumes">
       <div class="content">
-        <el-dialog title width="30%" :visible.sync="dialogDrag" style="border-radius:5px;">
+        <!-- <el-dialog title width="30%" :visible.sync="dialogDrag" style="border-radius:5px;">
           <div>
             <el-upload
               class="upload-demo"
@@ -41,7 +41,7 @@
               style="margin:5px 0 0 50px;width:80%"
             ></el-progress>
           </div>
-        </el-dialog>
+        </el-dialog> -->
         <el-dialog
           title
           :visible.sync="dialogSuccess"
@@ -1719,7 +1719,7 @@
       <div class="aside-body">
         <Affix :offset="60">
           <div class="aside">
-            <div class="aside-nav" style="margin:50px 0 80px 0">
+            <!-- <div class="aside-nav" style="margin:50px 0 80px 0">
               <div class="aside-foot">
                 <div class="aside-foot-second" v-for="(item,index) in formList" :key="index">
                   <el-upload
@@ -1802,8 +1802,8 @@
                   </el-upload>
                 </div>
               </div>
-            </div>
-            <div class="aside-nav">
+            </div> -->
+            <div class="aside-nav" style="margin:50px 0 0 0">
               <div class="aside-nav-first">在线简历</div>
               <div class="aside-nav-second">
                 <span>完整度</span>
@@ -3249,9 +3249,9 @@ export default {
               message: "登陆超时，请重新登录"
             });
           } else {
-            this.$message({
+            this.$notify.error({
+              title: "错误",
               message: error.response.data.message,
-              type: "error"
             });
             this.$router.push({ path: "/login" });
             this.personalinformation = true;
@@ -4006,11 +4006,11 @@ export default {
   computed: {
     uploadUrl() {
       // const {VUE_APP_SECRET,VUE_APP_DEV_MODE} = process.env
-      return "/api/v2/file-service/files/upload";
+      return "/api/file-service/files/upload";
     },
     uploadUrlOne() {
       // const {VUE_APP_SECRET,VUE_APP_DEV_MODE} = process.env
-      return "/api/v2/file-service/files/upload";
+      return "/api/file-service/files/upload";
     }
   },
   filters: {
