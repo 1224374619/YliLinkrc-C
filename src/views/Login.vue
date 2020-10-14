@@ -145,7 +145,7 @@ export default {
           // `/login?returnUrl=http://${document.location.host}/api/resume/brief`
           // `/login?returnUrl=/resume/brief`
           this.$_http
-            .post(`/consumer-user/login`, {
+            .post(`/consumer-user/login/phone-pwd`, {
               username: this.form.tel,
               password: this.form.password
             })
