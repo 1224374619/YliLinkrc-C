@@ -442,10 +442,10 @@ export default {
         }
       ],
       carouselImgs: [
-        require("../assets/images/46.png"),
-        require("../assets/images/big.png"),
-        require("../assets/images/2020.png"),
-        require("../assets/images/join.png")
+        require("../assets/images/46.jpg"),
+        require("../assets/images/big.jpg"),
+        require("../assets/images/2020.jpg"),
+        require("../assets/images/join.jpg")
       ],
       //热门企业
       imgList: [
