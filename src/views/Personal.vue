@@ -40,7 +40,7 @@
         </div>
       </div>-->
     </el-dialog>
-    <div class="personal-left">
+    <div class="personal-left" style="width:0px">
       <el-dialog
         title="面试邀请"
         style="text-align:left"
@@ -143,9 +143,9 @@
         <div style="margin:45px 0 35px 200px">
           <el-button type="primary" @click="dialogVisible = false">知道了</el-button>
         </div>
-      </el-dialog> -->
+      </el-dialog>-->
 
-       <el-dialog
+      <el-dialog
         title
         style="text-align:left"
         :visible.sync="dialogVisibleloseoffer"
@@ -386,42 +386,21 @@
       </el-tabs>
       <div style="font-size:15px;line-height:500px" v-if="isshowTabs">你还没有任何投递记录呦~~</div>
     </div>
-    <!-- <div class="personal-left" v-if="appraise">
-      <div class="personal-nav">
-        给你的面试
-        <span>吐个槽</span>吧～
-      </div>
-      <div class="personal-aside">
-        <div>
-          <span>面试进度</span>
+    <div class="personal-left" v-if="appraise">
+      <div class="personal-footer">
+        <div class="personal-footers">
+          <span>面试标签</span>
           <el-radio-group v-model="radio1" size="medium">
-            <el-radio-button label="面试中"></el-radio-button>
-            <el-radio-button label="已通过"></el-radio-button>
-            <el-radio-button label="失之交臂"></el-radio-button>
-          </el-radio-group>
-        </div>
-        <div style="margin:20px 0 0 0">
-          <span>面试难度</span>
-          <el-radio-group v-model="radio1" size="medium">
-            <el-radio-button label="容易"></el-radio-button>
-            <el-radio-button label="还行"></el-radio-button>
-            <el-radio-button label="好难"></el-radio-button>
-          </el-radio-group>
-        </div>
-        <div style="margin:20px 0 0 0">
-          <span>面试官</span>
-          <el-radio-group v-model="radio1" size="medium" style="margin:0 0 0 15px">
-            <el-radio-button label="亲切"></el-radio-button>
-            <el-radio-button label="还行"></el-radio-button>
-            <el-radio-button label="专业"></el-radio-button>
-          </el-radio-group>
-        </div>
-        <div style="margin:20px 0 0 0">
-          <span>公司印象</span>
-          <el-radio-group v-model="radio1" size="medium">
-            <el-radio-button label="很好"></el-radio-button>
-            <el-radio-button label="还行"></el-radio-button>
-            <el-radio-button label="不太好"></el-radio-button>
+            <el-radio-button label="福利待遇特别棒"></el-radio-button>
+            <el-radio-button label="面试官是大牛"></el-radio-button>
+            <el-radio-button label="环境非常nice"></el-radio-button>
+            <el-radio-button label="面试官很和善"></el-radio-button>
+            <el-radio-button label="面试效率很高" style="margin:0 20px 0 0"></el-radio-button>
+            <el-radio-button label="薪资跟标注不符"></el-radio-button>
+            <el-radio-button label="面试官太苛刻"></el-radio-button>
+            <el-radio-button label="环境一般般"></el-radio-button>
+            <el-radio-button label="面试官态度严肃"></el-radio-button>
+            <el-radio-button label="等到海枯石烂" style="margin:0 20px 0 0"></el-radio-button>
           </el-radio-group>
         </div>
       </div>
@@ -432,25 +411,27 @@
         </div>
       </div>
       <div class="personal-footer">
-        <div class="personal-footers">
-          <span>面试故事（选填）</span>
+        <div class="personal-footers" style="margin:-40px 0 0 0">
+          <span>面试评价（选填）</span>
           <el-input
             type="textarea"
-            style="width:674px"
+            style="width:824px"
             :autosize="{ minRows: 4, maxRows: 8}"
-            placeholder="留下更多你想说的话..."
+            placeholder="请描述你的面试过程，例如：面试流程如何？面试氛围如何？最好是给其他用户一些建议…"
             v-model="textarea2"
           ></el-input>
         </div>
       </div>
       <div class="personal-button">
         <div class="personal-buttons">
-          <el-button class="button" @click="open" type="primary">匿名发表</el-button>
-          <el-button class="button" type="info" disabled>匿名发表</el-button>
+          <el-button class="button" plain @click="open" >稍后评价</el-button>
+          <el-button class="button" @click="open" type="primary">提交评价</el-button>
+          
+          <!-- <el-button class="button" type="info" disabled>匿名发表</el-button> -->
         </div>
       </div>
     </div>
-    <div class="personal-left">
+    <!-- <div class="personal-left">
       <div class="personals-nav">
         产品经理 面试
         <span>面试进度：已完成</span>
@@ -572,7 +553,7 @@ export default {
       textarea:
         "able to work under high pressure and time limitation . able work under high pressure and time limitation. able towork under high pressure and time limitation.able to work under high pressure and time limitation.able to work under high pressure and time limitation.able to work under high pressure and time limitation. to work under pressure and time limitation.able to work under high pressure and time limitation.",
       value2: null,
-      appraise: false,
+      appraise: true,
       radio1: "",
       page: {
         total: 0,
@@ -597,7 +578,7 @@ export default {
       showInfor: true,
       showWarn: true,
       showWarnone: false,
-      showTabs: true,
+      showTabs: false,
       isshowTabs: false,
       submittedList: [],
       favoriteList: [],
@@ -973,7 +954,6 @@ export default {
   .personal-left {
     width: 1010px;
     background: white;
-
     .title {
       font-family: PingFangSC-Regular;
       color: #222222;
@@ -1097,19 +1077,6 @@ export default {
       }
     }
 
-    .personal-nav {
-      margin: 60px 0 0 168px;
-      font-size: 14px;
-      text-align: left;
-
-      span {
-        font-family: PingFangSC-Regular;
-        color: #373737;
-        letter-spacing: 0.7;
-        font-size: 16px;
-      }
-    }
-
     .personals-nav {
       margin: 60px 0 0 168px;
       font-size: 20px;
@@ -1143,55 +1110,8 @@ export default {
       font-size: 16px;
     }
 
-    .personal-aside {
-      text-align: left;
-      margin: 50px 0 0 168px;
-
-      span {
-        font-family: PingFangSC-Regular;
-        color: #606060;
-        font-size: 16px;
-      }
-
-      .el-radio-button--medium .el-radio-button__inner {
-        padding: 10px 20px;
-        font-size: 14px;
-        border-radius: 20px;
-        margin: 0 0 0 39px;
-        width: 130px;
-      }
-
-      .el-radio-button__inner {
-        line-height: 1;
-        white-space: nowrap;
-        vertical-align: middle;
-        background: #fff;
-        border: 1px solid #dcdfe6;
-        font-weight: 500;
-        border-left: 1;
-        margin: 0 0 0 20px;
-        color: #606266;
-        -webkit-appearance: none;
-        text-align: center;
-        box-sizing: border-box;
-        margin: 0;
-        cursor: pointer;
-        transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-        padding: 12px 20px;
-        font-size: 14px;
-        border-radius: 20px;
-      }
-
-      .el-radio-button__orig-radio:checked+.el-radio-button__inner {
-        color: #fff;
-        background-color: #409eff;
-        border-color: #409eff;
-        box-shadow: -1px 0 0 0 #409eff;
-      }
-    }
-
     .personal-select {
-      margin: 40px 0 0 168px;
+      margin: 40px 0 0 108px;
 
       .personal-selects {
         display: flex;
@@ -1218,7 +1138,7 @@ export default {
     }
 
     .personal-footer {
-      margin: 40px 0 0 168px;
+      margin: 80px 0 0 108px;
 
       .personal-footers {
         display: flex;
@@ -1244,6 +1164,42 @@ export default {
           border-radius: 4px;
           transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
           margin: 20px 0 0 0;
+        }
+
+        .el-radio-button--medium .el-radio-button__inner {
+          padding: 10px 20px;
+          font-size: 14px;
+          border-radius: 20px;
+          margin: 20px 0 0 16px;
+          width: 152px;
+        }
+
+        .el-radio-button__inner {
+          line-height: 1;
+          white-space: nowrap;
+          vertical-align: middle;
+          background: #fff;
+          border: 1px solid #dcdfe6;
+          font-weight: 500;
+          border-left: 1;
+          margin: 0 0 0 20px;
+          color: #606266;
+          -webkit-appearance: none;
+          text-align: center;
+          box-sizing: border-box;
+          margin: 0;
+          cursor: pointer;
+          transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+          padding: 12px 20px;
+          font-size: 14px;
+          border-radius: 20px;
+        }
+
+        .el-radio-button__orig-radio:checked+.el-radio-button__inner {
+          color: #fff;
+          background-color: #409eff;
+          border-color: #409eff;
+          box-shadow: -1px 0 0 0 #409eff;
         }
 
         span {

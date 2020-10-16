@@ -47,6 +47,109 @@
                   ></baidu-map>
                 </div>
               </div>
+              <div class="station-appraise">
+                <div class="station-appraise-nav">
+                  <div style="margin:30px 0 0 30px">银领面试评价</div>
+                  <div style="margin:30px 0 0 40px">综合面试评分：</div>
+                  <div style="margin:35px 0 0 0;width:140px">
+                    <el-rate v-model="value2" :colors="colors"></el-rate>
+                  </div>
+                  <div style="margin:31px 0 0 10px;">4.0</div>
+                  <div style="margin:31px 0 0 0;">（来自15条评价）</div>
+                </div>
+                <div class="station-appraise-line"></div>
+                <div class="station-appraise-aside">
+                  <div>
+                    <img
+                      style="width:50px;height:50px;margin:0 0 0 30px"
+                      src="../assets/images/89.png"
+                    />
+                  </div>
+                  <div class="appraise-nav">
+                    <div>匿名用户</div>
+                  </div>
+                  <div class="appraise-aside" style="margin:15px 0 0 94px">
+                    面试体验：
+                    <el-rate style="width:140px;" v-model="value2" :colors="colors"></el-rate>
+                  </div>
+                  <div class="appraise-aside" style="margin:15px 0 0 50px">面试职位：产品经理</div>
+                  <div style="margin:15px 0 0 75px">2020-02-14</div>
+                </div>
+                <div class="station-appraise-select">
+                  <el-radio-group v-model="radio1" size="medium">
+                    <el-radio-button label="福利待遇特别棒"></el-radio-button>
+                  </el-radio-group>
+                </div>
+                <div class="station-appraise-content">
+                  <div>
+                    <span style="margin:0 0 0 -7px">【面试过程】</span>
+                    <span>able to work under high pressure and time limitation . able work under high pressure and time limitation. able towork under high pressure and time limitation.able to work under high pressure and time limitation.able to work under high pressure and time limitation.able to work under high pressure and time limitation. to work under pressure and time limitation.able to work under high pressure and time limitation.</span>
+                  </div>
+                  <div style="margin:0 0 0 -720px">企业回复</div>
+                  <div class="third">
+                    <div>
+                      <img
+                        style="width:50px;height:50px;margin:15px 0 0 15px"
+                        src="../assets/images/89.png"
+                      />
+                    </div>
+                    <div>
+                      <div style="margin:5px 0 0 -200px;color: #A2A2A2">银领.HR.人事</div>
+                      <div style="margin:0 0 0 5px">每天在宽敞舒适的环境办公心情会更好哦～</div>
+                    </div>
+                    <div>
+                      <div>2020-02-14</div>
+                    </div>
+                  </div>
+                  <div class="station-appraise-footer">
+                    <div style="display: flex;flex-direction: row;margin:20px 35px 0 0">
+                      <img style="width:25px;height:25px" src="../assets/images/zan.png" />
+                      <span style="line-height:25px">1820</span>
+                    </div>
+                    <div style="display: flex;flex-direction: row;margin:20px 0 0 0">
+                      <img style="width:25px;height:25px" src="../assets/images/book.png" />
+                      <span style="line-height:25px">2</span>
+                    </div>
+                  </div>
+                  <div style="background: #FAFAFA;width: 794px;margin: 20px 0 0 0;">
+                    <div class="discuss">
+                      <div style="width:200px;margin:16px 0 0 0">
+                        <span class="nav">张三：</span>问个问题问个问题
+                      </div>
+                      <div style="width:160px;margin:16px 0 0 0">
+                        <span>赞（3）</span>
+                        <span>回复（2）</span>
+                      </div>
+                    </div>
+                    <div class="discusses">
+                      <div style="margin:0 0 10px -640px">08月23日 14:21</div>
+                      <el-input
+                        type="textarea"
+                        style="width:96%;margin:10px 2% 0 2%"
+                        :rows="2"
+                        placeholder="请输入内容"
+                        v-model="textarea"
+                      ></el-input>
+                      <el-button style="margin:20px 0 0 86%" plain>发表</el-button>
+                      <div class="line"></div>
+                    </div>
+                    <div class="discuss">
+                      <div style="width:200px;margin:16px 0 0 0">
+                        <span class="nav">张三：</span>问个问题问个问题
+                      </div>
+                      <div style="width:160px;margin:16px 0 0 0">
+                        <span>赞（3）</span>
+                        <span>回复（2）</span>
+                      </div>
+                    </div>
+                    <div class="discusses">
+                      <div style="margin:0 0 0 -640px">08月23日 14:21</div>
+
+                      <div class="line"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </el-tab-pane>
           <el-tab-pane label="在招职位" name="second">
@@ -230,7 +333,7 @@ export default {
         .then(res => {
           if (res.data.code == 200) {
             this.companyIdList = res.data.data;
-            this.getLocationPoint()
+            this.getLocationPoint();
           }
         })
         .catch(error => {
@@ -469,7 +572,6 @@ export default {
   },
 
   created() {
-    
     let token = Cookies.get("token");
     this.positionCatalogList = positionCatalog.data;
     this.industryList = industrys.data;
@@ -482,7 +584,7 @@ export default {
     this.companyId();
     // this.allposition()
     this.positionCataloga();
-    
+
     if (this.companIds === undefined) {
       this.activeName = "first";
     } else {
@@ -698,6 +800,217 @@ export default {
 
         .anchorBL {
           display: none;
+        }
+      }
+
+      .station-appraise {
+        margin: 0 55px 0 0;
+        border: 1px solid rgba(236, 236, 236, 1);
+        height: 1000px;
+        border-radius: 5px;
+        width: 850px;
+
+        .station-appraise-nav {
+          display: flex;
+          flex-direction: row;
+
+          div:nth-child(1) {
+            font-family: PingFangSC-Medium;
+            color: #373737;
+            font-size: 22px;
+          }
+
+          div:nth-child(2) {
+            font-family: PingFangSC-Regular;
+            color: #333333;
+            font-size: 18px;
+            line-height: 35px;
+          }
+
+          div:nth-child(4) {
+            font-family: PingFangSC-Medium;
+            color: #327CF3;
+            font-size: 26px;
+            line-height: 35px;
+          }
+
+          div:nth-child(5) {
+            font-family: PingFangSC-Regular;
+            color: #666666;
+            font-size: 18px;
+            line-height: 35px;
+          }
+        }
+
+        .station-appraise-line {
+          border: 1px solid #f8f8f8;
+          margin: 20px 30px 0 30px;
+        }
+
+        .station-appraise-aside {
+          display: flex;
+          flex-direction: row;
+          margin: 20px 0 0 0;
+
+          .appraise-nav {
+            display: flex;
+            flex-direction: column;
+            margin: 15px 0 0 0;
+          }
+
+          .appraise-nav div:nth-child(1) {
+            font-family: PingFangSC-Medium;
+            color: #373737;
+            font-size: 16px;
+            margin: 0 0 0 5px;
+          }
+
+          .appraise-nav div:nth-child(2) {
+            font-family: PingFangSC-Medium;
+            color: #666666;
+            font-size: 16px;
+            margin: 0 0 0 5px;
+          }
+
+          .appraise-aside {
+            display: flex;
+            flex-direction: row;
+            font-family: PingFangSC-Regular;
+            color: #373737;
+            font-size: 16px;
+            margin: 0 0 0 0;
+          }
+        }
+
+        .station-appraise-select {
+          display: flex;
+          flex-direction: row;
+          margin: 0 30px 0 30px;
+
+          .el-radio-button--medium .el-radio-button__inner {
+            padding: 2px 10px;
+            font-size: 14px;
+            border-radius: 20px;
+            margin: 20px 0 0 16px;
+            height: 20px;
+          }
+
+          .el-radio-button__inner {
+            line-height: 1;
+            white-space: nowrap;
+            vertical-align: middle;
+            background: #fff;
+            border: 1px solid #dcdfe6;
+            font-weight: 500;
+            border-left: 1;
+            margin: 0 0 0 20px;
+            color: #606266;
+            -webkit-appearance: none;
+            text-align: center;
+            box-sizing: border-box;
+            margin: 0;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+            padding: 12px 20px;
+            font-size: 14px;
+            border-radius: 20px;
+            heigth: 20px;
+          }
+
+          .el-radio-button__orig-radio:checked+.el-radio-button__inner {
+            color: #fff;
+            background-color: #409eff;
+            border-color: #409eff;
+            box-shadow: -1px 0 0 0 #409eff;
+          }
+
+          div:nth-child(1) {
+            font-family: PingFangSC-Regular;
+            color: #424242;
+            font-size: 16px;
+          }
+
+          div:nth-child(2) {
+            margin: 0 0 0 40px;
+
+            span {
+              font-family: PingFangSC-Regular;
+              color: #327CF3;
+              font-size: 16px;
+            }
+          }
+        }
+
+        .station-appraise-content {
+          height: 100px;
+          margin: 20px 30px 0 30px;
+          font-family: PingFangSC-Regular;
+          color: #686868;
+          font-size: 16px;
+
+          div:nth-child(2) {
+            font-family: PingFangSC-Regular;
+            color: #777777;
+            font-size: 16px;
+            margin: 10px 0 0 0;
+          }
+
+          .third {
+            background: rgba(50, 124, 243, 0.05);
+            border: 1px solid rgba(50, 124, 243, 0.2);
+            border-radius: 4px;
+            width: 794px;
+            height: 83px;
+            margin: 10px 0 0 0;
+            display: flex;
+            flex-direction: row;
+
+            div:nth-child(3) {
+              font-family: PingFangSC-Regular;
+              color: #555555;
+              margin: 15px 0 0 300px;
+              font-size: 16px;
+            }
+
+            div:nth-child(2) {
+              font-family: PingFangSC-Regular;
+              color: #888888;
+              font-size: 16px;
+            }
+          }
+
+          .station-appraise-footer {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+          }
+
+          .discuss {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+
+            span {
+              font-family: PingFangSC-Regular;
+              color: #373737;
+              font-size: 16px;
+            }
+
+            .nav {
+              font-family: PingFangSC-Regular;
+              color: #327CF3;
+              font-size: 16px;
+              margin: 16px 0 0 16px;
+            }
+          }
+
+          .discusses {
+            .line {
+              margin: 20px 15px 0 15px;
+              width: 96%;
+              border: 1px solid rgba(236, 236, 236, 1);
+            }
+          }
         }
       }
     }
