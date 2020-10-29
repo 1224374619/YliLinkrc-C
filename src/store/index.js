@@ -9,6 +9,7 @@ export default new Vuex.Store({
     hasLogin: '',
     avatarUrl:'',
     value: '',
+    childList:[],
     lsit: window.sessionStorage.getItem('lsit'),
     citycode: window.sessionStorage.getItem('citycode'),
     cityButton: window.sessionStorage.getItem('cityButton'),

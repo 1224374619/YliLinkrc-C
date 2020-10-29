@@ -15,7 +15,7 @@
             <div style="font-family: PingFangSC-Regular;color: #565656;font-size:14px;margin:10px 0 70px 0">请稍后有重试~</div>
             <div><el-button style="width:270px;height:40px;margin:0 0 40px 0" type="primary">确定</el-button></div>
       </div>-->
-      <div style="display:flex;flex-direction:column;">
+      <!-- <div style="display:flex;flex-direction:column;">
         <div>
           <img :src="require('../assets/images/pjs.png')" />
         </div>
@@ -26,8 +26,8 @@
         <div>
           <el-button style="width:270px;height:40px;margin:0 0 40px 0" type="primary">确定</el-button>
         </div>
-      </div>
-      <!-- <div style="display:flex;flex-direction:column;">
+      </div>-->
+      <div style="display:flex;flex-direction:column;">
         <div>
           <img :src="require('../assets/images/pj.png')" />
         </div>
@@ -36,175 +36,206 @@
           style="font-family: PingFangSC-Regular;color: #565656;font-size:14px;margin:10px 0 70px 0"
         >感谢你的点评~</div>
         <div>
-          <el-button style="width:270px;height:40px;margin:0 0 40px 0" type="primary">返回</el-button>
+          <el-button
+            style="width:270px;height:40px;margin:0 0 40px 0"
+            @click="dialogSuccess = false"
+            type="primary"
+          >返回</el-button>
         </div>
-      </div>-->
+      </div>
     </el-dialog>
-    <div class="personal-left" style="width:0px">
-      <el-dialog
-        title="面试邀请"
-        style="text-align:left"
-        :visible.sync="dialogVisible"
-        width="30%"
-        :before-close="handleClose"
-      >
-        <div class="title">张先生 您好！</div>
-        <div class="title">恭喜您获得面试邀请，现邀请您参加面试，面试信息如下：</div>
-        <div class="content" style="margin:20px 0 0 0">
-          面试公司：
-          <span>爱奇艺</span>
-        </div>
-        <div class="content">
-          面试时间：
-          <span>2020年02月14日 14:00</span>
-        </div>
-        <div class="content">
-          面试职位：
-          <span>产品经理 10-15k</span>
-        </div>
-        <div class="content">
-          面试地点：
-          <span>上海市静安区中铁中环时代广场</span>
-        </div>
-        <div class="content">
-          联系人：
-          <span>Estella</span>
-        </div>
-        <div class="content">
-          联系电话：
-          <span>18858688888</span>
-        </div>
-        <div class="content">
-          备注：
-          <span>请携带相关证明</span>
-        </div>
-        <div class="aside">
-          如有疑问或建议，可发送邮件至
-          <el-tooltip placement="top" effect="light">
-            <div slot="content">{{this.linktitle}}</div>
-            <span
-              class="tabs-read"
-              :data-clipboard-text="this.textlink"
-              @click="copy"
-            >service@163.com</span>
-          </el-tooltip>
-        </div>
-        <div class="foot">请您最晚于面试前12小时确认是否参加面试</div>
-        <div style="margin:30px 0 0 150px">
-          <el-button plain>拒绝</el-button>
-          <el-button type="primary" @click="dialogVisible = false">接受</el-button>
-        </div>
-      </el-dialog>
+    <div v-if="detailEvaltion">
+      <div class="personal-left" v-if="appraise">
+        <el-dialog title="面试邀请" style="text-align:left" :visible.sync="dialogVisible" width="30%">
+          <div class="title">{{jobSeekers.jobSeekersName}}先生 您好！</div>
+          <div class="title">恭喜您获得面试邀请，现邀请您参加面试，面试信息如下：</div>
+          <div class="content" style="margin:20px 0 0 0">
+            面试公司：
+            <span>{{jobSeekers.companyName}}</span>
+          </div>
+          <div class="content">
+            面试时间：
+            <span>{{jobSeekers.interviewTime|formatDateTwo}}</span>
+          </div>
+          <div class="content">
+            面试职位：
+            <span>{{jobSeekers.positionName}} {{jobSeekers.positionSalary}}</span>
+          </div>
+          <div class="content">
+            面试地点：
+            <span>{{jobSeekers.interviewAddress.detail}}</span>
+          </div>
+          <div class="content">
+            联系人：
+            <span>{{jobSeekers.contactName}}</span>
+          </div>
+          <div class="content">
+            联系电话：
+            <span>{{jobSeekers.contactPhone}}</span>
+          </div>
+          <div class="content">
+            备注：
+            <span>{{jobSeekers.interviewRemark}}</span>
+          </div>
+          <div class="aside">
+            如有疑问或建议，可发送邮件至
+            <el-tooltip placement="top" effect="light">
+              <div slot="content">{{this.linktitle}}</div>
+              <span
+                class="tabs-read"
+                :data-clipboard-text="this.textlink"
+                @click="copy"
+              >service@163.com</span>
+            </el-tooltip>
+          </div>
+          <div class="foot">请您最晚于面试前2小时确认是否参加面试</div>
+          <div style="margin:30px 0 0 150px">
+            <el-button
+              :disabled="this.interviewStates === 'TO_BE_ACCEPTED'?false:true"
+              @click="refuse()"
+              plain
+            >拒绝</el-button>
+            <el-button
+              :disabled="this.interviewStates === 'TO_BE_ACCEPTED'?false:true"
+              type="primary"
+              @click="accept()"
+            >接受</el-button>
+          </div>
+        </el-dialog>
 
-      <el-dialog
-        title
-        style="text-align:left"
-        :visible.sync="dialogVisibleoffer"
-        width="30%"
-        :before-close="handleClose"
-      >
-        <div class="offer-title">选择面试取消原因</div>
-        <div class="offer-radio">
-          <el-radio v-model="radio" label="1">面试时间变更</el-radio>
-          <el-radio style="margin:0 0 0 30px" v-model="radio" label="2">已经接到offer</el-radio>
-        </div>
-        <div class="offer-radio">
-          <el-radio v-model="radio" label="1">面试爽约</el-radio>
-          <el-radio style="margin:0 0 0 62px" v-model="radio" label="2">其他原因</el-radio>
-        </div>
-        <div style="margin:30px 0 0 150px">
-          <el-button plain>取消</el-button>
-          <el-button type="primary" @click="dialogVisible = false">确认</el-button>
-        </div>
-      </el-dialog>
+        <el-dialog title style="text-align:left" :visible.sync="dialogVisibleoffer" width="30%">
+          <div class="offer-title">选择面试取消原因</div>
+          <div class="offer-radio">
+            <el-radio v-model="radioReason" label="面试时间变更">面试时间变更</el-radio>
+            <el-radio style="margin:0 0 0 30px" v-model="radioReason" label="已经接到offer">已经接到offer</el-radio>
+          </div>
+          <div class="offer-radio">
+            <el-radio v-model="radioReason" label="面试爽约">面试爽约</el-radio>
+            <el-radio style="margin:0 0 0 62px" v-model="radioReason" label="其他原因">其他原因</el-radio>
+          </div>
+          <div style="margin:30px 0 0 150px">
+            <el-button plain @click="dialogVisible = false">取消</el-button>
+            <el-button type="primary" @click="reasonKeep()">确认</el-button>
+          </div>
+        </el-dialog>
 
-      <el-dialog
-        title
-        style="text-align:left"
-        :visible.sync="dialogVisibleoutoffer"
-        width="30%"
-        :before-close="handleClose"
-      >
-        <div style="text-align:center" class="offer-titles">已超出可取消面试时间</div>
-        <div style="margin:45px 0 35px 200px">
-          <el-button type="primary" @click="dialogVisible = false">确认</el-button>
-        </div>
-      </el-dialog>
+        <el-dialog title style="text-align:left" :visible.sync="dialogVisibleoutoffer" width="30%">
+          <div style="text-align:center" class="offer-titles">已超出可取消面试时间</div>
+          <div style="margin:45px 0 35px 200px">
+            <el-button type="primary" @click="dialogVisible = false">确认</el-button>
+          </div>
+        </el-dialog>
 
-      <!-- <el-dialog
+        <!-- <el-dialog
         title
         style="text-align:left"
         :visible.sync="dialogVisibleloseoffer"
         width="30%"
-        :before-close="handleClose"
+        
       >
         <div style="text-align:center" class="lose-titles">由于您未在面试时间之前接受面试，面试邀请已失效，如有疑问请联系招聘人员。</div>
         <div style="text-align:center" class="lose-content">招聘人员：王女士 联系方式：13738366688</div>
         <div style="margin:45px 0 35px 200px">
           <el-button type="primary" @click="dialogVisible = false">知道了</el-button>
         </div>
-      </el-dialog>-->
+        </el-dialog>-->
 
-      <el-dialog
-        title
-        style="text-align:left"
-        :visible.sync="dialogVisibleloseoffer"
-        width="30%"
-        :before-close="handleClose"
-      >
-        <div style="text-align:center" class="lose-titles">我们已将您的答复反馈给面试官！感谢您的使用</div>
-        <div style="margin:45px 0 35px 200px">
-          <el-button type="primary" @click="dialogVisible = false">知道了</el-button>
-        </div>
-      </el-dialog>
-
-      <el-tabs v-model="activeName" class="personal-tabs" v-if="showTabs">
-        <el-tab-pane
-          :label="`投递记录（${throwNum = this.page1.total}）`"
-          name="first"
-          class="personal-first"
-        >
-          <div style="margin:0 60px 40px 0">
-            <el-button
-              style="margin:0 0 0 0"
-              :class="this.index== 'first' ? 'tabs-buttons' : 'tabs-button'"
-              type="text"
-              @click="Tabstatus(1)"
-            >待查看</el-button>
-            <el-button
-              :class="this.index== 'second' ? 'tabs-buttons' : 'tabs-button'"
-              type="text"
-              @click="Tabstatus(2)"
-            >已查看</el-button>
-            <el-dropdown trigger="click">
-              <el-button
-                :class="this.index== 'third' ? 'tabs-buttons' : 'tabs-button'"
-                type="text"
-                @click="Tabstatus(3)"
-              >面试</el-button>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item>全部</el-dropdown-item>
-                <el-dropdown-item>待接收</el-dropdown-item>
-                <el-dropdown-item>已拒绝</el-dropdown-item>
-                <el-dropdown-item>待面试</el-dropdown-item>
-                <el-dropdown-item>取消面试</el-dropdown-item>
-                <el-dropdown-item>已完成</el-dropdown-item>
-                <el-dropdown-item>已失效</el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
-            <el-button
-              :class="this.index== 'fourth' ? 'tabs-buttons' : 'tabs-button'"
-              type="text"
-              @click="Tabstatus(4)"
-            >已录用</el-button>
-            <el-button
-              :class="this.index== 'fifth' ? 'tabs-buttons' : 'tabs-button'"
-              type="text"
-              @click="Tabstatus(5)"
-            >不合格</el-button>
+        <el-dialog title style="text-align:left" :visible.sync="dialogVisibleloseoffer" width="30%">
+          <div style="text-align:center" class="lose-titles">我们已将您的答复反馈给面试官！感谢您的使用</div>
+          <div style="margin:45px 0 35px 200px">
+            <el-button type="primary" @click="dialogVisible = false">知道了</el-button>
           </div>
+        </el-dialog>
+        <!-- <div class="tab-operations">
+        <ul
+          class="el-dropdown-menu el-popper"
+          id="dropdown-menu-6024"
+          style="position: absolute; top: 175px; left: 460px; transform-origin: center top; z-index: 2011;width:110px;"
+          x-placement="bottom-end"
+        >
+          <li tabindex="-1" class="el-dropdown-menu__item">全部</li>
+          <li tabindex="-1" class="el-dropdown-menu__item">待接收</li>
+          <li tabindex="-1" class="el-dropdown-menu__item">已拒绝</li>
+          <li tabindex="-1" class="el-dropdown-menu__item">待面试</li>
+          <li tabindex="-1" class="el-dropdown-menu__item">取消面试</li>
+          <li tabindex="-1" class="el-dropdown-menu__item">已完成</li>
+          <li tabindex="-1" class="el-dropdown-menu__item">已失效</li>
+          <div x-arrow class="popper__arrow" style="left: 59px;"></div>
+        </ul>
+        </div>-->
+        <el-tabs v-model="activeName" class="personal-tabs" v-if="showTabs">
+          <el-tab-pane
+            :label="`投递记录（${throwNum = this.page1.total}）`"
+            name="first"
+            class="personal-first"
+          >
+            <div style="margin:0 60px 40px 0">
+              <el-button
+                style="margin:0 0 0 0"
+                :class="this.index== 'TO_PROCESS' ? 'tabs-buttons' : 'tabs-button'"
+                type="text"
+                @click="Tabstatus(1)"
+              >待查看</el-button>
+              <el-button
+                :class="this.index== 'PROCESSING' ? 'tabs-buttons' : 'tabs-button'"
+                type="text"
+                @click="Tabstatus(2)"
+              >已查看</el-button>
+              <!-- <el-button
+              :class="this.index== 'INTERVIEW' ? 'tabs-buttons' : 'tabs-button'"
+              type="text"
+              @click="Tabstatus(3)"
+              >面试</el-button>-->
+              <el-dropdown>
+                <el-button
+                  :class="this.index== 'INTERVIEW' ? 'tabs-buttons' : 'tabs-button'"
+                  @click="Tabstatus(3)"
+                  type="text"
+                >面试</el-button>
+                <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item
+                    @click.native="interviewstatus(1)"
+                    :class="this.interviewStates== null ? 'dropdown-buttons' : 'dropdown-button'"
+                  >全部</el-dropdown-item>
+                  <el-dropdown-item
+                    @click.native="interviewstatus(2)"
+                    :class="this.interviewStates== 'TO_BE_ACCEPTED' ? 'dropdown-buttons' : 'dropdown-button'"
+                  >待接收</el-dropdown-item>
+                  <el-dropdown-item
+                    @click.native="interviewstatus(3)"
+                    :class="this.interviewStates== 'REFUSED' ? 'dropdown-buttons' : 'dropdown-button'"
+                  >已拒绝</el-dropdown-item>
+                  <el-dropdown-item
+                    @click.native="interviewstatus(4)"
+                    :class="this.interviewStates== 'TO_BE_INTERVIEWED' ? 'dropdown-buttons' : 'dropdown-button'"
+                  >待面试</el-dropdown-item>
+                  <el-dropdown-item
+                    @click.native="interviewstatus(5)"
+                    :class="this.interviewStates== 'COMPLETED' ? 'dropdown-buttons' : 'dropdown-button'"
+                  >已完成</el-dropdown-item>
+                  <el-dropdown-item
+                    @click.native="interviewstatus(6)"
+                    :class="this.interviewStates== 'TO_CANCEL_THE_INTERVIEW' ? 'dropdown-buttons' : 'dropdown-button'"
+                  >取消面试</el-dropdown-item>
+                  <el-dropdown-item
+                    @click.native="interviewstatus(7)"
+                    :class="this.interviewStates== 'HAS_BEEN_EFFECTIVE' ? 'dropdown-buttons' : 'dropdown-button'"
+                  >已失效</el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
+              <el-button
+                :class="this.index== 'OFFERED' ? 'tabs-buttons' : 'tabs-button'"
+                type="text"
+                @click="Tabstatus(4)"
+              >已录用</el-button>
+              <el-button
+                :class="this.index== 'UNFIT' ? 'tabs-buttons' : 'tabs-button'"
+                type="text"
+                @click="Tabstatus(5)"
+              >不合格</el-button>
+            </div>
 
-          <div
+            <!-- <div
             style="width:854px;cursor:pointer"
             class="hover"
             v-for="(list,index) in submittedList"
@@ -233,25 +264,16 @@
               <span
                 v-if="list.workAgeMax == null"
               >{{list.workAddress.city}} | 10年以上 | {{list.degreeMin}}</span>
+              <span
+                v-else-if="list.workAgeMin == 0"
+              >{{list.workAddress.city}} | 无工作经验 | {{list.degreeMin}}</span>
               <span
                 v-else
               >{{list.workAddress.city}} | {{list.workAgeMin}}-{{list.workAgeMax}}年 | {{list.degreeMin}}</span>
               <span>
-                {{list.operatedHistory[0].operatedTime|formatDate}}
-                <!-- <el-tooltip class="item" effect="light" placement="top-end">
-                  <div slot="content">
-                    <div
-                      style="padding:5px 0 5px 0;color:#373737;font-size:12px"
-                      v-for="(item,index) in list.operatedHistory"
-                      :key="index"
-                    >{{item.operatedTime|formatDateThree}} {{item.operation}}</div>
-                  </div>
-                  <span
-                    class="sap"
-                    style="font-size:18px;color:#373737;"
-                  >{{list.operatedHistory[0].operation}}</span>
-                </el-tooltip>-->
+                {{list.publishedTime|formatDate}}
               </span>
+            
             </div>
             <div class="tabs-line"></div>
           </div>
@@ -265,209 +287,224 @@
               layout="total, sizes, prev, pager, next, jumper"
               :total="page1.total"
             ></el-pagination>
-          </div>
+            </div>-->
 
-          <!-- <div
-            style="width:854px;cursor:pointer"
-            class="hover"
-            v-for="(list,index) in submittedList"
-            :key="index"
-            @click="nextjoblist(list.id)"
-          >
-            <div class="tabs-first">
-              <span v-if="list.positionName.length > 8">
-                <el-tooltip placement="bottom" effect="light">
-                  <div slot="content">{{list.positionName}}</div>
-                  <span style="margin:0 0 0 0">{{list.positionName.slice(0, 8)+'...'}}</span>
-                </el-tooltip>
-              </span>
-              <span v-else>{{list.positionName}}</span>
-              <span v-if="list.salaryMin === 35">{{list.salaryMin}}k以上</span>
-              <span v-else>{{list.salaryMin}}-{{list.salaryMax}}k</span>
-            </div>
-            <div class="tabs-second">
-              <span v-if="list.company.companyName.length > 8">
-                <el-tooltip placement="bottom" effect="light">
-                  <div slot="content">{{list.company.companyName}}</div>
-                  <span style="margin:0 0 0 0">{{list.company.companyName.slice(0, 8)+'...'}}</span>
-                </el-tooltip>
-              </span>
-              <span v-else>{{list.company.companyName}}</span>
-              <span
-                v-if="list.workAgeMax == null"
-              >{{list.workAddress.city}} | 10年以上 | {{list.degreeMin}}</span>
-              <span
-                v-else
-              >{{list.workAddress.city}} | {{list.workAgeMin}}-{{list.workAgeMax}}年 | {{list.degreeMin}}</span>
-              <span class="operated">
-                {{list.operatedHistory[0].operatedTime|formatDate}}
-                {{list.operatedHistory[0].operation}}
-              </span>
-              <div class="operatedButton">
-                <button class="button">查看详情</button>
+            <div
+              style="width:854px;cursor:pointer"
+              class="hover"
+              v-for="(list,index) in submittedList"
+              :key="index"
+            >
+              <div class="tabs-first">
+                <span v-if="list.positionName.length > 8">
+                  <el-tooltip placement="bottom" effect="light">
+                    <div slot="content">{{list.positionName}}</div>
+                    <span style="margin:0 0 0 0">{{list.positionName.slice(0, 8)+'...'}}</span>
+                  </el-tooltip>
+                </span>
+                <span v-else>{{list.positionName}}</span>
+                <span v-if="list.salaryMin === 35">{{list.salaryMin}}k以上</span>
+                <span v-else>{{list.salaryMin}}-{{list.salaryMax}}k</span>
               </div>
+              <div class="tabs-second">
+                <span v-if="list.company.companyName.length > 8">
+                  <el-tooltip placement="bottom" effect="light">
+                    <div slot="content">{{list.company.companyName}}</div>
+                    <span style="margin:0 0 0 0">{{list.company.companyName.slice(0, 8)+'...'}}</span>
+                  </el-tooltip>
+                </span>
+                <span v-else>{{list.company.companyName}}</span>
+                <span
+                  v-if="list.workAgeMax == null"
+                >{{list.workAddress.city}} | 10年以上 | {{list.degreeMin}}</span>
+                <span
+                  v-else-if="list.workAgeMin == 0"
+                >{{list.workAddress.city}} | 无工作经验 | {{list.degreeMin}}</span>
+                <span
+                  v-else
+                >{{list.workAddress.city}} | {{list.workAgeMin}}-{{list.workAgeMax}}年 | {{list.degreeMin}}</span>
+                <span
+                  v-if="list.processedState === 'INTERVIEW'"
+                  class="publishedTimes"
+                >{{list.publishedTime|formatDate}}</span>
+                <span v-else class="publishedTime">{{list.publishedTime|formatDate}}</span>
+                <div class="operatedButton" v-if="list.processedState === 'INTERVIEW'">
+                  <div v-if="list.interviewState === 'COMPLETED'">
+                    <button @click="exist(list)" class="button">评价/查看</button>
+                    <!-- <button @click="exist(list)" class="button">去评价</button> -->
+                  </div>
+
+                  <div
+                    v-else-if="list.interviewState === 'TO_BE_INTERVIEWED'"
+                    style="margin:0 -35px 0 -113px"
+                  >
+                    <button
+                      @click="abolish(list)"
+                      style="margin-right:20px;background:white;border:1px solid #327cf3;color:#327cf3"
+                      class="button"
+                      plain
+                    >取消面试</button>
+                    <button class="button" @click="lookinterview(list)">查看面试</button>
+                  </div>
+                  <button v-else class="button" @click="lookinterview(list)">查看面试</button>
+                </div>
+              </div>
+              <div class="tabs-line"></div>
             </div>
-            <div class="tabs-line"></div>
-          </div>
-          <div class="tabs-pagination">
-            <el-pagination
-              @size-change="handleSizeChange1"
-              @current-change="handleCurrentChange1"
-              :current-page="page1.current"
-              :page-sizes="page1.pageSizeOpts"
-              :page-size="page1.pageSize"
-              layout="total, sizes, prev, pager, next, jumper"
-              :total="page1.total"
-            ></el-pagination>
-          </div>-->
-        </el-tab-pane>
-        <el-tab-pane :label="`我的收藏（${collectNum = this.page.total}）`" name="second">
-          <div
-            style="width:854px;cursor:pointer"
-            class="hover"
-            v-for="(list,index) in favoriteList"
-            :key="index"
-          >
-            <div class="tabs-first" @click="nextjoblist(list.id)">
-              <span v-if="list.positionName.length > 10">
-                <el-tooltip placement="bottom" effect="light">
-                  <div slot="content">{{list.positionName}}</div>
-                  <span style="margin:0 0 0 0">{{list.positionName.slice(0, 10)+'...'}}</span>
-                </el-tooltip>
-              </span>
-              <span v-else>{{list.positionName}}</span>
-              <span v-if="list.salaryMin === 35">{{list.salaryMin}}k以上</span>
-              <span v-else>{{list.salaryMin}}-{{list.salaryMax}}k</span>
+            <div class="tabs-pagination">
+              <el-pagination
+                @size-change="handleSizeChange1"
+                @current-change="handleCurrentChange1"
+                :current-page="page1.current"
+                :page-sizes="page1.pageSizeOpts"
+                :page-size="page1.pageSize"
+                layout="total, sizes, prev, pager, next, jumper"
+                :total="page1.total"
+              ></el-pagination>
             </div>
-            <div class="collect-second">
-              <span
-                @click="nextjoblist(list.id)"
-                class="collect-company"
-                v-if="list.company.companyName.length > 10"
-              >
-                <el-tooltip placement="bottom" effect="light">
-                  <div slot="content">{{list.company.companyName}}</div>
-                  <span style="margin:0 0 0 0">{{list.company.companyName.slice(0, 8)+'...'}}</span>
-                </el-tooltip>
-              </span>
-              <span
-                @click="nextjoblist(list.id)"
-                class="collect-company"
-                v-else
-              >{{list.company.companyName}}</span>
-              <span
-                @click="nextjoblist(list.id)"
-                class="collect-city"
-                v-if="list.workAgeMax == null"
-              >{{list.workAddress.city}} | 10年以上 | {{list.degreeMin}}</span>
-              <span
-                @click="nextjoblist(list.id)"
-                class="collect-city"
-                v-else
-              >{{list.workAddress.city}} | {{list.workAgeMin}}-{{list.workAgeMax}}年 | {{list.degreeMin}}</span>
-              <span class="collect-button">
-                <el-button type="primary" @click="iscancel(list.id)">取消收藏</el-button>
-              </span>
+          </el-tab-pane>
+          <el-tab-pane :label="`我的收藏（${collectNum = this.page.total}）`" name="second">
+            <div
+              style="width:854px;cursor:pointer"
+              class="hover"
+              v-for="(list,index) in favoriteList"
+              :key="index"
+            >
+              <div class="tabs-first" @click="nextjoblist(list.id)">
+                <span v-if="list.positionName.length > 10">
+                  <el-tooltip placement="bottom" effect="light">
+                    <div slot="content">{{list.positionName}}</div>
+                    <span style="margin:0 0 0 0">{{list.positionName.slice(0, 10)+'...'}}</span>
+                  </el-tooltip>
+                </span>
+                <span v-else>{{list.positionName}}</span>
+                <span v-if="list.salaryMin === 35">{{list.salaryMin}}k以上</span>
+                <span v-else>{{list.salaryMin}}-{{list.salaryMax}}k</span>
+              </div>
+              <div class="collect-second">
+                <span
+                  @click="nextjoblist(list.id)"
+                  class="collect-company"
+                  v-if="list.company.companyName.length > 10"
+                >
+                  <el-tooltip placement="bottom" effect="light">
+                    <div slot="content">{{list.company.companyName}}</div>
+                    <span style="margin:0 0 0 0">{{list.company.companyName.slice(0, 8)+'...'}}</span>
+                  </el-tooltip>
+                </span>
+                <span
+                  @click="nextjoblist(list.id)"
+                  class="collect-company"
+                  v-else
+                >{{list.company.companyName}}</span>
+                <span
+                  @click="nextjoblist(list.id)"
+                  class="collect-city"
+                  v-if="list.workAgeMax == null"
+                >{{list.workAddress.city}} | 10年以上 | {{list.degreeMin}}</span>
+                <span
+                  @click="nextjoblist(list.id)"
+                  class="collect-city"
+                  v-else
+                >{{list.workAddress.city}} | {{list.workAgeMin}}-{{list.workAgeMax}}年 | {{list.degreeMin}}</span>
+                <span class="collect-button">
+                  <el-button type="primary" @click="iscancel(list.id)">取消收藏</el-button>
+                </span>
+              </div>
+              <div class="collect-line"></div>
             </div>
-            <div class="collect-line"></div>
+            <div class="collect-pagination">
+              <el-pagination
+                @size-change="handleSizeChange"
+                @current-change="handleCurrentChange"
+                :current-page="page.current"
+                :page-sizes="page.pageSizeOpts"
+                :page-size="page.pageSize"
+                layout="total, sizes, prev, pager, next, jumper"
+                :total="page.total"
+              ></el-pagination>
+            </div>
+          </el-tab-pane>
+        </el-tabs>
+        <div style="font-size:15px;line-height:500px" v-if="isshowTabs">你还没有任何投递记录呦~~</div>
+      </div>
+      <div class="personal-left" v-else>
+        <div class="personal-footer">
+          <div class="personal-footers">
+            <span>面试标签</span>
+            <el-checkbox-group v-model="userList" size="medium" @change="groupChange">
+              <el-checkbox-button label="THE_BENEFITS_PACKAGE_IS_FANTASTIC">福利待遇特别棒</el-checkbox-button>
+              <el-checkbox-button label="THE_INTERVIEWER_IS_DANIEL">面试官是大牛</el-checkbox-button>
+              <el-checkbox-button label="THE_ENVIRONMENT_IS_VERY_GOOD">环境非常nice</el-checkbox-button>
+              <el-checkbox-button label="THE_INTERVIEWER_IS_VERY_KIND">面试官很和善</el-checkbox-button>
+              <el-checkbox-button
+                label="INTERVIEW_EFFICIENCY_IS_VERY_HIGH"
+                style="margin:0 20px 0 0"
+              >面试效率很高</el-checkbox-button>
+              <el-checkbox-button label="THE_SALARY_DOES_NOT_MATCH_THE_LABEL">薪资跟标注不符</el-checkbox-button>
+              <el-checkbox-button label="THE_INTERVIEWER_IS_TOO_DEMANDING">面试官太苛刻</el-checkbox-button>
+              <el-checkbox-button label="THE_ENVIRONMENT_IS_SO_SO">环境一般般</el-checkbox-button>
+              <el-checkbox-button label="THE_INTERVIEWER_IS_VERY_SERIOUS">面试官态度严肃</el-checkbox-button>
+              <el-checkbox-button
+                label="WHEN_THE_SEAS_RUN_DRY_AND_THE_ROCKS_CRUMBLE"
+                style="margin:0 20px 0 0"
+              >等到海枯石烂</el-checkbox-button>
+            </el-checkbox-group>
           </div>
-          <div class="collect-pagination">
-            <el-pagination
-              @size-change="handleSizeChange"
-              @current-change="handleCurrentChange"
-              :current-page="page.current"
-              :page-sizes="page.pageSizeOpts"
-              :page-size="page.pageSize"
-              layout="total, sizes, prev, pager, next, jumper"
-              :total="page.total"
-            ></el-pagination>
+        </div>
+        <div class="personal-select">
+          <div class="personal-selects">
+            <span>面试体验</span>
+            <el-rate style="margin:0 0 0 10px" show-text v-model="value2" :colors="colors"></el-rate>
           </div>
-        </el-tab-pane>
-      </el-tabs>
-      <div style="font-size:15px;line-height:500px" v-if="isshowTabs">你还没有任何投递记录呦~~</div>
+        </div>
+        <div class="personal-footer">
+          <div class="personal-footers" style="margin:0 0 0 0">
+            <span>面试评价（选填）</span>
+            <el-input
+              type="textarea"
+              style="width:824px"
+              :autosize="{ minRows: 4, maxRows: 8}"
+              placeholder="请描述你的面试过程，例如：面试流程如何？面试氛围如何？最好是给其他用户一些建议…"
+              v-model="textarea2"
+            ></el-input>
+          </div>
+        </div>
+        <div class="personal-button">
+          <div class="personal-buttons">
+            <el-button class="button" plain @click="laterM()">稍后评价</el-button>
+            <el-button class="button" @click="evaluation" type="primary">提交评价</el-button>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="personal-left" v-if="appraise">
-      <div class="personal-footer">
-        <div class="personal-footers">
-          <span>面试标签</span>
-          <el-radio-group v-model="radio1" size="medium">
-            <el-radio-button label="福利待遇特别棒"></el-radio-button>
-            <el-radio-button label="面试官是大牛"></el-radio-button>
-            <el-radio-button label="环境非常nice"></el-radio-button>
-            <el-radio-button label="面试官很和善"></el-radio-button>
-            <el-radio-button label="面试效率很高" style="margin:0 20px 0 0"></el-radio-button>
-            <el-radio-button label="薪资跟标注不符"></el-radio-button>
-            <el-radio-button label="面试官太苛刻"></el-radio-button>
-            <el-radio-button label="环境一般般"></el-radio-button>
-            <el-radio-button label="面试官态度严肃"></el-radio-button>
-            <el-radio-button label="等到海枯石烂" style="margin:0 20px 0 0"></el-radio-button>
-          </el-radio-group>
-        </div>
-      </div>
-      <div class="personal-select">
-        <div class="personal-selects">
-          <span>面试体验</span>
-          <el-rate style="margin:0 0 0 10px" show-text v-model="value2" :colors="colors"></el-rate>
-        </div>
-      </div>
-      <div class="personal-footer">
-        <div class="personal-footers" style="margin:-40px 0 0 0">
-          <span>面试评价（选填）</span>
-          <el-input
-            type="textarea"
-            style="width:824px"
-            :autosize="{ minRows: 4, maxRows: 8}"
-            placeholder="请描述你的面试过程，例如：面试流程如何？面试氛围如何？最好是给其他用户一些建议…"
-            v-model="textarea2"
-          ></el-input>
-        </div>
-      </div>
-      <div class="personal-button">
-        <div class="personal-buttons">
-          <el-button class="button" plain @click="open" >稍后评价</el-button>
-          <el-button class="button" @click="open" type="primary">提交评价</el-button>
-          
-          <!-- <el-button class="button" type="info" disabled>匿名发表</el-button> -->
-        </div>
-      </div>
-    </div>
-    <!-- <div class="personal-left">
-      <div class="personals-nav">
-        产品经理 面试
-        <span>面试进度：已完成</span>
-      </div>
+    <div class="personal-left" v-else>
+      <div class="personals-nav">{{evaltionDetail.positionName}} 面试</div>
       <div class="personals-aside">
         <div>
           <span>面试体验：</span>
-          <span>4.0</span>分
+          <span>{{evaltionDetail.interviewExperience}}.0</span>分
         </div>
       </div>
-      <div class="personals-select">
+      <!-- <div class="personals-select">
         <div>
-          <span>面试难度：</span>
+          <span>面试体验：</span>
           <span>容易</span>
         </div>
-        <div style="margin:0 0 0 40px">
-          <span>面试官：</span>
-          <span>亲切</span>
-        </div>
-        <div style="margin:0 0 0 40px">
-          <span>公司印象：</span>
-          <span>还行</span>
-        </div>
-      </div>
+      </div> -->
       <div class="personal-footer">
         <div class="personal-footers">
-          <span>面试故事</span>
+          <span>面试评价</span>
           <el-input
             type="textarea"
             style="width:674px;font-family: PingFangSC-Regular;color: #737373;font-size:16px"
             :autosize="{ minRows: 4, maxRows: 8}"
             v-model="textarea"
           ></el-input>
+          <el-button style="margin:30px auto" @click="detailEvaltion = true">返回</el-button>
         </div>
       </div>
-    </div>-->
+    </div>
     <div class="personal-right">
       <div class="right-nav">
         <span class="span-hover" @click="edit">编辑</span>
@@ -540,21 +577,28 @@ export default {
   components: {},
   data() {
     return {
+      detailEvaltion: true,
+      evaltionDetail: {},
+      radioReason: "",
+      textarea2: "",
+      interviewStates: null,
+      params: {},
+      interviewparams: {},
       linktitle: "复制链接",
       textlink: "service@163.com",
       dialogVisible: false,
       dialogVisibleoffer: false,
       dialogVisibleoutoffer: false,
-      dialogVisibleloseoffer: true,
-      index: "first",
+      dialogVisibleloseoffer: false,
+      index: "TO_PROCESS",
       colors: ["#99A9BF", "#F7BA2A", "#FF9900"],
       dialogError: false,
       dialogSuccess: false,
-      textarea:
-        "able to work under high pressure and time limitation . able work under high pressure and time limitation. able towork under high pressure and time limitation.able to work under high pressure and time limitation.able to work under high pressure and time limitation.able to work under high pressure and time limitation. to work under pressure and time limitation.able to work under high pressure and time limitation.",
+      textarea: "",
       value2: null,
       appraise: true,
-      radio1: "",
+      userList: [],
+      radio: "",
       page: {
         total: 0,
         pageSize: 10,
@@ -578,7 +622,7 @@ export default {
       showInfor: true,
       showWarn: true,
       showWarnone: false,
-      showTabs: false,
+      showTabs: true,
       isshowTabs: false,
       submittedList: [],
       favoriteList: [],
@@ -606,10 +650,141 @@ export default {
       salaryMin: "",
       size: "",
       workAgeMax: "",
-      workAgeMin: ""
+      workAgeMin: "",
+      jobSeekers: {
+        interviewAddress: {}
+      },
+      interviewId: "",
+      positionId: "",
+      interviewLabel: [
+        {
+          interviewLabel: "",
+          customizeInterviewTag: ""
+        }
+      ]
     };
   },
   methods: {
+    //去评价
+    exist(res) {
+      this.positionId = res.id;
+      this.interviewId = res.interviewId;
+      this.$http
+        .get(`/consumer-core/interview/exist/${res.interviewId}`)
+        .then(res => {
+          if (res.data.data) {
+            this.detailEvaltion = false;
+            this.$http
+              .get(`/consumer-core/interview/evaluation/${this.interviewId}`)
+              .then(res => {
+                this.evaltionDetail = res.data.data;
+                this.textarea = res.data.data.content;
+              })
+              .catch(error => {});
+          } else {
+            this.appraise = false;
+          }
+        })
+        .catch(error => {});
+    },
+    groupChange() {
+      if (this.userList.length > 3) {
+        this.userList.shift();
+      }
+    },
+    //稍后评论
+    laterM() {
+      this.appraise = true;
+    },
+    evaluation() {
+      this.userList.forEach((item, index, array) => {
+        this.interviewLabel[index] = {
+          interviewLabel: array[index],
+          customizeInterviewTag: null
+        };
+      });
+      let params = {
+        content: this.textarea2,
+        evaluationInterviewLabelBodes: this.interviewLabel,
+        interviewExperience: this.value2,
+        isAnonymous: false,
+        parentId: 0,
+        positionId: this.positionId
+      };
+      this.$http
+        .put(`/consumer-core/interview/evaluation/${this.interviewId}`, params)
+        .then(res => {
+          this.dialogSuccess = true;
+          this.appraise = true;
+        })
+
+        .catch(error => {});
+    },
+    //取消面试
+    abolish(res) {
+      this.interviewId = res.interviewId;
+      this.dialogVisibleoffer = true;
+    },
+    reasonKeep() {
+      let params = {
+        reason: this.radioReason
+      };
+      this.$http
+        .put(`/consumer-core/interview/cancel/${this.interviewId}`, params)
+        .then(res => {
+          this.dialogVisibleoffer = false;
+          submitted(this.interviewparams).then(res => {
+            if (res.data.code == 200) {
+              this.submittedList = res.data.data.list;
+              this.page1.total = res.data.data.total;
+            }
+          });
+        })
+        .catch(error => {});
+    },
+    //拒绝面试
+    refuse() {
+      this.$http
+        .put(`/consumer-core/interview/refused/${this.interviewId}`)
+        .then(res => {
+          this.dialogVisible = false;
+          this.dialogVisibleloseoffer = true;
+          submitted(this.interviewparams).then(res => {
+            if (res.data.code == 200) {
+              this.submittedList = res.data.data.list;
+              this.page1.total = res.data.data.total;
+            }
+          });
+        })
+        .catch(error => {});
+    },
+    //接受面试
+    accept() {
+      this.$http
+        .put(`/consumer-core/interview/accept/${this.interviewId}`)
+        .then(res => {
+          this.dialogVisible = false;
+          submitted(this.interviewparams).then(res => {
+            if (res.data.code == 200) {
+              this.submittedList = res.data.data.list;
+              this.page1.total = res.data.data.total;
+            }
+          });
+        })
+        .catch(error => {});
+    },
+    //查看面试
+    lookinterview(res) {
+      this.interviewId = res.interviewId;
+      this.interviewStates = res.interviewState;
+      this.dialogVisible = true;
+      this.$http
+        .get(`/consumer-core/interview/${res.interviewId}`)
+        .then(res => {
+          this.jobSeekers = res.data.data;
+        })
+        .catch(error => {});
+    },
     copy() {
       var clipboard = new Clipboard(".tabs-read");
       clipboard.on("success", e => {
@@ -628,31 +803,113 @@ export default {
       });
     },
     Tabstatus(e) {
-      console.log(e);
       if (e === 1) {
-        this.index = "first";
+        this.index = "TO_PROCESS";
+        this.params = {
+          resumeProcessedState: this.index,
+          pageNum: 10,
+          pageSize: 1
+        };
       } else if (e === 2) {
-        this.index = "second";
+        this.index = "PROCESSING";
+        this.params = {
+          resumeProcessedState: this.index,
+          pageNum: 10,
+          pageSize: 1
+        };
       } else if (e === 3) {
-        this.index = "third";
+        this.index = "INTERVIEW";
+        this.params = {
+          resumeProcessedState: this.index,
+          pageNum: 10,
+          pageSize: 1
+        };
       } else if (e === 4) {
-        this.index = "fourth";
+        this.index = "OFFERED";
+        this.params = {
+          resumeProcessedState: this.index,
+          pageNum: 10,
+          pageSize: 1
+        };
       } else {
-        this.index = "fifth";
+        this.index = "UNFIT";
+        this.params = {
+          resumeProcessedState: this.index,
+          pageNum: 10,
+          pageSize: 1
+        };
       }
+      submitted(this.params).then(res => {
+        if (res.data.code == 200) {
+          this.submittedList = res.data.data.list;
+          this.page1.total = res.data.data.total;
+        }
+      });
     },
-    open() {
-      this.$confirm("请评价面试体验～", "", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        showClose: false,
-        center: true,
-        showCancelButton: false,
-        showConfirmButton: false
-      })
-        .then(() => {})
-        .catch(() => {});
+    interviewstatus(e) {
+      if (e === 1) {
+        this.interviewStates = null;
+        this.interviewparams = {
+          resumeProcessedState: "INTERVIEW",
+          interviewState: this.interviewStates
+        };
+      } else if (e === 2) {
+        this.interviewStates = "TO_BE_ACCEPTED";
+        this.interviewparams = {
+          resumeProcessedState: "INTERVIEW",
+          interviewState: this.interviewStates
+        };
+      } else if (e === 3) {
+        this.interviewStates = "REFUSED";
+        this.interviewparams = {
+          resumeProcessedState: "INTERVIEW",
+          interviewState: this.interviewStates
+        };
+      } else if (e === 4) {
+        this.interviewStates = "TO_BE_INTERVIEWED";
+        this.interviewparams = {
+          resumeProcessedState: "INTERVIEW",
+          interviewState: this.interviewStates
+        };
+      } else if (e === 5) {
+        this.interviewStates = "COMPLETED";
+        this.interviewparams = {
+          resumeProcessedState: "INTERVIEW",
+          interviewState: this.interviewStates
+        };
+      } else if (e === 6) {
+        this.interviewStates = "TO_CANCEL_THE_INTERVIEW";
+        this.interviewparams = {
+          resumeProcessedState: "INTERVIEW",
+          interviewState: this.interviewStates
+        };
+      } else {
+        this.interviewStates = "HAS_BEEN_EFFECTIVE";
+        this.interviewparams = {
+          resumeProcessedState: "INTERVIEW",
+          interviewState: this.interviewStates
+        };
+      }
+      submitted(this.interviewparams).then(res => {
+        if (res.data.code == 200) {
+          this.submittedList = res.data.data.list;
+          this.page1.total = res.data.data.total;
+        }
+      });
     },
+    // open() {
+    //   // this.$confirm("请评价面试体验～", "", {
+    //   //   confirmButtonText: "确定",
+    //   //   cancelButtonText: "取消",
+    //   //   showClose: false,
+    //   //   center: true,
+    //   //   showCancelButton: false,
+    //   //   showConfirmButton: false
+    //   // })
+    //   //   .then(() => {})
+    //   //   .catch(() => {});
+
+    // },
     handleSizeChange(val) {
       this.page.pageSize = val;
       this.page.current = 1;
@@ -732,7 +989,12 @@ export default {
     },
     //获取投递过的岗位
     submitt() {
-      submitted().then(res => {
+      let params = {
+        resumeProcessedState: "TO_PROCESS",
+        pageNum: 10,
+        pageSize: 1
+      };
+      submitted(params).then(res => {
         if (res.data.code == 200) {
           this.submittedList = res.data.data.list;
           this.page1.total = res.data.data.total;
@@ -909,6 +1171,15 @@ export default {
 </script>
 
 <style lang="stylus">
+.dropdown-button {
+  background: #ffffff;
+}
+
+.dropdown-buttons {
+  background: #e9ebf4;
+  
+}
+
 .el-message-box__content {
   font-size: 20px;
   font-family: PingFangSC-Medium;
@@ -926,6 +1197,14 @@ export default {
   .operatedButton {
     display: none;
     margin: 0 72px 0 0;
+  }
+
+  .publishedTime {
+    display: inline;
+  }
+
+  .publishedTimes {
+    display: inline;
   }
 
   .hover:hover {
@@ -946,7 +1225,7 @@ export default {
       }
     }
 
-    .operated {
+    .publishedTimes {
       display: none;
     }
   }
@@ -954,6 +1233,7 @@ export default {
   .personal-left {
     width: 1010px;
     background: white;
+
     .title {
       font-family: PingFangSC-Regular;
       color: #222222;
@@ -1078,21 +1358,15 @@ export default {
     }
 
     .personals-nav {
-      margin: 60px 0 0 168px;
+      margin: 60px 0 0 110px;
       font-size: 20px;
       text-align: left;
       font-family: PingFangSC-Medium;
       color: #373737;
-
-      span {
-        font-family: PingFangSC-Regular;
-        color: #666666;
-        font-size: 16px;
-      }
     }
 
     .personals-aside {
-      margin: 40px 0 0 168px;
+      margin: 40px 0 0 110px;
       text-align: left;
 
       span:nth-child(2) {
@@ -1102,11 +1376,11 @@ export default {
     }
 
     .personals-select {
-      margin: 25px 0 0 168px;
+      margin: 25px 0 0 110px;
       display: flex;
       flex-direction: row;
       font-family: PingFangSC-Regular;
-      color: #327CF3;
+      color: #666666;
       font-size: 16px;
     }
 
@@ -1138,7 +1412,7 @@ export default {
     }
 
     .personal-footer {
-      margin: 80px 0 0 108px;
+      margin: 30px 0 0 108px;
 
       .personal-footers {
         display: flex;
@@ -1166,7 +1440,7 @@ export default {
           margin: 20px 0 0 0;
         }
 
-        .el-radio-button--medium .el-radio-button__inner {
+        .el-checkbox-button--medium .el-checkbox-button__inner {
           padding: 10px 20px;
           font-size: 14px;
           border-radius: 20px;
@@ -1174,7 +1448,7 @@ export default {
           width: 152px;
         }
 
-        .el-radio-button__inner {
+        .el-checkbox-button__inner {
           line-height: 1;
           white-space: nowrap;
           vertical-align: middle;
@@ -1195,11 +1469,11 @@ export default {
           border-radius: 20px;
         }
 
-        .el-radio-button__orig-radio:checked+.el-radio-button__inner {
+        .el-checkbox-button.is-checked .el-checkbox-button__inner {
           color: #fff;
           background-color: #409eff;
           border-color: #409eff;
-          box-shadow: -1px 0 0 0 #409eff;
+          box-shadow: -1px 0 0 0 #8cc5ff;
         }
 
         span {
@@ -1218,6 +1492,25 @@ export default {
       .button {
         width: 200px;
         height: 40px;
+      }
+    }
+
+    .tab-operations {
+      position: absolute;
+      z-index: 999;
+      font-family: PingFangSC-Regular;
+
+      .el-dropdown-menu {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 10;
+        padding: 10px 0;
+        margin: 5px 0;
+        background-color: #fff;
+        border: 1px solid #ebeef5;
+        border-radius: 4px;
+        box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
       }
     }
 

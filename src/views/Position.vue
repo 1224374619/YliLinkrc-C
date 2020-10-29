@@ -47,7 +47,116 @@
                   ></baidu-map>
                 </div>
               </div>
-              <div class="station-appraise">
+              <div class="station-appraise" v-if="this.apprasiseEvaluation">
+                <div class="station-appraise-nav">
+                  <div style="margin:30px 0 0 30px">{{evaluationLists.companyName}}面试评价</div>
+                  <div style="margin:30px 0 0 40px">综合面试评分：</div>
+                  <div style="margin:35px 0 0 0;width:140px">
+                    <el-rate v-model="value2" :colors="colors"></el-rate>
+                  </div>
+                  <div style="margin:31px 0 0 10px;">{{evaluationLists.overallExperienceNum}}.0</div>
+                  <div style="margin:31px 0 0 0;">（来自{{evaluationLists.evaluations.total}}条评价）</div>
+                </div>
+                <div class="personal-footers" v-if="radiobutton">
+                  <el-radio-group size="medium" v-model="usercode" @change="radioChange">
+                    <el-radio-button label="null">全部</el-radio-button>
+                    <el-radio-button label="90000">传媒/艺术/设计</el-radio-button>
+                    <el-radio-button label="80000">生产/制造</el-radio-button>
+                    <el-radio-button label="120000">能源/农业/科研</el-radio-button>
+                    <el-radio-button label="40000">IT/互联网/通信</el-radio-button>
+                    <el-radio-button label="30000">项目/质量/管理</el-radio-button>
+                    <el-radio-button label="0">其他</el-radio-button>
+                  </el-radio-group>
+                </div>
+                <div class="station-appraise-line"></div>
+                <div
+                  v-for="(item,index) in evaluationLists.evaluations.list"
+                  :key="index"
+                  style="height:330px"
+                >
+                  <div class="station-appraise-aside">
+                    <div>
+                      <img
+                        style="width:50px;height:50px;margin:0 0 0 30px"
+                        src="../assets/images/89.png"
+                      />
+                    </div>
+                    <div class="appraise-nav">
+                      <div v-if="item.isAnonymous">{{item.appraiser}}</div>
+                      <div v-else>匿名用户</div>
+                    </div>
+                    <div class="appraise-aside" style="margin:15px 0 0 54px">
+                      面试体验：
+                      <el-rate
+                        style="width:140px;"
+                        v-model="item.interviewExperience"
+                        :colors="colors"
+                      ></el-rate>
+                    </div>
+                    <div
+                      class="appraise-aside"
+                      style="margin:15px 0 0 20px;"
+                    >面试职位：{{item.positionName}}</div>
+                    <div style="margin:15px 0 0 55px">{{item.createdTime|formatDateOne}}</div>
+                  </div>
+                  <div class="station-appraise-select">
+                    <el-radio-group v-model="radio1" size="medium">
+                      <el-radio-button label="福利待遇特别棒"></el-radio-button>
+                    </el-radio-group>
+                  </div>
+                  <div class="station-appraise-content">
+                    <div style="text-align:left">
+                      <span style="margin:0 0 0 -7px">【面试过程】</span>
+                      <span>{{item.content}}</span>
+                    </div>
+                    <div style="margin:0 0 0 -720px">企业回复</div>
+                    <div class="third">
+                      <div>
+                        <img
+                          style="width:50px;height:50px;margin:15px 0 0 15px"
+                          src="../assets/images/89.png"
+                        />
+                      </div>
+                      <div>
+                        <div
+                          style="margin:5px 0 0 5px;color: #A2A2A2;text-align:left"
+                        >{{evaluationLists.companyName}}HR.人事</div>
+                        <div style="margin:0 0 0 5px;text-align:left">{{item.content}}</div>
+                      </div>
+                      <div>
+                        <div>{{item.createdTime|formatDateOne}}</div>
+                      </div>
+                    </div>
+                    <div class="station-appraise-footer">
+                      <div
+                        style="display: flex;flex-direction: row;margin:20px 0 0 0"
+                        @click="like(item)"
+                      >
+                        <img style="width:25px;height:25px" src="../assets/images/zan.png" />
+                        <span style="line-height:25px">{{item.likeNum}}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div v-if="this.jumper">
+                  <button @click="more()" class="station-appraise-button">查看更多</button>
+                </div>
+                <div v-if="this.pager">
+                  <el-pagination
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page="page.current"
+                    :page-sizes="page.pageSizeOpts"
+                    style="margin:30px 0 30px 0"
+                    :page-size="page.pageSize"
+                    layout="total, sizes, prev, pager, next, jumper"
+                    :total="page.total"
+                  ></el-pagination>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="station-appraise" >
+              <div style="height:800px">
                 <div class="station-appraise-nav">
                   <div style="margin:30px 0 0 30px">银领面试评价</div>
                   <div style="margin:30px 0 0 40px">综合面试评分：</div>
@@ -56,6 +165,15 @@
                   </div>
                   <div style="margin:31px 0 0 10px;">4.0</div>
                   <div style="margin:31px 0 0 0;">（来自15条评价）</div>
+                </div>
+                <div class="station-appraise-radio">
+                  <el-radio-group v-model="radio1" size="medium">
+                    <el-radio-button label="全部"></el-radio-button>
+                    <el-radio-button label="产品经理"></el-radio-button>
+                    <el-radio-button label="UI设计师"></el-radio-button>
+                    <el-radio-button label="前端开发"></el-radio-button>
+                    <el-radio-button label="后端开发"></el-radio-button>
+                  </el-radio-group>
                 </div>
                 <div class="station-appraise-line"></div>
                 <div class="station-appraise-aside">
@@ -81,7 +199,7 @@
                   </el-radio-group>
                 </div>
                 <div class="station-appraise-content">
-                  <div>
+                  <div style="text-align:left">
                     <span style="margin:0 0 0 -7px">【面试过程】</span>
                     <span>able to work under high pressure and time limitation . able work under high pressure and time limitation. able towork under high pressure and time limitation.able to work under high pressure and time limitation.able to work under high pressure and time limitation.able to work under high pressure and time limitation. to work under pressure and time limitation.able to work under high pressure and time limitation.</span>
                   </div>
@@ -111,46 +229,9 @@
                       <span style="line-height:25px">2</span>
                     </div>
                   </div>
-                  <div style="background: #FAFAFA;width: 794px;margin: 20px 0 0 0;">
-                    <div class="discuss">
-                      <div style="width:200px;margin:16px 0 0 0">
-                        <span class="nav">张三：</span>问个问题问个问题
-                      </div>
-                      <div style="width:160px;margin:16px 0 0 0">
-                        <span>赞（3）</span>
-                        <span>回复（2）</span>
-                      </div>
-                    </div>
-                    <div class="discusses">
-                      <div style="margin:0 0 10px -640px">08月23日 14:21</div>
-                      <el-input
-                        type="textarea"
-                        style="width:96%;margin:10px 2% 0 2%"
-                        :rows="2"
-                        placeholder="请输入内容"
-                        v-model="textarea"
-                      ></el-input>
-                      <el-button style="margin:20px 0 0 86%" plain>发表</el-button>
-                      <div class="line"></div>
-                    </div>
-                    <div class="discuss">
-                      <div style="width:200px;margin:16px 0 0 0">
-                        <span class="nav">张三：</span>问个问题问个问题
-                      </div>
-                      <div style="width:160px;margin:16px 0 0 0">
-                        <span>赞（3）</span>
-                        <span>回复（2）</span>
-                      </div>
-                    </div>
-                    <div class="discusses">
-                      <div style="margin:0 0 0 -640px">08月23日 14:21</div>
-
-                      <div class="line"></div>
-                    </div>
-                  </div>
                 </div>
               </div>
-            </div>
+            </div>-->
           </el-tab-pane>
           <el-tab-pane label="在招职位" name="second">
             <div class="postType">
@@ -235,6 +316,19 @@ export default {
   data() {
     let self = this;
     return {
+      radiobutton:false,
+      usercode:'',
+      jumper: false,
+      pager: false,
+      evaluationLists: {
+        evaluations: {
+          list: []
+        }
+      },
+      value2: 5,
+      colors: ["#99A9BF", "#F7BA2A", "#FF9900"],
+      apprasiseEvaluation: true,
+      radio1: "",
       page: {
         total: 0,
         pageSize: 10,
@@ -307,6 +401,131 @@ export default {
     };
   },
   methods: {
+    //筛选
+    radioChange() {
+       let params = {
+        pageNum: 1,
+        pageSize: 10,
+        code:parseInt(this.usercode),
+        positionIds: [],
+        sortBy: null,
+        sortOrder: null
+      };
+      this.$http
+        .post(`/consumer-core/evaluation/company/${this.companId}`, params)
+        .then(res => {
+          this.evaluationLists = res.data.data;
+          this.page.total = res.data.data.evaluations.total;
+          // this.jumper = false;
+          // this.pager = true;
+          // this.radiobutton = true
+        })
+        .catch(error => {});
+    },
+    //评论分页
+    handleSizeChange(val) {
+      this.page.pageSize = val;
+      this.page.current = 1;
+      let params = {
+        pageNum: this.page.current,
+        pageSize: this.page.pageSize,
+        positionIds: [],
+        sortBy: null,
+        sortOrder: null
+      };
+      this.$http
+        .post(`/consumer-core/evaluation/company/${this.companId}`, params)
+        .then(res => {
+          this.evaluationLists = res.data.data;
+          this.page.total = res.data.data.evaluations.total;
+          this.jumper = false;
+          this.pager = true;
+        })
+        .catch(error => {});
+    },
+    handleCurrentChange(val) {
+      this.page.current = val;
+      let params = {
+        pageNum: this.page.current,
+        pageSize: this.page.pageSize,
+        positionIds: [],
+        sortBy: null,
+        sortOrder: null
+      };
+      this.$http
+        .post(`/consumer-core/evaluation/company/${this.companId}`, params)
+        .then(res => {
+          this.evaluationLists = res.data.data;
+          this.page.total = res.data.data.evaluations.total;
+          this.jumper = false;
+          this.pager = true;
+        })
+        .catch(error => {});
+    },
+    //查看更多
+    more() {
+      let params = {
+        pageNum: 1,
+        pageSize: 10,
+        code:null,
+        positionIds: [],
+        sortBy: null,
+        sortOrder: null
+      };
+      this.$http
+        .post(`/consumer-core/evaluation/company/${this.companId}`, params)
+        .then(res => {
+          this.evaluationLists = res.data.data;
+          this.page.total = res.data.data.evaluations.total;
+          this.jumper = false;
+          this.pager = true;
+          this.radiobutton = true
+        })
+        .catch(error => {});
+    },
+    // //获取公司所有职位列表用于筛选
+    // filtrate() {
+    //   this.$http
+    //     .get(`/consumer-core/position/filtrate/list/${this.companId}`)
+    //     .then(res => {})
+    //     .catch(error => {});
+    // },
+    //点赞
+    like(list) {
+      this.$http
+        .post(`/consumer-core/evaluation/like/${list.id}`)
+        .then(res => {
+          this.evaluationList();
+        })
+        .catch(error => {});
+    },
+    //根据公司id获取公司评价列表‘
+    evaluationList() {
+      let params = {
+        code:null,
+        pageNum: 1,
+        pageSize: 5,
+        positionIds: [],
+        sortBy: null,
+        sortOrder: null
+      };
+      this.$http
+        .post(`/consumer-core/evaluation/company/${this.companId}`, params)
+        .then(res => {
+          if (res.data.data.evaluations === null) {
+            this.apprasiseEvaluation = false;
+          } else {
+            this.evaluationLists = res.data.data;
+            if (this.evaluationLists.evaluations.total < 5) {
+              this.jumper = true;
+            } else {
+              this.jumper = false;
+            }
+            // this.value2 = res.data.data.overallExperienceNum
+          }
+        })
+        .catch(error => {});
+    },
     getLocationPoint(e) {
       // this.lng = e.point.lng;
       // this.lat = e.point.lat;
@@ -580,7 +799,8 @@ export default {
     this.companId = this.$route.query.id;
     this.companIds = this.$route.query.sid;
     // this.citise()
-
+    // this.filtrate();
+    this.evaluationList();
     this.companyId();
     // this.allposition()
     this.positionCataloga();
@@ -749,7 +969,7 @@ export default {
         text-align: left;
         font-size: 16px;
         color: #535353;
-        margin: 0 0 0 0;
+        margin: 30px 0 0 0;
         width: 854px;
         white-space: pre-line;
       }
@@ -806,7 +1026,7 @@ export default {
       .station-appraise {
         margin: 0 55px 0 0;
         border: 1px solid rgba(236, 236, 236, 1);
-        height: 1000px;
+        height: auto;
         border-radius: 5px;
         width: 850px;
 
@@ -842,9 +1062,93 @@ export default {
           }
         }
 
+        .personal-footers {
+          display: flex;
+          flex-direction: column;
+
+          .el-radio-button--medium .el-radio-button__inner {
+            padding: 10px 10px;
+            font-size: 10px;
+            border-radius: 20px;
+            margin: 20px 0 0 16px;
+            width: 102px;
+          }
+
+          .el-radio-button__inner {
+            line-height: 1;
+            white-space: nowrap;
+            vertical-align: middle;
+            background: #fff;
+            border: 1px solid #dcdfe6;
+            font-weight: 500;
+            border-left: 1;
+            margin: 0 0 0 20px;
+            color: #606266;
+            -webkit-appearance: none;
+            text-align: center;
+            box-sizing: border-box;
+            margin: 0;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+            padding: 12px 20px;
+            font-size: 10px;
+            border-radius: 20px;
+          }
+
+          .el-radio-button__orig-radio:checked+.el-radio-button__inner {
+            color: #fff;
+            background-color: #409eff;
+            border-color: #409eff;
+            box-shadow: -1px 0 0 0 #8cc5ff;
+          }
+        }
+
+        .station-appraise-radio {
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-start;
+          margin: 0 0 0 15px;
+
+          .el-radio-button--medium .el-radio-button__inner {
+            padding: 10px 20px 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            margin: 20px 0 0 16px;
+            height: 26px;
+          }
+
+          .el-radio-button__inner {
+            line-height: 5px;
+            white-space: nowrap;
+            vertical-align: middle;
+            background: #fff;
+            border: 1px solid #dcdfe6;
+            font-weight: 500;
+            border-left: 1;
+            margin: 0 0 0 20px;
+            color: #606266;
+            -webkit-appearance: none;
+            text-align: center;
+            box-sizing: border-box;
+            margin: 0;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+            font-size: 14px;
+            border-radius: 20px;
+            heigth: 26px;
+          }
+
+          .el-radio-button__orig-radio:checked+.el-radio-button__inner {
+            color: #fff;
+            background-color: #409eff;
+            border-color: #409eff;
+            box-shadow: -1px 0 0 0 #409eff;
+          }
+        }
+
         .station-appraise-line {
-          border: 1px solid #f8f8f8;
-          margin: 20px 30px 0 30px;
+          border: 0.5px solid #f8f8f8;
+          margin: 30px 30px 0 30px;
         }
 
         .station-appraise-aside {
@@ -941,6 +1245,19 @@ export default {
           }
         }
 
+        .station-appraise-button {
+          width: 118px;
+          height: 30px;
+          border-radius: 5px;
+          background: #FFFFFF;
+          border: 1px solid rgba(201, 201, 201, 1);
+          font-family: PingFangSC-Regular;
+          color: #222222;
+          letter-spacing: 1.8;
+          font-size: 16px;
+          margin: 0 0 30px 0;
+        }
+
         .station-appraise-content {
           height: 100px;
           margin: 20px 30px 0 30px;
@@ -983,6 +1300,7 @@ export default {
             display: flex;
             flex-direction: row;
             justify-content: flex-end;
+            margin: 0 0 30px 0;
           }
 
           .discuss {

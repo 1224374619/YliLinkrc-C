@@ -2,17 +2,17 @@
   <Scroll ref="scroll">
     <div class="resumes">
       <div class="content">
-        <!-- <el-dialog title width="30%" :visible.sync="dialogDrag" style="border-radius:5px;">
+        <el-dialog title width="30%" :visible.sync="dialogDrag" style="border-radius:5px;">
           <div>
             <el-upload
               class="upload-demo"
               :action="uploadUrl"
               style="margin:0 0 20px 0"
               drag
+              :data="uploadfile"
+              :headers="myHeaders"
               :show-file-list="false"
               :on-success="handleVideoSuccess"
-              :before-upload="beforeUploadVideo"
-              :on-progress="uploadVideoProcess"
             >
               <div>
                 <i class="el-icon-upload"></i>
@@ -29,35 +29,42 @@
                 <span style="margin:0 0 0 5px">123</span>
               </div>
               <div>
-               <i class="el-icon-delete"></i>
+                <i class="el-icon-delete"></i>
               </div>
             </div>
-            <el-progress
+            <!-- <el-progress
               v-if="videoFlag == true"
               type="line"
               :text-inside="true"
               :stroke-width="15"
               :percentage="videoUploadPercent"
               style="margin:5px 0 0 50px;width:80%"
-            ></el-progress>
+            ></el-progress>-->
           </div>
-        </el-dialog> -->
+        </el-dialog>
         <el-dialog
           title
           :visible.sync="dialogSuccess"
           style="width:700px;margin-left:25%;margin-top:5%;border-radius:5px"
         >
-          <!-- <div style="display:flex;flex-direction:column;">
+          <div style="display:flex;flex-direction:column;" v-if="this.dialogsetDefault">
             <div>
-              <img :src="require('../assets/images/succ.png')"
-          />
+              <img :src="require('../assets/images/succ.png')" />
             </div>
             <div style="font-family: PingFangSC-Medium;color: #2C2C2C;font-size:20px">设置成功</div>
-            <div style="font-family: PingFangSC-Regular;color: #565656;font-size:14px;margin:10px 0 70px 0">成功设置为默认投递简历～</div>
-            <div><el-button style="width:270px;height:40px;margin:0 0 40px 0" type="primary">确定</el-button></div>
-          </div>-->
+            <div
+              style="font-family: PingFangSC-Regular;color: #565656;font-size:14px;margin:10px 0 70px 0"
+            >成功设置为默认投递简历～</div>
+            <div>
+              <el-button
+                @click="dialogSuccess = false"
+                style="width:270px;height:40px;margin:0 0 40px 0"
+                type="primary"
+              >确定</el-button>
+            </div>
+          </div>
 
-          <div style="display:flex;flex-direction:column;">
+          <div style="display:flex;flex-direction:column;" v-else>
             <div>
               <img :src="require('../assets/images/sz.png')" />
             </div>
@@ -66,7 +73,11 @@
               style="font-family: PingFangSC-Regular;color: #565656;font-size:14px;margin:10px 0 70px 0"
             >成功上传附件简历~</div>
             <div>
-              <el-button style="width:270px;height:40px;margin:0 0 40px 0" type="primary">确定</el-button>
+              <el-button
+                @click="dialogSuccess = false"
+                style="width:270px;height:40px;margin:0 0 40px 0"
+                type="primary"
+              >确定</el-button>
             </div>
           </div>
         </el-dialog>
@@ -76,15 +87,15 @@
           :visible.sync="dialogResume"
           style="width:900px;margin-left:25%;margin-top:10%;border-radius:5px"
         >
-          <div style="display:flex;flex-direction:row;margin-left:90px">
-            <!-- <span
-              style="font-size:20px;line-height:20px;margin:15px 0 0 -10px;color:#373737"
-            >确定删除？删除后默认投递简历将会改变</span>-->
-            <span style="font-size:20px;line-height:20px;margin:15px 0 0 -10px;color:#373737">确定删除？</span>
+          <div style="display:flex;flex-direction:row;margin-left:30px">
+            <span v-if="this.isDefault"
+              style="font-size:20px;line-height:20px;margin:15px 0 0 0;color:#373737"
+            >确定删除？删除后默认投递简历将会改变</span>
+            <span v-else style="font-size:20px;line-height:20px;margin:15px 0 0 130px;color:#373737">确定删除？</span>
           </div>
-          <div slot="footer" class="dialog-footer" style="margin-top:-70px;margin-right:50px">
+          <div slot="footer" class="dialog-footer" style="margin-top:-70px;margin-right:60px">
             <el-button style="margin:0 100px 0 0" @click="dialogResume = false" plain>取 消</el-button>
-            <el-button type="primary" style="margin:0 0 0 0" @click="dialogResume = false">确 定</el-button>
+            <el-button type="primary" style="margin:0 0 0 0" @click="keepDelete()">确 定</el-button>
           </div>
         </el-dialog>
         <!-- 教育经历删除确认 -->
@@ -1719,34 +1730,24 @@
       <div class="aside-body">
         <Affix :offset="60">
           <div class="aside">
-            <!-- <div class="aside-nav" style="margin:50px 0 80px 0">
+            <div class="aside-nav" style="margin:50px 0 80px 0">
               <div class="aside-foot">
-                <div class="aside-foot-second" v-for="(item,index) in formList" :key="index">
-                  <el-upload
-                    class="upload-demo"
-                    action="https://jsonplaceholder.typicode.com/posts/"
-                    :on-change="handleChange"
-                    :file-list="item.pics"
-                    :limit="3"
-                    list-type="text"
-                    :on-exceed="handleExceed"
-                    :on-success="handleSuccess"
-                    style="margin-bottom:20px"
+                <div class="aside-foot-second">
+                  <div
+                    style="display: flex;flex-direction: row;justify-content: space-between;line-height:30px;width:270px"
                   >
-                    <div
-                      style="display: flex;flex-direction: row;justify-content: space-between;line-height:30px;width:270px"
-                    >
-                      <div class="aside-foot-first">附件简历</div>
-                      <el-button
-                        style="font-family: PingFangSC-Regular;color: #327CF3;font-size:12px;width:25px"
-                        type="text"
-                      >添加</el-button>
-                    </div>
-
+                    <div class="aside-foot-first">附件简历</div>
+                    <el-button
+                      style="font-family: PingFangSC-Regular;color: #327CF3;font-size:12px;width:25px"
+                      type="text"
+                      @click="addfile"
+                    >添加</el-button>
+                  </div>
+                  <div v-for="(item,index) in fileList" :key="index">
                     <div class="onResume">
                       <div>
                         <i class="el-icon-paperclip"></i>
-                        <span style="margin:0 0 0 5px">123</span>
+                        <span style="margin:0 0 0 5px">{{item.resumeName}}</span>
                       </div>
                       <div>
                         <el-dropdown>
@@ -1754,55 +1755,18 @@
                             <i class="el-icon-more-outline"></i>
                           </span>
                           <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item>设为默认投递简历</el-dropdown-item>
+                            <el-dropdown-item @click.native="setDefault(item)">设为默认投递简历</el-dropdown-item>
                             <el-dropdown-item>下载</el-dropdown-item>
-                            <el-dropdown-item>删除</el-dropdown-item>
+                            <el-dropdown-item @click.native="deleteFile(item)">删除</el-dropdown-item>
                           </el-dropdown-menu>
                         </el-dropdown>
                       </div>
                     </div>
                     <div class="resumeLine"></div>
-                    <div class="onResume">
-                      <div>
-                        <i class="el-icon-paperclip"></i>
-                        <span style="margin:0 0 0 5px">123</span>
-                      </div>
-                      <div>
-                        <el-dropdown>
-                          <span class="el-dropdown-link">
-                            <i class="el-icon-more-outline"></i>
-                          </span>
-                          <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item>设为默认投递简历</el-dropdown-item>
-                            <el-dropdown-item>下载</el-dropdown-item>
-                            <el-dropdown-item>删除</el-dropdown-item>
-                          </el-dropdown-menu>
-                        </el-dropdown>
-                      </div>
-                    </div>
-                    <div class="resumeLine"></div>
-                    <div class="onResume">
-                      <div>
-                        <i class="el-icon-paperclip"></i>
-                        <span style="margin:0 0 0 5px">123</span>
-                      </div>
-                      <div>
-                        <el-dropdown>
-                          <span class="el-dropdown-link">
-                            <i class="el-icon-more-outline"></i>
-                          </span>
-                          <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item>设为默认投递简历</el-dropdown-item>
-                            <el-dropdown-item>下载</el-dropdown-item>
-                            <el-dropdown-item>删除</el-dropdown-item>
-                          </el-dropdown-menu>
-                        </el-dropdown>
-                      </div>
-                    </div>
-                  </el-upload>
+                  </div>
                 </div>
               </div>
-            </div> -->
+            </div>
             <div class="aside-nav" style="margin:50px 0 0 0">
               <div class="aside-nav-first">在线简历</div>
               <div class="aside-nav-second">
@@ -1998,28 +1962,14 @@ export default {
       }
     };
     return {
-      formList: [{ pics: [] }],
+      fileList: [],
       videoFlag: false,
       videoUploadPercent: 0,
-      fileList: [
-        {
-          name: "food.jpeg",
-          url:
-            "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"
-        },
-        {
-          name: "food2.jpeg",
-          url:
-            "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"
-        },
-        {
-          name: "food2.jpeg",
-          url:
-            "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"
-        }
-      ],
       uploadData: {
         label: "resume-avatar"
+      },
+      uploadfile: {
+        label: "resume-file"
       },
       myHeaders: { "Auth-Token": token },
       monthPayList: [],
@@ -2028,6 +1978,7 @@ export default {
       joint: true,
       selfjoint: true,
       perId: "",
+      isDefault:'',
       imageUrlTwo: "",
       fileOne: "",
       imageUrl: "",
@@ -2082,7 +2033,8 @@ export default {
       dialogedu: false,
       dialogResume: false,
       dialogSuccess: false,
-      dialogDrag: true,
+      dialogsetDefault: false,
+      dialogDrag: false,
       dialogwork: false,
       dialogproject: false,
       dialogtrain: false,
@@ -2117,6 +2069,7 @@ export default {
       showpersonappraisal: true,
       file: "",
       imageUrlOne: "",
+      defaultId: "",
       languageouterVisible: false,
       languageinnerVisible: false,
       professionouterVisible: false,
@@ -2455,17 +2408,81 @@ export default {
   //   },
   // },
   methods: {
-    uploadVideoProcess(event, file, fileList) {
-      this.videoFlag = true;
-      console.log(event);
-      this.startTimer = setInterval(() => {
-        this.videoUploadPercent++;
-        if (this.videoUploadPercent >= file.percentage) {
-          clearInterval(this.startTimer);
-          this.videoFlag = false;
-        }
-      }, 100);
+    //设置附件简历
+    setDefault(res) {
+      this.$http
+        .put(`/consumer-core/resume/setDefault/${res.id}`)
+        .then(res => {
+          this.dialogSuccess = true;
+          this.dialogsetDefault = true;
+          this.allfile();
+        })
+        .catch(error => {});
     },
+    //删除附件简历
+    deleteFile(res) {
+      if (res.isDefault) {
+        this.isDefault = true
+        this.dialogResume = true;
+      }else {
+        this.isDefault = false
+        this.dialogResume = true;
+      }
+      this.defaultId = res.id;
+    },
+    //确认删除附件简历
+    keepDelete() {
+      this.$http
+        .delete(`/consumer-core/resume/${this.defaultId}/file`)
+        .then(res => {
+          this.dialogResume = false;
+          this.allfile();
+        })
+        .catch(error => {});
+    },
+    //获取所有附件简历
+    allfile() {
+      this.$http
+        .get("/consumer-core/resume/file/list")
+        .then(res => {
+          this.fileList = res.data.data;
+        })
+        .catch(error => {});
+    },
+    //上传附件简历
+    handleVideoSuccess(res, file) {
+      console.log(file);
+      let params = {
+        file: res.data
+      };
+      let paramss = {
+        resumeName: file.name
+      };
+      this.$http
+        .post(`/consumer-core/resume/file/?resumeName=${file.name}`, params)
+        .then(res => {
+          this.dialogSuccess = true;
+          this.dialogsetDefault = false;
+          this.dialogDrag = false;
+          this.allfile();
+        })
+        .catch(error => {});
+    },
+    //添加附件
+    addfile() {
+      this.dialogDrag = true;
+    },
+    // uploadVideoProcess(event, file, fileList) {
+    //   this.videoFlag = true;
+    //   console.log(event);
+    //   this.startTimer = setInterval(() => {
+    //     this.videoUploadPercent++;
+    //     if (this.videoUploadPercent >= file.percentage) {
+    //       clearInterval(this.startTimer);
+    //       this.videoFlag = false;
+    //     }
+    //   }, 100);
+    // },
     handleExceed(files, fileList) {
       this.$notify.error({
         title: "错误",
@@ -3251,7 +3268,7 @@ export default {
           } else {
             this.$notify.error({
               title: "错误",
-              message: error.response.data.message,
+              message: error.response.data.message
             });
             this.$router.push({ path: "/login" });
             this.personalinformation = true;
@@ -3993,7 +4010,8 @@ export default {
     this.optionList = options.data;
     this.positionCatalogList = positionCatalog.data;
     if (token) {
-      this.brief()
+      this.brief();
+      this.allfile();
       // this.allposition(),
       // this.allpositionCatalog(),
     }
@@ -4143,9 +4161,10 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width:78%;
-  margin:0 0 0 50px
+  width: 78%;
+  margin: 0 0 0 50px;
 }
+
 .resumes {
   width: 1440px;
   margin: 96px auto 0;
@@ -4402,7 +4421,7 @@ export default {
         font-famil: PingFangSC-Regular;
         color: #909090;
         font-size: 12px;
-        margin: 5px 0 0 30px;
+        margin: 5px 30px 0 30px;
 
         .onResume {
           display: flex;

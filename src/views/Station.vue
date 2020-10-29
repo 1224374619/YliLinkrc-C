@@ -11,7 +11,7 @@
       </div>
       <div class="station-nav-content">
         <div class="content-nav" style="width:500px;">
-          <span>{{positionIdList.company.address.city}} | {{positionIdList.workAgeMin}}-{{positionIdList.workAgeMax}}年 | {{positionIdList.degreeMin}} | {{positionIdList.jobType}}</span>
+          <span>{{this.positionIdListaddress.city}} | {{positionIdList.workAgeMin}}-{{positionIdList.workAgeMax}}年 | {{positionIdList.degreeMin}} | {{positionIdList.jobType}}</span>
         </div>
         <div class="content-article">
           <span>发布时间：{{positionIdList.publishedTime | formatDate}}</span>
@@ -87,6 +87,23 @@
         </span>
       </el-dialog>
     </div>
+    <div style="margin:0 0 0 990px;width:300px">
+      <el-radio-group
+        v-model="paperclip"
+        class="radio-group"
+        v-for="(item,index) in resumeLists"
+        :key="index"
+      >
+        <el-radio
+          style="font-family: PingFangSC-Regular;color: #666666;font-size:18px;margin:15px 0 0 0"
+          :label="item.isDefault"
+        >
+          <i class="el-icon-paperclip"></i>
+          {{item.resumeName}}
+        </el-radio>
+        <br />
+      </el-radio-group>
+    </div>
     <div class="station-foot" v-if="stationFoot">
       <div class="station-foot-content">
         <p>职位描述</p>
@@ -98,7 +115,7 @@
           <div class="station-foot-foot-two">
             <span
               style="font-size:18px"
-            >{{positionIdList.company.address.province+' ' +' '+positionIdList.company.address.city}} {{positionIdList.workAddress.detail}}</span>
+            >{{this.positionIdListaddress.province+' ' +' '+this.positionIdListaddress.city}} {{this.positionIdListworkAddress.detail}}</span>
             <!-- <span>查看地图</span> -->
           </div>
           <!-- <el-amap
@@ -115,104 +132,131 @@
           <baidu-map
             :center="center"
             :zoom="zoom"
-            @ready="handler"
             style="width:859px;height:188px;margin:20px 0 45px 96px"
             @click="getLocationPoint"
             :scroll-wheel-zoom="true"
           ></baidu-map>
         </div>
-        <div class="station-appraise">
+
+        <div class="station-appraise" v-if="this.apprasiseEvaluation">
           <div class="station-appraise-nav">
-            <div style="margin:30px 0 0 30px">银领面试评价</div>
+            <div style="margin:30px 0 0 30px">{{evaluationLists.companyName}}面试评价</div>
             <div style="margin:30px 0 0 40px">综合面试评分：</div>
             <div style="margin:35px 0 0 0;width:140px">
               <el-rate v-model="value2" :colors="colors"></el-rate>
             </div>
-            <div style="margin:31px 0 0 10px;">4.0</div>
-            <div style="margin:31px 0 0 0;">（来自15条评价）</div>
+            <div style="margin:31px 0 0 10px;">{{evaluationLists.overallExperienceNum}}.0</div>
+            <div style="margin:31px 0 0 0;">（来自{{evaluationLists.evaluations.total}}条评价）</div>
           </div>
           <div class="station-appraise-line"></div>
-          <div class="station-appraise-aside">
-            <div>
-              <img style="width:50px;height:50px;margin:0 0 0 30px" src="../assets/images/89.png" />
-            </div>
-            <div class="appraise-nav">
-              <div>匿名用户</div>
-            </div>
-            <div class="appraise-aside" style="margin:15px 0 0 94px">
-              面试体验：
-              <el-rate style="width:140px;" v-model="value2" :colors="colors"></el-rate>
-            </div>
-            <div class="appraise-aside" style="margin:15px 0 0 50px">面试职位：产品经理</div>
-            <div style="margin:15px 0 0 85px">2020-02-14</div>
-          </div>
-          <div class="station-appraise-select">
-            <el-radio-group v-model="radio1" size="medium">
-              <el-radio-button label="福利待遇特别棒"></el-radio-button>
-            </el-radio-group>
-          </div>
-          <div class="station-appraise-content">
-            <div>
-              <span style="margin:0 0 0 -7px">【面试过程】</span>
-              <span>able to work under high pressure and time limitation . able work under high pressure and time limitation. able towork under high pressure and time limitation.able to work under high pressure and time limitation.able to work under high pressure and time limitation.able to work under high pressure and time limitation. to work under pressure and time limitation.able to work under high pressure and time limitation.</span>
-            </div>
-            <div>企业回复</div>
-            <div class="third">
-              <div>
-                <img
-                  style="width:50px;height:50px;margin:15px 0 0 15px"
-                  src="../assets/images/89.png"
-                />
-              </div>
-              <div>
-                <div style="margin:5px 0 0 5px;color: #A2A2A2">银领.HR.人事</div>
-                <div style="margin:0 0 0 5px">每天在宽敞舒适的环境办公心情会更好哦～</div>
-              </div>
-              <div>
-                <div>2020-02-14</div>
-              </div>
-            </div>
-            <div class="station-appraise-footer">
-              <div style="display: flex;flex-direction: row;margin:20px 35px 0 0">
-                <img style="width:25px;height:25px" src="../assets/images/zan.png" />
-                <span style="line-height:25px">1820</span>
-              </div>
-              <div style="display: flex;flex-direction: row;margin:20px 0 0 0">
-                <img style="width:25px;height:25px" src="../assets/images/book.png" />
-                <span style="line-height:25px">2</span>
-              </div>
-            </div>
-            <div style="background: #FAFAFA;width: 794px;margin: 20px 0 0 0;">
-              <div class="discuss">
-                <div style="width:200px;margin:16px 0 0 0">
-                  <span class="nav">张三：</span>问个问题问个问题
-                </div>
-                <div style="width:160px;margin:16px 0 0 0">
-                  <span>赞（3）</span>
-                  <span>回复（2）</span>
-                </div>
-              </div>
-              <div class="discusses">
-                <span style="margin:0 0 10px 15px">08月23日 14:21</span>
-                <el-input type="textarea" style="width:96%;margin:10px 2% 0 2%" :rows="2" placeholder="请输入内容" v-model="textarea"></el-input>
-                <el-button style="margin:20px 0 0 86%" plain>发表</el-button>
-                <div class="line"></div>
-              </div>
-              <div class="discuss">
-                <div style="width:200px;margin:16px 0 0 0">
-                  <span class="nav">张三：</span>问个问题问个问题
-                </div>
-                <div style="width:160px;margin:16px 0 0 0">
-                  <span>赞（3）</span>
-                  <span>回复（2）</span>
-                </div>
-              </div>
-              <div class="discusses">
-                <span style="margin:0 0 10px 15px">08月23日 14:21</span>
 
-                <div class="line"></div>
+          <div v-for="(item,index) in evaluationLists.evaluations.list" :key="index">
+            <div class="station-appraise-aside">
+              <div>
+                <img style="width:50px;height:50px;margin:0 0 0 30px" src="../assets/images/89.png" />
               </div>
+              <div class="appraise-nav">
+                <div v-if="item.isAnonymous">{{item.appraiser}}</div>
+                <div v-else>匿名用户</div>
+              </div>
+              <div class="appraise-aside" style="margin:15px 0 0 54px">
+                面试体验：
+                <el-rate style="width:140px;" v-model="item.interviewExperience" :colors="colors"></el-rate>
+              </div>
+              <div class="appraise-aside" style="margin:15px 0 0 20px;">面试职位：{{item.positionName}}</div>
+              <div style="margin:15px 0 0 55px">{{item.createdTime|formatDateOne}}</div>
             </div>
+            <div class="station-appraise-select">
+              <el-radio-group v-model="radio1" size="medium">
+                <el-radio-button label="福利待遇特别棒"></el-radio-button>
+              </el-radio-group>
+            </div>
+            <div class="station-appraise-content">
+              <div>
+                <span style="margin:0 0 0 -7px">【面试过程】</span>
+                <span>{{item.content}}</span>
+              </div>
+              <div>企业回复</div>
+              <div class="third">
+                <div>
+                  <img
+                    style="width:50px;height:50px;margin:15px 0 0 15px"
+                    src="../assets/images/89.png"
+                  />
+                </div>
+                <div>
+                  <div
+                    style="margin:5px 0 0 5px;color: #A2A2A2"
+                  >{{evaluationLists.companyName}}HR.人事</div>
+                  <div style="margin:0 0 0 5px">{{item.content}}</div>
+                </div>
+                <div>
+                  <div>{{item.createdTime|formatDateOne}}</div>
+                </div>
+              </div>
+              <div class="station-appraise-footer">
+                <div
+                  style="display: flex;flex-direction: row;margin:20px 0 0 0"
+                  @click="like(item)"
+                >
+                  <img style="width:25px;height:25px" src="../assets/images/zan.png" />
+                  <span style="line-height:25px">{{item.likeNum}}</span>
+                </div>
+                <!-- <div style="display: flex;flex-direction: row;margin:20px 0 0 0">
+                  <img style="width:25px;height:25px" src="../assets/images/book.png" />
+                  <span style="line-height:25px">2</span>
+                </div>-->
+              </div>
+              <!-- <div style="color:#317cf3;display:flex; justify-content:flex-end;margin:15px 0 0 0">
+                <div v-if="!item.isReply" @click="morereply(item)">
+                  展示更多回复
+                  <i style="margin:3px 0 0 0" class="el-icon-arrow-right"></i>
+                </div>
+                <div v-else @click="morereply(item)">
+                  收起
+                  <i style="margin:3px 0 0 0" class="el-icon-arrow-down"></i>
+                </div>
+              </div>
+
+              <div style="background: #FAFAFA;width: 794px;margin: 20px 0 0 0" v-if="item.isReply">
+                <div v-for="(list,cindex) in childList" :key="cindex">
+                  <div class="discuss">
+                    <div style="width:600px;margin:16px 0 15px 0">
+                      <span class="nav">{{list.appraiser}}</span>
+                      {{list.content}}
+                    </div>
+                    <div style="width:160px;margin:16px 0 0 0">
+                      <span>赞（{{list.likeNum}}）</span>
+                      <span @click="list.isReply = !list.isReply">回复（{{list.likeNum}}）</span>
+                    </div>
+                  </div>
+                  <div v-if="list.isReply">
+                    <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"></el-input>
+                    <button
+                      @click="addecaluation(list)"
+                      style="width:81px;height:33px;background:#327cf3;color:#fff;font-size:20px;border:1px solid #327cf3;border-radius:5px;margin:15px 0 15px 650px;"
+                    >发表</button>
+                  </div>
+                 
+                </div>
+              </div>-->
+            </div>
+          </div>
+
+          <div v-if="this.morejumpers">
+            <button @click="more()" class="station-appraise-button">查看更多</button>
+          </div>
+          <div v-if="this.morepagers" style="margin:0 0 30px 0">
+            <el-pagination
+              @size-change="handleSizeChange"
+              @current-change="handleCurrentChange"
+              :current-page="page.current"
+              :page-sizes="page.pageSizeOpts"
+              style="margin: 0 0 0 190px"
+              :page-size="page.pageSize"
+              layout="total, sizes, prev, pager, next, jumper"
+              :total="page.total"
+            ></el-pagination>
           </div>
         </div>
       </div>
@@ -310,6 +354,7 @@ import {
 } from "apis/account";
 // let amapManager = new AMapManager();
 import Cookies from "js-cookie";
+import Vuex from "vuex";
 // import { error } from 'util';
 export default {
   name: "station",
@@ -319,13 +364,35 @@ export default {
   },
   data() {
     return {
+      morejumpers: false,
+      morepagers: false,
+      apprasiseEvaluation: true,
+      radio1: "",
+      page: {
+        total: 0,
+        pageSize: 10,
+        current: 1,
+        pageSizeOpts: [10, 20, 30]
+      },
+      interviewExperience: 0,
+      paperclip: true,
+      resumeLists: [],
+      evaluationLists: {
+        evaluations: {
+          list: []
+        }
+      },
       companyId: "",
       positiId: "",
       companyName: "",
       noMore: false,
       More: true,
+      al: true,
+      all: true,
       hotpositionList: [],
       positionIdList: [],
+      positionIdListaddress: {},
+      positionIdListworkAddress: {},
       companyIdList: [],
       industryList: [],
       radio: 3,
@@ -349,40 +416,119 @@ export default {
       citysal: [],
       resumesId: "",
 
-      value2: null,
+      value2: 5,
       colors: ["#99A9BF", "#F7BA2A", "#FF9900"],
 
       center: { lng: "", lat: "" },
       zoom: 13
-
-      // nearbyInfo: [], // 周边信息---高德反馈（周边建筑信息）
-      // addressInfo: "", // 城市信息---高德反馈（省市区、adcode）
-      // center: [123, 123], // 高德地图中心点
-      // zoom: 15, // 地图缩放
-      // events: {
-      //   click: e => {
-      //     // 点击地图的时候，获取点击的经纬度，并将地图中心点移自此处
-      //     let m = e.lnglat;
-      //     self.addrInput = "";
-      //     self.center = [m.lng, m.lat];
-      //     self.GDmapGetInfoOfNearby(m.lng, m.lat, self); // 获取周边信息
-      //   }
-      // },
-      // plugin: [
-      //   {
-      //     pName: "Geolocation",
-      //     noIpLocate: 1, // ios11： 禁止ip定位：ios11之后默认是ip定位，参数为1则是禁止ip定位
-      //     events: {
-      //       init: o => {
-      //         self.GDinit(o, self); // 获取当前位置
-      //       }
-      //     }
-      //   }
-      // ]
     };
   },
 
   methods: {
+    //评论分页
+    handleSizeChange(val) {
+      this.page.pageSize = val;
+      this.page.current = 1;
+      let params = {
+        pageNum: this.page.current,
+        pageSize: this.page.pageSize,
+        positionIds: [this.positiId],
+        sortBy: null,
+        sortOrder: null
+      };
+      this.$http
+        .post(`/consumer-core/evaluation/position`, params)
+        .then(res => {
+          if (res.data.data.evaluations === null) {
+            this.apprasiseEvaluation = false;
+          } else {
+            this.evaluationLists = res.data.data;
+          }
+        })
+        .catch(error => {});
+    },
+    handleCurrentChange(val) {
+      this.page.current = val;
+      let params = {
+        pageNum: this.page.current,
+        pageSize: this.page.pageSize,
+        positionIds: [this.positiId],
+        sortBy: null,
+        sortOrder: null
+      };
+      this.$http
+        .post(`/consumer-core/evaluation/position`, params)
+        .then(res => {
+          if (res.data.data.evaluations === null) {
+            this.apprasiseEvaluation = false;
+          } else {
+            this.evaluationLists = res.data.data;
+          }
+        })
+        .catch(error => {});
+    },
+    //查看更多
+    more() {
+      let params = {
+        pageNum: 1,
+        pageSize: 10,
+        positionIds: [this.positiId],
+        sortBy: null,
+        sortOrder: null
+      };
+      this.$http
+        .post(`/consumer-core/evaluation/position`, params)
+        .then(res => {
+          this.evaluationLists = res.data.data;
+          this.page.total = res.data.data.evaluations.total;
+          this.morejumpers = false;
+          this.morepagers = true;
+        })
+        .catch(error => {});
+    },
+    //点赞
+    like(list) {
+      this.$http
+        .post(`/consumer-core/evaluation/like/${list.id}`)
+        .then(res => {
+          this.evaluationList();
+        })
+        .catch(error => {});
+    },
+    //根据职位id获取职位评价列表‘
+    evaluationList() {
+      let params = {
+        pageNum: 1,
+        pageSize: 5,
+        positionIds: [this.positiId],
+        sortBy: null,
+        sortOrder: null
+      };
+      this.$http
+        .post(`/consumer-core/evaluation/position`, params)
+        .then(res => {
+          if (res.data.data.evaluations === null) {
+            this.apprasiseEvaluation = false;
+          } else {
+            this.evaluationLists = res.data.data;
+            if (this.evaluationLists.evaluations.total < 5) {
+              this.morejumpers = true;
+            } else {
+              this.morejumpers = false;
+            }
+          }
+        })
+        .catch(error => {});
+    },
+    //获取所有简历
+    resumeList() {
+      this.$http
+        .get(`/consumer-core/resume/list`)
+        .then(res => {
+          this.resumeLists = res.data.data;
+        })
+        .catch(error => {});
+    },
     getLocationPoint(e) {
       // this.lng = e.point.lng;
       // this.lat = e.point.lat;
@@ -558,6 +704,8 @@ export default {
           this.companyName = res.data.data.company.companyName;
           if (res.data.code == 200) {
             this.positionIdList = res.data.data;
+            this.positionIdListaddress = res.data.data.company.address;
+            this.positionIdListworkAddress = res.data.data.workAddress;
             this.getLocationPoint();
             if (res.data.data.company.logoUrl) {
               this.url = res.data.data.company.logoUrl;
@@ -789,6 +937,8 @@ export default {
       this.brief();
       this.showdeli();
       this.showcoll();
+      this.resumeList();
+      this.evaluationList();
     }
     this.positionId();
   },
@@ -880,6 +1030,12 @@ export default {
       color: white;
       border-color: #1d366e;
     }
+  }
+
+  .radio-group {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
   }
 
   .station-foot {
@@ -1060,7 +1216,7 @@ export default {
     .station-appraise {
       margin: 0 55px 0 96px;
       border: 1px solid rgba(236, 236, 236, 1);
-      height: 1000px;
+      height: auto;
       border-radius: 5px;
 
       .station-appraise-nav {
@@ -1098,6 +1254,19 @@ export default {
       .station-appraise-line {
         border: 1px solid #f8f8f8;
         margin: 20px 30px 0 30px;
+      }
+
+      .station-appraise-button {
+        width: 118px;
+        height: 30px;
+        border-radius: 5px;
+        background: #FFFFFF;
+        border: 1px solid rgba(201, 201, 201, 1);
+        font-family: PingFangSC-Regular;
+        color: #222222;
+        letter-spacing: 1.8;
+        font-size: 16px;
+        margin: 0 0 30px 350px;
       }
 
       .station-appraise-aside {
@@ -1195,7 +1364,7 @@ export default {
       }
 
       .station-appraise-content {
-        height: 100px;
+        height: auto;
         margin: 20px 30px 0 30px;
         font-family: PingFangSC-Regular;
         color: #686868;
@@ -1236,6 +1405,11 @@ export default {
           display: flex;
           flex-direction: row;
           justify-content: flex-end;
+          margin: 0 0 30px 0;
+        }
+
+        .active {
+          display: none;
         }
 
         .discuss {
@@ -1253,7 +1427,7 @@ export default {
             font-family: PingFangSC-Regular;
             color: #327CF3;
             font-size: 16px;
-            margin: 16px 0 0 16px;
+            margin: 16px 10px 0 16px;
           }
         }
 

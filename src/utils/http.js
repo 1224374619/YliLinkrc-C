@@ -35,7 +35,7 @@ _axios.interceptors.response.use(
     response => {
         let token = response.headers['auth-token']
         if (token === undefined) {
-            Cookies.set("token",'');
+            Cookies.set("token", '');
         } else {
             Cookies.set("token", response.headers['auth-token']);
         }
@@ -48,6 +48,16 @@ _axios.interceptors.response.use(
             //     message: '登录超时，请登录'
             // });
             router.replace('/login');
+        } else if (error.response.status === 404) {
+            Notification.error({
+                title: "错误",
+                message: "页面丢失，请重新加载"
+            });
+        } else {
+            Notification.error({
+                title: "错误",
+                message: error.response.data.message
+            });
         }
         return Promise.reject(error);
     }
