@@ -3,6 +3,10 @@
     <div class="resumes">
       <div class="content">
         <el-dialog title width="30%" :visible.sync="dialogDrag" style="border-radius:5px;">
+          <!-- <div style="font-size:18px;">简历附件上传功能正在准备中<br>敬请期待</div>
+          <div style="margin:25px 0 0 0">
+            <el-button @click="dialogDrag = false" type="primary">知道了</el-button>
+          </div>-->
           <div>
             <el-upload
               class="upload-demo"
@@ -32,14 +36,6 @@
                 <i class="el-icon-delete"></i>
               </div>
             </div>
-            <!-- <el-progress
-              v-if="videoFlag == true"
-              type="line"
-              :text-inside="true"
-              :stroke-width="15"
-              :percentage="videoUploadPercent"
-              style="margin:5px 0 0 50px;width:80%"
-            ></el-progress>-->
           </div>
         </el-dialog>
         <el-dialog
@@ -88,10 +84,14 @@
           style="width:900px;margin-left:25%;margin-top:10%;border-radius:5px"
         >
           <div style="display:flex;flex-direction:row;margin-left:30px">
-            <span v-if="this.isDefault"
+            <span
+              v-if="this.isDefault"
               style="font-size:20px;line-height:20px;margin:15px 0 0 0;color:#373737"
             >确定删除？删除后默认投递简历将会改变</span>
-            <span v-else style="font-size:20px;line-height:20px;margin:15px 0 0 130px;color:#373737">确定删除？</span>
+            <span
+              v-else
+              style="font-size:20px;line-height:20px;margin:15px 0 0 130px;color:#373737"
+            >确定删除？</span>
           </div>
           <div slot="footer" class="dialog-footer" style="margin-top:-70px;margin-right:60px">
             <el-button style="margin:0 100px 0 0" @click="dialogResume = false" plain>取 消</el-button>
@@ -1736,7 +1736,7 @@
                   <div
                     style="display: flex;flex-direction: row;justify-content: space-between;line-height:30px;width:270px"
                   >
-                    <div class="aside-foot-first">附件简历</div>
+                    <div class="aside-foot-first">附件简历（Beta）</div>
                     <el-button
                       style="font-family: PingFangSC-Regular;color: #327CF3;font-size:12px;width:25px"
                       type="text"
@@ -1860,6 +1860,7 @@
 let token = Cookies.get("token");
 const timeUtil = require("../timeUtil.js");
 import Cookies from "js-cookie";
+// import aliyun from "../aliyun.js";
 // import PersonalinformationFrom from 'components/personalinformation_from.vue'
 import { swiper, swiperSlide } from "vue-awesome-swiper";
 import datacenterBus from "../apis/datacenterBus.js";
@@ -1962,6 +1963,7 @@ export default {
       }
     };
     return {
+      aaaa: false,
       fileList: [],
       videoFlag: false,
       videoUploadPercent: 0,
@@ -1978,7 +1980,7 @@ export default {
       joint: true,
       selfjoint: true,
       perId: "",
-      isDefault:'',
+      isDefault: "",
       imageUrlTwo: "",
       fileOne: "",
       imageUrl: "",
@@ -2422,10 +2424,10 @@ export default {
     //删除附件简历
     deleteFile(res) {
       if (res.isDefault) {
-        this.isDefault = true
+        this.isDefault = true;
         this.dialogResume = true;
-      }else {
-        this.isDefault = false
+      } else {
+        this.isDefault = false;
         this.dialogResume = true;
       }
       this.defaultId = res.id;
@@ -2452,21 +2454,35 @@ export default {
     //上传附件简历
     handleVideoSuccess(res, file) {
       console.log(file);
+      let label = "resume-file";
       let params = {
-        file: res.data
-      };
-      let paramss = {
-        resumeName: file.name
+        accessUrl: res.data.fileAccessVo.accessUrl,
+        expireTime: res.data.fileAccessVo.expireTime,
+        ext: res.data.fileAccessVo.ext,
+        size: res.data.fileAccessVo.size,
+        fileName: res.data.fileAccessVo.fileName
       };
       this.$http
-        .post(`/consumer-core/resume/file/?resumeName=${file.name}`, params)
+        .post(`/file-service/files/getPreviewUrl/?label=${label}`, params)
         .then(res => {
-          this.dialogSuccess = true;
-          this.dialogsetDefault = false;
-          this.dialogDrag = false;
-          this.allfile();
+          let demo = aliyun.config({
+            url: res.data.data.previewURL, //设置文档预览URL地址。
+            mount: document.querySelector("#container")
+          });
+          //设置AccessToken。
+          demo.setToken({ token: res.data.data.accessToken });
+          console.log(demo.iframe)
         })
         .catch(error => {});
+      // this.$http
+      //   .post(`/consumer-core/resume/file/?resumeName=${file.name}`, params)
+      //   .then(res => {
+      //     this.dialogSuccess = true;
+      //     this.dialogsetDefault = false;
+      //     this.dialogDrag = false;
+      //     this.allfile();
+      //   })
+      //   .catch(error => {});
     },
     //添加附件
     addfile() {
@@ -4157,12 +4173,9 @@ export default {
 </script>
 
 <style lang="stylus">
-.dialogResume {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 78%;
-  margin: 0 0 0 50px;
+.web-office-iframe {
+  border:1px solid red
+  width:300px
 }
 
 .resumes {

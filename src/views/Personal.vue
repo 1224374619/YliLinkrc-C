@@ -89,7 +89,13 @@
             </el-tooltip>
           </div>
           <div class="foot">请您最晚于面试前2小时确认是否参加面试</div>
-          <div style="margin:30px 0 0 150px">
+          <div style="margin:30px 0 0 180px" v-if="this.interviewStates === 'TO_CANCEL_THE_INTERVIEW'">
+            <el-button
+              plain
+              disabled
+            >已取消</el-button>
+          </div>
+          <div style="margin:30px 0 0 150px" v-else>
             <el-button
               :disabled="this.interviewStates === 'TO_BE_ACCEPTED'?false:true"
               @click="refuse()"
@@ -405,8 +411,16 @@
                 <span
                   @click="nextjoblist(list.id)"
                   class="collect-city"
+                  v-else-if="list.workAgeMin == 0"
+                >{{list.workAddress.city}} | 无工作经验 | {{list.degreeMin}}</span>
+                <span
+                  @click="nextjoblist(list.id)"
+                  class="collect-city"
                   v-else
                 >{{list.workAddress.city}} | {{list.workAgeMin}}-{{list.workAgeMax}}年 | {{list.degreeMin}}</span>
+                <span class="collect-button" v-if="list.isSubmitted">
+                  <el-button style="color:#327cf3" type="text">已投递</el-button>
+                </span>
                 <span class="collect-button">
                   <el-button type="primary" @click="iscancel(list.id)">取消收藏</el-button>
                 </span>
@@ -486,12 +500,21 @@
           <span>{{evaltionDetail.interviewExperience}}.0</span>分
         </div>
       </div>
-      <!-- <div class="personals-select">
+      <div class="personals-select">
         <div>
           <span>面试体验：</span>
-          <span>容易</span>
+          <span>
+            <el-radio-group
+              v-model="radio1"
+              size="medium"
+              v-for="(list,index) in evaltionDetail.evaluationInterviewLabelBodes"
+              :key="index"
+            >
+              <el-radio-button :label="list.interviewLabel|level"></el-radio-button>
+            </el-radio-group>
+          </span>
         </div>
-      </div> -->
+      </div>
       <div class="personal-footer">
         <div class="personal-footers">
           <span>面试评价</span>
@@ -596,6 +619,7 @@ export default {
       dialogSuccess: false,
       textarea: "",
       value2: null,
+      radio1: "",
       appraise: true,
       userList: [],
       radio: "",
@@ -807,36 +831,51 @@ export default {
         this.index = "TO_PROCESS";
         this.params = {
           resumeProcessedState: this.index,
-          pageNum: 10,
-          pageSize: 1
+          pageNum: 1,
+          pageSize: 10,
+          interviewState: null,
+          sortBy: null,
+          sortOrder: null
         };
       } else if (e === 2) {
         this.index = "PROCESSING";
         this.params = {
           resumeProcessedState: this.index,
-          pageNum: 10,
-          pageSize: 1
+          pageNum: 1,
+          pageSize: 10,
+          interviewState: null,
+          sortBy: null,
+          sortOrder: null
         };
       } else if (e === 3) {
         this.index = "INTERVIEW";
         this.params = {
           resumeProcessedState: this.index,
-          pageNum: 10,
-          pageSize: 1
+          pageNum: 1,
+          pageSize: 10,
+          interviewState: null,
+          sortBy: null,
+          sortOrder: null
         };
       } else if (e === 4) {
         this.index = "OFFERED";
         this.params = {
           resumeProcessedState: this.index,
-          pageNum: 10,
-          pageSize: 1
+          pageNum: 1,
+          pageSize: 10,
+          interviewState: null,
+          sortBy: null,
+          sortOrder: null
         };
       } else {
         this.index = "UNFIT";
         this.params = {
           resumeProcessedState: this.index,
-          pageNum: 10,
-          pageSize: 1
+          pageNum: 1,
+          pageSize: 10,
+          interviewState: null,
+          sortBy: null,
+          sortOrder: null
         };
       }
       submitted(this.params).then(res => {
@@ -991,8 +1030,11 @@ export default {
     submitt() {
       let params = {
         resumeProcessedState: "TO_PROCESS",
-        pageNum: 10,
-        pageSize: 1
+        pageNum: 1,
+        pageSize: 10,
+        interviewState: null,
+        sortBy: null,
+        sortOrder: null
       };
       submitted(params).then(res => {
         if (res.data.code == 200) {
@@ -1166,6 +1208,44 @@ export default {
       this.submitt();
       this.brief();
     }
+  },
+  filters: {
+    level(level) {
+      var a;
+      switch (level) {
+        case "THE_BENEFITS_PACKAGE_IS_FANTASTIC":
+          a = "福利待遇特别棒";
+          break;
+        case "THE_INTERVIEWER_IS_DANIEL":
+          a = "面试官是大牛";
+          break;
+        case "THE_ENVIRONMENT_IS_VERY_GOOD":
+          a = "环境非常nice";
+          break;
+        case "THE_INTERVIEWER_IS_VERY_KIND":
+          a = "面试官很和善";
+          break;
+        case "INTERVIEW_EFFICIENCY_IS_VERY_HIGH":
+          a = "面试效率很高";
+          break;
+        case "THE_SALARY_DOES_NOT_MATCH_THE_LABEL":
+          a = "薪资跟标注不符";
+          break;
+        case "THE_INTERVIEWER_IS_TOO_DEMANDING":
+          a = "面试官太苛刻";
+          break;
+        case "THE_ENVIRONMENT_IS_SO_SO":
+          a = "环境一般般";
+          break;
+        case "THE_INTERVIEWER_IS_VERY_SERIOUS":
+          a = "面试官很严肃";
+          break;
+        case "WHEN_THE_SEAS_RUN_DRY_AND_THE_ROCKS_CRUMBLE":
+          a = "等到海枯石烂";
+          break;
+      }
+      return a;
+    }
   }
 };
 </script>
@@ -1177,7 +1257,6 @@ export default {
 
 .dropdown-buttons {
   background: #e9ebf4;
-  
 }
 
 .el-message-box__content {
@@ -1382,6 +1461,42 @@ export default {
       font-family: PingFangSC-Regular;
       color: #666666;
       font-size: 16px;
+
+      .el-radio-button--medium .el-radio-button__inner {
+        padding: 2px 10px;
+        font-size: 14px;
+        border-radius: 20px;
+        height: 20px;
+      }
+
+      .el-radio-button__inner {
+        line-height: 1;
+        white-space: nowrap;
+        vertical-align: middle;
+        background: #fff;
+        border: 1px solid #dcdfe6;
+        font-weight: 500;
+        border-left: 1;
+        margin: 0 0 0 20px;
+        color: #606266;
+        -webkit-appearance: none;
+        text-align: center;
+        box-sizing: border-box;
+        margin: 0;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+        padding: 12px 20px;
+        font-size: 14px;
+        border-radius: 20px;
+        heigth: 20px;
+      }
+
+      .el-radio-button__orig-radio:checked+.el-radio-button__inner {
+        color: #272822;
+        background-color: #fff;
+        border-color: #dee1e6;
+        box-shadow: -1px 0 0 0 #409eff;
+      }
     }
 
     .personal-select {
@@ -1576,6 +1691,8 @@ export default {
       font-size: 16px;
       width: 94px;
       height: 32px;
+      display: flex;
+      flex-direction: row;
 
       .button {
         background-color: #327cf3;

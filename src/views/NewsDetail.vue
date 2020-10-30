@@ -19,9 +19,14 @@
             <el-table :data="tableData" style="width: 100%">
               <el-table-column prop="title" label="消息列表">
                 <template slot-scope="scope">
-                  <el-collapse v-model="activeNames" @change="handleChange">
-                    <el-collapse-item :title="`${scope.row.title}`" name="1">
-                      <div>{{scope.row.content}}</div>
+                  <el-collapse>
+                    <el-collapse-item v-if="scope.row.title.length>22" :title="`${scope.row.title.substring(0,22)}`" name="1">
+                      <!-- <div>{{scope.row.content}}</div> -->
+                      <!-- <div v-else>{{scope.row.content}}</div> -->
+                    </el-collapse-item>
+                     <el-collapse-item v-else :title="`${scope.row.title}`" name="1">
+                      <!-- <div>{{scope.row.content}}</div> -->
+                      <!-- <div v-else>{{scope.row.content}}</div> -->
                     </el-collapse-item>
                   </el-collapse>
                 </template>
@@ -47,7 +52,7 @@
             <el-table :data="tableData" style="width: 100%">
               <el-table-column prop="title" label="消息列表">
                 <template slot-scope="scope">
-                  <el-collapse v-model="activeNames" @change="handleChange">
+                  <el-collapse>
                     <el-collapse-item :title="`${scope.row.title}`" name="1">
                       <div>{{scope.row.content}}</div>
                     </el-collapse-item>

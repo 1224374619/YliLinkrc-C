@@ -53,8 +53,8 @@
                   style="width:412px;height:210px;border-bottom:1px solid #fafafa;cursor:default;overflow:scroll;overflow-x:hidden;"
                 >
                   <div class="badge" v-for="(item,index) in notificationlist" :key="index">
-                    <span style="color:#6C6C6C;font-size:14px;margin-left:24px;">{{item.title}}</span>
-
+                    <span v-if="item.title.length>22" style="color:#6C6C6C;font-size:14px;margin-left:24px;">{{item.title.substring(0,22)}}</span>
+                    <span v-else style="color:#6C6C6C;font-size:14px;margin-left:24px;">{{item.title}}</span>
                     <span style="color:#909090;font-size:12px;margin-right:35px;">
                       <el-badge :is-dot="!item.isRead" class="item">{{item.releaseTime|formatDate}}</el-badge>
                     </span>

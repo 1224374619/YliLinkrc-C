@@ -121,7 +121,7 @@
                         <div
                           style="margin:5px 0 0 5px;color: #A2A2A2;text-align:left"
                         >{{evaluationLists.companyName}}HR.人事</div>
-                        <div style="margin:0 0 0 5px;text-align:left">{{item.content}}</div>
+                        <div style="margin:0 0 0 5px;text-align:left">{{item.sublist[0].content}}</div>
                       </div>
                       <div>
                         <div>{{item.createdTime|formatDateOne}}</div>
@@ -504,7 +504,7 @@ export default {
       let params = {
         code:null,
         pageNum: 1,
-        pageSize: 5,
+        pageSize: 10,
         positionIds: [],
         sortBy: null,
         sortOrder: null
@@ -516,7 +516,7 @@ export default {
             this.apprasiseEvaluation = false;
           } else {
             this.evaluationLists = res.data.data;
-            if (this.evaluationLists.evaluations.total < 5) {
+            if (this.evaluationLists.evaluations.total > 5) {
               this.jumper = true;
             } else {
               this.jumper = false;

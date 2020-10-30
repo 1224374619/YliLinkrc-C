@@ -19,6 +19,7 @@ import Station from '../views/Station.vue'
 import JobList from '../views/JobList.vue'
 import Personal from '../views/Personal.vue'
 import InforChange from '../views/inforchange.vue'
+// import captcha from '../components/captcha.vue'
 import NewsDetail from '../views/NewsDetail.vue'
 import AboutUs from '../views/AboutUs.vue'
 import Specialty  from '../views/Specialty.vue'
@@ -122,6 +123,12 @@ const router = new Router({
             name: 'inforchange',
             component: InforChange
         },
+
+        // {
+        //     path: '/captcha',
+        //     name: 'captcha',
+        //     component: captcha
+        // },
         {
             path: '/login',
             name: 'login',

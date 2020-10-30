@@ -328,6 +328,12 @@
                   v-if="list.workAgeMax == null"
                 >{{$CodeToTag.CodeToTag([parseInt(parseInt(list.catalogCode/100)*100/10000)*10000,parseInt(list.catalogCode/100)*100,list.catalogCode],positionCatalogList)[2]}} | 10年以上 | {{list.degreeMin}}</div>
                 <div
+                  @click="descOne(list.id)"
+                  class="desc-second"
+                  style="cursor:pointer"
+                  v-else-if="list.workAgeMin == 0"
+                >{{$CodeToTag.CodeToTag([parseInt(parseInt(list.catalogCode/100)*100/10000)*10000,parseInt(list.catalogCode/100)*100,list.catalogCode],positionCatalogList)[2]}} | 无工作经验 | {{list.degreeMin}}</div>
+                <div
                   class="desc-second"
                   v-else
                   style="cursor:pointer"

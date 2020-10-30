@@ -10,7 +10,13 @@
         <span v-else>{{positionIdList.salaryMin}}-{{positionIdList.salaryMax}}k</span>
       </div>
       <div class="station-nav-content">
-        <div class="content-nav" style="width:500px;">
+        <div class="content-nav" style="width:500px;" v-if="positionIdList.workAgeMax == null">
+          <span>{{this.positionIdListaddress.city}} | 10年以上 | {{positionIdList.degreeMin}} | {{positionIdList.jobType}}</span>
+        </div>
+        <div class="content-nav" style="width:500px;" v-else-if="positionIdList.workAgeMin == 0">
+          <span>{{this.positionIdListaddress.city}} | 无工作经验 | {{positionIdList.degreeMin}} | {{positionIdList.jobType}}</span>
+        </div>
+        <div class="content-nav" style="width:500px;" v-else>
           <span>{{this.positionIdListaddress.city}} | {{positionIdList.workAgeMin}}-{{positionIdList.workAgeMax}}年 | {{positionIdList.degreeMin}} | {{positionIdList.jobType}}</span>
         </div>
         <div class="content-article">
@@ -87,7 +93,7 @@
         </span>
       </el-dialog>
     </div>
-    <div style="margin:0 0 0 990px;width:300px">
+    <!-- <div style="margin:0 0 0 990px;width:300px">
       <el-radio-group
         v-model="paperclip"
         class="radio-group"
@@ -103,7 +109,7 @@
         </el-radio>
         <br />
       </el-radio-group>
-    </div>
+    </div> -->
     <div class="station-foot" v-if="stationFoot">
       <div class="station-foot-content">
         <p>职位描述</p>
@@ -163,12 +169,18 @@
                 面试体验：
                 <el-rate style="width:140px;" v-model="item.interviewExperience" :colors="colors"></el-rate>
               </div>
-              <div class="appraise-aside" style="margin:15px 0 0 20px;">面试职位：{{item.positionName}}</div>
+              <div class="appraise-aside" style="margin:15px 0 0 20px;" v-if="item.positionName.length>10">面试职位：{{item.positionName.substring(0,10)}}</div>
+              <div class="appraise-aside" style="margin:15px 0 0 20px;" v-else>面试职位：{{item.positionName}}</div>
               <div style="margin:15px 0 0 55px">{{item.createdTime|formatDateOne}}</div>
             </div>
             <div class="station-appraise-select">
-              <el-radio-group v-model="radio1" size="medium">
-                <el-radio-button label="福利待遇特别棒"></el-radio-button>
+              <el-radio-group
+                v-model="radio1"
+                size="medium"
+                v-for="(list,index) in item.evaluationInterviewLabelBodes"
+                :key="index"
+              >
+                <el-radio-button :label="list.interviewLabel|thelevel"></el-radio-button>
               </el-radio-group>
             </div>
             <div class="station-appraise-content">
@@ -188,7 +200,7 @@
                   <div
                     style="margin:5px 0 0 5px;color: #A2A2A2"
                   >{{evaluationLists.companyName}}HR.人事</div>
-                  <div style="margin:0 0 0 5px">{{item.content}}</div>
+                  <div style="margin:0 0 0 5px">{{item.sublist[0].content}}</div>
                 </div>
                 <div>
                   <div>{{item.createdTime|formatDateOne}}</div>
@@ -954,6 +966,42 @@ export default {
     size(size) {
       const map = ["小于10人", "10-100人", "100-500人", "500人以上"];
       return map[size];
+    },
+    thelevel(thelevel) {
+      var a;
+      switch (thelevel) {
+        case "THE_BENEFITS_PACKAGE_IS_FANTASTIC":
+          a = "福利待遇特别棒";
+          break;
+        case "THE_INTERVIEWER_IS_DANIEL":
+          a = "面试官是大牛";
+          break;
+        case "THE_ENVIRONMENT_IS_VERY_GOOD":
+          a = "环境非常nice";
+          break;
+        case "THE_INTERVIEWER_IS_VERY_KIND":
+          a = "面试官很和善";
+          break;
+        case "INTERVIEW_EFFICIENCY_IS_VERY_HIGH":
+          a = "面试效率很高";
+          break;
+        case "THE_SALARY_DOES_NOT_MATCH_THE_LABEL":
+          a = "薪资跟标注不符";
+          break;
+        case "THE_INTERVIEWER_IS_TOO_DEMANDING":
+          a = "面试官太苛刻";
+          break;
+        case "THE_ENVIRONMENT_IS_SO_SO":
+          a = "环境一般般";
+          break;
+        case "THE_INTERVIEWER_IS_VERY_SERIOUS":
+          a = "面试官很严肃";
+          break;
+        case "WHEN_THE_SEAS_RUN_DRY_AND_THE_ROCKS_CRUMBLE":
+          a = "等到海枯石烂";
+          break;
+      }
+      return a;
     }
   }
 };
@@ -1307,13 +1355,12 @@ export default {
       .station-appraise-select {
         display: flex;
         flex-direction: row;
-        margin: 0 30px 0 30px;
+        margin: 15px 0 30px 30px;
 
         .el-radio-button--medium .el-radio-button__inner {
           padding: 2px 10px;
           font-size: 14px;
           border-radius: 20px;
-          margin: 20px 0 0 16px;
           height: 20px;
         }
 
@@ -1340,26 +1387,10 @@ export default {
         }
 
         .el-radio-button__orig-radio:checked+.el-radio-button__inner {
-          color: #fff;
-          background-color: #409eff;
-          border-color: #409eff;
+          color: #272822;
+          background-color: #fff;
+          border-color: #dee1e6;
           box-shadow: -1px 0 0 0 #409eff;
-        }
-
-        div:nth-child(1) {
-          font-family: PingFangSC-Regular;
-          color: #424242;
-          font-size: 16px;
-        }
-
-        div:nth-child(2) {
-          margin: 0 0 0 40px;
-
-          span {
-            font-family: PingFangSC-Regular;
-            color: #327CF3;
-            font-size: 16px;
-          }
         }
       }
 

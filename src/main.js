@@ -13,6 +13,7 @@ import { Notification } from 'element-ui';
 import {CodeToTag} from './cookie';
 // import cookie from 'vue-cookie'; 
 import Cookies from 'js-cookie'
+
 import 'babel-polyfill';
 import './assets/iconfont/iconfont.css'
 import VueAMap from 'vue-amap';
