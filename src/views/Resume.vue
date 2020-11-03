@@ -3,11 +3,11 @@
     <div class="resumes">
       <div class="content">
         <el-dialog title width="30%" :visible.sync="dialogDrag" style="border-radius:5px;">
-          <!-- <div style="font-size:18px;">简历附件上传功能正在准备中<br>敬请期待</div>
+          <div style="font-size:18px;">简历附件上传功能正在准备中<br>敬请期待</div>
           <div style="margin:25px 0 0 0">
             <el-button @click="dialogDrag = false" type="primary">知道了</el-button>
-          </div>-->
-          <div>
+          </div>
+          <!-- <div>
             <el-upload
               class="upload-demo"
               :action="uploadUrl"
@@ -36,7 +36,7 @@
                 <i class="el-icon-delete"></i>
               </div>
             </div>
-          </div>
+          </div> -->
         </el-dialog>
         <el-dialog
           title
