@@ -19,7 +19,7 @@ import {
 let config = {
     //判断当前开发环境，切换代理配置
     // baseURL: process.env.NODE_ENV === 'production' ? '/api/v1/' : '/api/',
-    baseURL: '/api/v2/',
+    baseURL: '/api/',
     headers: {
         'Cache-Control': 'no-cache'
     },
@@ -108,7 +108,7 @@ _axios.interceptors.request.use(
 // /api/v1/consumer-user
 const instance = axios.create({
     // baseURL: process.env.NODE_ENV === 'production' ? '/api/v1/consumer-user' : '/api/',
-    baseURL: '/api/v2/',
+    baseURL: '/api/',
     headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
     },
@@ -116,7 +116,7 @@ const instance = axios.create({
 })
 Vue.prototype.$_http = instance;
 const local = axios.create({
-    baseURL: '/api/v2/',
+    baseURL: '/api/',
     // headers:{'Auth-Token':store.state.token === ''?'':store.state.token},
     timeout: 60 * 1000, // Timeout
     withCredentials: true, // Check cross-site Access-Control

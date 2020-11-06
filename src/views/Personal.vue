@@ -89,11 +89,11 @@
             </el-tooltip>
           </div>
           <div class="foot">请您最晚于面试前2小时确认是否参加面试</div>
-          <div style="margin:30px 0 0 180px" v-if="this.interviewStates === 'TO_CANCEL_THE_INTERVIEW'">
-            <el-button
-              plain
-              disabled
-            >已取消</el-button>
+          <div
+            style="margin:30px 0 0 180px"
+            v-if="this.interviewStates === 'TO_CANCEL_THE_INTERVIEW'"
+          >
+            <el-button plain disabled>已取消</el-button>
           </div>
           <div style="margin:30px 0 0 150px" v-else>
             <el-button
@@ -336,8 +336,8 @@
                 <span v-else class="publishedTime">{{list.publishedTime|formatDate}}</span>
                 <div class="operatedButton" v-if="list.processedState === 'INTERVIEW'">
                   <div v-if="list.interviewState === 'COMPLETED'">
-                    <button @click="exist(list)" class="button">评价/查看</button>
-                    <!-- <button @click="exist(list)" class="button">去评价</button> -->
+                    <button v-if="list.evaluationId === 0" @click="laterM()" class="button">去评价</button>
+                    <button v-else @click="exist(list)" class="button">去查看</button>
                   </div>
 
                   <div
@@ -483,10 +483,13 @@
               v-model="textarea2"
             ></el-input>
           </div>
+          <div style="margin:20px 0 0 600px">
+            <el-checkbox v-model="checked">匿名评价</el-checkbox>
+          </div>
         </div>
         <div class="personal-button">
           <div class="personal-buttons">
-            <el-button class="button" plain @click="laterM()">稍后评价</el-button>
+            <el-button class="button" plain @click="appraise = true">稍后评价</el-button>
             <el-button class="button" @click="evaluation" type="primary">提交评价</el-button>
           </div>
         </div>
@@ -498,19 +501,20 @@
         <div>
           <span>面试体验：</span>
           <span>{{evaltionDetail.interviewExperience}}.0</span>分
+          <span style="margin:0 0 0 490px;font-family: PingFangSC-Regular;color: #8F8F8F;font-size:16px">提交时间：{{evaltionDetail.createdTime|formatDateOne}}</span>
         </div>
       </div>
       <div class="personals-select">
         <div>
           <span>面试体验：</span>
-          <span>
+          <span style="margin:0 0 0 -20px">
             <el-radio-group
               v-model="radio1"
               size="medium"
               v-for="(list,index) in evaltionDetail.evaluationInterviewLabelBodes"
               :key="index"
             >
-              <el-radio-button :label="list.interviewLabel|level"></el-radio-button>
+              <el-radio-button style="padding:0 0 0 20px;" :label="list.interviewLabel|level"></el-radio-button>
             </el-radio-group>
           </span>
         </div>
@@ -518,12 +522,7 @@
       <div class="personal-footer">
         <div class="personal-footers">
           <span>面试评价</span>
-          <el-input
-            type="textarea"
-            style="width:674px;font-family: PingFangSC-Regular;color: #737373;font-size:16px"
-            :autosize="{ minRows: 4, maxRows: 8}"
-            v-model="textarea"
-          ></el-input>
+          <div style="width:674px;font-family: PingFangSC-Regular;color: #737373;font-size:16px;text-align:left;margin:30px 0 0 0">{{this.textarea}}</div>
           <el-button style="margin:30px auto" @click="detailEvaltion = true">返回</el-button>
         </div>
       </div>
@@ -600,6 +599,7 @@ export default {
   components: {},
   data() {
     return {
+      checked:true,
       detailEvaltion: true,
       evaltionDetail: {},
       radioReason: "",
@@ -693,23 +693,24 @@ export default {
     exist(res) {
       this.positionId = res.id;
       this.interviewId = res.interviewId;
+      this.detailEvaltion = false;
       this.$http
-        .get(`/consumer-core/interview/exist/${res.interviewId}`)
+        .get(`/consumer-core/interview/evaluation/${this.interviewId}`)
         .then(res => {
-          if (res.data.data) {
-            this.detailEvaltion = false;
-            this.$http
-              .get(`/consumer-core/interview/evaluation/${this.interviewId}`)
-              .then(res => {
-                this.evaltionDetail = res.data.data;
-                this.textarea = res.data.data.content;
-              })
-              .catch(error => {});
-          } else {
-            this.appraise = false;
-          }
+          this.evaltionDetail = res.data.data;
+          this.textarea = res.data.data.content;
         })
         .catch(error => {});
+      // this.$http
+      //   .get(`/consumer-core/interview/exist/${res.interviewId}`)
+      //   .then(res => {
+      //     if (res.data.data) {
+
+      //     } else {
+      //       this.appraise = false;
+      //     }
+      //   })
+      //   .catch(error => {});
     },
     groupChange() {
       if (this.userList.length > 3) {
@@ -718,7 +719,7 @@ export default {
     },
     //稍后评论
     laterM() {
-      this.appraise = true;
+      this.appraise = false;
     },
     evaluation() {
       this.userList.forEach((item, index, array) => {
@@ -731,7 +732,7 @@ export default {
         content: this.textarea2,
         evaluationInterviewLabelBodes: this.interviewLabel,
         interviewExperience: this.value2,
-        isAnonymous: false,
+        isAnonymous: this.checked,
         parentId: 0,
         positionId: this.positionId
       };
@@ -887,43 +888,51 @@ export default {
     },
     interviewstatus(e) {
       if (e === 1) {
+        console.log();
         this.interviewStates = null;
+        this.index = "INTERVIEW";
         this.interviewparams = {
           resumeProcessedState: "INTERVIEW",
           interviewState: this.interviewStates
         };
       } else if (e === 2) {
         this.interviewStates = "TO_BE_ACCEPTED";
+        this.index = "INTERVIEW";
         this.interviewparams = {
           resumeProcessedState: "INTERVIEW",
           interviewState: this.interviewStates
         };
       } else if (e === 3) {
         this.interviewStates = "REFUSED";
+        this.index = "INTERVIEW";
         this.interviewparams = {
           resumeProcessedState: "INTERVIEW",
           interviewState: this.interviewStates
         };
       } else if (e === 4) {
         this.interviewStates = "TO_BE_INTERVIEWED";
+        this.index = "INTERVIEW";
         this.interviewparams = {
           resumeProcessedState: "INTERVIEW",
           interviewState: this.interviewStates
         };
       } else if (e === 5) {
         this.interviewStates = "COMPLETED";
+        this.index = "INTERVIEW";
         this.interviewparams = {
           resumeProcessedState: "INTERVIEW",
           interviewState: this.interviewStates
         };
       } else if (e === 6) {
         this.interviewStates = "TO_CANCEL_THE_INTERVIEW";
+        this.index = "INTERVIEW";
         this.interviewparams = {
           resumeProcessedState: "INTERVIEW",
           interviewState: this.interviewStates
         };
       } else {
         this.interviewStates = "HAS_BEEN_EFFECTIVE";
+        this.index = "INTERVIEW";
         this.interviewparams = {
           resumeProcessedState: "INTERVIEW",
           interviewState: this.interviewStates
