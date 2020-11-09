@@ -176,10 +176,11 @@ export default {
       this.$http
         .get("/consumer-core/resume/brief")
         .then(res => {
-          if (res.status === 200) {
-            this.$store.state.avatarUrl = res.data.data.base.avatarUrl;
+          if (res.data.data.base !== null) {
             this.$router.push({ path: "/home" });
+            this.$store.state.avatarUrl = res.data.data.base.avatarUrl;
           } else {
+            this.$router.push({ path: "/home" });
           }
         })
         .catch(error => {
@@ -227,7 +228,7 @@ export default {
   },
   watch: {
     isFollow(newVal, oldVal) {
-      console.log(newVal)
+      console.log(newVal);
     }
   },
 
