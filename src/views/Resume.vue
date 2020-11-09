@@ -4185,8 +4185,7 @@ export default {
   background: #FFFFFF;
   flex-direction: row;
   cursor: default;
-  position:relative;
-  z-index:100
+  
 
   .content {
     width: 1010px;

@@ -102,14 +102,14 @@ export default {
     cancel() {
       this.$emit("workEmit", false, true);
     },
-    //获取所有企业行业
-    allposition() {
-      this.$http.get("/constant/industry").then(res => {
-        if (res.data.code == 200) {
-          this.industryList = res.data.data;
-        }
-      });
-    },
+    // //获取所有企业行业
+    // allposition() {
+    //   this.$http.get("/constant/industry").then(res => {
+    //     if (res.data.code == 200) {
+    //       this.industryList = res.data.data;
+    //     }
+    //   });
+    // },
     //新增
     keep(formName) {
       this.$refs[formName].validate(valid => {
@@ -162,7 +162,7 @@ export default {
     }
   },
   created() {
-    this.allposition();
+    // this.allposition();
   }
 };
 </script>
