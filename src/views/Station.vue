@@ -210,7 +210,8 @@
                   style="display: flex;flex-direction: row;margin:20px 0 0 0"
                   @click="like(item)"
                 >
-                  <img style="width:25px;height:25px" src="../assets/images/zan.png" />
+                  <img v-if="item.isLike" style="width:25px;height:25px" src="../assets/images/zan.png" />
+                  <img v-else style="width:25px;height:25px" src="../assets/images/hzan.png" />
                   <span style="line-height:25px">{{item.likeNum}}</span>
                 </div>
                 <!-- <div style="display: flex;flex-direction: row;margin:20px 0 0 0">
@@ -450,7 +451,7 @@ export default {
       this.$http
         .post(`/consumer-core/evaluation/position`, params)
         .then(res => {
-          if (res.data.data.evaluations === null) {
+          if (res.data.data.evaluations.total === 0) {
             this.apprasiseEvaluation = false;
           } else {
             this.evaluationLists = res.data.data;
@@ -470,7 +471,7 @@ export default {
       this.$http
         .post(`/consumer-core/evaluation/position`, params)
         .then(res => {
-          if (res.data.data.evaluations === null) {
+          if (res.data.data.evaluations.total === 0) {
             this.apprasiseEvaluation = false;
           } else {
             this.evaluationLists = res.data.data;
@@ -518,11 +519,11 @@ export default {
       this.$http
         .post(`/consumer-core/evaluation/position`, params)
         .then(res => {
-          if (res.data.data.evaluations === null) {
+          if (res.data.data.evaluations.total === 0) {
             this.apprasiseEvaluation = false;
           } else {
             this.evaluationLists = res.data.data;
-            if (this.evaluationLists.evaluations.total < 5) {
+            if (res.data.data.evaluations.total > 5) {
               this.morejumpers = true;
             } else {
               this.morejumpers = false;

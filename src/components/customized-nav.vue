@@ -232,7 +232,7 @@ export default {
     //退出
     detrusion() {
       this.$http
-        .get("/logout?returnUrl=http://localhost:8080/login")
+        .get("/consumer-user/loggedOut")
         .then(res => {
           this.$store.commit("LOGOUT");
           this.$router.push({ path: "/login" });
@@ -353,7 +353,7 @@ export default {
 
 <style lang="stylus">
 nav {
-  z-index: 100;
+  z-index: 200;
   font-family: PingFangSC-Regular;
   background-color: #ffffff;
   letter-spacing: 1.1;

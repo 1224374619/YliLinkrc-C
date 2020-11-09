@@ -49,8 +49,10 @@ export default {
 <style lang="stylus" scoped>
   .footer
     background-color #E1E1E1
-    margin 0 0 50px 0
+    margin 0 0 0 0
     height 290px
+    position:relative;
+    z-index:200
     .appendix
       display flex
       width 1440px

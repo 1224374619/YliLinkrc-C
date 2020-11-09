@@ -40,7 +40,6 @@
                   <baidu-map
                     :center="center"
                     :zoom="zoom"
-                    @ready="handler"
                     style="width:859px;height:188px;margin:0 0 45px 0"
                     @click="getLocationPoint"
                     :scroll-wheel-zoom="true"
@@ -109,8 +108,8 @@
                       <span style="margin:0 0 0 -7px">【面试过程】</span>
                       <span>{{item.content}}</span>
                     </div>
-                    <div style="margin:0 0 0 -720px">企业回复</div>
-                    <div class="third">
+                    <div v-if="item.sublist !== null" style="margin:0 0 0 -720px">企业回复</div>
+                    <div v-if="item.sublist !== null" class="third">
                       <div>
                         <img
                           style="width:50px;height:50px;margin:15px 0 0 15px"
@@ -132,7 +131,12 @@
                         style="display: flex;flex-direction: row;margin:20px 0 0 0"
                         @click="like(item)"
                       >
-                        <img style="width:25px;height:25px" src="../assets/images/zan.png" />
+                        <img
+                          v-if="item.isLike"
+                          style="width:25px;height:25px"
+                          src="../assets/images/zan.png"
+                        />
+                        <img v-else style="width:25px;height:25px" src="../assets/images/hzan.png" />
                         <span style="line-height:25px">{{item.likeNum}}</span>
                       </div>
                     </div>
@@ -316,8 +320,8 @@ export default {
   data() {
     let self = this;
     return {
-      radiobutton:false,
-      usercode:'',
+      radiobutton: false,
+      usercode: "",
       jumper: false,
       pager: false,
       evaluationLists: {
@@ -403,10 +407,10 @@ export default {
   methods: {
     //筛选
     radioChange() {
-       let params = {
+      let params = {
         pageNum: 1,
         pageSize: 10,
-        code:parseInt(this.usercode),
+        code: parseInt(this.usercode),
         positionIds: [],
         sortBy: null,
         sortOrder: null
@@ -467,7 +471,7 @@ export default {
       let params = {
         pageNum: 1,
         pageSize: 10,
-        code:null,
+        code: null,
         positionIds: [],
         sortBy: null,
         sortOrder: null
@@ -479,7 +483,7 @@ export default {
           this.page.total = res.data.data.evaluations.total;
           this.jumper = false;
           this.pager = true;
-          this.radiobutton = true
+          this.radiobutton = true;
         })
         .catch(error => {});
     },
@@ -502,9 +506,9 @@ export default {
     //根据公司id获取公司评价列表‘
     evaluationList() {
       let params = {
-        code:null,
+        code: null,
         pageNum: 1,
-        pageSize: 10,
+        pageSize: 5,
         positionIds: [],
         sortBy: null,
         sortOrder: null
@@ -512,10 +516,11 @@ export default {
       this.$http
         .post(`/consumer-core/evaluation/company/${this.companId}`, params)
         .then(res => {
-          if (res.data.data.evaluations === null) {
+          if (res.data.data.evaluations.total === 0) {
             this.apprasiseEvaluation = false;
           } else {
             this.evaluationLists = res.data.data;
+            console.log(this.evaluationLists.evaluations.total)
             if (this.evaluationLists.evaluations.total > 5) {
               this.jumper = true;
             } else {
@@ -800,9 +805,10 @@ export default {
     this.companIds = this.$route.query.sid;
     // this.citise()
     // this.filtrate();
-    this.evaluationList();
+    
     this.companyId();
     // this.allposition()
+    this.evaluationList();
     this.positionCataloga();
 
     if (this.companIds === undefined) {

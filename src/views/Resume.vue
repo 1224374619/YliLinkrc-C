@@ -4040,11 +4040,11 @@ export default {
   computed: {
     uploadUrl() {
       // const {VUE_APP_SECRET,VUE_APP_DEV_MODE} = process.env
-      return "/api/file-service/files/upload";
+      return "/api/v2/file-service/files/upload";
     },
     uploadUrlOne() {
       // const {VUE_APP_SECRET,VUE_APP_DEV_MODE} = process.env
-      return "/api/file-service/files/upload";
+      return "/api/v2/file-service/files/upload";
     }
   },
   filters: {
@@ -4185,6 +4185,8 @@ export default {
   background: #FFFFFF;
   flex-direction: row;
   cursor: default;
+  position:relative;
+  z-index:100
 
   .content {
     width: 1010px;
@@ -4319,8 +4321,7 @@ export default {
   }
 
   .aside-body {
-    position: relative;
-
+    
     .aside {
       background: #FFFFFF;
       margin-top: 0px;
@@ -4360,6 +4361,7 @@ export default {
       }
 
       .aside-tabulation {
+        border:1px solid red
         display: flex;
         flex-direction: column;
         margin: 15px 0 0 0;

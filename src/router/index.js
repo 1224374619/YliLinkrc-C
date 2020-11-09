@@ -49,7 +49,7 @@ const router = new Router({
         {
             path: '/',
             name: 'front',
-            component: resolve => require(['../layout/front/nav'], resolve),
+            component: resolve => require(['../layout/front/index'], resolve),
             redirect: '/home',
             children: [
                 {
