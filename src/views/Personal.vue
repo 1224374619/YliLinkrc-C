@@ -548,7 +548,7 @@
           <span class="span-city">现居{{city}} | {{workAge}}年工作经验 | {{age}}岁</span>
           <span class="span-type">求职状态：{{jobSearchStatus}}</span>
         </div>
-        <div v-if="showWarn" style="font-size:14px;padding:10px 0 10px 0">个人信息未填写完整，快快来补充吧</div>
+        <div v-if="showWarn" style="font-size:14px;padding:40px 0 20px 0">个人信息未填写完整，快快来补充吧</div>
       </div>
       <div class="right-footer">
         <div class="footer-nav">

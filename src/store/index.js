@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { DONE_LOGOUT, DONE_LOGIN } from './mutation-types';
+import Cookies from "js-cookie";
 
 Vue.use(Vuex);
 
@@ -51,8 +52,10 @@ export default new Vuex.Store({
       // 登出的时候要清除token
       state.token = null
       state.user = null
+      Cookies.remove("token");
       window.sessionStorage.removeItem('token')
       window.sessionStorage.removeItem('user')
+      
     }
   }
 });
