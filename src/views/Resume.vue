@@ -1734,7 +1734,7 @@
               <div class="aside-foot">
                 <div class="aside-foot-second">
                   <div
-                    style="display: flex;flex-direction: row;justify-content: space-between;line-height:30px;width:270px"
+                    style="display: flex;flex-direction: row;justify-content: space-between;line-height:30px;width:270px;margin:0 0 20px 0"
                   >
                     <div class="aside-foot-first">附件简历（Beta）</div>
                     <el-button
