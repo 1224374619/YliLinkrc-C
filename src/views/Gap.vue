@@ -9,7 +9,7 @@
         <el-step title="步骤 1"></el-step>
         <el-step title="步骤 2"></el-step>
         <el-step title="步骤 3"></el-step>
-      </el-steps> -->
+      </el-steps>-->
     </div>
 
     <!-- <div class="gap-right">
@@ -28,19 +28,22 @@
 </template>
 
 <script>
-
 import { brief } from "apis/account";
 export default {
   name: "gap",
 
   data() {
     return {
-      token:''
+      token: ""
     };
   },
   methods: {
     next() {
-     this.$router.push({ path: "/gapDetail" });
+      this.$http.post("/consumer-core/resume").then(res => {
+        if (res.data.code == "201") {
+          this.$router.push({ path: "/gapDetail" });
+        }
+      });
     },
     upload() {
       this.$http.post("/resume/file");
