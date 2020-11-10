@@ -179,7 +179,7 @@
             style="width:234px;height:34px"
             :options="positionCatalogList"
             :props="propsTwo"
-            v-model="formInline.postType"
+            v-model="JobformInline.postType"
           ></el-cascader>
         </el-form-item>
         <el-form-item label="工作城市" style="margin:0 10px 20px 79px" prop="city">
@@ -187,7 +187,7 @@
             style="width:234px;height:34px"
             :options="options"
             :props="propsCity"
-            v-model="formInline.city"
+            v-model="JobformInline.city"
           ></el-cascader>
         </el-form-item>
         <br />
@@ -196,11 +196,11 @@
             style="width:234px;height:34px"
             :options="industryList"
             :props="propsOne"
-            v-model="formInline.industry"
+            v-model="JobformInline.industry"
           ></el-cascader>
         </el-form-item>
         <el-form-item label="薪资范围" style="margin:0 10px 20px 79px" prop="scope">
-          <el-select style="width:234px;height:34px" v-model="formInline.scope" placeholder>
+          <el-select style="width:234px;height:34px" v-model="JobformInline.scope" placeholder>
             <el-option
               v-for="(list,index) in monthPayList"
               :key="index"
@@ -214,7 +214,7 @@
           <el-select
             id="name"
             style="width:234px;height:34px"
-            v-model="formInline.status"
+            v-model="JobformInline.status"
             placeholder
             @change="Jobstate()"
           >
@@ -227,7 +227,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="工作类型" style="margin:0 10px 20px 79px" prop="jobType">
-          <el-select style="width:234px;height:34px" v-model="formInline.jobType" placeholder>
+          <el-select style="width:234px;height:34px" v-model="JobformInline.jobType" placeholder>
             <el-option
               v-for="(list,index) in workStateList"
               :key="index"
@@ -240,7 +240,7 @@
         <el-form-item label="到岗时间" class="block" v-if="datePicker" style="margin:0 420px 0 0">
           <el-date-picker
             style="width:234px;height:34px"
-            :disabled="this.formInline.status === 1||this.formJobintension.status === '离职-延时到岗'?false:true"
+            :disabled="this.JobformInline.status === 1||this.formJobintension.status === '离职-延时到岗'?false:true"
             v-model="formInline.reportTime"
             type="date"
             placeholder="请选择日期"
@@ -255,20 +255,20 @@
     <div class="education" v-if="education">
       <el-form
         :inline="true"
-        :model="formInline"
+        :model="eduformInline"
         class="demo-form-inline"
         :rules="edurules"
-        ref="formInline"
+        ref="eduformInline"
         label-width="100px"
       >
         <el-form-item label="学校名称" style="margin:0 0 0 10px" prop="schoolName">
-          <el-input style="width:234px;height:36px" v-model="formInline.schoolName" placeholder></el-input>
+          <el-input style="width:234px;height:36px" v-model="eduformInline.schoolName" placeholder></el-input>
         </el-form-item>
         <el-form-item label="在校时间" class="block" prop="schoolTime" style="margin:0 10px 20px 9px">
           <!-- :picker-options="pickerOptions" -->
           <el-date-picker
             style="width:234px;"
-            v-model="formInline.schoolTime"
+            v-model="eduformInline.schoolTime"
             type="daterange"
             unlink-panels
             range-separator="至"
@@ -278,12 +278,12 @@
         </el-form-item>
         <br />
         <el-form-item label="专业" style="margin:0 0 0 10px" prop="major">
-          <el-input style="width:234px;height:36px" v-model="formInline.major" placeholder></el-input>
+          <el-input style="width:234px;height:36px" v-model="eduformInline.major" placeholder></el-input>
         </el-form-item>
         <el-form-item label="学历" style="margin:0 10px 20px 9px" prop="qualifications">
           <el-select
             style="width:234px;height:36px"
-            v-model="formInline.qualifications"
+            v-model="eduformInline.qualifications"
             placeholder
           >
             <el-option label="初中及以下" value="0"></el-option>
@@ -297,10 +297,10 @@
         </el-form-item>
         <br />
         <el-form-item label="是否统招" style="width:355px;margin:0 0 0 10px" prop="general">
-          <el-radio style="width:112px;height:40px" v-model="formInline.general" border label="0">是</el-radio>
+          <el-radio style="width:112px;height:40px" v-model="eduformInline.general" border label="0">是</el-radio>
           <el-radio
             style="width:112px;height:40px;margin:0 0 0 -20px"
-            v-model="formInline.general"
+            v-model="eduformInline.general"
             border
             label="1"
           >否</el-radio>
@@ -313,7 +313,7 @@
         </el-form-item>
         <br />
         <el-form-item class="cancel" style="margin:0 0 20px 0">
-          <el-button style="width:200px" @click="keep('formInline')" type="primary">保存</el-button>
+          <el-button style="width:200px" @click="keep('eduformInline')" type="primary">保存</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -360,7 +360,7 @@ export default {
       basicinfo: true,
       jobintension: false,
       education: false,
-      formInline: {
+      eduformInline: {
         schoolName: "",
         schoolTime: [],
         major: "",
@@ -551,8 +551,8 @@ export default {
     keep(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          let til = this.formInline.schoolTime[0].getTime();
-          let till = this.formInline.schoolTime[1].getTime();
+          let til = this.eduformInline.schoolTime[0].getTime();
+          let till = this.eduformInline.schoolTime[1].getTime();
           let ti = this.$moment(till).format("YYYY-MM");
           let end = this.$moment(new Date().getTime()).format("YYYY-MM");
           if (ti === end) {
@@ -560,21 +560,21 @@ export default {
           } else {
             eduTime = till;
           }
-          if (this.formInline.general == 0) {
-            this.formInline.general = true;
-          } else if (this.formInline.general == 1) {
-            this.formInline.general = false;
+          if (this.eduformInline.general == 0) {
+            this.eduformInline.general = true;
+          } else if (this.eduformInline.general == 1) {
+            this.eduformInline.general = false;
           }
           let params = {
             beginTime: til,
             endTime: eduTime,
             degree: timeUtil.qualifications(
-              parseInt(this.formInline.qualifications)
+              parseInt(this.eduformInline.qualifications)
             ),
-            degreeCode: this.formInline.qualifications,
-            major: this.formInline.major,
-            school: this.formInline.schoolName,
-            isUnified: this.formInline.general
+            degreeCode: this.eduformInline.qualifications,
+            major: this.eduformInline.major,
+            school: this.eduformInline.schoolName,
+            isUnified: this.eduformInline.general
           };
           eduadd(this.defaultResumeId, params)
             .then(res => {
@@ -613,7 +613,7 @@ export default {
       }
     },
     JobT(formName) {
-      switch (this.formInline.scope) {
+      switch (this.JobformInline.scope) {
         case 0:
           this.salaryMin = 0;
           this.salaryMax = 1;
@@ -655,33 +655,33 @@ export default {
           this.salaryMax = null;
           break;
       }
-      let til = new Date(this.formInline.reportTime).getTime();
+      let til = new Date(this.JobformInline.reportTime).getTime();
       let params = {
         arriveTime: til,
         cities: [
           {
-            city: this.formInline.city[1],
-            district: this.formInline.city[2],
-            province: this.formInline.city[0]
+            city: this.JobformInline.city[1],
+            district: this.JobformInline.city[2],
+            province: this.JobformInline.city[0]
           }
         ],
         industries: [
           {
-            first: this.formInline.industry[0],
-            secondary: this.formInline.industry[1]
+            first: this.JobformInline.industry[0],
+            secondary: this.JobformInline.industry[1]
           }
         ],
         jobSearchStatus: timeUtil.jobSearchStatus(
-          parseInt(this.formInline.status)
+          parseInt(this.JobformInline.status)
         ),
-        jobSearchStatusCode: this.formInline.status,
-        jobType: timeUtil.jobType(parseInt(this.formInline.jobType)),
-        jobTypeCode: this.formInline.jobType,
+        jobSearchStatusCode: this.JobformInline.status,
+        jobType: timeUtil.jobType(parseInt(this.JobformInline.jobType)),
+        jobTypeCode: this.JobformInline.jobType,
         positionCatalogs: [
           {
-            first: this.formInline.postType[0],
-            secondary: this.formInline.postType[1],
-            third: this.formInline.postType[2]
+            first: this.JobformInline.postType[0],
+            secondary: this.JobformInline.postType[1],
+            third: this.JobformInline.postType[2]
           }
         ],
         salaryMin: this.salaryMin,
@@ -850,7 +850,6 @@ export default {
   created() {
     this.options = citys.data;
     this.token = Cookies.get("token");
-    console.log(this.token,'qqqqqqqqqqqqqqqqqqqqq')
     this.industryList = industrys.data;
     this.optionList = options.data;
     this.positionCatalogList = positionCatalog.data;
