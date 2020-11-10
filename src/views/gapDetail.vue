@@ -321,6 +321,7 @@
 </template>
 
 <script>
+
 let token = Cookies.get("token");
 import Cookies from "js-cookie";
 import {
@@ -849,6 +850,7 @@ export default {
   created() {
     this.options = citys.data;
     this.token = Cookies.get("token");
+    console.log(this.token,'qqqqqqqqqqqqqqqqqqqqq')
     this.industryList = industrys.data;
     this.optionList = options.data;
     this.positionCatalogList = positionCatalog.data;

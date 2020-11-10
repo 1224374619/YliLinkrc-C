@@ -28,12 +28,15 @@
 </template>
 
 <script>
+
 import { brief } from "apis/account";
 export default {
   name: "gap",
 
   data() {
-    return {};
+    return {
+      token:''
+    };
   },
   methods: {
     next() {
@@ -48,6 +51,7 @@ export default {
     }
   },
   created() {
+    this.token = Cookies.get("token");
     // brief()
     //   .then(res => {
     //     if (res.data.code == 200) {
