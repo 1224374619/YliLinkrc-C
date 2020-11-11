@@ -336,7 +336,7 @@
                 <span v-else class="publishedTime">{{list.updateTime|formatDate}}</span>
                 <div class="operatedButton" v-if="list.processedState === 'INTERVIEW'">
                   <div v-if="list.interviewState === 'COMPLETED'">
-                    <button v-if="list.evaluationId === 0" @click="laterM()" class="button">去评价</button>
+                    <button v-if="list.evaluationId === 0" @click="laterM(list)" class="button">去评价</button>
                     <button v-else @click="exist(list)" class="button">去查看</button>
                   </div>
 
