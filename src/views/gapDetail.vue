@@ -321,9 +321,9 @@
 </template>
 
 <script>
-
-let token = Cookies.get("token");
 import Cookies from "js-cookie";
+let token = Cookies.get("token");
+console.log(token)
 import {
   jobintensionadd,
   industry,
@@ -456,7 +456,7 @@ export default {
       uploadData: {
         label: "resume-avatar"
       },
-      myHeaders: { "Auth-Token": token },
+      myHeaders: { "Auth-Token": Cookies.get("token") },
       formInline: {
         name: "",
         jobHunting: "",

@@ -5,27 +5,32 @@
     </div>
     <div class="aside">
       <div>
-        <div v-if="activeName === 'first'" class="tab-operations" @click="allRead">
-          <el-button style="color:#FF7152;" type="text">全部已读</el-button>
-        </div>
-        <div v-else class="tab-operations"></div>
         <el-tabs
           v-model="activeName"
           type="card"
           @tab-click="handleClick"
           style="width:96%;margin:20px auto"
         >
+          <div v-if="activeName === 'first'" class="tab-operations" @click="allRead">
+            <span style="color:#FF7152;font-size:12px">全部已读</span>
+            <!-- <el-button style="color:#FF7152;" type="text">全部已读</el-button> -->
+          </div>
+          <div v-else class="tab-operations"></div>
           <el-tab-pane label="未读消息" name="first">
             <el-table :data="tableData" style="width: 100%">
               <el-table-column prop="title" label="消息列表">
                 <template slot-scope="scope">
                   <el-collapse>
-                    <el-collapse-item v-if="scope.row.title.length>22" :title="`${scope.row.title.substring(0,22)}`" name="1">
-                      <!-- <div>{{scope.row.content}}</div> -->
+                    <el-collapse-item
+                      v-if="scope.row.title.length>22"
+                      :title="`${scope.row.title.substring(0,22)}`"
+                      name="1"
+                    >
+                      <div>{{scope.row.content}}</div>
                       <!-- <div v-else>{{scope.row.content}}</div> -->
                     </el-collapse-item>
-                     <el-collapse-item v-else :title="`${scope.row.title}`" name="1">
-                      <!-- <div>{{scope.row.content}}</div> -->
+                    <el-collapse-item v-else :title="`${scope.row.title}`" name="1">
+                      <div>{{scope.row.content}}</div>
                       <!-- <div v-else>{{scope.row.content}}</div> -->
                     </el-collapse-item>
                   </el-collapse>
@@ -44,6 +49,7 @@
               :page-sizes="page.pageSizeOpts"
               class="pagination"
               :page-size="page.pageSize"
+              style="margin:20px 0 0 0"
               layout="total, sizes, prev, pager, next, jumper"
               :total="page.total"
             ></el-pagination>
@@ -71,6 +77,7 @@
               :current-page="page.current"
               :page-sizes="page.pageSizeOpts"
               class="pagination"
+              style="margin:20px 0 0 0"
               :page-size="page.pageSize"
               layout="total, sizes, prev, pager, next, jumper"
               :total="page.total"
@@ -90,9 +97,9 @@ export default {
       tableData: [],
       page: {
         total: 0,
-        pageSize: 10,
+        pageSize: 5,
         current: 1,
-        pageSizeOpts: [10, 20, 30]
+        pageSizeOpts: [5, 10, 20]
       }
     };
   },
@@ -109,23 +116,23 @@ export default {
           }
         })
         .catch(error => {
-              if (error.response.status === 404) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "页面丢失，请重新加载"
-                });
-              } else if (error.response.status === 403) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "登陆超时，请重新登录"
-                });
-              } else {
-                this.$notify.error({
-                  title: "错误",
-                  message: error.response.data.message
-                });
-              }
+          if (error.response.status === 404) {
+            this.$notify.error({
+              title: "错误",
+              message: "页面丢失，请重新加载"
             });
+          } else if (error.response.status === 403) {
+            this.$notify.error({
+              title: "错误",
+              message: "登陆超时，请重新登录"
+            });
+          } else {
+            this.$notify.error({
+              title: "错误",
+              message: error.response.data.message
+            });
+          }
+        });
     },
     //跳转
     handleClick(tab) {
@@ -153,28 +160,27 @@ export default {
           if (res.data.code == "200") {
             this.tableData = res.data.data.list;
             this.page.total = res.data.data.total;
-            
           } else {
           }
         })
         .catch(error => {
-              if (error.response.status === 404) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "页面丢失，请重新加载"
-                });
-              } else if (error.response.status === 403) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "登陆超时，请重新登录"
-                });
-              } else {
-                this.$notify.error({
-                  title: "错误",
-                  message: error.response.data.message
-                });
-              }
+          if (error.response.status === 404) {
+            this.$notify.error({
+              title: "错误",
+              message: "页面丢失，请重新加载"
             });
+          } else if (error.response.status === 403) {
+            this.$notify.error({
+              title: "错误",
+              message: "登陆超时，请重新登录"
+            });
+          } else {
+            this.$notify.error({
+              title: "错误",
+              message: error.response.data.message
+            });
+          }
+        });
     },
     handleSizeChange(val) {
       this.page.pageSize = val;
@@ -194,10 +200,12 @@ export default {
 
 <style lang="stylus" scoped>
 .container {
-  margin: 196px auto 0px;
+  margin: 0 auto;
+  padding: 96px 0 0 0;
   width: 1280px;
   border: 1px solid #ffffff;
   background: #ffffff;
+  overflow-y: hidden;
 
   .nav {
     width: 960px;
@@ -213,9 +221,8 @@ export default {
   }
 
   .tab-operations {
-    position: absolute;
-    margin: 7px 0 0 860px;
-    z-index: 999;
+    margin: 0 0 10px 860px;
+    z-index: 100;
   }
 
   .aside {

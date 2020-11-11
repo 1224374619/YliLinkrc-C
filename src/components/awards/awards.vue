@@ -55,7 +55,7 @@ export default {
     return {
       imageUrl:'',
       file:'',
-      myHeaders: { "Auth-Token": token },
+      myHeaders: { "Auth-Token": Cookies.get("token") },
       uploadData: {
         label: "resume-cert"
       },

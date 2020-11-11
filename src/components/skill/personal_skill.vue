@@ -63,7 +63,7 @@ export default {
       perId: "",
       file: "",
       imageUrl: "",
-      myHeaders: { "Auth-Token": token },
+      myHeaders: { "Auth-Token": Cookies.get("token") },
       uploadData: {
         label: "resume-cert"
       },

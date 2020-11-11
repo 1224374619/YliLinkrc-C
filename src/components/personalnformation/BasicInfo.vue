@@ -185,7 +185,7 @@ export default {
       uploadData: {
         label: "resume-avatar",
       },
-      myHeaders: { "Auth-Token": token },
+      myHeaders: { "Auth-Token": Cookies.get("token") },
       formInline: {
         name: "",
         jobHunting: "",

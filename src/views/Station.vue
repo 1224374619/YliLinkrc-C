@@ -205,7 +205,8 @@
                   <div
                     style="margin:5px 0 0 5px;color: #A2A2A2"
                   >{{evaluationLists.companyName}}HR.人事</div>
-                  <div style="margin:0 0 0 5px">{{item.sublist[0].content}}</div>
+                  <div style="margin:0 0 0 5px" v-if="item.sublist === null"></div>
+                  <div style="margin:0 0 0 5px" v-else>{{item.sublist[0].content}}</div>
                 </div>
                 <div>
                   <div>{{item.createdTime|formatDateOne}}</div>

@@ -7,13 +7,13 @@
 </template>
 
 <script>
-// import CustomizedFooter from "components/customized-footer.vue";
-// import CustomizedNav from "components/customized-nav.vue";
+import CustomizedFooter from "components/customized-footer.vue";
+import CustomizedNav from "components/customized-nav.vue";
 export default {
   name: "",
   components: {
-    // CustomizedFooter,
-    // CustomizedNav,
+    CustomizedFooter,
+    CustomizedNav,
     // PasswordInput
   },
 };

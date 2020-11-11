@@ -11,7 +11,9 @@ import Register from '../views/Register.vue'
 import RegisterResult from '../views/RegisterResult.vue'
 import UserLicense from '../views/UserLicense.vue'
 import JobDetail from '../views/JobDetail.vue'
-import { Notification } from 'element-ui';
+import {
+    Notification
+} from 'element-ui';
 // import Resumes from '../views/Resumes.vue'
 import Resume from '../views/Resume.vue'
 import Position from '../views/Position.vue'
@@ -22,37 +24,41 @@ import InforChange from '../views/inforchange.vue'
 // import captcha from '../components/captcha.vue'
 import NewsDetail from '../views/NewsDetail.vue'
 import AboutUs from '../views/AboutUs.vue'
-import Specialty  from '../views/Specialty.vue'
-import Gap  from '../views/Gap.vue'
-import gapDetail  from '../views/gapDetail.vue'
-import ComingSoon  from '../views/ComingSoon.vue'
+import Specialty from '../views/Specialty.vue'
+import Gap from '../views/Gap.vue'
+import gapDetail from '../views/gapDetail.vue'
+import ComingSoon from '../views/ComingSoon.vue'
 // import {Message} from 'element-ui'
 // import map from '../views/maps.vue' 
 Vue.use(Router);
 // Vue.use(Message)
 const router = new Router({
     mode: 'hash',
-    routes: [
-        {
+    routes: [{
             path: '/',
             name: 'front',
             component: resolve => require(['../layout/front/index'], resolve),
             redirect: '/home',
-            children: [
-                {
-                    path: '/home',
-                    name: 'home',
-                    component: Home
-                },
-            ]
+            children: [{
+                path: '/home',
+                name: 'home',
+                component: Home,
+                meta: {
+                    title: '银领人才网',
+                    content: {
+                        keywords: '银领,银领人才,银领招聘,银领人才网,银领英才,灰领,技能人才,工匠',
+                        description: '银领人才网，是上海银领网络科技有限公司全力打造的“银领人才”招聘网站。专注于银领人才，银领英才，银领匠才，航空航天人才，军工人才等技能技术人才的求职与招聘服务',
+                    },
+
+                }
+            }, ]
         },
         {
             path: '/',
             name: 'front',
             component: resolve => require(['../layout/front/index'], resolve),
             redirect: '/home',
-            children: [
-                {
+            children: [{
                     path: '/resume',
                     name: '简历',
                     component: Resume,
@@ -114,7 +120,15 @@ const router = new Router({
                 {
                     path: '/station',
                     name: '空白',
-                    component: Station
+                    component: Station,
+                    meta: {
+                        title: '职位管理_银领人才网',
+                        content: {
+                            keywords: '银领匠才,银领技术招聘,技能技术招聘',
+                            description: '银领人才网,将为中国智能制造、国家经济高质量发展提供全方位的高技能人才支撑！“银领人才网”将解决企业技能人才缺失的核心问题！同时让“银领人才”得到全社会的认可和尊重，实现人才社会价值的提升！',
+                        },
+
+                    }
                 },
             ]
         },
@@ -169,31 +183,43 @@ const router = new Router({
             name: 'detail',
             component: JobDetail
         },
-        
+
     ]
 });
 
 // 注册全局钩子用来拦截导航
 router.beforeEach((to, from, next) => {
-   
     const token = Cookies.get('token')
     if (to.meta.requireAuth) { // 判断该路由是否需要登录权限
-      if (token) { // 通过vuex state获取当前的token是否存在
-        next()
-      } else {
-        Notification.error({
-            title: "错误",
-            message: '请先登录'
-          });
-        setTimeout(()=>next({
-            path: '/login'
-            // query: {redirect: to.fullPath} // 将跳转的路由path作为参数，登录成功后跳转到该路由
-          }),2000)
-        
-      }
-    } else {
-      next()
-    }
-  })
+        if (token) { // 通过vuex state获取当前的token是否存在
+            next()
+        } else {
+            Notification.error({
+                title: "错误",
+                message: '请先登录'
+            });
+            setTimeout(() => next({
+                path: '/login'
+                // query: {redirect: to.fullPath} // 将跳转的路由path作为参数，登录成功后跳转到该路由
+            }), 2000)
 
-  export default router
+        }
+    } else {
+        next()
+    }
+    /* 路由发生变化修改页面meta */
+    if (to.meta.content) {
+        let head = document.getElementsByTagName('head');
+        let meta = document.createElement('meta');
+        document.querySelector('meta[name="keywords"]').setAttribute('content', to.meta.content.keywords)
+        document.querySelector('meta[name="description"]').setAttribute('content', to.meta.content.description)
+        meta.content = to.meta.content;
+        head[0].appendChild(meta)
+    }
+    /* 路由发生变化修改页面title */
+    if (to.meta.title) {
+        document.title = to.meta.title;
+    }
+})
+
+export default router
