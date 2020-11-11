@@ -177,7 +177,7 @@ export default {
         .get("/consumer-core/resume/brief")
         .then(res => {
           if (res.data.data.base !== null) {
-            this.$.push({ path: "/home" });
+            this.$router.push({ path: "/home" });
             this.$storerouter.state.avatarUrl = res.data.data.base.avatarUrl;
           } else {
             this.$router.push({ path: "/home" });
