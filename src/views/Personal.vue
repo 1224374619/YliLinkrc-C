@@ -724,7 +724,7 @@ export default {
       }
     },
     //稍后评论
-    laterM() {
+    laterM(res) {
       this.interviewId = res.interviewId;
       this.appraise = false;
     },
