@@ -354,6 +354,11 @@
                   </div>
                   <button v-else class="button" @click="lookinterview(list)">查看面试</button>
                 </div>
+                <div class="operatedButton" v-if="list.processedState === 'OFFERED'">
+                  <div v-if="list.interviewState === 'COMPLETED'">
+                    <button v-if="list.evaluationId === 0" @click="laterM(list)" class="button">去评价</button>
+                    <button v-else @click="exist(list)" class="button">去查看</button>
+                  </div>
               </div>
               <div class="tabs-line"></div>
             </div>
@@ -718,7 +723,8 @@ export default {
       }
     },
     //稍后评论
-    laterM() {
+    laterM(res) {
+      this.interviewId = res.interviewId;
       this.appraise = false;
     },
     evaluation() {
