@@ -359,6 +359,7 @@
                     <button v-if="list.evaluationId === 0" @click="laterM(list)" class="button">去评价</button>
                     <button v-else @click="exist(list)" class="button">去查看</button>
                   </div>
+                </div>
               </div>
               <div class="tabs-line"></div>
             </div>
@@ -723,7 +724,7 @@ export default {
       }
     },
     //稍后评论
-    laterM(res) {
+    laterM() {
       this.interviewId = res.interviewId;
       this.appraise = false;
     },
