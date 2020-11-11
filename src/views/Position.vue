@@ -112,7 +112,7 @@
                       <div>
                         <img
                           style="width:50px;height:50px;margin:15px 0 0 15px"
-                          src="../assets/images/89.png"
+                          :src="item.avatar"
                         />
                       </div>
                       <div>
