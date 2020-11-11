@@ -48,6 +48,7 @@
           </span>
           <span v-if="showCollect">
             <el-button
+              @click="iscancel"
               plain
               icon="el-icon-star-off"
               style="width:140px;height:40px;border: 1px solid rgba(216,216,216,1);color: #B7B7B7"
@@ -109,7 +110,7 @@
         </el-radio>
         <br />
       </el-radio-group>
-    </div> -->
+    </div>-->
     <div class="station-foot" v-if="stationFoot">
       <div class="station-foot-content">
         <p>职位描述</p>
@@ -168,8 +169,16 @@
                 面试体验：
                 <el-rate style="width:140px;" v-model="item.interviewExperience" :colors="colors"></el-rate>
               </div>
-              <div class="appraise-aside" style="margin:15px 0 0 20px;" v-if="item.positionName.length>10">面试职位：{{item.positionName.substring(0,10)}}</div>
-              <div class="appraise-aside" style="margin:15px 0 0 20px;" v-else>面试职位：{{item.positionName}}</div>
+              <div
+                class="appraise-aside"
+                style="margin:15px 0 0 20px;"
+                v-if="item.positionName.length>10"
+              >面试职位：{{item.positionName.substring(0,10)}}</div>
+              <div
+                class="appraise-aside"
+                style="margin:15px 0 0 20px;"
+                v-else
+              >面试职位：{{item.positionName}}</div>
               <div style="margin:15px 0 0 55px">{{item.createdTime|formatDateOne}}</div>
             </div>
             <div class="station-appraise-select">
@@ -190,10 +199,7 @@
               <div>企业回复</div>
               <div class="third">
                 <div>
-                  <img
-                    style="width:50px;height:50px;margin:15px 0 0 15px"
-                    :src="item.avatar"
-                  />
+                  <img style="width:50px;height:50px;margin:15px 0 0 15px" :src="item.avatar" />
                 </div>
                 <div>
                   <div
@@ -210,7 +216,11 @@
                   style="display: flex;flex-direction: row;margin:20px 0 0 0"
                   @click="like(item)"
                 >
-                  <img v-if="item.isLike" style="width:25px;height:25px" src="../assets/images/zan.png" />
+                  <img
+                    v-if="item.isLike"
+                    style="width:25px;height:25px"
+                    src="../assets/images/zan.png"
+                  />
                   <img v-else style="width:25px;height:25px" src="../assets/images/hzan.png" />
                   <span style="line-height:25px">{{item.likeNum}}</span>
                 </div>
@@ -357,6 +367,7 @@ import {
   showdeliver,
   companyDetail,
   positionlist,
+  isfavorite,
   // positionSearch,
   brief,
   positionDetail,
@@ -437,6 +448,33 @@ export default {
   },
 
   methods: {
+    //取消对岗位的收藏
+    iscancel() {
+      isfavorite(this.positiId)
+        .then(res => {
+          if (res.data.code === "200") {
+            this.showcoll();
+          }
+        })
+        .catch(error => {
+          if (error.response.status === 404) {
+            this.$notify.error({
+              title: "错误",
+              message: "页面丢失，请重新加载"
+            });
+          } else if (error.response.status === 403) {
+            this.$notify.error({
+              title: "错误",
+              message: "登陆超时，请重新登录"
+            });
+          } else {
+            this.$notify.error({
+              title: "错误",
+              message: error.response.data.message
+            });
+          }
+        });
+    },
     //评论分页
     handleSizeChange(val) {
       this.page.pageSize = val;

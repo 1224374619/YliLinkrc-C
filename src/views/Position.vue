@@ -77,12 +77,11 @@
                     <div>
                       <img
                         style="width:50px;height:50px;margin:0 0 0 30px"
-                        src="../assets/images/89.png"
+                        :src="item.avatar"
                       />
                     </div>
                     <div class="appraise-nav">
-                      <div v-if="item.isAnonymous">{{item.appraiser}}</div>
-                      <div v-else>匿名用户</div>
+                      <div>{{item.appraiser}}</div>
                     </div>
                     <div class="appraise-aside" style="margin:15px 0 0 54px">
                       面试体验：
