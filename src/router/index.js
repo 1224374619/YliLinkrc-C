@@ -43,14 +43,14 @@ const router = new Router({
                 path: '/home',
                 name: 'home',
                 component: Home,
-                // meta: {
-                //     title: '银领人才网',
-                //     content: {
-                //         keywords: '银领,银领人才,银领招聘,银领人才网,银领英才,灰领,技能人才,工匠',
-                //         description: '银领人才网，是上海银领网络科技有限公司全力打造的“银领人才”招聘网站。专注于银领人才，银领英才，银领匠才，航空航天人才，军工人才等技能技术人才的求职与招聘服务',
-                //     },
+                meta: {
+                    title: '[银领人才网]海量技术人才求职_企业招聘_上银领人才网！',
+                    content: {
+                        keywords: '银领,银领人才,银领招聘,银领人才网,银领英才,灰领,技能人才,工匠',
+                        description: '银领人才网,是上海银领网络科技有限公司全力打造的"银领人才"招聘网站。专注于银领人才,银领英才,银领匠才,航空航天人才,军工人才等技能技术人才的求职与招聘服务',
+                    },
 
-                // }
+                }
             }, ]
         },
         {
@@ -63,7 +63,13 @@ const router = new Router({
                     name: '简历',
                     component: Resume,
                     meta: {
-                        requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
+                        requireAuth: true, // 添加该字段，表示进入这个路由是需要登录的,
+                        title: '银领人才网-简历',
+                        content: {
+                            keywords: '技术人才,技术人才求职',
+                            description: '银领人才网将努力使技能技术人才得到全社会的尊重与认可',
+                        },
+
                     }
                 },
                 {
@@ -93,8 +99,16 @@ const router = new Router({
                 },
                 {
                     path: '/aboutus/:id',
-                    name: '职位',
-                    component: AboutUs
+                    name: '联系我们',
+                    component: AboutUs,
+                    meta: {
+                        title: '银领人才网-关于我们',
+                        content: {
+                            keywords: '上海银领网络科技有限公司,银领求职专业网站',
+                            description: '银领人才网将为“既动手又动脑”的银领人才求职提供多维度、精准化的招聘服务，为中国智能制造、制造业强国提供高技能人才的支撑。',
+                        },
+
+                    }
                 },
                 {
                     path: '/specialty',
@@ -119,16 +133,16 @@ const router = new Router({
                 },
                 {
                     path: '/station',
-                    name: '空白',
+                    name: '职位详情',
                     component: Station,
-                    // meta: {
-                    //     title: '职位管理_银领人才网',
-                    //     content: {
-                    //         keywords: '银领匠才,银领技术招聘,技能技术招聘',
-                    //         description: '银领人才网,将为中国智能制造、国家经济高质量发展提供全方位的高技能人才支撑！“银领人才网”将解决企业技能人才缺失的核心问题！同时让“银领人才”得到全社会的认可和尊重，实现人才社会价值的提升！',
-                    //     },
+                    meta: {
+                        title: '职位管理_银领人才网',
+                        content: {
+                            keywords: '银领匠才,银领技术招聘,技能技术招聘',
+                            description: '银领人才网,将为中国智能制造,国家经济高质量发展提供全方位的高技能人才支撑！银领人才网将解决企业技能人才缺失的核心问题！同时让“银领人才”得到全社会的认可和尊重，实现人才社会价值的提升！',
+                        },
 
-                    // }
+                    }
                 },
             ]
         },
@@ -146,7 +160,15 @@ const router = new Router({
         {
             path: '/login',
             name: 'login',
-            component: Login
+            component: Login,
+            meta: {
+                title: '银领人才网-登录',
+                content: {
+                    keywords: '银领人才求职,银领人才的意思',
+                    description: '银领人才是既要能动脑，又要能动手，具有较高知识层次、较强创新能力、熟练掌握高技能的高级技术人才',
+                },
+
+            }
         },
         {
             path: '/register',
@@ -207,19 +229,19 @@ router.beforeEach((to, from, next) => {
     } else {
         next()
     }
-    // /* 路由发生变化修改页面meta */
-    // if (to.meta.content) {
-    //     let head = document.getElementsByTagName('head');
-    //     let meta = document.createElement('meta');
-    //     document.querySelector('meta[name="keywords"]').setAttribute('content', to.meta.content.keywords)
-    //     document.querySelector('meta[name="description"]').setAttribute('content', to.meta.content.description)
-    //     meta.content = to.meta.content;
-    //     head[0].appendChild(meta)
-    // }
-    // /* 路由发生变化修改页面title */
-    // if (to.meta.title) {
-    //     document.title = to.meta.title;
-    // }
+    /* 路由发生变化修改页面meta */
+    if (to.meta.content) {
+        let head = document.getElementsByTagName('head');
+        let meta = document.createElement('meta');
+        document.querySelector('meta[name="keywords"]').setAttribute('content', to.meta.content.keywords)
+        document.querySelector('meta[name="description"]').setAttribute('content', to.meta.content.description)
+        meta.content = to.meta.content;
+        head[0].appendChild(meta)
+    }
+    /* 路由发生变化修改页面title */
+    if (to.meta.title) {
+        document.title = to.meta.title;
+    }
 })
 
 export default router
