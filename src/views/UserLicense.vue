@@ -204,7 +204,7 @@ export default {
   },
   methods: {
     close() {
-      window.close();
+      this.$router.go(-1)
     },
   }
 }

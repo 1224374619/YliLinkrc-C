@@ -28,6 +28,8 @@ import Specialty from '../views/Specialty.vue'
 import Gap from '../views/Gap.vue'
 import gapDetail from '../views/gapDetail.vue'
 import ComingSoon from '../views/ComingSoon.vue'
+import Appraise from '../views/appraise/appraise.vue'
+import AppraiseDetail from '../views/appraise/appraiseDetail.vue'
 // import {Message} from 'element-ui'
 // import map from '../views/maps.vue' 
 Vue.use(Router);
@@ -96,6 +98,16 @@ const router = new Router({
                     path: '/comingsoon',
                     name: '敬请期待',
                     component: ComingSoon
+                },
+                {
+                    path: '/appraise',
+                    name: '活动中心',
+                    component: Appraise
+                },
+                {
+                    path: '/appraiseDetail',
+                    name: '活动详情',
+                    component: AppraiseDetail
                 },
                 {
                     path: '/aboutus/:id',

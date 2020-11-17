@@ -21,8 +21,8 @@
             <router-link style="margin:0 0 0 20px" to="/aboutus/:id" index="4">
               <span>联系我们</span>
             </router-link>
-            <router-link style="margin:0 0 0 40px" to="/comingsoon" index="5">
-              <span>敬请期待</span>
+            <router-link style="margin:0 0 0 40px" to="/appraise" index="5">
+              <span>活动中心</span>
             </router-link>
           </div>
           <div class="btn-set" v-if="!this.token">
