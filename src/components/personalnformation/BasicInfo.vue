@@ -259,7 +259,7 @@ export default {
         phone: [
           { required: true, message: "请填写手机号", trigger: "change" },
           {
-            pattern: /^[1][3578][0-9]{9}$/,
+            pattern: /^[1][356789][0-9]{9}$/,
             message: "请输入正确的手机号",
             trigger: ["change", "blur"]
           }

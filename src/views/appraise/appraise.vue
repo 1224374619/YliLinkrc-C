@@ -47,7 +47,7 @@
           <el-button type="primary" @click="dialogVisible = false">确定</el-button>
         </span>
       </el-dialog>
-      <el-tabs v-model="activeName">
+      <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="线上活动" name="first">
           <div class="demo" v-if="activeDemo">
             <div style="padding:30px 0 0 20px">
@@ -197,16 +197,18 @@
 export default {
   data() {
     return {
+      isParticipate: false,
+      activityMode: 0,
       activeName: "first",
       dialogVisible: false,
       dialogVisibles: false,
-      activeDemo: false,
+      activeDemo: true,
       textarea: "",
       page: {
         total: 0,
-        pageSize: 5,
+        pageSize: 10,
         current: 1,
-        pageSizeOpts: [5, 10, 20]
+        pageSizeOpts: [10, 20, 30]
       },
       form: {
         name: ""
@@ -214,8 +216,38 @@ export default {
     };
   },
   methods: {
+    //tab切换
+    handleClick(tab, event) {
+      if (tab.name === "fitst") {
+        this.activityMode = 0;
+        this.isParticipate = false;
+      } else if (tab.name === "second") {
+        this.activityMode = 1;
+        this.isParticipate = false;
+      } else {
+        this.activityMode = 1;
+        this.isParticipate = true;
+      }
+    },
     enroll() {
-      console.log("1313111111111");
+      let params = {
+        activityMode: this.activityMode,
+        isParticipate: this.isParticipate,
+        pageNum: this.page.current,
+        pageSize: this.page.pageSize,
+        sortBy: null,
+        sortOrder: null
+      };
+      this.$http
+        .post("/consumer-core/activity/list", params)
+        .then(res => {
+          if (res.data.code == 200) {
+            this.tableData = res.data.data.list;
+            this.page.total = res.data.data.total;
+          } else {
+          }
+        })
+        .catch(error => {});
     },
     handleSizeChange(val) {
       this.page.pageSize = val;
@@ -225,7 +257,9 @@ export default {
       this.page.current = val;
     }
   },
-  created() {}
+  created() {
+    this.enroll()
+  }
 };
 </script>
 
@@ -293,7 +327,7 @@ export default {
         margin: -30px 0 0 0;
 
         .pagination {
-          margin: 60px 0 90px 0;
+          margin: 60px 0 90px 215px;
         }
 
         div {
