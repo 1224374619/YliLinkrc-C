@@ -11,23 +11,28 @@
           <el-form
             ref="form"
             :model="form"
-            label-width="80px"
+            :rules="rules"
+            label-width="100px"
             style="font-family: PingFangSC-Regular;color: #5A5A5A;font-size:16px;margin:30px 0 0 0"
           >
-            <el-form-item label="姓名" style="padding:0 40px 0 0">
-              <el-input v-model="form.name"></el-input>
-            </el-form-item>
-            <el-form-item label="昵称" style="padding:0 40px 0 0">
-              <el-input v-model="form.name"></el-input>
-            </el-form-item>
-            <el-form-item label="手机" style="padding:0 40px 0 0">
-              <el-input v-model="form.name"></el-input>
+            <el-form-item
+              style="padding:0 40px 0 0"
+              v-for="(item, index) in this.formAttributeBodies"
+              :key="index"
+              :label="item.chineseName"
+              :prop="item.englishName"
+            >
+              <el-input
+                placeholder="请填写"
+                style="width:234px;margin:0 35px 0 0"
+                v-model="form[item.englishName]"
+              ></el-input>
             </el-form-item>
           </el-form>
         </div>
         <span slot="footer" class="dialog-footer">
-          <el-button plain>取消</el-button>
-          <el-button type="primary" @click="dialogVisible = false">提交</el-button>
+          <el-button plain @click="dialogVisible = false">取消</el-button>
+          <el-button type="primary" @click="formEnroll('form')">提交</el-button>
         </span>
       </el-dialog>
       <el-dialog title :visible.sync="dialogVisibles" width="26%">
@@ -43,140 +48,78 @@
           ></el-input>
         </div>
         <span slot="footer" class="dialog-footer">
-          <el-button plain>取消</el-button>
-          <el-button type="primary" @click="dialogVisible = false">确定</el-button>
+          <el-button plain @click="dialogVisibles = false">取消</el-button>
+          <el-button type="primary" @click="abolishEnlists()">确定</el-button>
         </span>
       </el-dialog>
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="线上活动" name="first">
           <div class="demo" v-if="activeDemo">
-            <div style="padding:30px 0 0 20px">
+            <div style="padding:30px 0 0 20px" v-for="(item,index) in this.tableData" :key="index">
               <div class="demo-aside">
-                <img class="imgs" src="../../assets/images/b1.png" />
+                <img
+                  class="imgs"
+                  v-if="item.activityRegistrationState === 'REGISTRATION_NOT_STARTED'"
+                  src="../../assets/images/b1.png"
+                />
+                <img
+                  class="imgs"
+                  v-else-if="item.activityRegistrationState === 'REGISTRATION_IN_PROGRESS'"
+                  src="../../assets/images/b2.png"
+                />
+                <img class="imgs" v-else src="../../assets/images/b3.png" />
               </div>
-              <div class="demo-nav">
-                <img src="../../assets/images/bans.png" />
+              <div class="demo-nav" @click="appraiseDetail(item)">
+                <img :src="item.activityPosterUrl" />
               </div>
               <div class="demo-footer">
-                <div class="appraise-name">上海银领技术人才技术论坛交流会</div>
+                <div class="appraise-name">{{item.activityName}}</div>
                 <div class="appraise-time">
-                  <div>活动时间：2020.10.10-2020.11.11</div>
-                  <div>报名时间：2020.10.10-2020.11.11</div>
-                  <div>报名人数：5 / 100</div>
+                  <div>活动时间：{{item.activityStartTime | formatDateFourth}}-{{item.activityEndTime | formatDateFourth}}</div>
+                  <div>报名时间：{{item.registrationStartTime| formatDateFourth}}-{{item.registrationEndTime| formatDateFourth}}</div>
+                  <div>报名人数：{{item.registeredNum}} / {{item.registrationNum}}</div>
                 </div>
                 <div>
-                  <button class="appraise-button">去报名</button>
+                  <div v-if="item.activityRegistrationState === 'REGISTRATION_NOT_STARTED'">
+                    <button
+                      style="pointer-events: none;"
+                      @click="enlist(item)"
+                      class="appraises-button"
+                    >去报名</button>
+                  </div>
+                  <div v-if="item.activityRegistrationState === 'REGISTRATION_IN_PROGRESS'">
+                    <button
+                      v-if="item.registrationStatus === 'DID_NOT_SIGN_UP'"
+                      @click="enlist(item)"
+                      class="appraise-button"
+                    >去报名</button>
+                    <button
+                      v-else-if="item.registrationStatus === 'REGISTERED'"
+                      class="appraise-button"
+                      @click="abolishEnlist(item)"
+                    >取消报名</button>
+                  </div>
+                  <div v-if="item.activityRegistrationState === 'REGISTRATION_IS_UP'">
+                    <button style="pointer-events: none;" class="appraises-button">报名已截止</button>
+                  </div>
+                  <div v-if="item.registrationStatus === 'CANCELED'">
+                    <button style="pointer-events: none;" class="appraises-button">报名已取消</button>
+                  </div>
                 </div>
               </div>
             </div>
-            <div style="padding:30px 0 0 20px">
-              <div class="demo-aside">
-                <img class="imgs" src="../../assets/images/b1.png" />
-              </div>
-              <div class="demo-nav">
-                <img src="../../assets/images/bans.png" />
-              </div>
-              <div class="demo-footer">
-                <div class="appraise-name">上海银领技术人才技术论坛交流会</div>
-                <div class="appraise-time">
-                  <div>活动时间：2020.10.10-2020.11.11</div>
-                  <div>报名时间：2020.10.10-2020.11.11</div>
-                  <div>报名人数：5 / 100</div>
-                </div>
-                <div>
-                  <button class="appraise-button">去报名</button>
-                </div>
-              </div>
-            </div>
-            <div style="padding:30px 0 0 20px">
-              <div class="demo-aside">
-                <img class="imgs" src="../../assets/images/b1.png" />
-              </div>
-              <div class="demo-nav">
-                <img src="../../assets/images/bans.png" />
-              </div>
-              <div class="demo-footer">
-                <div class="appraise-name">上海银领技术人才技术论坛交流会</div>
-                <div class="appraise-time">
-                  <div>活动时间：2020.10.10-2020.11.11</div>
-                  <div>报名时间：2020.10.10-2020.11.11</div>
-                  <div>报名人数：5 / 100</div>
-                </div>
-                <div>
-                  <button class="appraise-button">去报名</button>
-                </div>
-              </div>
-            </div>
-
-            <div style="padding:30px 0 0 20px">
-              <div class="demo-aside">
-                <img class="imgs" src="../../assets/images/b1.png" />
-              </div>
-              <div class="demo-nav">
-                <img src="../../assets/images/bans.png" />
-              </div>
-              <div class="demo-footer">
-                <div class="appraise-name">上海银领技术人才技术论坛交流会</div>
-                <div class="appraise-time">
-                  <div>活动时间：2020.10.10-2020.11.11</div>
-                  <div>报名时间：2020.10.10-2020.11.11</div>
-                  <div>报名人数：5 / 100</div>
-                </div>
-                <div>
-                  <button class="appraise-button" @click="enroll">去报名</button>
-                </div>
-              </div>
-            </div>
-            <div style="padding:30px 0 0 20px">
-              <div class="demo-aside">
-                <img class="imgs" src="../../assets/images/b1.png" />
-              </div>
-              <div class="demo-nav">
-                <img src="../../assets/images/bans.png" />
-              </div>
-              <div class="demo-footer">
-                <div class="appraise-name">上海银领技术人才技术论坛交流会</div>
-                <div class="appraise-time">
-                  <div>活动时间：2020.10.10-2020.11.11</div>
-                  <div>报名时间：2020.10.10-2020.11.11</div>
-                  <div>报名人数：5 / 100</div>
-                </div>
-                <div>
-                  <button class="appraise-button" @click="enroll">去报名</button>
-                </div>
-              </div>
-            </div>
-            <div style="padding:30px 0 0 20px">
-              <div class="demo-aside">
-                <img class="imgs" src="../../assets/images/b1.png" />
-              </div>
-              <div class="demo-nav">
-                <img src="../../assets/images/bans.png" />
-              </div>
-              <div class="demo-footer">
-                <div class="appraise-name">上海银领技术人才技术论坛交流会</div>
-                <div class="appraise-time">
-                  <div>活动时间：2020.10.10-2020.11.11</div>
-                  <div>报名时间：2020.10.10-2020.11.11</div>
-                  <div>报名人数：5 / 100</div>
-                </div>
-                <div>
-                  <button class="appraise-button" @click="enroll">去报名</button>
-                </div>
-              </div>
-            </div>
-            <div class="pagination">
-              <el-pagination
-                @size-change="handleSizeChange"
-                @current-change="handleCurrentChange"
-                :current-page="page.current"
-                :page-sizes="page.pageSizeOpts"
-                class="pagination"
-                :page-size="page.pageSize"
-                layout="total, sizes, prev, pager, next, jumper"
-                :total="page.total"
-              ></el-pagination>
-            </div>
+          </div>
+          <div class="pagination" v-if="activeDemo">
+            <el-pagination
+              @size-change="handleSizeChange"
+              @current-change="handleCurrentChange"
+              :current-page="page.current"
+              :page-sizes="page.pageSizeOpts"
+              class="pagination"
+              :page-size="page.pageSize"
+              layout="total, sizes, prev, pager, next, jumper"
+              :total="page.total"
+            ></el-pagination>
           </div>
           <div class="demos" v-else>
             <img src="../../assets/images/ass.png" />
@@ -184,10 +127,150 @@
           </div>
         </el-tab-pane>
         <el-tab-pane label="线下活动" name="second">
-          <div class="demo"></div>
+          <div class="demo" v-if="activeDemo">
+            <div style="padding:30px 0 0 20px" v-for="(item,index) in this.tableData" :key="index">
+              <div class="demo-aside">
+                <img
+                  class="imgs"
+                  v-if="item.activityRegistrationState === 'REGISTRATION_NOT_STARTED'"
+                  src="../../assets/images/b1.png"
+                />
+                <img
+                  class="imgs"
+                  v-else-if="item.activityRegistrationState === 'REGISTRATION_IN_PROGRESS'"
+                  src="../../assets/images/b2.png"
+                />
+                <img class="imgs" v-else src="../../assets/images/b3.png" />
+              </div>
+              <div class="demo-nav">
+                <img :src="item.activityPosterUrl" />
+              </div>
+              <div class="demo-footer">
+                <div class="appraise-name">{{item.activityName}}</div>
+                <div class="appraise-time">
+                  <div>活动时间：{{item.activityStartTime | formatDateFourth}}-{{item.activityEndTime | formatDateFourth}}</div>
+                  <div>报名时间：{{item.registrationStartTime| formatDateFourth}}-{{item.registrationEndTime| formatDateFourth}}</div>
+                  <div>报名人数：{{item.registeredNum}} / {{item.registrationNum}}</div>
+                </div>
+                <div>
+                  <div v-if="item.activityRegistrationState === 'REGISTRATION_NOT_STARTED'">
+                    <button
+                      style="pointer-events: none;"
+                      @click="enlist(item)"
+                      class="appraises-button"
+                    >去报名</button>
+                  </div>
+                  <div v-if="item.activityRegistrationState === 'REGISTRATION_IN_PROGRESS'">
+                    <button
+                      v-if="item.registrationStatus === 'DID_NOT_SIGN_UP'"
+                      @click="enlist(item)"
+                      class="appraise-button"
+                    >去报名</button>
+                    <button
+                      v-else-if="item.registrationStatus === 'REGISTERED'"
+                      class="appraise-button"
+                      @click="abolishEnlist(item)"
+                    >取消报名</button>
+                  </div>
+                  <div v-if="item.activityRegistrationState === 'REGISTRATION_IS_UP'">
+                    <button style="pointer-events: none;" class="appraises-button">报名已截止</button>
+                  </div>
+                  <div v-if="item.registrationStatus === 'CANCELED'">
+                    <button style="pointer-events: none;" class="appraises-button">报名已取消</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="pagination" v-if="activeDemo">
+            <el-pagination
+              @size-change="handleSizeChange"
+              @current-change="handleCurrentChange"
+              :current-page="page.current"
+              :page-sizes="page.pageSizeOpts"
+              class="pagination"
+              :page-size="page.pageSize"
+              layout="total, sizes, prev, pager, next, jumper"
+              :total="page.total"
+            ></el-pagination>
+          </div>
+          <div class="demos" v-else>
+            <img src="../../assets/images/ass.png" />
+            <div>还没有可以参加的活动哦～</div>
+          </div>
         </el-tab-pane>
         <el-tab-pane label="我参与的" name="third">
-          <div class="demo"></div>
+          <div class="demo" v-if="activeDemo">
+            <div style="padding:30px 0 0 20px" v-for="(item,index) in this.tableData" :key="index">
+              <div class="demo-aside">
+                <img
+                  class="imgs"
+                  v-if="item.activityRegistrationState === 'REGISTRATION_NOT_STARTED'"
+                  src="../../assets/images/b1.png"
+                />
+                <img
+                  class="imgs"
+                  v-else-if="item.activityRegistrationState === 'REGISTRATION_IN_PROGRESS'"
+                  src="../../assets/images/b2.png"
+                />
+                <img class="imgs" v-else src="../../assets/images/b3.png" />
+              </div>
+              <div class="demo-nav">
+                <img :src="item.activityPosterUrl" />
+              </div>
+              <div class="demo-footer">
+                <div class="appraise-name">{{item.activityName}}</div>
+                <div class="appraise-time">
+                  <div>活动时间：{{item.activityStartTime | formatDateFourth}}-{{item.activityEndTime | formatDateFourth}}</div>
+                  <div>报名时间：{{item.registrationStartTime| formatDateFourth}}-{{item.registrationEndTime| formatDateFourth}}</div>
+                  <div>报名人数：{{item.registeredNum}} / {{item.registrationNum}}</div>
+                </div>
+                <div>
+                  <div v-if="item.activityRegistrationState === 'REGISTRATION_NOT_STARTED'">
+                    <button
+                      style="pointer-events: none;"
+                      @click="enlist(item)"
+                      class="appraises-button"
+                    >去报名</button>
+                  </div>
+                  <div v-if="item.activityRegistrationState === 'REGISTRATION_IN_PROGRESS'">
+                    <button
+                      v-if="item.registrationStatus === 'DID_NOT_SIGN_UP'"
+                      @click="enlist(item)"
+                      class="appraise-button"
+                    >去报名</button>
+                    <button
+                      v-else-if="item.registrationStatus === 'REGISTERED'"
+                      class="appraise-button"
+                      @click="abolishEnlist(item)"
+                    >取消报名</button>
+                  </div>
+                  <div v-if="item.activityRegistrationState === 'REGISTRATION_IS_UP'">
+                    <button style="pointer-events: none;" class="appraises-button">报名已截止</button>
+                  </div>
+                  <div v-if="item.registrationStatus === 'CANCELED'">
+                    <button style="pointer-events: none;" class="appraises-button">报名已取消</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="pagination" v-if="activeDemo">
+            <el-pagination
+              @size-change="handleSizeChange"
+              @current-change="handleCurrentChange"
+              :current-page="page.current"
+              :page-sizes="page.pageSizeOpts"
+              class="pagination"
+              :page-size="page.pageSize"
+              layout="total, sizes, prev, pager, next, jumper"
+              :total="page.total"
+            ></el-pagination>
+          </div>
+          <div class="demos" v-else>
+            <img src="../../assets/images/ass.png" />
+            <div>还没有可以参加的活动哦～</div>
+          </div>
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -197,6 +280,55 @@
 export default {
   data() {
     return {
+      rules: {
+        surname: [{ required: true, message: "请输入", trigger: "blur" }],
+        sex: [{ required: true, message: "请输入", trigger: "blur" }],
+        age: [{ required: true, message: "请输入", trigger: "blur" }],
+        position: [{ required: true, message: "请输入", trigger: "blur" }],
+        record: [{ required: true, message: "请输入", trigger: "blur" }],
+        school: [{ required: true, message: "请输入", trigger: "blur" }],
+        major: [{ required: true, message: "请输入", trigger: "blur" }],
+        phone: [
+          { required: true, message: "请输入", trigger: "blur" },
+          {
+            pattern: /^[1][356789][0-9]{9}$/,
+            message: "请输入正确的手机号",
+            trigger: ["change", "blur"]
+          }
+        ],
+        email: [
+          { required: true, message: "请输入", trigger: "blur" },
+          {
+            pattern: /^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+\.)+(com|cn|net|com.cn|com.tw|com.hk)$/,
+            message: "邮箱格式错误",
+            trigger: ["change", "blur"]
+          }
+        ]
+      },
+
+      formAttributeBodies: [
+        {
+          chineseName: "",
+          groupId: 0,
+          englishName: "",
+          isNumeric: true,
+          unit: null
+        }
+      ],
+      form: {
+        surname: "",
+        phone: "",
+        email: "",
+        sex: "",
+        age: "",
+        position: "",
+        record: "",
+        school: "",
+        major: ""
+      },
+      registrationSpec: {},
+      registrationSpecs: {},
+      tableData: [],
       isParticipate: false,
       activityMode: 0,
       activeName: "first",
@@ -206,27 +338,116 @@ export default {
       textarea: "",
       page: {
         total: 0,
-        pageSize: 10,
+        pageSize: 6,
         current: 1,
-        pageSizeOpts: [10, 20, 30]
+        pageSizeOpts: [6]
       },
-      form: {
-        name: ""
-      }
+      activityId: ""
     };
   },
   methods: {
+    //活动详情
+    appraiseDetail(item) {
+      this.$router.push({
+        path: "/appraiseDetail",
+        query:{id:item.id}
+      });
+    },
+    //取消报名
+    abolishEnlist(res) {
+      this.dialogVisibles = true;
+      this.activityId = res.id;
+    },
+    abolishEnlists() {
+      let params = {
+        activityId: this.activityId,
+        reason: this.textarea
+      };
+      this.$http
+        .put(`/consumer-core/activity/registration`, params)
+        .then(res => {
+          if (res.data.code == 200) {
+            this.dialogVisibles = false;
+            this.textarea = "";
+            this.enroll();
+          } else {
+          }
+        })
+        .catch(error => {});
+    },
+    //去报名
+    enlist(res) {
+      this.activityId = res.id;
+      this.$http
+        .get(`/consumer-core/activity/form/${res.id}`)
+        .then(res => {
+          if (res.data.code == 200) {
+            this.dialogVisible = true;
+            this.formAttributeBodies = res.data.data;
+          } else {
+          }
+        })
+        .catch(error => {});
+    },
+    formEnroll(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          this.forms();
+          let params = {
+            activityId: this.activityId,
+            registrationSpec: this.registrationSpecs
+          };
+          this.$http
+            .post("/consumer-core/activity/registration", params)
+            .then(res => {
+              if (res.data.code == 200) {
+                this.dialogVisible = false;
+                this.enroll();
+              } else {
+              }
+            })
+            .catch(error => {
+              this.dialogVisible = false;
+              this.form = {
+                surname: "",
+                phone: "",
+                email: "",
+                sex: "",
+                age: "",
+                position: "",
+                record: "",
+                school: "",
+                major: ""
+              };
+            });
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+    },
+    //form
+    forms() {
+      this.formAttributeBodies.forEach((item, index, array) => {
+        //执行代码
+        this.registrationSpec[item.id] = this.form[item.englishName];
+      });
+      this.registrationSpecs = JSON.stringify(this.registrationSpec);
+    },
     //tab切换
     handleClick(tab, event) {
-      if (tab.name === "fitst") {
+      if (tab.name === "first") {
         this.activityMode = 0;
         this.isParticipate = false;
+        this.enroll();
       } else if (tab.name === "second") {
         this.activityMode = 1;
         this.isParticipate = false;
+        this.enroll();
       } else {
-        this.activityMode = 1;
+        this.activityMode = null;
         this.isParticipate = true;
+        this.enroll();
       }
     },
     enroll() {
@@ -244,6 +465,11 @@ export default {
           if (res.data.code == 200) {
             this.tableData = res.data.data.list;
             this.page.total = res.data.data.total;
+            if (this.page.total === 0) {
+              this.activeDemo = false;
+            } else {
+              this.activeDemo = true;
+            }
           } else {
           }
         })
@@ -252,13 +478,15 @@ export default {
     handleSizeChange(val) {
       this.page.pageSize = val;
       this.page.current = 1;
+      this.enroll();
     },
     handleCurrentChange(val) {
       this.page.current = val;
+      this.enroll();
     }
   },
   created() {
-    this.enroll()
+    this.enroll();
   }
 };
 </script>
@@ -320,15 +548,15 @@ export default {
     .el-tabs {
       margin: 70px 0 0 0;
 
+      .pagination {
+        margin: 60px 0 90px 0;
+      }
+
       .demo {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
         margin: -30px 0 0 0;
-
-        .pagination {
-          margin: 60px 0 90px 215px;
-        }
 
         div {
           .demo-footer {
@@ -344,7 +572,8 @@ export default {
               font-family: PingFangSC-Medium;
               color: #373737;
               font-size: 20px;
-              margin: 110px 50px 0 0;
+              margin: 110px 50px 0 25px;
+              text-align: left;
             }
 
             .appraise-time {
@@ -370,6 +599,18 @@ export default {
               border-radius: 5px;
               margin: 10px 0 0 230px;
             }
+
+            .appraises-button {
+              width: 110px;
+              height: 44px;
+              border: 0.75px solid rgba(188, 188, 188, 1);
+              background: #ffffff;
+              font-family: PingFangSC-Medium;
+              color: #BCBCBC;
+              font-size: 18px;
+              border-radius: 5px;
+              margin: 10px 0 0 230px;
+            }
           }
 
           .demo-aside {
@@ -388,6 +629,11 @@ export default {
             top: 200px;
             width: 375px;
             height: 211px;
+
+            img {
+              width: 375px;
+              height: 211px;
+            }
           }
         }
       }

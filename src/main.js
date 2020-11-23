@@ -72,6 +72,9 @@ Vue.filter('formatDateTwo', function(value) {
 Vue.filter('formatDateThree', function(value) {
   return Moment(value).format('YYYY-MM-DD HH:mm')
 })
+Vue.filter('formatDateFourth', function(value) {
+  return Moment(value).format('YYYY.MM.DD')
+})
 Vue.config.productionTip = false;
 Vue.use(vuescroll, {
   ops: {
