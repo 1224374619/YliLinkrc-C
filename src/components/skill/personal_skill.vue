@@ -83,7 +83,7 @@ export default {
   },
   computed: {
     uploadUrl() {
-      return '/api/v2/file-service/files/upload';
+      return '/api/v2/file-service-dev/files/upload';
     }
   },
   methods: {

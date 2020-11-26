@@ -217,7 +217,7 @@ export default {
       this.$router.push({ path: "reset-password" });
     },
     business() {
-      window.open("http://47.102.145.186/business/#/login");
+      window.open("https://www.yinlinkrc.com/business/#/login");
     }
   },
 

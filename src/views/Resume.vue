@@ -390,6 +390,7 @@
                 <el-date-picker
                   v-model="formInformation.birthday"
                   type="date"
+                  :picker-options="pickerOptions"
                   style="width:300px;height:36px;margin-left:-100px"
                   placeholder="选择日期"
                 ></el-date-picker>
@@ -1995,11 +1996,11 @@ export default {
         label: "tag",
         children: "children"
       },
-      // pickerOptions: {
-      //   disabledDate(time) {
-      //     return time.getTime() > Date.now();
-      //   }
-      // },
+      pickerOptions: {
+        disabledDate(time) {
+          return time.getTime() < new Date().setFullYear((new Date().getFullYear()-16))
+        }
+      },
       // pickerOptionsOne: {
       //   disabledDate(time) {
       //     return time.getTime() < Date.now();
@@ -4040,11 +4041,11 @@ export default {
   computed: {
     uploadUrl() {
       // const {VUE_APP_SECRET,VUE_APP_DEV_MODE} = process.env
-      return "/api/v2/file-service/files/upload";
+      return "/api/v2/file-service-dev/files/upload";
     },
     uploadUrlOne() {
       // const {VUE_APP_SECRET,VUE_APP_DEV_MODE} = process.env
-      return "/api/v2/file-service/files/upload";
+      return "/api/v2/file-service-dev/files/upload";
     }
   },
   filters: {

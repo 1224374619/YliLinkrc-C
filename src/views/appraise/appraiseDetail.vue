@@ -126,7 +126,20 @@
         <div class="img">
           <img src="../../assets/images/huo.png" />
         </div>
-        <div class="content">{{this.appraiseList.activityContent}}</div>
+        <div class="content" v-html="this.appraiseList.activityContent"></div>
+      </div>
+      <div class="contact">
+        <el-form :inline="true" :model="formInline" class="demo-form-inline">
+          <el-form-item label="联系人姓名">
+            <el-input disabled v-model="appraiseList.contactName" placeholder></el-input>
+          </el-form-item>
+          <el-form-item label="联系人手机号">
+            <el-input disabled v-model="appraiseList.contactPhone" placeholder></el-input>
+          </el-form-item>
+          <el-form-item label="联系人邮箱" style="margin:0 70px 0 0">
+            <el-input disabled v-model="appraiseList.contactEmail" placeholder></el-input>
+          </el-form-item>
+        </el-form>
       </div>
     </div>
 
@@ -204,7 +217,20 @@
         <div class="img">
           <img src="../../assets/images/huo.png" />
         </div>
-        <div class="content">{{this.appraiseList.activityContent}}</div>
+        <div class="content" v-html="this.appraiseList.activityContent"></div>
+      </div>
+      <div class="contact">
+        <el-form :inline="true" :model="formInline" class="demo-form-inline">
+          <el-form-item label="联系人姓名">
+            <el-input disabled v-model="appraiseList.contactName" placeholder></el-input>
+          </el-form-item>
+          <el-form-item label="联系人手机号">
+            <el-input disabled v-model="appraiseList.contactPhone" placeholder></el-input>
+          </el-form-item>
+          <el-form-item label="联系人邮箱" style="margin:0 70px 0 0">
+            <el-input disabled v-model="appraiseList.contactEmail" placeholder></el-input>
+          </el-form-item>
+        </el-form>
       </div>
     </div>
   </div>
@@ -213,12 +239,17 @@
 export default {
   data() {
     return {
-      textarea:'',
+      textarea: "",
       activityId: "",
       id: "",
       appraiseList: {},
       dialogVisible: false,
       dialogVisibles: false,
+      formInline: {
+        contactName: "",
+        contactPhone: "",
+        contactEmail: ""
+      },
       form: {
         surname: "",
         phone: "",
@@ -534,6 +565,10 @@ export default {
         margin: 10px 0 0 160px;
       }
     }
+  }
+
+  .contact {
+    margin: 30px 0 30px 0;
   }
 
   .footer {

@@ -142,7 +142,7 @@
                 />
                 <img class="imgs" v-else src="../../assets/images/b3.png" />
               </div>
-              <div class="demo-nav">
+              <div class="demo-nav" @click="appraiseDetail(item)">
                 <img :src="item.activityPosterUrl" />
               </div>
               <div class="demo-footer">
@@ -215,7 +215,7 @@
                 />
                 <img class="imgs" v-else src="../../assets/images/b3.png" />
               </div>
-              <div class="demo-nav">
+              <div class="demo-nav" @click="appraiseDetail(item)">
                 <img :src="item.activityPosterUrl" />
               </div>
               <div class="demo-footer">
@@ -350,7 +350,7 @@ export default {
     appraiseDetail(item) {
       this.$router.push({
         path: "/appraiseDetail",
-        query:{id:item.id}
+        query: { id: item.id }
       });
     },
     //取消报名
@@ -370,6 +370,11 @@ export default {
             this.dialogVisibles = false;
             this.textarea = "";
             this.enroll();
+            this.$notify({
+              title: "成功",
+              message: '取消报名成功',
+              type: "success"
+            });
           } else {
           }
         })
@@ -403,6 +408,11 @@ export default {
               if (res.data.code == 200) {
                 this.dialogVisible = false;
                 this.enroll();
+                this.$notify({
+                  title: "成功",
+                  message: res.data.message,
+                  type: "success"
+                });
               } else {
               }
             })
@@ -619,7 +629,7 @@ export default {
             position: relative;
             z-index: 50;
             top: 15px;
-            left: 15px;
+            left: 10px;
           }
 
           .demo-nav {
@@ -627,12 +637,20 @@ export default {
             position: relative;
             z-index: 40;
             top: 200px;
+            cursor:pointer
             width: 375px;
             height: 211px;
+            border-radius: 7px;
+            box-shadow: 0px 3px 10px 0px rgba(214, 214, 214, 1);
+
+            .demo-nav:hover {
+              box-shadow: 0px 3px 10px 0px rgba(214, 214, 214, 1);
+            }
 
             img {
               width: 375px;
               height: 211px;
+              border-radius: 7px;
             }
           }
         }

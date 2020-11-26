@@ -78,7 +78,7 @@ export default {
       //   disabledDate(time) {
       //     return time.getTime() > Date.now();
       //   }
-      // },
+      // }
       rules: {
         schoolName: [
           { required: true, message: "请输入学校名称", trigger: "blur" },

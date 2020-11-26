@@ -131,6 +131,7 @@
               <el-date-picker
                 style="width:234px;height:36px"
                 type="date"
+                :picker-options="pickerOptions"
                 placeholder="选择日期"
                 v-model="formInline.birthday"
               ></el-date-picker>
@@ -297,7 +298,12 @@
         </el-form-item>
         <br />
         <el-form-item label="是否统招" style="width:355px;margin:0 0 0 10px" prop="general">
-          <el-radio style="width:112px;height:40px" v-model="eduformInline.general" border label="0">是</el-radio>
+          <el-radio
+            style="width:112px;height:40px"
+            v-model="eduformInline.general"
+            border
+            label="0"
+          >是</el-radio>
           <el-radio
             style="width:112px;height:40px;margin:0 0 0 -20px"
             v-model="eduformInline.general"
@@ -323,7 +329,7 @@
 <script>
 import Cookies from "js-cookie";
 let token = Cookies.get("token");
-console.log(token)
+console.log(token);
 import {
   jobintensionadd,
   industry,
@@ -356,7 +362,7 @@ export default {
       }
     };
     return {
-      num:0,
+      num: 0,
       basicinfo: true,
       jobintension: false,
       education: false,
@@ -367,11 +373,14 @@ export default {
         general: "",
         qualifications: ""
       },
-      // pickerOptions: {
-      //   disabledDate(time) {
-      //     return time.getTime() > Date.now();
-      //   }
-      // },
+      pickerOptions: {
+        disabledDate(time) {
+          return (
+            time.getTime() <
+            new Date().setFullYear(new Date().getFullYear() - 16)
+          );
+        }
+      },
       edurules: {
         schoolName: [
           { required: true, message: "请输入学校名称", trigger: "blur" },
@@ -695,7 +704,7 @@ export default {
                 this.basicinfo = false;
                 this.jobintension = false;
                 this.education = true;
-                this.num = 2
+                this.num = 2;
               }
             })
             .catch(error => {
@@ -777,7 +786,7 @@ export default {
                 this.basicinfo = false;
                 this.jobintension = true;
                 this.education = false;
-                this.num = 1
+                this.num = 1;
               }
             })
             .catch(error => {
@@ -858,7 +867,7 @@ export default {
   },
   computed: {
     uploadUrl() {
-      return "/api/v2/file-service/files/upload";
+      return "/api/v2/file-service-dev/files/upload";
     }
   }
 };

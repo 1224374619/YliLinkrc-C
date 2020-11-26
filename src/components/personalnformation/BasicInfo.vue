@@ -119,6 +119,7 @@
             <el-date-picker
               style="width:234px;height:36px"
               type="date"
+              :picker-options="pickerOptions"
               placeholder="选择日期"
               v-model="formInline.birthday"
             ></el-date-picker>
@@ -182,6 +183,11 @@ export default {
       }
     };
     return {
+      pickerOptions: {
+        disabledDate(time) {
+          return time.getTime() < new Date().setFullYear((new Date().getFullYear()-16))
+        }
+      },
       uploadData: {
         label: "resume-avatar",
       },
@@ -386,7 +392,7 @@ export default {
   },
   computed: {
     uploadUrl() {
-      return '/api/v2/file-service/files/upload';
+      return '/api/v2/file-service-dev/files/upload';
     }
   },
   watch: {

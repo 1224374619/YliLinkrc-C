@@ -66,6 +66,7 @@ export default {
   props:['fromData','todo'],
   data() {
     return {
+      
      avatarUrl:'',
      citysal:[]
     };
