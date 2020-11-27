@@ -1998,7 +1998,7 @@ export default {
       },
       pickerOptions: {
         disabledDate(time) {
-          return time.getTime() < new Date().setFullYear((new Date().getFullYear()-16))
+          return time.getTime() > new Date().setFullYear((new Date().getFullYear()-16))
         }
       },
       // pickerOptionsOne: {
@@ -4041,11 +4041,11 @@ export default {
   computed: {
     uploadUrl() {
       // const {VUE_APP_SECRET,VUE_APP_DEV_MODE} = process.env
-      return "/api/v2/file-service-dev/files/upload";
+      return "/api/v2/file-service/files/upload";
     },
     uploadUrlOne() {
       // const {VUE_APP_SECRET,VUE_APP_DEV_MODE} = process.env
-      return "/api/v2/file-service-dev/files/upload";
+      return "/api/v2/file-service/files/upload";
     }
   },
   filters: {

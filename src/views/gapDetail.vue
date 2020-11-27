@@ -376,7 +376,7 @@ export default {
       pickerOptions: {
         disabledDate(time) {
           return (
-            time.getTime() <
+            time.getTime() >
             new Date().setFullYear(new Date().getFullYear() - 16)
           );
         }
@@ -867,7 +867,7 @@ export default {
   },
   computed: {
     uploadUrl() {
-      return "/api/v2/file-service-dev/files/upload";
+      return "/api/v2/file-service/files/upload";
     }
   }
 };
