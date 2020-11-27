@@ -31,7 +31,7 @@ export default {
         rules: {
           professional: [
             { required: true, message: "请输入职称信息", trigger: "blur" },
-            { min: 0, max: 50, message: "仅限50个字符", trigger: "blur" }
+            { min: 0, max: 50, message: "仅限30个字符", trigger: "blur" }
           ]
       }
     }

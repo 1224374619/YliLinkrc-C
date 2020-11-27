@@ -545,6 +545,7 @@
                 <el-date-picker
                   :disabled="this.formJobintension.status === 1||this.formJobintension.status === '离职-延时到岗'?false:true"
                   v-model="formJobintension.reportTime"
+                  :picker-options="pickerOptionsOne"
                   style="width:300px;height:36px;margin-left:-100px"
                   type="date"
                   placeholder="选择日期"
@@ -2001,11 +2002,11 @@ export default {
           return time.getTime() > new Date().setFullYear((new Date().getFullYear()-16))
         }
       },
-      // pickerOptionsOne: {
-      //   disabledDate(time) {
-      //     return time.getTime() < Date.now();
-      //   }
-      // },
+      pickerOptionsOne: {
+        disabledDate(time) {
+          return time.getTime() < Date.now();
+        }
+      },
       propsTwo: {
         value: "tag",
         label: "tag",
@@ -2322,7 +2323,7 @@ export default {
           {
             min: 0,
             max: 20000,
-            message: "长度在 0 到 2000 个字符",
+            message: "长度在 0 到 600 个字符",
             trigger: "blur"
           }
         ]

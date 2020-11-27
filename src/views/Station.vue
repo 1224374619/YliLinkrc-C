@@ -328,7 +328,6 @@
               class="aside-footer"
               v-for="(list,index) in hotpositionList.slice(0,6)"
               :key="index"
-              @click="nextjoblist(list.id)"
             >
               <div class="company-post">
                 <span v-if="list.positionName.length > 10">
@@ -636,12 +635,12 @@ export default {
         // this.$router.push({ path: "/login" });
       }
     },
-    nextjoblist(id) {
-      this.positiId = id;
-      this.positionId();
-      this.showdeli();
-      this.showcoll();
-    },
+    // nextjoblist(id) {
+    //   this.positiId = id;
+    //   this.positionId();
+    //   this.showdeli();
+    //   this.showcoll();
+    // },
     //获取所有企业行业
     allposition() {
       industry()

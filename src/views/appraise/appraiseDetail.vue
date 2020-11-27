@@ -98,20 +98,20 @@
           <div v-if="this.appraiseList.activityRegistrationState === 'REGISTRATION_NOT_STARTED'">
             <button
               style="pointer-events: none;"
-              @click="enlist(this.appraiseList)"
+              @click="enlist()"
               class="appraises-button"
             >去报名</button>
           </div>
           <div v-if="this.appraiseList.activityRegistrationState === 'REGISTRATION_IN_PROGRESS'">
             <button
               v-if="this.appraiseList.registrationStatus === 'DID_NOT_SIGN_UP'"
-              @click="enlist(this.appraiseList)"
+              @click="enlist()"
               class="appraise-button"
             >去报名</button>
             <button
               v-else-if="this.appraiseList.registrationStatus === 'REGISTERED'"
               class="appraise-button"
-              @click="abolishEnlist(this.appraiseList)"
+              @click="abolishEnlist()"
             >取消报名</button>
           </div>
           <div v-if="this.appraiseList.activityRegistrationState === 'REGISTRATION_IS_UP'">
@@ -128,7 +128,7 @@
         </div>
         <div class="content" v-html="this.appraiseList.activityContent"></div>
       </div>
-      <div class="contact">
+      <!-- <div class="contact">
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
           <el-form-item label="联系人姓名">
             <el-input disabled v-model="appraiseList.contactName" placeholder></el-input>
@@ -140,7 +140,7 @@
             <el-input disabled v-model="appraiseList.contactEmail" placeholder></el-input>
           </el-form-item>
         </el-form>
-      </div>
+      </div> -->
     </div>
 
     <div v-else>
@@ -219,7 +219,7 @@
         </div>
         <div class="content" v-html="this.appraiseList.activityContent"></div>
       </div>
-      <div class="contact">
+      <!-- <div class="contact">
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
           <el-form-item label="联系人姓名">
             <el-input disabled v-model="appraiseList.contactName" placeholder></el-input>
@@ -231,7 +231,7 @@
             <el-input disabled v-model="appraiseList.contactEmail" placeholder></el-input>
           </el-form-item>
         </el-form>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

@@ -7,7 +7,7 @@
       :rules="rules"
       ref="formInline"
     >
-      <el-form-item label="工作描述" style="margin-left:-10px;">
+      <el-form-item label="工作描述" style="margin-left:-10px;" prop="prizeAward">
         <el-input
           type="textarea"
           v-model="formInline.personalDescription"
@@ -36,7 +36,7 @@ export default {
       rules: {
         prizeAward: [
           { required: true, message: "请输入奖项名称", trigger: "blur" },
-          { min: 0, max: 50, message: "仅限50个字符", trigger: "blur" }
+          { min: 0, max: 50, message: "仅限300个字符", trigger: "blur" }
           // { pattern:/^[a-zA-Z\u4e00-\u9fa5\s]{0,24}$/, message: '姓名仅支持中文汉字与英文字母', trigger: 'blur' },
         ],
         prizeTime: [

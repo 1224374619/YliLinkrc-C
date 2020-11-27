@@ -75,6 +75,7 @@
           :disabled="this.formInline.status === 1||this.formJobintension.status === '离职-延时到岗'?false:true"
           v-model="formInline.reportTime"
           type="date"
+          :picker-options="pickerOptions"
           placeholder="请选择日期"
         ></el-date-picker>
       </el-form-item>
@@ -114,11 +115,11 @@ export default {
       positionCatalogList: [],
       salaryMin: "",
       salaryMax: "",
-      // pickerOptionsOne: {
-      //   disabledDate(time) {
-      //     return time.getTime() < Date.now();
-      //   }
-      // },
+      pickerOptionsOne: {
+        disabledDate(time) {
+          return time.getTime() < Date.now();
+        }
+      },
       props: {
         value: "tag",
         label: "tag",

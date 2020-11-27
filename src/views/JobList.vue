@@ -210,7 +210,7 @@
         <div class="article" style="margin-top:17px">
           <span class="article-title">公司行业：</span>
           <el-radio-group size="small" v-model="dutyOne" style="margin-top:-1px;;margin-left:20px;">
-            <el-radio-button size="small" label="1000">不限</el-radio-button>
+            <el-radio-button size="small" label="10000">不限</el-radio-button>
           </el-radio-group>
           <el-radio-group
             size="small"
@@ -540,7 +540,7 @@ export default {
       workAgeMax: "",
       quality: [],
       qualityOne: ["5"],
-      dutyOne: "1000",
+      dutyOne: "10000",
       Beat: "0",
       release: 5,
       isGraduate: "",
@@ -674,7 +674,7 @@ export default {
   methods: {
     //行业不限
     industryDemo() {
-      this.dutyOne = ["1000"];
+      this.dutyOne = ["10000"];
       this.duty = [];
     },
     industryDemoOne() {
@@ -1065,7 +1065,7 @@ export default {
       this.scale = "15";
       this.release = 5;
       this.quality = [];
-      this.dutyOne = "1000";
+      this.dutyOne = "10000";
       this.searchContent = "";
       this.isdistrict = false;
       setTimeout(() => {
@@ -1280,7 +1280,7 @@ export default {
                   }
                 ],
           industries:
-            this.dutyOne === "1000"
+            this.dutyOne === "10000"
               ? null
               : [
                   {
@@ -1288,7 +1288,7 @@ export default {
                     secondary: null
                   }
                 ],
-          industryCodes: this.dutyOne === "1000" ? null : [this.dutyOne],
+          industryCodes: this.dutyOne === "10000" ? null : [this.dutyOne],
           keywords: this.searchContent,
           pageNum: 1,
           natures: null,
@@ -1455,7 +1455,7 @@ export default {
               ? null
               : timeUtil.qualifications(parseInt(this.Education)),
           industries:
-            this.dutyOne === "1000"
+            this.dutyOne === "10000"
               ? null
               : [
                   {
@@ -1464,7 +1464,7 @@ export default {
                   }
                 ],
           isGraduate: null,
-          industryCodes: this.dutyOne === "1000" ? null : [this.dutyOne],
+          industryCodes: this.dutyOne === "10000" ? null : [this.dutyOne],
           jobType:
             this.workState === "15"
               ? null
@@ -1560,7 +1560,7 @@ export default {
                   }
                 ],
           industries:
-            this.dutyOne === "1000"
+            this.dutyOne === "10000"
               ? null
               : [
                   {
@@ -1568,7 +1568,7 @@ export default {
                     secondary: null
                   }
                 ],
-          industryCodes: this.dutyOne === "1000" ? null : [this.dutyOne],
+          industryCodes: this.dutyOne === "10000" ? null : [this.dutyOne],
           keywords: this.searchContent,
           pageNum: 1,
           natures: null,
@@ -1719,7 +1719,7 @@ export default {
               ? null
               : timeUtil.qualifications(parseInt(this.Education)),
           industries:
-            this.dutyOne === "1000"
+            this.dutyOne === "10000"
               ? null
               : [
                   {
@@ -1728,7 +1728,7 @@ export default {
                   }
                 ],
           isGraduate: false,
-          industryCodes: this.dutyOne === "1000" ? null : [this.dutyOne],
+          industryCodes: this.dutyOne === "10000" ? null : [this.dutyOne],
           jobType:
             this.workState === "15"
               ? null

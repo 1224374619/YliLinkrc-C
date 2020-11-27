@@ -360,6 +360,12 @@
                     <button v-else @click="exist(list)" class="button">去查看</button>
                   </div>
                 </div>
+                <!-- <div class="operatedButton" v-if="list.processedState === 'EMPLOYED'">
+                  <div v-if="list.interviewState === 'COMPLETED'">
+                    <button v-if="list.evaluationId === 0" @click="laterM(list)" class="button">去评价</button>
+                    <button v-else @click="exist(list)" class="button">去查看</button>
+                  </div>
+                </div> -->
               </div>
               <div class="tabs-line"></div>
             </div>
@@ -507,7 +513,9 @@
         <div>
           <span>面试体验：</span>
           <span>{{evaltionDetail.interviewExperience}}.0</span>分
-          <span style="margin:0 0 0 490px;font-family: PingFangSC-Regular;color: #8F8F8F;font-size:16px">提交时间：{{evaltionDetail.createdTime|formatDateOne}}</span>
+          <span
+            style="margin:0 0 0 490px;font-family: PingFangSC-Regular;color: #8F8F8F;font-size:16px"
+          >提交时间：{{evaltionDetail.createdTime|formatDateOne}}</span>
         </div>
       </div>
       <div class="personals-select">
@@ -528,7 +536,9 @@
       <div class="personal-footer">
         <div class="personal-footers">
           <span>面试评价</span>
-          <div style="width:674px;font-family: PingFangSC-Regular;color: #737373;font-size:16px;text-align:left;margin:30px 0 0 0">{{this.textarea}}</div>
+          <div
+            style="width:674px;font-family: PingFangSC-Regular;color: #737373;font-size:16px;text-align:left;margin:30px 0 0 0"
+          >{{this.textarea}}</div>
           <el-button style="margin:30px auto" @click="detailEvaltion = true">返回</el-button>
         </div>
       </div>
@@ -605,7 +615,7 @@ export default {
   components: {},
   data() {
     return {
-      checked:true,
+      checked: true,
       detailEvaltion: true,
       evaltionDetail: {},
       radioReason: "",
@@ -796,8 +806,12 @@ export default {
         .put(`/consumer-core/interview/accept/${this.interviewId}`)
         .then(res => {
           this.dialogVisible = false;
+          this.interviewparams = {
+            resumeProcessedState: "INTERVIEW",
+            interviewState: null
+          };
           submitted(this.interviewparams).then(res => {
-            if (res.data.code == 200) {
+            if (res.data.code == "200") {
               this.submittedList = res.data.data.list;
               this.page1.total = res.data.data.total;
             }

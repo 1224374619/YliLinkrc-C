@@ -85,7 +85,7 @@
                       style="pointer-events: none;"
                       @click="enlist(item)"
                       class="appraises-button"
-                    >去报名</button>
+                    >报名未开始</button>
                   </div>
                   <div v-if="item.activityRegistrationState === 'REGISTRATION_IN_PROGRESS'">
                     <button
@@ -100,10 +100,15 @@
                     >取消报名</button>
                   </div>
                   <div v-if="item.activityRegistrationState === 'REGISTRATION_IS_UP'">
-                    <button style="pointer-events: none;" class="appraises-button">报名已截止</button>
-                  </div>
-                  <div v-if="item.registrationStatus === 'CANCELED'">
-                    <button style="pointer-events: none;" class="appraises-button">报名已取消</button>
+                    <div v-if="item.registrationStatus === 'REGISTERED'">
+                      <button style="pointer-events: none;" class="appraises-button">已报名</button>
+                    </div>
+                    <div v-if="item.registrationStatus === 'DID_NOT_SIGN_UP'">
+                      <button style="pointer-events: none;" class="appraises-button">报名已截止</button>
+                    </div>
+                    <div v-if="item.registrationStatus === 'CANCELED'">
+                      <button style="pointer-events: none;" class="appraises-button">报名已取消</button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -158,7 +163,7 @@
                       style="pointer-events: none;"
                       @click="enlist(item)"
                       class="appraises-button"
-                    >去报名</button>
+                    >报名未开始</button>
                   </div>
                   <div v-if="item.activityRegistrationState === 'REGISTRATION_IN_PROGRESS'">
                     <button
@@ -173,10 +178,15 @@
                     >取消报名</button>
                   </div>
                   <div v-if="item.activityRegistrationState === 'REGISTRATION_IS_UP'">
-                    <button style="pointer-events: none;" class="appraises-button">报名已截止</button>
-                  </div>
-                  <div v-if="item.registrationStatus === 'CANCELED'">
-                    <button style="pointer-events: none;" class="appraises-button">报名已取消</button>
+                    <div v-if="item.registrationStatus === 'REGISTERED'">
+                      <button style="pointer-events: none;" class="appraises-button">已报名</button>
+                    </div>
+                    <div v-if="item.registrationStatus === 'DID_NOT_SIGN_UP'">
+                      <button style="pointer-events: none;" class="appraises-button">报名已截止</button>
+                    </div>
+                    <div v-if="item.registrationStatus === 'CANCELED'">
+                      <button style="pointer-events: none;" class="appraises-button">报名已取消</button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -231,7 +241,7 @@
                       style="pointer-events: none;"
                       @click="enlist(item)"
                       class="appraises-button"
-                    >去报名</button>
+                    >报名未开始</button>
                   </div>
                   <div v-if="item.activityRegistrationState === 'REGISTRATION_IN_PROGRESS'">
                     <button
@@ -246,10 +256,15 @@
                     >取消报名</button>
                   </div>
                   <div v-if="item.activityRegistrationState === 'REGISTRATION_IS_UP'">
-                    <button style="pointer-events: none;" class="appraises-button">报名已截止</button>
-                  </div>
-                  <div v-if="item.registrationStatus === 'CANCELED'">
-                    <button style="pointer-events: none;" class="appraises-button">报名已取消</button>
+                    <div v-if="item.registrationStatus === 'REGISTERED'">
+                      <button style="pointer-events: none;" class="appraises-button">已报名</button>
+                    </div>
+                    <div v-if="item.registrationStatus === 'DID_NOT_SIGN_UP'">
+                      <button style="pointer-events: none;" class="appraises-button">报名已截止</button>
+                    </div>
+                    <div v-if="item.registrationStatus === 'CANCELED'">
+                      <button style="pointer-events: none;" class="appraises-button">报名已取消</button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -372,7 +387,7 @@ export default {
             this.enroll();
             this.$notify({
               title: "成功",
-              message: '取消报名成功',
+              message: "取消报名成功",
               type: "success"
             });
           } else {
@@ -637,7 +652,7 @@ export default {
             position: relative;
             z-index: 40;
             top: 200px;
-            cursor:pointer
+            cursor: pointer;
             width: 375px;
             height: 211px;
             border-radius: 7px;
