@@ -1,7 +1,12 @@
 <template>
   <div class="appraise">
     <div class="nav">
-      <img src="../../assets/images/appraise.jpg" />
+      <el-carousel :interval="5000" height="380px">
+        <el-carousel-item v-for="(item,index) in carouselImgs" :key="index">
+          <img style="width:1440px;" :src="item" />
+        </el-carousel-item>
+      </el-carousel>
+      <!-- <img src="../../assets/images/bus.jpg" /> -->
     </div>
     <div class="tabs">
       <el-dialog title :visible.sync="dialogVisible" width="26%">
@@ -254,6 +259,11 @@
                       class="appraise-button"
                       @click="abolishEnlist(item)"
                     >取消报名</button>
+                    <button
+                      v-else-if="item.registrationStatus === 'CANCELED'"
+                      class="appraises-button"
+                      style="pointer-events: none;"
+                    >报名已取消</button>
                   </div>
                   <div v-if="item.activityRegistrationState === 'REGISTRATION_IS_UP'">
                     <div v-if="item.registrationStatus === 'REGISTERED'">
@@ -320,7 +330,11 @@ export default {
           }
         ]
       },
-
+      carouselImgs: [
+        require("../../assets/images/appraise-03.jpg"),
+        require("../../assets/images/appraise-02.jpg"),
+        require("../../assets/images/appraise-01.jpg"),
+      ],
       formAttributeBodies: [
         {
           chineseName: "",
@@ -520,7 +534,7 @@ export default {
 .appraise {
   width: 1440px;
   height: auto;
-  margin: 96px auto 0;
+  margin: 77px auto 0;
 
   .nav {
     padding: 20px 0 0 0;
