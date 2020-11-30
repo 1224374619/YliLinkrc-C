@@ -199,14 +199,14 @@
               <div>企业回复</div>
               <div class="third">
                 <div>
-                  <img style="width:50px;height:50px;margin:15px 0 0 15px" :src="item.avatar" />
+                  <img style="width:50px;height:50px;margin:15px 0 0 15px" :src="item.sublist[0].avatar" />
                 </div>
                 <div>
                   <div
-                    style="margin:5px 0 0 5px;color: #A2A2A2"
+                    style="margin:5px 0 0 10px;color: #A2A2A2"
                   >{{evaluationLists.companyName}}HR.人事</div>
-                  <div style="margin:0 0 0 5px" v-if="item.sublist === null"></div>
-                  <div style="margin:0 0 0 5px" v-else>{{item.sublist[0].content}}</div>
+                  <div style="margin:0 0 0 10px" v-if="item.sublist === null"></div>
+                  <div style="margin:5px 0 0 10px" v-else>{{item.sublist[0].content}}</div>
                 </div>
                 <div>
                   <div>{{item.createdTime|formatDateOne}}</div>
@@ -457,22 +457,7 @@ export default {
           }
         })
         .catch(error => {
-          if (error.response.status === 404) {
-            this.$notify.error({
-              title: "错误",
-              message: "页面丢失，请重新加载"
-            });
-          } else if (error.response.status === 403) {
-            this.$notify.error({
-              title: "错误",
-              message: "登陆超时，请重新登录"
-            });
-          } else {
-            this.$notify.error({
-              title: "错误",
-              message: error.response.data.message
-            });
-          }
+         
         });
     },
     //评论分页

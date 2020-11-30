@@ -58,18 +58,101 @@
         </span>
       </el-dialog>
       <el-tabs v-model="activeName" @tab-click="handleClick">
-        <el-tab-pane label="线上活动" name="first">
+        <el-tab-pane label="线上活动" name="first" style="margin:50px 0 0 85px">
           <div class="demo" v-if="activeDemo">
             <div style="padding:30px 0 0 20px" v-for="(item,index) in this.tableData" :key="index">
               <div class="demo-aside">
                 <img
                   class="imgs"
-                  v-if="item.activityRegistrationState === 'REGISTRATION_NOT_STARTED'"
+                  v-if="item.activityProceedState === 'HAVE_NOT_STARTED'"
                   src="../../assets/images/b1.png"
                 />
                 <img
                   class="imgs"
-                  v-else-if="item.activityRegistrationState === 'REGISTRATION_IN_PROGRESS'"
+                  v-else-if="item.activityProceedState === 'UNDERWAY'"
+                  src="../../assets/images/b2.png"
+                />
+                <img class="imgs" v-else src="../../assets/images/b3.png" />
+              </div>
+              <div class="demo-nav" @click="appraiseDetail(item)">
+                <img :src="item.activityPosterUrl" />
+              </div>
+              <div class="demo-footer">
+                <div class="appraise-name">{{item.activityName}}</div>
+                <div class="appraise-time">
+                  <div>活动时间：{{item.activityStartTime | formatDateFourth}}-{{item.activityEndTime | formatDateFourth}}</div>
+                  <div>报名时间：{{item.registrationStartTime| formatDateFourth}}-{{item.registrationEndTime| formatDateFourth}}</div>
+                  <div>报名人数：{{item.registeredNum}} / {{item.registrationNum}}</div>
+                </div>
+                <div>
+                  <div v-if="item.activityRegistrationState === 'REGISTRATION_NOT_STARTED'">
+                    <button
+                      style="pointer-events: none;"
+                      @click="enlist(item)"
+                      class="appraises-button"
+                    >报名未开始</button>
+                  </div>
+                  <div v-if="item.activityRegistrationState === 'REGISTRATION_IN_PROGRESS'">
+                    <button
+                      v-if="item.registrationStatus === 'DID_NOT_SIGN_UP'"
+                      @click="enlist(item)"
+                      class="appraise-button"
+                    >去报名</button>
+                    <button
+                      v-else-if="item.registrationStatus === 'REGISTERED'"
+                      class="appraise-button"
+                      @click="abolishEnlist(item)"
+                    >取消报名</button>
+                    <button
+                      v-else-if="item.registrationStatus === 'CANCELED'"
+                      style="pointer-events: none;"
+                      class="appraises-button"
+                    >取消已报名</button>
+                  </div>
+                  <div v-if="item.activityRegistrationState === 'REGISTRATION_IS_UP'">
+                    <div v-if="item.registrationStatus === 'REGISTERED'">
+                      <button style="pointer-events: none;" class="appraises-button">已报名</button>
+                    </div>
+                    <div v-if="item.registrationStatus === 'DID_NOT_SIGN_UP'">
+                      <button style="pointer-events: none;" class="appraises-button">报名已截止</button>
+                    </div>
+                    <div v-if="item.registrationStatus === 'CANCELED'">
+                      <button style="pointer-events: none;" class="appraises-button">报名已取消</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="pagination" v-if="activeDemo">
+            <el-pagination
+              @size-change="handleSizeChange"
+              @current-change="handleCurrentChange"
+              :current-page="page.current"
+              :page-sizes="page.pageSizeOpts"
+              class="pagination"
+              :page-size="page.pageSize"
+              layout="total, sizes, prev, pager, next, jumper"
+              :total="page.total"
+            ></el-pagination>
+          </div>
+          <div class="demos" v-else>
+            <img src="../../assets/images/ass.png" />
+            <div>还没有可以参加的活动哦～</div>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="线下活动" name="second" style="margin:50px 0 0 85px">
+          <div class="demo" v-if="activeDemo">
+            <div style="padding:30px 0 0 20px" v-for="(item,index) in this.tableData" :key="index">
+              <div class="demo-aside">
+                <img
+                  class="imgs"
+                  v-if="item.activityProceedState === 'HAVE_NOT_STARTED'"
+                  src="../../assets/images/b1.png"
+                />
+                <img
+                  class="imgs"
+                  v-else-if="item.activityProceedState === 'UNDERWAY'"
                   src="../../assets/images/b2.png"
                 />
                 <img class="imgs" v-else src="../../assets/images/b3.png" />
@@ -136,96 +219,18 @@
             <div>还没有可以参加的活动哦～</div>
           </div>
         </el-tab-pane>
-        <el-tab-pane label="线下活动" name="second">
+        <el-tab-pane label="我参与的" name="third" style="margin:50px 0 0 85px">
           <div class="demo" v-if="activeDemo">
             <div style="padding:30px 0 0 20px" v-for="(item,index) in this.tableData" :key="index">
               <div class="demo-aside">
                 <img
                   class="imgs"
-                  v-if="item.activityRegistrationState === 'REGISTRATION_NOT_STARTED'"
+                  v-if="item.activityProceedState === 'HAVE_NOT_STARTED'"
                   src="../../assets/images/b1.png"
                 />
                 <img
                   class="imgs"
-                  v-else-if="item.activityRegistrationState === 'REGISTRATION_IN_PROGRESS'"
-                  src="../../assets/images/b2.png"
-                />
-                <img class="imgs" v-else src="../../assets/images/b3.png" />
-              </div>
-              <div class="demo-nav" @click="appraiseDetail(item)">
-                <img :src="item.activityPosterUrl" />
-              </div>
-              <div class="demo-footer">
-                <div class="appraise-name">{{item.activityName}}</div>
-                <div class="appraise-time">
-                  <div>活动时间：{{item.activityStartTime | formatDateFourth}}-{{item.activityEndTime | formatDateFourth}}</div>
-                  <div>报名时间：{{item.registrationStartTime| formatDateFourth}}-{{item.registrationEndTime| formatDateFourth}}</div>
-                  <div>报名人数：{{item.registeredNum}} / {{item.registrationNum}}</div>
-                </div>
-                <div>
-                  <div v-if="item.activityRegistrationState === 'REGISTRATION_NOT_STARTED'">
-                    <button
-                      style="pointer-events: none;"
-                      @click="enlist(item)"
-                      class="appraises-button"
-                    >报名未开始</button>
-                  </div>
-                  <div v-if="item.activityRegistrationState === 'REGISTRATION_IN_PROGRESS'">
-                    <button
-                      v-if="item.registrationStatus === 'DID_NOT_SIGN_UP'"
-                      @click="enlist(item)"
-                      class="appraise-button"
-                    >去报名</button>
-                    <button
-                      v-else-if="item.registrationStatus === 'REGISTERED'"
-                      class="appraise-button"
-                      @click="abolishEnlist(item)"
-                    >取消报名</button>
-                  </div>
-                  <div v-if="item.activityRegistrationState === 'REGISTRATION_IS_UP'">
-                    <div v-if="item.registrationStatus === 'REGISTERED'">
-                      <button style="pointer-events: none;" class="appraises-button">已报名</button>
-                    </div>
-                    <div v-if="item.registrationStatus === 'DID_NOT_SIGN_UP'">
-                      <button style="pointer-events: none;" class="appraises-button">报名已截止</button>
-                    </div>
-                    <div v-if="item.registrationStatus === 'CANCELED'">
-                      <button style="pointer-events: none;" class="appraises-button">报名已取消</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="pagination" v-if="activeDemo">
-            <el-pagination
-              @size-change="handleSizeChange"
-              @current-change="handleCurrentChange"
-              :current-page="page.current"
-              :page-sizes="page.pageSizeOpts"
-              class="pagination"
-              :page-size="page.pageSize"
-              layout="total, sizes, prev, pager, next, jumper"
-              :total="page.total"
-            ></el-pagination>
-          </div>
-          <div class="demos" v-else>
-            <img src="../../assets/images/ass.png" />
-            <div>还没有可以参加的活动哦～</div>
-          </div>
-        </el-tab-pane>
-        <el-tab-pane label="我参与的" name="third">
-          <div class="demo" v-if="activeDemo">
-            <div style="padding:30px 0 0 20px" v-for="(item,index) in this.tableData" :key="index">
-              <div class="demo-aside">
-                <img
-                  class="imgs"
-                  v-if="item.activityRegistrationState === 'REGISTRATION_NOT_STARTED'"
-                  src="../../assets/images/b1.png"
-                />
-                <img
-                  class="imgs"
-                  v-else-if="item.activityRegistrationState === 'REGISTRATION_IN_PROGRESS'"
+                  v-else-if="item.activityProceedState === 'UNDERWAY'"
                   src="../../assets/images/b2.png"
                 />
                 <img class="imgs" v-else src="../../assets/images/b3.png" />
@@ -333,7 +338,7 @@ export default {
       carouselImgs: [
         require("../../assets/images/appraise-03.jpg"),
         require("../../assets/images/appraise-02.jpg"),
-        require("../../assets/images/appraise-01.jpg"),
+        require("../../assets/images/appraise-01.jpg")
       ],
       formAttributeBodies: [
         {
@@ -586,6 +591,7 @@ export default {
 
     .el-tabs {
       margin: 70px 0 0 0;
+      width: 1440px;
 
       .pagination {
         margin: 60px 0 90px 0;

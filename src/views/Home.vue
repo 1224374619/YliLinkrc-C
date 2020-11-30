@@ -1005,7 +1005,7 @@ export default {
   },
   created() {
     let token = Cookies.get("token");
-    console.log(token)
+    console.log(token);
     this.new();
     this.positionCatalogList = positionCatalog.data;
     this.industryList = industrys.data;
@@ -1152,32 +1152,6 @@ export default {
     border: 0px solid rgba(229, 229, 229, 1);
     box-shadow: 0px 1px 4px 0px rgba(212, 212, 212, 0.5);
 
-    .CompanyInput {
-      .el-input__inner {
-        border: 0px solid red;
-        font-size: 22px;
-        text-align: center;
-      }
-
-      .el-input__icon {
-        margin: -10px 30px 0 0;
-        line-height: 40px;
-        width: 11px;
-      }
-
-      .el-select .el-input .el-select__caret {
-        color: red;
-        font-size: 11px;
-        transition: transform 0.3s;
-        transform: rotate(180deg);
-        cursor: point;
-      }
-
-      .el-icon-arrow-up:before {
-        content: '\e78f';
-      }
-    }
-
     .CompanySelect {
       .el-select-dropdown__item:hover {
         background: #FAFAFA;
@@ -1188,6 +1162,7 @@ export default {
         font-size: 22px;
         text-align: center;
         margin: 10px 0 0 0;
+        cursor: pointer;
       }
 
       .el-input__icon {

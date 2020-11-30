@@ -7,12 +7,12 @@
       :rules="rules"
       ref="formInline"
     >
-      <el-form-item label="工作描述" style="margin-left:-10px;" prop="prizeAward">
+      <el-form-item label="自我介绍" style="margin-left:-10px;" prop="personalDescription">
         <el-input
           type="textarea"
           v-model="formInline.personalDescription"
           style="width:583px;"
-          placeholder="资料完善程度高，被选中的几率越大呦"
+          placeholder="请填写自我介绍"
         ></el-input>
       </el-form-item>
       <br />
@@ -34,14 +34,11 @@ export default {
         personalDescription: ""
       },
       rules: {
-        prizeAward: [
-          { required: true, message: "请输入奖项名称", trigger: "blur" },
-          { min: 0, max: 50, message: "仅限300个字符", trigger: "blur" }
+        personalDescription: [
+          { required: true, message: "请输入自我介绍", trigger: "blur" },
+          { min: 0, max: 300, message: "仅限300个字符", trigger: "blur" }
           // { pattern:/^[a-zA-Z\u4e00-\u9fa5\s]{0,24}$/, message: '姓名仅支持中文汉字与英文字母', trigger: 'blur' },
         ],
-        prizeTime: [
-          { required: true, message: "请选择获奖时间", trigger: "blur" }
-        ]
       }
     };
   },
@@ -62,24 +59,7 @@ export default {
                 this.$emit("selfappraisalemit", false, true);
               }
             })
-            .catch(error => {
-              if (error.response.status === 404) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "页面丢失，请重新加载"
-                });
-              } else if (error.response.status === 403) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "登陆超时，请重新登录"
-                });
-              } else {
-                this.$notify.error({
-                  title: "错误",
-                  message: error.response.data.message
-                });
-              }
-            });
+            .catch(error => {});
         } else {
           return false;
         }
