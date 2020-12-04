@@ -3,7 +3,7 @@
     <div class="appendix" v-if="!showSimple">
       <div class="group">
         <span>公司：上海银领网络科技有限公司</span>
-        <span>地址：上海市静安区江场三路26、28号207室</span>
+        <span>地址：上海市静安区大众东朔空间1206</span>
         <span>邮编：200436</span>
         <span>电话：021 56057115</span>
         <span>邮箱：Nicole.yin@yinlinkrc.com</span>

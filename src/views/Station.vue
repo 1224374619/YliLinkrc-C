@@ -150,7 +150,7 @@
             <div style="margin:30px 0 0 30px">{{evaluationLists.companyName}}面试评价</div>
             <div style="margin:30px 0 0 40px">综合面试评分：</div>
             <div style="margin:35px 0 0 0;width:140px">
-              <el-rate v-model="value2" :colors="colors"></el-rate>
+              <el-rate disabled v-model="value2" :colors="colors"></el-rate>
             </div>
             <div style="margin:31px 0 0 10px;">{{evaluationLists.overallExperienceNum}}.0</div>
             <div style="margin:31px 0 0 0;">（来自{{evaluationLists.evaluations.total}}条评价）</div>
@@ -167,7 +167,7 @@
               </div>
               <div class="appraise-aside" style="margin:15px 0 0 54px">
                 面试体验：
-                <el-rate style="width:140px;" v-model="item.interviewExperience" :colors="colors"></el-rate>
+                <el-rate disabled style="width:140px;" v-model="item.interviewExperience" :colors="colors"></el-rate>
               </div>
               <div
                 class="appraise-aside"
@@ -821,9 +821,10 @@ export default {
       this.showdeli();
       this.showcoll();
       this.resumeList();
-      this.evaluationList();
+      
     }
     this.positionId();
+    this.evaluationList();
   },
   filters: {
     level(level) {

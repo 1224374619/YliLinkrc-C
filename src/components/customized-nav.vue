@@ -42,19 +42,21 @@
                 size="mini"
                 style="margin:5px 20px 0 0"
               >
-                <img
-                  style="width:22px;height:22px"
-                  @click="NewsDetail"
-                  :src="require('../assets/images/ling.png')"
-                />
+                <img style="width:22px;height:22px" :src="require('../assets/images/ling.png')" />
               </el-badge>
               <el-dropdown-menu slot="dropdown" style="width:412px;height:258px;">
                 <div
                   style="width:412px;height:210px;border-bottom:1px solid #fafafa;cursor:default;overflow:scroll;overflow-x:hidden;"
                 >
                   <div class="badge" v-for="(item,index) in notificationlist" :key="index">
-                    <span v-if="item.title.length>22" style="color:#6C6C6C;font-size:14px;margin-left:24px;">{{item.title.substring(0,20)}}</span>
-                    <span v-else style="color:#6C6C6C;font-size:14px;margin-left:24px;">{{item.title}}</span>
+                    <span
+                      v-if="item.title.length>20"
+                      style="color:#6C6C6C;font-size:14px;margin-left:24px;"
+                    >{{item.title.substring(0,20)}}</span>
+                    <span
+                      v-else
+                      style="color:#6C6C6C;font-size:14px;margin-left:24px;"
+                    >{{item.title}}</span>
                     <span style="color:#909090;font-size:12px;margin-right:25px;">
                       <el-badge
                         :is-dot="!item.isRead"
@@ -64,13 +66,19 @@
                   </div>
                 </div>
                 <div
-                  style="border: 1px solid rgba(244, 244, 244, 1);box-shadow: 0px 2px 10px 0px rgba(245, 245, 245, 1);height:60px"
+                  style="border: 1px solid rgba(244, 244, 244, 1);box-shadow: 0px 2px 10px 0px rgba(245, 245, 245, 1);height:60px;display: flex;
+  flex-direction: row;"
                 >
                   <el-button
-                    style="margin:7px 38%;width:120px;font-size:12px"
+                    style="margin:7px 0 0 17%;width:120px;font-size:12px"
                     @click="chorusle"
                     type="primary"
                   >全部标为已读</el-button>
+                  <el-button
+                    style="margin:7px 0 0 7%;width:120px;font-size:12px"
+                    @click="NewsDetail"
+                    type="primary"
+                  >查看全部</el-button>
                 </div>
               </el-dropdown-menu>
             </el-dropdown>
@@ -179,24 +187,7 @@ export default {
           } else {
           }
         })
-        .catch(error => {
-          if (error.response.status === 404) {
-            this.$notify.error({
-              title: "错误",
-              message: "页面丢失，请重新加载"
-            });
-          } else if (error.response.status === 403) {
-            this.$notify.error({
-              title: "错误",
-              message: "登陆超时，请重新登录"
-            });
-          } else {
-            this.$notify.error({
-              title: "错误",
-              message: error.response.data.message
-            });
-          }
-        });
+        .catch(error => {});
     },
     //消息click
     NewsDetail() {
@@ -213,24 +204,7 @@ export default {
           } else {
           }
         })
-        .catch(error => {
-          if (error.response.status === 404) {
-            this.$notify.error({
-              title: "错误",
-              message: "页面丢失，请重新加载"
-            });
-          } else if (error.response.status === 403) {
-            this.$notify.error({
-              title: "错误",
-              message: "登陆超时，请重新登录"
-            });
-          } else {
-            this.$notify.error({
-              title: "错误",
-              message: error.response.data.message
-            });
-          }
-        });
+        .catch(error => {});
     },
     //退出
     detrusion() {
@@ -260,24 +234,7 @@ export default {
             window.sessionStorage.setItem("value", this.value);
           }
         })
-        .catch(error => {
-          if (error.response.status === 404) {
-            this.$notify.error({
-              title: "错误",
-              message: "页面丢失，请重新加载"
-            });
-          } else if (error.response.status === 403) {
-            this.$notify.error({
-              title: "错误",
-              message: "登陆超时，请重新登录"
-            });
-          } else {
-            this.$notify.error({
-              title: "错误",
-              message: error.response.data.message
-            });
-          }
-        });
+        .catch(error => {});
     },
     gotoHomeUI() {
       this.$router.push({ path: "/" });
@@ -306,24 +263,7 @@ export default {
           } else {
           }
         })
-        .catch(error => {
-          if (error.response.status === 404) {
-            this.$notify.error({
-              title: "错误",
-              message: "页面丢失，请重新加载"
-            });
-          } else if (error.response.status === 403) {
-            this.$notify.error({
-              title: "错误",
-              message: "登陆超时，请重新登录"
-            });
-          } else {
-            this.$notify.error({
-              title: "错误",
-              message: error.response.data.message
-            });
-          }
-        });
+        .catch(error => {});
     }
   },
   // //利用计算属性
@@ -339,7 +279,7 @@ export default {
   },
   created() {
     this.token = Cookies.get("token");
-    console.log(this.token)
+    console.log(this.token);
     if (this.token) {
       this.brief();
       this.notification();
@@ -370,7 +310,6 @@ nav {
   height: 96px;
   align-content: center;
   align-items: center;
-
 
   .nav-body {
     display: flex;

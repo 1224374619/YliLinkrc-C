@@ -96,11 +96,7 @@
         </div>
         <div class="bans">
           <div v-if="this.appraiseList.activityRegistrationState === 'REGISTRATION_NOT_STARTED'">
-            <button
-              style="pointer-events: none;"
-              @click="enlist()"
-              class="appraises-button"
-            >去报名</button>
+            <button style="pointer-events: none;" @click="enlist()" class="appraises-button">报名未开始</button>
           </div>
           <div v-if="this.appraiseList.activityRegistrationState === 'REGISTRATION_IN_PROGRESS'">
             <button
@@ -113,13 +109,26 @@
               class="appraise-button"
               @click="abolishEnlist()"
             >取消报名</button>
+            <button
+              v-else-if="this.appraiseList.registrationStatus === 'CANCELED'"
+              class="appraises-button"
+              style="pointer-events: none;"
+            >报名已取消</button>
           </div>
           <div v-if="this.appraiseList.activityRegistrationState === 'REGISTRATION_IS_UP'">
-            <button style="pointer-events: none;" class="appraises-button">报名已截止</button>
+            <div v-if="this.appraiseList.registrationStatus === 'REGISTERED'">
+              <button style="pointer-events: none;" class="appraises-button">已报名</button>
+            </div>
+            <div v-if="this.appraiseList.registrationStatus === 'DID_NOT_SIGN_UP'">
+              <button style="pointer-events: none;" class="appraises-button">报名已截止</button>
+            </div>
+            <div v-if="this.appraiseList.registrationStatus === 'CANCELED'">
+              <button style="pointer-events: none;" class="appraises-button">报名已取消</button>
+            </div>
           </div>
-          <div v-if="this.appraiseList.registrationStatus === 'CANCELED'">
+          <!-- <div v-if="this.appraiseList.registrationStatus === 'CANCELED'">
             <button style="pointer-events: none;" class="appraises-button">报名已取消</button>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="footer">
@@ -140,7 +149,7 @@
             <el-input disabled v-model="appraiseList.contactEmail" placeholder></el-input>
           </el-form-item>
         </el-form>
-      </div> -->
+      </div>-->
     </div>
 
     <div v-else>
@@ -191,7 +200,7 @@
         </div>
         <div class="bans">
           <div v-if="this.appraiseList.activityRegistrationState === 'REGISTRATION_NOT_STARTED'">
-            <button style="pointer-events: none;" @click="enlist()" class="appraises-button">去报名</button>
+            <button style="pointer-events: none;" @click="enlist()" class="appraises-button">报名未开始</button>
           </div>
           <div v-if="this.appraiseList.activityRegistrationState === 'REGISTRATION_IN_PROGRESS'">
             <button
@@ -204,13 +213,26 @@
               class="appraise-button"
               @click="abolishEnlist()"
             >取消报名</button>
+            <button
+              v-else-if="this.appraiseList.registrationStatus === 'CANCELED'"
+              class="appraises-button"
+              style="pointer-events: none;"
+            >报名已取消</button>
           </div>
           <div v-if="this.appraiseList.activityRegistrationState === 'REGISTRATION_IS_UP'">
-            <button style="pointer-events: none;" class="appraises-button">报名已截止</button>
+            <div v-if="this.appraiseList.registrationStatus === 'REGISTERED'">
+              <button style="pointer-events: none;" class="appraises-button">已报名</button>
+            </div>
+            <div v-if="this.appraiseList.registrationStatus === 'DID_NOT_SIGN_UP'">
+              <button style="pointer-events: none;" class="appraises-button">报名已截止</button>
+            </div>
+            <div v-if="this.appraiseList.registrationStatus === 'CANCELED'">
+              <button style="pointer-events: none;" class="appraises-button">报名已取消</button>
+            </div>
           </div>
-          <div v-if="this.appraiseList.registrationStatus === 'CANCELED'">
+          <!-- <div v-if="this.appraiseList.registrationStatus === 'CANCELED'">
             <button style="pointer-events: none;" class="appraises-button">报名已取消</button>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="footer">
@@ -231,7 +253,7 @@
             <el-input disabled v-model="appraiseList.contactEmail" placeholder></el-input>
           </el-form-item>
         </el-form>
-      </div> -->
+      </div>-->
     </div>
   </div>
 </template>

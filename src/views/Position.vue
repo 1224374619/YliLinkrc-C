@@ -51,7 +51,7 @@
                   <div style="margin:30px 0 0 30px">{{evaluationLists.companyName}}面试评价</div>
                   <div style="margin:30px 0 0 40px">综合面试评分：</div>
                   <div style="margin:35px 0 0 0;width:140px">
-                    <el-rate v-model="value2" :colors="colors"></el-rate>
+                    <el-rate disabled v-model="value2" :colors="colors"></el-rate>
                   </div>
                   <div style="margin:31px 0 0 10px;">{{evaluationLists.overallExperienceNum}}.0</div>
                   <div style="margin:31px 0 0 0;">（来自{{evaluationLists.evaluations.total}}条评价）</div>
@@ -71,14 +71,11 @@
                 <div
                   v-for="(item,index) in evaluationLists.evaluations.list"
                   :key="index"
-                  style="height:330px"
+                  style="height:330px;"
                 >
                   <div class="station-appraise-aside">
                     <div>
-                      <img
-                        style="width:50px;height:50px;margin:0 0 0 30px"
-                        :src="item.avatar"
-                      />
+                      <img style="width:50px;height:50px;margin:0 0 0 30px" :src="item.avatar" />
                     </div>
                     <div class="appraise-nav">
                       <div>{{item.appraiser}}</div>
@@ -87,6 +84,7 @@
                       面试体验：
                       <el-rate
                         style="width:140px;"
+                        disabled
                         v-model="item.interviewExperience"
                         :colors="colors"
                       ></el-rate>
@@ -98,8 +96,13 @@
                     <div style="margin:15px 0 0 55px">{{item.createdTime|formatDateOne}}</div>
                   </div>
                   <div class="station-appraise-select">
-                    <el-radio-group v-model="radio1" size="medium">
-                      <el-radio-button label="福利待遇特别棒"></el-radio-button>
+                    <el-radio-group
+                      v-model="radio1"
+                      size="medium"
+                      v-for="(list,index) in item.evaluationInterviewLabelBodes"
+                      :key="index"
+                    >
+                      <el-radio-button :label="list.interviewLabel|thelevel"></el-radio-button>
                     </el-radio-group>
                   </div>
                   <div class="station-appraise-content">
@@ -110,10 +113,7 @@
                     <div v-if="item.sublist !== null" style="margin:0 0 0 -720px">企业回复</div>
                     <div v-if="item.sublist !== null" class="third">
                       <div>
-                        <img
-                          style="width:50px;height:50px;margin:15px 0 0 15px"
-                          :src="item.avatar"
-                        />
+                        <img style="width:50px;height:50px;margin:15px 0 0 15px" :src="item.avatar" />
                       </div>
                       <div>
                         <div
@@ -519,7 +519,7 @@ export default {
             this.apprasiseEvaluation = false;
           } else {
             this.evaluationLists = res.data.data;
-            console.log(this.evaluationLists.evaluations.total)
+            console.log(this.evaluationLists.evaluations.total);
             if (this.evaluationLists.evaluations.total > 5) {
               this.jumper = true;
             } else {
@@ -559,24 +559,7 @@ export default {
             this.getLocationPoint();
           }
         })
-        .catch(error => {
-          if (error.response.status === 404) {
-            this.$notify.error({
-              title: "错误",
-              message: "页面丢失，请重新加载"
-            });
-          } else if (error.response.status === 403) {
-            this.$notify.error({
-              title: "错误",
-              message: "登陆超时，请重新登录"
-            });
-          } else {
-            this.$notify.error({
-              title: "错误",
-              message: error.response.data.message
-            });
-          }
-        });
+        .catch(error => {});
     },
     //获取所有企业行业
     allposition() {
@@ -586,24 +569,7 @@ export default {
             this.industryList = res.data.data;
           }
         })
-        .catch(error => {
-          if (error.response.status === 404) {
-            this.$notify.error({
-              title: "错误",
-              message: "页面丢失，请重新加载"
-            });
-          } else if (error.response.status === 403) {
-            this.$notify.error({
-              title: "错误",
-              message: "登陆超时，请重新登录"
-            });
-          } else {
-            this.$notify.error({
-              title: "错误",
-              message: error.response.data.message
-            });
-          }
-        });
+        .catch(error => {});
     },
     //获取岗位列表
     handleClick(e) {
@@ -619,24 +585,7 @@ export default {
               this.page.total = res.data.data.total;
             }
           })
-          .catch(error => {
-            if (error.response.status === 404) {
-              this.$notify.error({
-                title: "错误",
-                message: "页面丢失，请重新加载"
-              });
-            } else if (error.response.status === 403) {
-              this.$notify.error({
-                title: "错误",
-                message: "登陆超时，请重新登录"
-              });
-            } else {
-              this.$notify.error({
-                title: "错误",
-                message: error.response.data.message
-              });
-            }
-          });
+          .catch(error => {});
       }
     },
     //获取指定岗位列表
@@ -654,24 +603,7 @@ export default {
             this.page.total = res.data.data.total;
           }
         })
-        .catch(error => {
-          if (error.response.status === 404) {
-            this.$notify.error({
-              title: "错误",
-              message: "页面丢失，请重新加载"
-            });
-          } else if (error.response.status === 403) {
-            this.$notify.error({
-              title: "错误",
-              message: "登陆超时，请重新登录"
-            });
-          } else {
-            this.$notify.error({
-              title: "错误",
-              message: error.response.data.message
-            });
-          }
-        });
+        .catch(error => {});
     },
     //岗位分类
     positionCataloga() {
@@ -682,24 +614,7 @@ export default {
             // this.positionCatalog = res.data.data.list[0].positionCatalog;
           }
         })
-        .catch(error => {
-          if (error.response.status === 404) {
-            this.$notify.error({
-              title: "错误",
-              message: "页面丢失，请重新加载"
-            });
-          } else if (error.response.status === 403) {
-            this.$notify.error({
-              title: "错误",
-              message: "登陆超时，请重新登录"
-            });
-          } else {
-            this.$notify.error({
-              title: "错误",
-              message: error.response.data.message
-            });
-          }
-        });
+        .catch(error => {});
     },
     handleSizeChange(val) {
       this.page.pageSize = val;
@@ -773,24 +688,7 @@ export default {
             this.posiCatalogList = res.data.data;
           }
         })
-        .catch(error => {
-          if (error.response.status === 404) {
-            this.$notify.error({
-              title: "错误",
-              message: "页面丢失，请重新加载"
-            });
-          } else if (error.response.status === 403) {
-            this.$notify.error({
-              title: "错误",
-              message: "登陆超时，请重新登录"
-            });
-          } else {
-            this.$notify.error({
-              title: "错误",
-              message: error.response.data.message
-            });
-          }
-        });
+        .catch(error => {});
     }
   },
 
@@ -804,7 +702,7 @@ export default {
     this.companIds = this.$route.query.sid;
     // this.citise()
     // this.filtrate();
-    
+
     this.companyId();
     // this.allposition()
     this.evaluationList();
@@ -824,24 +722,7 @@ export default {
             this.page.total = res.data.data.total;
           }
         })
-        .catch(error => {
-          if (error.response.status === 404) {
-            this.$notify.error({
-              title: "错误",
-              message: "页面丢失，请重新加载"
-            });
-          } else if (error.response.status === 403) {
-            this.$notify.error({
-              title: "错误",
-              message: "登陆超时，请重新登录"
-            });
-          } else {
-            this.$notify.error({
-              title: "错误",
-              message: error.response.data.message
-            });
-          }
-        });
+        .catch(error => {});
       this.activeName = "second";
     }
   },
@@ -857,6 +738,42 @@ export default {
     size(size) {
       const map = ["小于10人", "10-100人", "100-500人", "500人以上"];
       return map[size];
+    },
+    thelevel(thelevel) {
+      var a;
+      switch (thelevel) {
+        case "THE_BENEFITS_PACKAGE_IS_FANTASTIC":
+          a = "福利待遇特别棒";
+          break;
+        case "THE_INTERVIEWER_IS_DANIEL":
+          a = "面试官是大牛";
+          break;
+        case "THE_ENVIRONMENT_IS_VERY_GOOD":
+          a = "环境非常nice";
+          break;
+        case "THE_INTERVIEWER_IS_VERY_KIND":
+          a = "面试官很和善";
+          break;
+        case "INTERVIEW_EFFICIENCY_IS_VERY_HIGH":
+          a = "面试效率很高";
+          break;
+        case "THE_SALARY_DOES_NOT_MATCH_THE_LABEL":
+          a = "薪资跟标注不符";
+          break;
+        case "THE_INTERVIEWER_IS_TOO_DEMANDING":
+          a = "面试官太苛刻";
+          break;
+        case "THE_ENVIRONMENT_IS_SO_SO":
+          a = "环境一般般";
+          break;
+        case "THE_INTERVIEWER_IS_VERY_SERIOUS":
+          a = "面试官很严肃";
+          break;
+        case "WHEN_THE_SEAS_RUN_DRY_AND_THE_ROCKS_CRUMBLE":
+          a = "等到海枯石烂";
+          break;
+      }
+      return a;
     }
   }
 };
@@ -1194,13 +1111,12 @@ export default {
         .station-appraise-select {
           display: flex;
           flex-direction: row;
-          margin: 0 30px 0 30px;
+          margin: 15px 0 30px 30px;
 
           .el-radio-button--medium .el-radio-button__inner {
             padding: 2px 10px;
             font-size: 14px;
             border-radius: 20px;
-            margin: 20px 0 0 16px;
             height: 20px;
           }
 
@@ -1227,26 +1143,10 @@ export default {
           }
 
           .el-radio-button__orig-radio:checked+.el-radio-button__inner {
-            color: #fff;
-            background-color: #409eff;
-            border-color: #409eff;
+            color: #272822;
+            background-color: #fff;
+            border-color: #dee1e6;
             box-shadow: -1px 0 0 0 #409eff;
-          }
-
-          div:nth-child(1) {
-            font-family: PingFangSC-Regular;
-            color: #424242;
-            font-size: 16px;
-          }
-
-          div:nth-child(2) {
-            margin: 0 0 0 40px;
-
-            span {
-              font-family: PingFangSC-Regular;
-              color: #327CF3;
-              font-size: 16px;
-            }
           }
         }
 
