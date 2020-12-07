@@ -82,7 +82,7 @@ export default {
       rules: {
         schoolName: [
           { required: true, message: "请输入学校名称", trigger: "blur" },
-          { min: 0, max: 36, message: '仅限36个字符', trigger: 'blur' },
+          { min: 0, max: 36, message: '仅限36个字', trigger: 'blur' },
           // { pattern:/^[a-zA-Z\u4e00-\u9fa5\s]{0,24}$/, message: '姓名仅支持中文汉字与英文字母', trigger: 'blur' },
         ],
         schoolTime: [
@@ -94,7 +94,7 @@ export default {
             message: "请输入专业信息",
             trigger: "change"
           },
-          { min: 0, max: 36, message: "仅限36个字符", trigger: "blur" }
+          { min: 0, max: 20, message: "仅限20个字", trigger: "blur" }
         ],
         general: [{ required: true, message: "请选择教育类型", trigger: "change" }],
         qualifications: [
@@ -140,22 +140,7 @@ export default {
               }
             })
             .catch(error => {
-              if (error.response.status === 404) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "页面丢失，请重新加载"
-                });
-              } else if (error.response.status === 403) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "登陆超时，请重新登录"
-                });
-              } else {
-                this.$notify.error({
-                  title: "错误",
-                  message: error.response.data.message
-                });
-              }
+    
             });
         } else {
           return false;

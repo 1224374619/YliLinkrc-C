@@ -51,7 +51,7 @@ export default {
          rules: {
           languages: [
             { required: true, message: "请输入语种", trigger: "blur" },
-            { min: 0, max: 30, message: "仅限30个字符", trigger: "blur" }
+            { min: 0, max: 10, message: "仅限10个字", trigger: "blur" }
             // { pattern:/^[a-zA-Z\u4e00-\u9fa5\s]{0,24}$/, message: '姓名仅支持中文汉字与英文字母', trigger: 'blur' },
           ],
           listenAbility: [
@@ -80,22 +80,7 @@ export default {
             }
           })
           .catch(error => {
-              if (error.response.status === 404) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "页面丢失，请重新加载"
-                });
-              } else if (error.response.status === 403) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "登陆超时，请重新登录"
-                });
-              } else {
-                this.$notify.error({
-                  title: "错误",
-                  message: error.response.data.message
-                });
-              }
+              
             });
         } else {
           return false;

@@ -12,6 +12,8 @@
           type="textarea"
           v-model="formInline.personalDescription"
           style="width:583px;"
+          maxlength="300"
+          show-word-limit
           placeholder="请填写自我介绍"
         ></el-input>
       </el-form-item>

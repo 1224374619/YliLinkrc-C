@@ -52,7 +52,7 @@
                     <span
                       v-if="item.title.length>20"
                       style="color:#6C6C6C;font-size:14px;margin-left:24px;"
-                    >{{item.title.substring(0,20)}}</span>
+                    >{{item.title.substring(0,20)}}...</span>
                     <span
                       v-else
                       style="color:#6C6C6C;font-size:14px;margin-left:24px;"

@@ -772,12 +772,16 @@
                 <el-input
                   type="textarea"
                   v-model="formProject.duty"
+                  maxlength="1600"
+                  show-word-limit
                   style="width:300px;margin-left:-100px"
                 ></el-input>
               </el-form-item>
               <el-form-item label="项目介绍" prop="project">
                 <el-input
                   type="textarea"
+                  maxlength="1600"
+                  show-word-limit
                   v-model="formProject.project"
                   style="width:300px;margin-left:-100px"
                 ></el-input>
@@ -1186,6 +1190,8 @@
                   type="textarea"
                   v-model="formSelfappraisal.personalDescription"
                   style="width:400px;margin-right:50px"
+                  maxlength="300"
+  show-word-limit
                   placeholder="资料完善程度高，被选中的几率越大呦"
                 ></el-input>
               </el-form-item>
@@ -1781,6 +1787,7 @@
                   ></el-progress>
                 </span>
               </div>
+              <div style='color:#f17130;font-size: 12px;margin: 10px 0 0 40px;'>完整度超过66%可投递简历~</div>
               <div class="aside-nav-third">最后更新：{{this.updatedTime|formatDateTwo}}</div>
             </div>
             <div class="aside-tabulation">
@@ -2190,8 +2197,8 @@ export default {
       activeOne: "",
       edurules: {
         educationName: [
-          { required: true, message: "请输入学校名称", trigger: "blur" }
-          // { min: 0, max: 24, message: '长度在 0 到 24 个字符', trigger: 'blur' },
+          { required: true, message: "请输入学校名称", trigger: "blur" },
+          { min: 0, max: 36, message: '长度在 0 到 36 个字', trigger: 'blur' },
           // { pattern:/^[a-zA-Z\u4e00-\u9fa5\s]{0,24}$/, message: '姓名仅支持中文汉字与英文字母', trigger: 'blur' },
         ],
         educationTime: [
@@ -2203,7 +2210,7 @@ export default {
             message: "请填写专业",
             trigger: "change"
           },
-          { min: 0, max: 36, message: "长度在 0 到 36 个字符", trigger: "blur" }
+          { min: 0, max: 20, message: "长度在 0 到 20 个字", trigger: "blur" }
         ],
         educationDegree: [
           { required: true, message: "请选择学历", trigger: "change" }
@@ -2211,25 +2218,25 @@ export default {
       },
       workrules: {
         companyName: [
-          { required: true, message: "请输入公司名称", trigger: "blur" }
-          // { min: 0, max: 24, message: '长度在 0 到 24 个字符', trigger: 'blur' },
+          { required: true, message: "请输入公司名称", trigger: "blur" },
+          { min: 0, max: 36, message: "仅限36个字", trigger: "blur" }
           // { pattern:/^[a-zA-Z\u4e00-\u9fa5\s]{0,24}$/, message: '姓名仅支持中文汉字与英文字母', trigger: 'blur' },
         ],
         postName: [
           { required: true, message: "请输入职位名称", trigger: "blur" },
-          { min: 0, max: 50, message: "长度在 0 到 50 个字符", trigger: "blur" }
+          { min: 0, max: 10, message: "仅限10个字", trigger: "blur" }
         ],
         workTime: [
           { required: true, message: "请选择在职时间", trigger: "blur" }
         ],
         monthPay: [
-          { min: 0, max: 7, message: "长度在 0 到 7 个字符", trigger: "blur" }
+          { min: 0, max: 5, message: "长度在 0 到 10 个字符", trigger: "blur" }
         ],
         jobDescription: [
           {
             min: 0,
             max: 800,
-            message: "长度在 0 到 800 个字符",
+            message: "仅限800个字",
             trigger: "blur"
           },
           { required: true, message: "请填写工作描述", trigger: "change" }
@@ -2238,11 +2245,12 @@ export default {
       progectrules: {
         itemName: [
           { required: true, message: "请输入项目名称", trigger: "blur" },
-          { min: 0, max: 50, message: "长度在 0 到 50 个字符", trigger: "blur" }
+          { min: 0, max: 36, message: "长度在 0 到 36 个字", trigger: "blur" }
           // { pattern:/^[a-zA-Z\u4e00-\u9fa5\s]{0,24}$/, message: '姓名仅支持中文汉字与英文字母', trigger: 'blur' },
         ],
         companyName: [
-          { min: 0, max: 50, message: "长度在 0 到 50 个字符", trigger: "blur" }
+          { required: true, message: "请输入公司名称", trigger: "blur" },
+          { min: 0, max: 36, message: "长度在 0 到 36 个字", trigger: "blur" }
         ],
         schoolTime: [
           { required: true, message: "请选择项目时间", trigger: "blur" }
@@ -2253,7 +2261,7 @@ export default {
           {
             min: 0,
             max: 800,
-            message: "长度在 0 到 800 个字符",
+            message: "长度在 0 到 800 个字",
             trigger: "blur"
           }
         ],
@@ -2261,7 +2269,7 @@ export default {
           {
             min: 0,
             max: 800,
-            message: "长度在 0 到 800 个字符",
+            message: "长度在 0 到 800 个字",
             trigger: "blur"
           },
           { required: true, message: "请填写项目介绍", trigger: "change" }
@@ -2270,19 +2278,19 @@ export default {
       trainrules: {
         trainCourse: [
           { required: true, message: "请输入培训课程", trigger: "blur" },
-          { min: 0, max: 50, message: "长度在 0 到 50 个字符", trigger: "blur" }
+          { min: 0, max: 20, message: "长度在 0 到 20 个字", trigger: "blur" }
           // { pattern:/^[a-zA-Z\u4e00-\u9fa5\s]{0,24}$/, message: '姓名仅支持中文汉字与英文字母', trigger: 'blur' },
         ],
         trainCours: [
           { required: true, message: "请输入培训机构", trigger: "blur" },
-          { min: 0, max: 50, message: "长度在 0 到 50 个字符", trigger: "blur" }
+          { min: 0, max: 20, message: "长度在 0 到 20 个字", trigger: "blur" }
         ],
         trainTime: []
       },
       languagerules: {
         languages: [
           { required: true, message: "请输入语种", trigger: "blur" },
-          { min: 0, max: 30, message: "长度在 0 到 30 个字符", trigger: "blur" }
+          { min: 0, max: 10, message: "长度在 0 到 10 个字", trigger: "blur" }
           // { pattern:/^[a-zA-Z\u4e00-\u9fa5\s]{0,24}$/, message: '姓名仅支持中文汉字与英文字母', trigger: 'blur' },
         ],
         listenAbility: [
@@ -2294,15 +2302,15 @@ export default {
       },
       professionalrules: {
         qual: [
-          { required: true, message: "请输入语种", trigger: "blur" },
-          { min: 0, max: 30, message: "长度在 0 到 30 个字符", trigger: "blur" }
+          { required: true, message: "请输入职称等级名称", trigger: "blur" },
+          { min: 0, max: 10, message: "长度在 0 到 10 个字", trigger: "blur" }
           // { pattern:/^[a-zA-Z\u4e00-\u9fa5\s]{0,24}$/, message: '姓名仅支持中文汉字与英文字母', trigger: 'blur' },
         ]
       },
       skillrules: {
         technicalName: [
           { required: true, message: "请输入技能名称", trigger: "blur" },
-          { min: 0, max: 50, message: "长度在 0 到 50 个字符", trigger: "blur" }
+          { min: 0, max: 10, message: "长度在 0 到 10 个字", trigger: "blur" }
           // { pattern:/^[a-zA-Z\u4e00-\u9fa5\s]{0,24}$/, message: '姓名仅支持中文汉字与英文字母', trigger: 'blur' },
         ],
         level: [{ required: true, message: "请选择掌握程度", trigger: "blur" }]
@@ -2310,7 +2318,7 @@ export default {
       awardsrules: {
         prizeAward: [
           { required: true, message: "请输入奖项名称", trigger: "blur" },
-          { min: 0, max: 30, message: "长度在 0 到 30 个字符", trigger: "blur" }
+          { min: 0, max: 10, message: "长度在 0 到 10 个字", trigger: "blur" }
           // { pattern:/^[a-zA-Z\u4e00-\u9fa5\s]{0,24}$/, message: '姓名仅支持中文汉字与英文字母', trigger: 'blur' },
         ],
         prizeTime: [
@@ -2322,8 +2330,8 @@ export default {
           { required: true, message: "请填写个人介绍", trigger: "blur" },
           {
             min: 0,
-            max: 20000,
-            message: "长度在 0 到 600 个字符",
+            max: 300,
+            message: "长度在 0 到 300 个字",
             trigger: "blur"
           }
         ]
@@ -2616,22 +2624,7 @@ export default {
               }
             })
             .catch(error => {
-              if (error.response.status === 404) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "页面丢失，请重新加载"
-                });
-              } else if (error.response.status === 403) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "登陆超时，请重新登录"
-                });
-              } else {
-                this.$notify.error({
-                  title: "错误",
-                  message: error.response.data.message
-                });
-              }
+              
             });
         } else {
           return false;
@@ -2724,22 +2717,7 @@ export default {
               }
             })
             .catch(error => {
-              if (error.response.status === 404) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "页面丢失，请重新加载"
-                });
-              } else if (error.response.status === 403) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "登陆超时，请重新登录"
-                });
-              } else {
-                this.$notify.error({
-                  title: "错误",
-                  message: error.response.data.message
-                });
-              }
+             
             });
         }
       });
@@ -2759,22 +2737,7 @@ export default {
               }
             })
             .catch(error => {
-              if (error.response.status === 404) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "页面丢失，请重新加载"
-                });
-              } else if (error.response.status === 403) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "登陆超时，请重新登录"
-                });
-              } else {
-                this.$notify.error({
-                  title: "错误",
-                  message: error.response.data.message
-                });
-              }
+              
             });
         } else {
           return false;
@@ -2817,22 +2780,7 @@ export default {
               }
             })
             .catch(error => {
-              if (error.response.status === 404) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "页面丢失，请重新加载"
-                });
-              } else if (error.response.status === 403) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "登陆超时，请重新登录"
-                });
-              } else {
-                this.$notify.error({
-                  title: "错误",
-                  message: error.response.data.message
-                });
-              }
+              
             });
         } else {
           return false;
@@ -2864,22 +2812,7 @@ export default {
               }
             })
             .catch(error => {
-              if (error.response.status === 404) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "页面丢失，请重新加载"
-                });
-              } else if (error.response.status === 403) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "登陆超时，请重新登录"
-                });
-              } else {
-                this.$notify.error({
-                  title: "错误",
-                  message: error.response.data.message
-                });
-              }
+              
             });
         } else {
           return false;
@@ -2907,22 +2840,7 @@ export default {
               }
             })
             .catch(error => {
-              if (error.response.status === 404) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "页面丢失，请重新加载"
-                });
-              } else if (error.response.status === 403) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "登陆超时，请重新登录"
-                });
-              } else {
-                this.$notify.error({
-                  title: "错误",
-                  message: error.response.data.message
-                });
-              }
+              
             });
         } else {
           return false;
@@ -2944,22 +2862,7 @@ export default {
               }
             })
             .catch(error => {
-              if (error.response.status === 404) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "页面丢失，请重新加载"
-                });
-              } else if (error.response.status === 403) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "登陆超时，请重新登录"
-                });
-              } else {
-                this.$notify.error({
-                  title: "错误",
-                  message: error.response.data.message
-                });
-              }
+              
             });
         } else {
           return false;
@@ -2993,22 +2896,7 @@ export default {
               }
             })
             .catch(error => {
-              if (error.response.status === 404) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "页面丢失，请重新加载"
-                });
-              } else if (error.response.status === 403) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "登陆超时，请重新登录"
-                });
-              } else {
-                this.$notify.error({
-                  title: "错误",
-                  message: error.response.data.message
-                });
-              }
+              
             });
         } else {
           return false;
@@ -3044,22 +2932,7 @@ export default {
               }
             })
             .catch(error => {
-              if (error.response.status === 404) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "页面丢失，请重新加载"
-                });
-              } else if (error.response.status === 403) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "登陆超时，请重新登录"
-                });
-              } else {
-                this.$notify.error({
-                  title: "错误",
-                  message: error.response.data.message
-                });
-              }
+              
             });
         } else {
           return false;
@@ -3095,22 +2968,7 @@ export default {
               }
             })
             .catch(error => {
-              if (error.response.status === 404) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "页面丢失，请重新加载"
-                });
-              } else if (error.response.status === 403) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "登陆超时，请重新登录"
-                });
-              } else {
-                this.$notify.error({
-                  title: "错误",
-                  message: error.response.data.message
-                });
-              }
+              
             });
         } else {
           return false;
@@ -3164,22 +3022,7 @@ export default {
               }
             })
             .catch(error => {
-              if (error.response.status === 404) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "页面丢失，请重新加载"
-                });
-              } else if (error.response.status === 403) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "登陆超时，请重新登录"
-                });
-              } else {
-                this.$notify.error({
-                  title: "错误",
-                  message: error.response.data.message
-                });
-              }
+              
             });
         } else {
           return false;
@@ -3274,18 +3117,18 @@ export default {
         })
         .catch(error => {
           if (error.response.status === 404) {
-            this.$notify.error({
-              title: "错误",
+            this.$notify.info({
+              title: "消息",
               message: "页面丢失，请重新加载"
             });
           } else if (error.response.status === 403) {
-            this.$notify.error({
-              title: "错误",
+            this.$notify.info({
+              title: "消息",
               message: "登陆超时，请重新登录"
             });
           } else {
-            this.$notify.error({
-              title: "错误",
+            this.$notify.info({
+              title: "消息",
               message: error.response.data.message
             });
             this.$router.push({ path: "/login" });
@@ -3313,22 +3156,7 @@ export default {
           }
         })
         .catch(error => {
-          if (error.response.status === 404) {
-            this.$notify.error({
-              title: "错误",
-              message: "页面丢失，请重新加载"
-            });
-          } else if (error.response.status === 403) {
-            this.$notify.error({
-              title: "错误",
-              message: "登陆超时，请重新登录"
-            });
-          } else {
-            this.$notify.error({
-              title: "错误",
-              message: error.response.data.message
-            });
-          }
+          
         });
     },
     //职称等级删除
@@ -3341,22 +3169,7 @@ export default {
           }
         })
         .catch(error => {
-          if (error.response.status === 404) {
-            this.$notify.error({
-              title: "错误",
-              message: "页面丢失，请重新加载"
-            });
-          } else if (error.response.status === 403) {
-            this.$notify.error({
-              title: "错误",
-              message: "登陆超时，请重新登录"
-            });
-          } else {
-            this.$notify.error({
-              title: "错误",
-              message: error.response.data.message
-            });
-          }
+          
         });
     },
     //工作经历删除
@@ -3369,22 +3182,7 @@ export default {
           }
         })
         .catch(error => {
-          if (error.response.status === 404) {
-            this.$notify.error({
-              title: "错误",
-              message: "页面丢失，请重新加载"
-            });
-          } else if (error.response.status === 403) {
-            this.$notify.error({
-              title: "错误",
-              message: "登陆超时，请重新登录"
-            });
-          } else {
-            this.$notify.error({
-              title: "错误",
-              message: error.response.data.message
-            });
-          }
+          
         });
     },
     //荣誉奖项删除
@@ -3397,22 +3195,7 @@ export default {
           }
         })
         .catch(error => {
-          if (error.response.status === 404) {
-            this.$notify.error({
-              title: "错误",
-              message: "页面丢失，请重新加载"
-            });
-          } else if (error.response.status === 403) {
-            this.$notify.error({
-              title: "错误",
-              message: "登陆超时，请重新登录"
-            });
-          } else {
-            this.$notify.error({
-              title: "错误",
-              message: error.response.data.message
-            });
-          }
+        
         });
     },
     //教育经历删除
@@ -3425,22 +3208,7 @@ export default {
           }
         })
         .catch(error => {
-          if (error.response.status === 404) {
-            this.$notify.error({
-              title: "错误",
-              message: "页面丢失，请重新加载"
-            });
-          } else if (error.response.status === 403) {
-            this.$notify.error({
-              title: "错误",
-              message: "登陆超时，请重新登录"
-            });
-          } else {
-            this.$notify.error({
-              title: "错误",
-              message: error.response.data.message
-            });
-          }
+          
         });
     },
     //培训经历删除
@@ -3453,22 +3221,7 @@ export default {
           }
         })
         .catch(error => {
-          if (error.response.status === 404) {
-            this.$notify.error({
-              title: "错误",
-              message: "页面丢失，请重新加载"
-            });
-          } else if (error.response.status === 403) {
-            this.$notify.error({
-              title: "错误",
-              message: "登陆超时，请重新登录"
-            });
-          } else {
-            this.$notify.error({
-              title: "错误",
-              message: error.response.data.message
-            });
-          }
+          
         });
     },
     //语言能力删除
@@ -3481,22 +3234,7 @@ export default {
           }
         })
         .catch(error => {
-          if (error.response.status === 404) {
-            this.$notify.error({
-              title: "错误",
-              message: "页面丢失，请重新加载"
-            });
-          } else if (error.response.status === 403) {
-            this.$notify.error({
-              title: "错误",
-              message: "登陆超时，请重新登录"
-            });
-          } else {
-            this.$notify.error({
-              title: "错误",
-              message: error.response.data.message
-            });
-          }
+          
         });
     },
     //项目经历删除
@@ -3509,22 +3247,7 @@ export default {
           }
         })
         .catch(error => {
-          if (error.response.status === 404) {
-            this.$notify.error({
-              title: "错误",
-              message: "页面丢失，请重新加载"
-            });
-          } else if (error.response.status === 403) {
-            this.$notify.error({
-              title: "错误",
-              message: "登陆超时，请重新登录"
-            });
-          } else {
-            this.$notify.error({
-              title: "错误",
-              message: error.response.data.message
-            });
-          }
+          
         });
     },
     //自我评价
@@ -3616,22 +3339,7 @@ export default {
           }
         })
         .catch(error => {
-          if (error.response.status === 404) {
-            this.$notify.error({
-              title: "错误",
-              message: "页面丢失，请重新加载"
-            });
-          } else if (error.response.status === 403) {
-            this.$notify.error({
-              title: "错误",
-              message: "登陆超时，请重新登录"
-            });
-          } else {
-            this.$notify.error({
-              title: "错误",
-              message: error.response.data.message
-            });
-          }
+          
         });
       this.awardsouterVisible = true;
     },
@@ -4341,7 +4049,7 @@ export default {
           color: #373737;
           font-size: 16px;
           font-weight: bold;
-          margin: 20px 0 0 40px;
+          margin: 20px 0 0 40px
         }
 
         .aside-nav-second {

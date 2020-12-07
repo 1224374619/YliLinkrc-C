@@ -62,12 +62,12 @@ export default {
       rules: {
         trainCourse: [
           { required: true, message: "请输入课程名称", trigger: "blur" },
-          { min: 0, max: 50, message: "仅限50个字符", trigger: "blur" }
+          { min: 0, max: 20, message: "仅限20个字", trigger: "blur" }
           // { pattern:/^[a-zA-Z\u4e00-\u9fa5\s]{0,24}$/, message: '姓名仅支持中文汉字与英文字母', trigger: 'blur' },
         ],
         trainCours: [
           { required: true, message: "请输入机构名称", trigger: "blur" },
-          { min: 0, max: 50, message: "仅限50个字符", trigger: "blur" }
+          { min: 0, max: 20, message: "仅限20个字", trigger: "blur" }
         ]
       }
     };
@@ -105,22 +105,7 @@ export default {
               }
             })
             .catch(error => {
-              if (error.response.status === 404) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "页面丢失，请重新加载"
-                });
-              } else if (error.response.status === 403) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "登陆超时，请重新登录"
-                });
-              } else {
-                this.$notify.error({
-                  title: "错误",
-                  message: error.response.data.message
-                });
-              }
+              
             });
         } else {
           return false;

@@ -27,12 +27,18 @@
           end-placeholder="结束日期"
         ></el-date-picker>
       </el-form-item>
-      
+
       <el-form-item label="工作描述" style="margin-left:20px" prop="jobDescription">
-        <el-input type="textarea" v-model="formInline.jobDescription" style="width:624px"></el-input>
+        <el-input
+          type="textarea"
+          maxlength="1600"
+          show-word-limit
+          v-model="formInline.jobDescription"
+          style="width:624px"
+        ></el-input>
       </el-form-item>
       <br />
-      <el-form-item class='cancel' style="margin:0 0 20px 505px">
+      <el-form-item class="cancel" style="margin:0 0 20px 505px">
         <el-button @click="cancel" plain style="margin:0 20px 0 0">取消</el-button>
         <el-button @click="keep('formInline')" type="primary">保存</el-button>
       </el-form-item>
@@ -41,9 +47,7 @@
 </template>
 
 <script>
-import {
-workadd
-} from "../../apis/account";
+import { workadd } from "../../apis/account";
 export default {
   name: "work",
   props: ["workDegree"],
@@ -72,25 +76,25 @@ export default {
       rules: {
         post: [
           { required: true, message: "请输入公司名称", trigger: "blur" },
-          { min: 0, max: 50, message: '仅限50个字符', trigger: 'blur' },
+          { min: 0, max: 36, message: "仅限36个字", trigger: "blur" }
           // { pattern:/^[a-zA-Z\u4e00-\u9fa5\s]{0,24}$/, message: '姓名仅支持中文汉字与英文字母', trigger: 'blur' },
         ],
         postName: [
           { required: true, message: "请输入职位名称", trigger: "blur" },
-          { min: 0, max: 50, message: "仅限50个字符", trigger: "blur" }
+          { min: 0, max: 10, message: "仅限10个字", trigger: "blur" }
         ],
         trade: [{ required: true, message: "请选择行业", trigger: "blur" }],
         workTime: [
           { required: true, message: "请选择工作时间", trigger: "blur" }
         ],
-        // monthPay: [
-        //   { min: 0, max: 7, message: "长度在 0 到 7 个字符", trigger: "blur" }
-        // ],
+        monthPay: [
+          { min: 0, max: 5, message: "长度在 0 到 10 个字符", trigger: "blur" }
+        ],
         jobDescription: [
           {
             min: 0,
             max: 800,
-            message: "仅限800个字符",
+            message: "仅限800个字",
             trigger: "blur"
           },
           { required: true, message: "请填写工作描述", trigger: "change" }
@@ -130,30 +134,15 @@ export default {
             position: this.formInline.postName,
             description: this.formInline.jobDescription,
             salaryBeforeTax: this.formInline.monthPay
-          }
-         workadd(this.workDegree,params)
+          };
+          workadd(this.workDegree, params)
             .then(res => {
               if (res.data.code == 201) {
                 this.$emit("workEmit", false, true);
               }
             })
             .catch(error => {
-              if (error.response.status === 404) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "页面丢失，请重新加载"
-                });
-              } else if (error.response.status === 403) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "登陆超时，请重新登录"
-                });
-              } else {
-                this.$notify.error({
-                  title: "错误",
-                  message: error.response.data.message
-                });
-              }
+              
             });
         } else {
           return false;
@@ -167,15 +156,20 @@ export default {
 };
 </script>
 
-<style lang="stylus"> 
-  .el-form-item
-    padding 0 0 0 30px
-  .el-button
-    width 94px 
-    height 34px
-    vertical-align middle
-    padding 0px 
-  .block
-    .el-range-editor.el-input__inner
-      height 40px     
+<style lang="stylus">.el-form-item {
+  padding: 0 0 0 30px;
+}
+
+.el-button {
+  width: 94px;
+  height: 34px;
+  vertical-align: middle;
+  padding: 0px;
+}
+
+.block {
+  .el-range-editor.el-input__inner {
+    height: 40px;
+  }
+}
 </style>

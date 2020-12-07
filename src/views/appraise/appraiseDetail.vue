@@ -284,13 +284,13 @@ export default {
         major: ""
       },
       rules: {
-        surname: [{ required: true, message: "请输入", trigger: "blur" }],
-        sex: [{ required: true, message: "请输入", trigger: "blur" }],
-        age: [{ required: true, message: "请输入", trigger: "blur" }],
-        position: [{ required: true, message: "请输入", trigger: "blur" }],
-        record: [{ required: true, message: "请输入", trigger: "blur" }],
-        school: [{ required: true, message: "请输入", trigger: "blur" }],
-        major: [{ required: true, message: "请输入", trigger: "blur" }],
+        surname: [{ required: true, message: "请输入", trigger: "blur" },{ min: 0, max: 12, message: "长度在 0 到 12 个字", trigger: "blur" }],
+        sex: [{ required: true, message: "请输入", trigger: "blur" },{ min: 0, max: 1, message: "长度在 0 到 1 个字", trigger: "blur" }],
+        age: [{ required: true, message: "请输入", trigger: "blur" },{ min: 0, max: 1, message: "长度在 0 到 1 个字", trigger: "blur" }],
+        position: [{ required: true, message: "请输入", trigger: "blur" },{ min: 0, max: 10, message: "长度在 0 到 10 个字", trigger: "blur" }],
+        record: [{ required: true, message: "请输入", trigger: "blur" },{ min: 0, max: 10, message: "长度在 0 到 10 个字", trigger: "blur" }],
+        school: [{ required: true, message: "请输入", trigger: "blur" },{ min: 0, max: 10, message: "长度在 0 到 10 个字", trigger: "blur" }],
+        major: [{ required: true, message: "请输入", trigger: "blur" },{ min: 0, max: 20, message: "长度在 5 到 20 个字", trigger: "blur" }],
         phone: [
           { required: true, message: "请输入", trigger: "blur" },
           {
@@ -410,6 +410,7 @@ export default {
         .then(res => {
           if (res.data.code == 200) {
             this.appraiseList = res.data.data;
+            
           } else {
           }
         })

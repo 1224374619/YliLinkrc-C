@@ -74,7 +74,7 @@ export default {
       rules: {
         technicalName: [
           { required: true, message: "请输入技能名称", trigger: "blur" },
-          { min: 0, max: 50, message: "仅限50个字符", trigger: "blur" }
+          { min: 0, max: 10, message: "仅限10个字", trigger: "blur" }
           // { pattern:/^[a-zA-Z\u4e00-\u9fa5\s]{0,24}$/, message: '姓名仅支持中文汉字与英文字母', trigger: 'blur' },
         ],
         level: [{ required: true, message: "请选择掌握程度", trigger: "blur" }]

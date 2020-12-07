@@ -157,7 +157,7 @@
           </div>
           <div class="station-appraise-line"></div>
 
-          <div v-for="(item,index) in evaluationLists.evaluations.list" :key="index">
+          <div v-for="(item,index) in evaluationLists.evaluations.list" :key="index" >
             <div class="station-appraise-aside">
               <div>
                 <img style="width:50px;height:50px;margin:0 0 0 30px" :src="item.avatar" />

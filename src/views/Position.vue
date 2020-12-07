@@ -46,7 +46,7 @@
                   ></baidu-map>
                 </div>
               </div>
-              <div class="station-appraise" v-if="this.apprasiseEvaluation">
+              <div class="station-appraises" v-if="this.apprasiseEvaluation">
                 <div class="station-appraise-nav">
                   <div style="margin:30px 0 0 30px">{{evaluationLists.companyName}}面试评价</div>
                   <div style="margin:30px 0 0 40px">综合面试评分：</div>
@@ -71,7 +71,6 @@
                 <div
                   v-for="(item,index) in evaluationLists.evaluations.list"
                   :key="index"
-                  style="height:330px;"
                 >
                   <div class="station-appraise-aside">
                     <div>
@@ -110,7 +109,7 @@
                       <span style="margin:0 0 0 -7px">【面试过程】</span>
                       <span>{{item.content}}</span>
                     </div>
-                    <div v-if="item.sublist !== null" style="margin:0 0 0 -720px">企业回复</div>
+                    <div v-if="item.sublist !== null" style="margin-left: -720px">企业回复</div>
                     <div v-if="item.sublist !== null" class="third">
                       <div>
                         <img style="width:50px;height:50px;margin:15px 0 0 15px" :src="item.avatar" />
@@ -158,83 +157,6 @@
                 </div>
               </div>
             </div>
-            <!-- <div class="station-appraise" >
-              <div style="height:800px">
-                <div class="station-appraise-nav">
-                  <div style="margin:30px 0 0 30px">银领面试评价</div>
-                  <div style="margin:30px 0 0 40px">综合面试评分：</div>
-                  <div style="margin:35px 0 0 0;width:140px">
-                    <el-rate v-model="value2" :colors="colors"></el-rate>
-                  </div>
-                  <div style="margin:31px 0 0 10px;">4.0</div>
-                  <div style="margin:31px 0 0 0;">（来自15条评价）</div>
-                </div>
-                <div class="station-appraise-radio">
-                  <el-radio-group v-model="radio1" size="medium">
-                    <el-radio-button label="全部"></el-radio-button>
-                    <el-radio-button label="产品经理"></el-radio-button>
-                    <el-radio-button label="UI设计师"></el-radio-button>
-                    <el-radio-button label="前端开发"></el-radio-button>
-                    <el-radio-button label="后端开发"></el-radio-button>
-                  </el-radio-group>
-                </div>
-                <div class="station-appraise-line"></div>
-                <div class="station-appraise-aside">
-                  <div>
-                    <img
-                      style="width:50px;height:50px;margin:0 0 0 30px"
-                      src="../assets/images/89.png"
-                    />
-                  </div>
-                  <div class="appraise-nav">
-                    <div>匿名用户</div>
-                  </div>
-                  <div class="appraise-aside" style="margin:15px 0 0 94px">
-                    面试体验：
-                    <el-rate style="width:140px;" v-model="value2" :colors="colors"></el-rate>
-                  </div>
-                  <div class="appraise-aside" style="margin:15px 0 0 50px">面试职位：产品经理</div>
-                  <div style="margin:15px 0 0 75px">2020-02-14</div>
-                </div>
-                <div class="station-appraise-select">
-                  <el-radio-group v-model="radio1" size="medium">
-                    <el-radio-button label="福利待遇特别棒"></el-radio-button>
-                  </el-radio-group>
-                </div>
-                <div class="station-appraise-content">
-                  <div style="text-align:left">
-                    <span style="margin:0 0 0 -7px">【面试过程】</span>
-                    <span>able to work under high pressure and time limitation . able work under high pressure and time limitation. able towork under high pressure and time limitation.able to work under high pressure and time limitation.able to work under high pressure and time limitation.able to work under high pressure and time limitation. to work under pressure and time limitation.able to work under high pressure and time limitation.</span>
-                  </div>
-                  <div style="margin:0 0 0 -720px">企业回复</div>
-                  <div class="third">
-                    <div>
-                      <img
-                        style="width:50px;height:50px;margin:15px 0 0 15px"
-                        src="../assets/images/89.png"
-                      />
-                    </div>
-                    <div>
-                      <div style="margin:5px 0 0 -200px;color: #A2A2A2">银领.HR.人事</div>
-                      <div style="margin:0 0 0 5px">每天在宽敞舒适的环境办公心情会更好哦～</div>
-                    </div>
-                    <div>
-                      <div>2020-02-14</div>
-                    </div>
-                  </div>
-                  <div class="station-appraise-footer">
-                    <div style="display: flex;flex-direction: row;margin:20px 35px 0 0">
-                      <img style="width:25px;height:25px" src="../assets/images/zan.png" />
-                      <span style="line-height:25px">1820</span>
-                    </div>
-                    <div style="display: flex;flex-direction: row;margin:20px 0 0 0">
-                      <img style="width:25px;height:25px" src="../assets/images/book.png" />
-                      <span style="line-height:25px">2</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>-->
           </el-tab-pane>
           <el-tab-pane label="在招职位" name="second">
             <div class="postType">
@@ -778,7 +700,8 @@ export default {
   }
 };
 </script>
-<style lang="stylus">.position {
+<style lang="stylus">
+.position {
   display: flex;
   flex-direction: column;
   margin: 100px auto 0;
@@ -945,11 +868,11 @@ export default {
         }
       }
 
-      .station-appraise {
+      .station-appraises {
         margin: 0 55px 0 0;
         border: 1px solid rgba(236, 236, 236, 1);
-        height: auto;
         border-radius: 5px;
+        height: auto;
         width: 850px;
 
         .station-appraise-nav {
@@ -1164,11 +1087,11 @@ export default {
         }
 
         .station-appraise-content {
-          height: 100px;
           margin: 20px 30px 0 30px;
           font-family: PingFangSC-Regular;
           color: #686868;
           font-size: 16px;
+          height: auto;
 
           div:nth-child(2) {
             font-family: PingFangSC-Regular;
@@ -1186,6 +1109,7 @@ export default {
             margin: 10px 0 0 0;
             display: flex;
             flex-direction: row;
+            border: 1px solid;
 
             div:nth-child(3) {
               font-family: PingFangSC-Regular;

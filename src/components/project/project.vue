@@ -30,11 +30,13 @@
         </el-select>
       </el-form-item>
       <el-form-item label="个人职责" style="margin-left:18px" prop="duty">
-        <el-input type="textarea" v-model="formInline.duty" style="width:654px"></el-input>
+        <el-input type="textarea" maxlength="1600"
+                  show-word-limit v-model="formInline.duty" style="width:654px"></el-input>
       </el-form-item>
       <br />
       <el-form-item label="项目介绍" style="margin-left:18px" prop="project">
-        <el-input type="textarea" v-model="formInline.project" style="width:654px"></el-input>
+        <el-input type="textarea" maxlength="1600"
+                  show-word-limit  v-model="formInline.project" style="width:654px"></el-input>
       </el-form-item>
       <br />
       <el-form-item class="cancel" style="margin:0 0 20px 535px">
@@ -68,11 +70,12 @@ export default {
       rules: {
         itemName: [
           { required: true, message: "请输入项目名称", trigger: "blur" },
-          { min: 0, max: 50, message: "仅限50个字符", trigger: "blur" }
+          { min: 0, max: 36, message: "长度在 0 到 36 个字", trigger: "blur" }
           // { pattern:/^[a-zA-Z\u4e00-\u9fa5\s]{0,24}$/, message: '姓名仅支持中文汉字与英文字母', trigger: 'blur' },
         ],
         companyName: [
-          { min: 0, max: 50, message: "仅限50个字符", trigger: "blur" }
+          { required: true, message: "请输入公司名称", trigger: "blur" },
+          { min: 0, max: 36, message: "长度在 0 到 36 个字", trigger: "blur" }
         ],
         schoolTime: [
           { required: true, message: "请选择项目时间", trigger: "blur" }
@@ -83,7 +86,7 @@ export default {
           {
             min: 0,
             max: 800,
-            message: "仅限800个字符",
+            message: "仅限800个字",
             trigger: "blur"
           }
         ],
@@ -91,7 +94,7 @@ export default {
           {
             min: 0,
             max: 800,
-            message: "仅限800个字符",
+            message: "仅限800个字",
             trigger: "blur"
           },
           { required: true, message: "请填写项目介绍", trigger: "change" }
@@ -133,22 +136,7 @@ export default {
               this.$emit("progectEmit", false, true);
             }
           }).catch(error => {
-              if (error.response.status === 404) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "页面丢失，请重新加载"
-                });
-              } else if (error.response.status === 403) {
-                this.$notify.error({
-                  title: "错误",
-                  message: "登陆超时，请重新登录"
-                });
-              } else {
-                this.$notify.error({
-                  title: "错误",
-                  message: error.response.data.message
-                });
-              }
+              
             });
         } else {
           return false;
