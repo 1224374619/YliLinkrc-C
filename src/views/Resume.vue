@@ -3750,11 +3750,11 @@ export default {
   computed: {
     uploadUrl() {
       // const {VUE_APP_SECRET,VUE_APP_DEV_MODE} = process.env
-      return "/api/v2/file-service/files/upload";
+      return "/api/v3/file-service/files/upload";
     },
     uploadUrlOne() {
       // const {VUE_APP_SECRET,VUE_APP_DEV_MODE} = process.env
-      return "/api/v2/file-service/files/upload";
+      return "/api/v3/file-service/files/upload";
     }
   },
   filters: {
@@ -3884,7 +3884,6 @@ export default {
 
 <style lang="stylus">
 .web-office-iframe {
-  border:1px solid red
   width:300px
 }
 
@@ -4070,7 +4069,6 @@ export default {
       }
 
       .aside-tabulation {
-        border:1px solid red
         display: flex;
         flex-direction: column;
         margin: 15px 0 0 0;

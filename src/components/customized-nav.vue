@@ -50,9 +50,9 @@
                 >
                   <div class="badge" v-for="(item,index) in notificationlist" :key="index">
                     <span
-                      v-if="item.title.length>20"
+                      v-if="item.title.length>17"
                       style="color:#6C6C6C;font-size:14px;margin-left:24px;"
-                    >{{item.title.substring(0,20)}}...</span>
+                    >{{item.title.substring(0,17)}}...</span>
                     <span
                       v-else
                       style="color:#6C6C6C;font-size:14px;margin-left:24px;"

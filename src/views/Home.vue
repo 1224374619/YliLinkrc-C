@@ -352,7 +352,8 @@
                   />
                   <div class="third-content">
                     <span>{{list.company.companyName}}</span>
-                    <span>{{list.company.size}} | {{list.company.industrySecondary}}</span>
+                    <span v-if="list.company.size === '500人以上'">{{list.company.size}} | {{list.company.industrySecondary}}</span>
+                    <span v-else>{{list.company.size}}人 | {{list.company.industrySecondary}}</span>
                   </div>
                 </div>
               </div>
