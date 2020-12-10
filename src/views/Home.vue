@@ -431,7 +431,7 @@ export default {
       disabled: false,
       show: "",
       disabledOne: false,
-      recommend: true,
+      // recommend: true,
       activeName: "first",
       value: "上海市",
       company: "职位",
@@ -961,30 +961,29 @@ export default {
     redirectToSearchResult() {
       this.$router.push({ path: "/search" });
     },
-    //获取简历简讯
-    brief() {
-      brief().then(res => {
-        if (res.data.code == 200) {
-          if (res.data.data.target == null) {
-            this.recommend = false;
-          } else {
-            this.recommend = true;
-          }
-        }
-      });
-    }
+    // //获取简历简讯
+    // brief() {
+    //   brief().then(res => {
+    //     if (res.data.code == 200) {
+    //       if (res.data.data.target == null) {
+    //         this.recommend = false;
+    //       } else {
+    //         this.recommend = true;
+    //       }
+    //     }
+    //   });
+    // }
   },
   created() {
     let token = Cookies.get("token");
-    console.log(token);
     this.new();
     this.positionCatalogList = positionCatalog.data;
     this.industryList = industrys.data;
     this.city = citys.data;
-    if (token) {
-      this.brief();
-    } else {
-    }
+    // if (token) {
+    //   this.brief();
+    // } else {
+    // }
     this.citises();
     // this.industry();
     // this.carousel();
@@ -995,11 +994,11 @@ export default {
     // this.recommendation();
     // this.allposition();
     // this.cits()
-    if (this.recommend == false) {
-      this.activeName = "second";
-    } else {
-      this.activeName = "first";
-    }
+    // if (this.recommend == false) {
+    //   this.activeName = "second";
+    // } else {
+    //   this.activeName = "first";
+    // }
   },
   filters: {
     level(level) {
