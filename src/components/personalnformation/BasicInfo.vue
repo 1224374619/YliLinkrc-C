@@ -231,8 +231,8 @@ export default {
           { required: true, message: "请输入姓名", trigger: "blur" },
           {
             min: 0,
-            max: 24,
-            message: "长度在 0 到 24 个字符",
+            max: 10,
+            message: "长度在 0 到 10 个字",
             trigger: "blur"
           },
           {

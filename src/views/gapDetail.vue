@@ -384,7 +384,7 @@ export default {
       edurules: {
         schoolName: [
           { required: true, message: "请输入学校名称", trigger: "blur" },
-          { min: 0, max: 36, message: "仅限36个字符", trigger: "blur" }
+          { min: 0, max: 12, message: "仅限12个字符", trigger: "blur" }
           // { pattern:/^[a-zA-Z\u4e00-\u9fa5\s]{0,24}$/, message: '姓名仅支持中文汉字与英文字母', trigger: 'blur' },
         ],
         schoolTime: [
@@ -396,7 +396,7 @@ export default {
             message: "请输入专业信息",
             trigger: "change"
           },
-          { min: 0, max: 36, message: "仅限36个字符", trigger: "blur" }
+          { min: 0, max: 12, message: "仅限12个字符", trigger: "blur" }
         ],
         general: [
           { required: true, message: "请选择教育类型", trigger: "change" }
@@ -505,8 +505,8 @@ export default {
           { required: true, message: "请输入姓名", trigger: "blur" },
           {
             min: 0,
-            max: 24,
-            message: "长度在 0 到 24 个字符",
+            max: 10,
+            message: "长度在 0 到 10 个字",
             trigger: "blur"
           },
           {
@@ -539,7 +539,7 @@ export default {
         phone: [
           { required: true, message: "请填写手机号", trigger: "change" },
           {
-            pattern: /^[1][3578][0-9]{9}$/,
+            pattern: /^[1][356789][0-9]{9}$/,
             message: "请输入正确的手机号",
             trigger: ["change", "blur"]
           }

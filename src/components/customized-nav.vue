@@ -83,8 +83,13 @@
               </el-dropdown-menu>
             </el-dropdown>
             <span
+              v-if="this.fullName.length>3"
               style="line-height:65px;color:#373737;margin:0 20px 0 0;font-size:18px;width:60px;"
-            >{{$store.state.user === null?this.fullName:$store.state.user}}</span>
+            >{{$store.state.user === null?this.fullName.substring(0,3):$store.state.user}}...</span>
+            <span
+              v-else
+              style="line-height:65px;color:#373737;margin:0 20px 0 0;font-size:18px;width:60px;"
+            >{{$store.state.user === null?this.fullName:$store.state.user}}...</span>
             <el-dropdown placement="bottom-start" class="ada">
               <!-- <img
                 style="margin:10px 0 0 0;height:47px;width:47px"

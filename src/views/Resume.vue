@@ -2198,7 +2198,7 @@ export default {
       edurules: {
         educationName: [
           { required: true, message: "请输入学校名称", trigger: "blur" },
-          { min: 0, max: 36, message: '长度在 0 到 36 个字', trigger: 'blur' },
+          { min: 0, max: 12, message: '长度在 0 到 12 个字', trigger: 'blur' },
           // { pattern:/^[a-zA-Z\u4e00-\u9fa5\s]{0,24}$/, message: '姓名仅支持中文汉字与英文字母', trigger: 'blur' },
         ],
         educationTime: [
@@ -2210,7 +2210,7 @@ export default {
             message: "请填写专业",
             trigger: "change"
           },
-          { min: 0, max: 20, message: "长度在 0 到 20 个字", trigger: "blur" }
+          { min: 0, max: 12, message: "长度在 0 到 12 个字", trigger: "blur" }
         ],
         educationDegree: [
           { required: true, message: "请选择学历", trigger: "change" }
@@ -2341,8 +2341,8 @@ export default {
           { required: true, message: "请输入姓名", trigger: "blur" },
           {
             min: 0,
-            max: 24,
-            message: "长度在 0 到 24 个字符",
+            max: 10,
+            message: "长度在 0 到 10 个字",
             trigger: "blur"
           },
           {

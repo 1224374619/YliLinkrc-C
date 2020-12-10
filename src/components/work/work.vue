@@ -14,7 +14,7 @@
         <el-input style="width:234px;height:46px" v-model="formInline.postName" placeholder></el-input>
       </el-form-item>
       <el-form-item label="税前月薪" style="margin:0 0 0 20px" prop="monthPay">
-        <el-input style="width:234px;" v-model="formInline.monthPay" placeholder></el-input>
+        <el-input style="width:234px;" v-model="formInline.monthPay" placeholder></el-input> K 
       </el-form-item>
       <el-form-item label="工作时间" class="block" prop="workTime" style="margin:0 0 20px 9px">
         <el-date-picker
