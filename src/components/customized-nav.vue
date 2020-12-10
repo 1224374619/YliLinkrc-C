@@ -85,11 +85,15 @@
             <span
               v-if="this.fullName.length>3"
               style="line-height:65px;color:#373737;margin:0 20px 0 0;font-size:18px;width:60px;"
-            >{{$store.state.user === null?this.fullName.substring(0,3):$store.state.user}}...</span>
+            >{{this.fullName.substring(0,3)}}...</span>
             <span
               v-else
               style="line-height:65px;color:#373737;margin:0 20px 0 0;font-size:18px;width:60px;"
-            >{{$store.state.user === null?this.fullName:$store.state.user}}...</span>
+            >{{this.fullName}}</span>
+            <!-- <span
+              v-else
+              style="line-height:65px;color:#373737;margin:0 20px 0 0;font-size:18px;width:60px;"
+            >{{$store.state.user === null?this.fullName:$store.state.user}}...</span>-->
             <el-dropdown placement="bottom-start" class="ada">
               <!-- <img
                 style="margin:10px 0 0 0;height:47px;width:47px"
@@ -263,8 +267,14 @@ export default {
         .then(res => {
           if (res.status === 200) {
             this.defaultResumeId = res.data.data.defaultResumeId;
-            this.fullName = res.data.data.base.fullName;
+            if (res.data.data.base === null) {
+              this.fullName = "";
+            } else {
+              this.fullName = res.data.data.base.fullName;
+            }
+            console.log(this.fullName.length)
             this.$store.state.avatarUrl = res.data.data.base.avatarUrl;
+            
           } else {
           }
         })
