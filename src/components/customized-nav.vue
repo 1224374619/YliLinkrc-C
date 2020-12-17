@@ -1,27 +1,115 @@
 <template>
   <div>
-    <nav>
+    <div class="dialogCity">
+      <el-dialog title :visible.sync="dialogVisibleCity" width="30%" style="height:1000px">
+        <div class="title">按省份选择</div>
+        <div style="margin:20px 0 0 0">
+          <el-tooltip class="item" v-model="visible" effect="light" placement="bottom-start">
+            <el-input
+              placeholder="请选择省份"
+              :disabled="true"
+              style="width:138px;height:32px;font-size:16px;"
+              v-model="provinces"
+            >
+              <i style="cursor:auto" slot="suffix" class="el-input__icon el-icon-arrow-down"></i>
+            </el-input>
+            <div
+              class="tootip"
+              style="width:473px;height:140px;overflow-y:scroll;color:#525252"
+              slot="content"
+            >
+              <span
+                class="spanCity"
+                @click="checkProvince(item,index)"
+                style="float:left;text-align:center;margin:10px 0 0 8px;padding:6px 10px 0 10px;font-size:16px;height:26px;cursor:pointer"
+                v-for="(item,index) in citylist"
+                :key="index"
+              >{{item.tag}}</span>
+            </div>
+          </el-tooltip>
+          <el-tooltip
+            style="margin:0 200px 0 20px"
+            :disabled="disabled"
+            v-model="visibleOne"
+            effect="light"
+            placement="bottom"
+          >
+            <el-input
+              placeholder="请选择城市"
+              :disabled="true"
+              v-model="cities"
+              style="width:138px;height:32px;;font-size:16px"
+            >
+              <i style="cursor:auto" slot="suffix" class="el-input__icon el-icon-arrow-down"></i>
+            </el-input>
+            <div style="width:473px;height:140px;overflow-y:scroll;" slot="content">
+              <span
+                class="spanCity"
+                slot="reference"
+                @click="checkCity(item)"
+                style="float:left;text-align:center;margin:10px 0 0 8px;padding:6px 10px 0 10px;font-size:16px;height:26px;cursor:pointer"
+                v-for="(item,index) in districtlist"
+                :key="index"
+              >{{item.tag}}</span>
+            </div>
+          </el-tooltip>
+        </div>
+        <span slot="footer" class="dialog-footer">
+          <el-button plain @click="dialogVisibleCity = false">取 消</el-button>
+          <el-button type="primary" @click="dialogVisibleCity = false">确 定</el-button>
+        </span>
+      </el-dialog>
+    </div>
+    <nav :class="scroll>0?'navFls':'navFl'">
       <div class="nav-body">
-        <img style="height:40px" @click="gotoHomeUI" :src="require('../assets/images/logo.png')" />
-        <!-- <span v-if="!ctlHideMenus" style="margin:5px 0 0 27px;color:#327cf3;">上海<i class="el-icon-caret-bottom"></i></span> -->
+        <el-amap
+          vid="amap"
+          :plugin="plugin"
+          :events="events"
+          class="amap"
+          style="width:1px;height:0px;"
+          :center="center"
+          :zoom="zoom"
+        >
+          <el-amap-marker :position="center" vid="amapMarker"></el-amap-marker>
+        </el-amap>
+
+        <img
+          style="height:40px;width:160px"
+          @click="gotoHomeUI"
+          :src="require('../assets/images/logo.png')"
+        />
+        <span
+          v-if="!ctlHideMenus"
+          style="margin:5px 0 0 50px;color:#858585;width:200px;text-align:left;"
+          @click="dialogVisibleCity = true"
+        >
+          {{this.provinces}}
+          <i class="el-icon-caret-bottom"></i>
+        </span>
         <div class="menu">
           <div class="group" v-if="!ctlHideMenus">
-            <router-link to="/home" index="1">
+            <router-link style="margin:0 0 0 15px" to="/home" index="1">
               <span>首页</span>
             </router-link>
-            <router-link to="/joblist" index="2">
+            <router-link style="margin:0 0 0 60px" to="/joblist" index="2">
               <span>职位</span>
             </router-link>
-            <router-link v-if="this.defaultResumeId === 0" to="/gap" index="3">
+            <router-link
+              style="margin:0 0 0 60px"
+              v-if="this.defaultResumeId === 0"
+              to="/gap"
+              index="3"
+            >
               <span>简历</span>
             </router-link>
-            <router-link v-else to="/resume" index="3">
+            <router-link style="margin:0 0 0 60px" v-else to="/resume" index="3">
               <span>简历</span>
             </router-link>
-            <router-link style="margin:0 0 0 20px" to="/aboutus/:id" index="4">
+            <router-link style="margin:0 0 0 60px" to="/aboutus/:id" index="4">
               <span>联系我们</span>
             </router-link>
-            <router-link style="margin:0 0 0 40px" to="/appraise" index="5">
+            <router-link style="margin:0 0 0 60px" to="/appraise" index="5">
               <span>活动中心</span>
             </router-link>
           </div>
@@ -66,8 +154,7 @@
                   </div>
                 </div>
                 <div
-                  style="border: 1px solid rgba(244, 244, 244, 1);box-shadow: 0px 2px 10px 0px rgba(245, 245, 245, 1);height:60px;display: flex;
-  flex-direction: row;"
+                  style="border: 1px solid rgba(244, 244, 244, 1);box-shadow: 0px 2px 10px 0px rgba(245, 245, 245, 1);height:60px;display: flex;flex-direction: row;"
                 >
                   <el-button
                     style="margin:7px 0 0 17%;width:120px;font-size:12px"
@@ -83,9 +170,9 @@
               </el-dropdown-menu>
             </el-dropdown>
             <span
-              v-if="this.fullName.length>3"
+              v-if="this.fullName.length>2"
               style="line-height:65px;color:#373737;margin:0 20px 0 0;font-size:18px;width:60px;"
-            >{{this.fullName.substring(0,3)}}...</span>
+            >{{this.fullName.substring(0,2)}}...</span>
             <span
               v-else
               style="line-height:65px;color:#373737;margin:0 20px 0 0;font-size:18px;width:60px;"
@@ -135,24 +222,176 @@
 <script>
 import { mapState } from "vuex";
 import Cookies from "js-cookie";
+import citys from "../assets/city.json";
 export default {
   name: "customized-nav",
-  props: {
-    ctlHideMenus: {
-      type: Boolean,
-      default: false
-    }
-  },
   data() {
+    let self = this;
     return {
+      items: {
+        code: 310000,
+        tag: "上海市",
+        parent: 0,
+        level: 1,
+        children: [
+          {
+            code: 310101,
+            tag: "黄浦区",
+            parent: 310000,
+            level: 2
+          },
+          {
+            code: 310109,
+            tag: "虹口区",
+            parent: 310000,
+            level: 2
+          },
+          {
+            code: 310110,
+            tag: "杨浦区",
+            parent: 310000,
+            level: 2
+          },
+          {
+            code: 310104,
+            tag: "徐汇区",
+            parent: 310000,
+            level: 2
+          },
+          {
+            code: 310105,
+            tag: "长宁区",
+            parent: 310000,
+            level: 2
+          },
+          {
+            code: 310106,
+            tag: "静安区",
+            parent: 310000,
+            level: 2
+          },
+          {
+            code: 310107,
+            tag: "普陀区",
+            parent: 310000,
+            level: 2
+          },
+          {
+            code: 310116,
+            tag: "金山区",
+            parent: 310000,
+            level: 2
+          },
+          {
+            code: 310117,
+            tag: "松江区",
+            parent: 310000,
+            level: 2
+          },
+          {
+            code: 310118,
+            tag: "青浦区",
+            parent: 310000,
+            level: 2
+          },
+          {
+            code: 310112,
+            tag: "闵行区",
+            parent: 310000,
+            level: 2
+          },
+          {
+            code: 310113,
+            tag: "宝山区",
+            parent: 310000,
+            level: 2
+          },
+          {
+            code: 310114,
+            tag: "嘉定区",
+            parent: 310000,
+            level: 2
+          },
+          {
+            code: 310115,
+            tag: "浦东新区",
+            parent: 310000,
+            level: 2
+          },
+          {
+            code: 310120,
+            tag: "奉贤区",
+            parent: 310000,
+            level: 2
+          },
+          {
+            code: 310151,
+            tag: "崇明区",
+            parent: 310000,
+            level: 2
+          }
+        ]
+      },
+      citylist: [],
+      districtlist: [],
+      visible: false,
+      dialogVisibleCity: false,
       fullName: "",
       avatarUrl: "",
       chorus: false,
       defaultResumeId: "",
-      tok: this.$store.state.token,
       shown: true,
       token: "",
-      notificationlist: []
+      notificationlist: [],
+      scroll: "",
+
+      provinces: "",
+      cities: "",
+      nearbyInfo: [], // 周边信息---高德反馈（周边建筑信息）
+      addressInfo: "", // 城市信息---高德反馈（省市区、adcode）
+      center: [121.59996, 31.197646], // 高德地图中心点
+      zoom: 15, // 地图缩放
+      events: {
+        click: e => {
+          // 点击地图的时候，获取点击的经纬度，并将地图中心点移自此处
+          let m = e.lnglat;
+          self.addrInput = "";
+          self.center = [m.lng, m.lat];
+          self.GDmapGetInfoOfNearby(m.lng, m.lat, self); // 获取周边信息
+        }
+      },
+      plugin: [
+        {
+          pName: "Geolocation",
+          events: {
+            init(o) {
+              // o 是高德地图定位插件实例
+              o.getCurrentPosition((status, result) => {
+                console.log(result);
+                self.provinces = result.addressComponent.province;
+                if (result && result.position) {
+                  // 经纬度
+                  self.lng = result.position.lng;
+                  self.lat = result.position.lat;
+                  // 地址信息
+                  self.str = result.formattedAddress;
+                  self.center = [self.lng, self.lat];
+                  self.loaded = true;
+                  self.$nextTick();
+                  sessionStorage.setItem(
+                    "adcode",
+                    result.addressComponent.adcode
+                  );
+                  self.$store.state.adcode = result.addressComponent.adcode
+                  self.$store.state.cityName = result.addressComponent.province
+                  window.sessionStorage.setItem("adcode", result.addressComponent.adcode);
+                  window.sessionStorage.setItem("cityName", result.addressComponent.province);
+                }
+              });
+            }
+          }
+        }
+      ]
     };
   },
   computed: mapState({
@@ -160,7 +399,28 @@ export default {
       return state.hasLogin;
     }
   }),
+  mounted() {
+    window.addEventListener("scroll", this.handleScroll, true);
+  },
   methods: {
+    handleScroll(e) {
+      this.scroll = e.target.scrollTop;
+    },
+    //市级选择
+    checkCity(item) {
+      console.log(item);
+      this.cities = item.tag;
+    },
+    //省份选择
+    checkProvince(item, index) {
+      this.provinces = item.tag;
+      this.cities = item.children[0].tag;
+      this.districtlist = item.children;
+      window.sessionStorage.setItem("adcode", item.code);
+      window.sessionStorage.setItem("cityName", item.tag);
+      this.$store.state.adcode = item.code
+      this.$store.state.cityName = item.tag
+    },
     initList() {
       // this.value = window.sessionStorage.getItem('value')
       this.myInterval = window.setInterval(() => {
@@ -272,9 +532,8 @@ export default {
             } else {
               this.fullName = res.data.data.base.fullName;
             }
-            console.log(this.fullName.length)
+            console.log(this.fullName.length);
             this.$store.state.avatarUrl = res.data.data.base.avatarUrl;
-            
           } else {
           }
         })
@@ -287,33 +546,145 @@ export default {
   //     return this.$store.state.user;
   //   }
   // },
-  //监听执行
-  watch: {
-    "$store.state.avatarUrl": function(val) {},
-    "$store.state.value": function(val) {}
-  },
   created() {
+    this.citylist = citys.data;
+    this.districtlist = this.items.children;
+    this.provinces = this.items.tag;
+    this.cities = this.items.children[0].tag;
     this.token = Cookies.get("token");
-    console.log(this.token);
     if (this.token) {
       this.brief();
       this.notification();
     } else {
     }
-
     this.fullName = window.sessionStorage.getItem("username");
-    // if (this.notificationlist.length > 0) {
-    //   this.chorus = true;
-    // }
   }
 };
 </script>
 
 <style lang="stylus">
-nav {
+.dialogCity {
+  .title {
+    color: #02B9B8;
+    font-size: 17px;
+    text-align: left;
+    margin: 0 0 0 20px;
+  }
+
+  .el-dialog__header {
+    background: #02B9B8;
+    height: 22px;
+  }
+
+  .el-icon-close:before {
+    content: '\e6db';
+    color: #ffffff;
+  }
+
+  .el-dialog__body {
+    height: 240px;
+  }
+}
+
+.nav-body {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: auto;
+  width: 1440px;
+  min-width: 1024px;
+  height: 100%;
+
+  img {
+    height: 40px;
+    margin: 0 0 0 96px;
+    cursor: pointer;
+  }
+
+  .menu {
+    display: flex;
+    flex: 1;
+    height: 100%;
+    justify-content: flex-end;
+    align-items: center;
+
+    .group {
+      display: flex;
+      height: 100%;
+      flex: 1;
+      margin: 0 auto;
+      font-family: 'PingFangSC-Regular';
+
+      a {
+        color: #838383;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &.router-link-active {
+          color: #02B9B8;
+          font-family: PingFangSC-Medium;
+          border-bottom: 2px solid #02B9B8;
+
+          span {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+        }
+      }
+    }
+
+    .user-operations {
+      cursor: pointer;
+      display: flex;
+      flex-direction: row;
+      margin: 0 96px 0 0;
+    }
+
+    .personals {
+      background: red;
+    }
+
+    .badge {
+      border: 1px solid red;
+    }
+
+    img {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      margin: 17px 0 0 0;
+    }
+
+    .btn-set {
+      margin: 0 65px 0 0;
+
+      button {
+        cursor: pointer;
+        font-size: 18px;
+        background: none;
+        border: none;
+        padding: 0 38px;
+        line-height: 20px;
+        border-right: solid 2px lightgrey;
+        height: 18px;
+        color: #838383;
+
+        &:last-child {
+          border: none;
+        }
+      }
+    }
+  }
+}
+
+.navFl {
   z-index: 200;
   font-family: PingFangSC-Regular;
-  background-color: #ffffff;
+  background: #FFFFFF;
+  opacity: 0.8;
   letter-spacing: 1.1;
   box-shadow: 0px 1px 9px #ccc;
   width: 100%;
@@ -322,104 +693,27 @@ nav {
   font-size: 18px;
   display: flex;
   flex-direction: row;
-  height: 96px;
+  height: 76px;
   align-content: center;
   align-items: center;
+}
 
-  .nav-body {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin: auto;
-    width: 1440px;
-    min-width: 1024px;
-    height: 100%;
-
-    img {
-      height: 40px;
-      margin: 0 0 0 96px;
-      cursor: pointer;
-    }
-
-    .menu {
-      display: flex;
-      flex: 1;
-      height: 100%;
-      justify-content: flex-end;
-      align-items: center;
-
-      .group {
-        display: flex;
-        height: 100%;
-        flex: 1;
-        margin: 0 0 0 124px;
-        font-family: 'PingFangSC-Regular';
-
-        a {
-          width: 115px;
-          color: #838383;
-          text-decoration: none;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-
-          &.router-link-active {
-            color: #327cf3;
-            font-family: 'PingFangSC-Medium';
-            margin: 0 0 0 0;
-
-            span {
-              display: flex;
-              justify-content: center;
-              align-items: center;
-            }
-          }
-        }
-      }
-
-      .user-operations {
-        cursor: pointer;
-        display: flex;
-        flex-direction: row;
-        margin: 0 96px 0 0;
-      }
-
-      .personals {
-        background: red;
-      }
-
-      .badge {
-        border: 1px solid red;
-      }
-
-      img {
-        width: 26px;
-        height: 26px;
-        border-radius: 50%;
-        margin: 17px 0 0 0;
-      }
-
-      .btn-set {
-        margin: 0 65px 0 0;
-
-        button {
-          cursor: pointer;
-          font-size: 18px;
-          background: none;
-          border: none;
-          padding: 0 38px;
-          line-height: 20px;
-          border-right: solid 2px lightgrey;
-          height: 18px;
-          color: #838383;
-
-          &:last-child {
-            border: none;
-          }
-        }
-      }
-    }
-  }
+.navFls {
+  z-index: 200;
+  font-family: PingFangSC-Regular;
+  background: #FFFFFF;
+  opacity: 0.8;
+  letter-spacing: 1.1;
+  box-shadow: 0px 1px 9px #ccc;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  font-size: 18px;
+  display: flex;
+  flex-direction: row;
+  height: 76px;
+  align-content: center;
+  align-items: center;
 }
 </style>
 <style lang="stylus">

@@ -161,8 +161,8 @@ export default {
 
 .cancel
   .el-button.is-plain:hover
-    color #327cf3
-    border-color #327cf3
+    color #02B9B8
+    border-color #02B9B8
 
 .el-button {
   width: 94px;

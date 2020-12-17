@@ -49,7 +49,7 @@ export default {
       justify-content center
       flex 1
       position relative
-      background #327cf3
+      background #02B9B8
       .form
         background-color white
         border-radius 5px

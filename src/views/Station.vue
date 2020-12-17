@@ -26,7 +26,7 @@
           <span v-if="almsg">
             <el-button
               id="deliver"
-              style="width:140px;height:40px;margin:0 70px 0 0;background:#327cf3;color:#fff"
+              style="width:140px;height:40px;margin:0 70px 0 0;background:#02B9B8;color:#fff"
               @click="showdeliver"
             >投递简历</el-button>
           </span>
@@ -42,7 +42,7 @@
           <span v-if="isshowCollect">
             <el-button
               class="collect"
-              style="width:140px;height:40px;background:#327cf3;color:#fff"
+              style="width:140px;height:40px;background:#02B9B8;color:#fff"
               @click="iscollect()"
             >收藏</el-button>
           </span>
@@ -122,7 +122,7 @@
           <div class="station-foot-foot-two">
             <span
               style="font-size:18px"
-            >{{this.positionIdListaddress.province+' ' +' '+this.positionIdListaddress.city}} {{this.positionIdListworkAddress.detail}}</span>
+            >{{this.positionIdListworkAddress.province+' ' +' '+this.positionIdListworkAddress.city}} {{this.positionIdListworkAddress.detail}}</span>
             <!-- <span>查看地图</span> -->
           </div>
           <!-- <el-amap
@@ -257,7 +257,7 @@
                     <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="textarea"></el-input>
                     <button
                       @click="addecaluation(list)"
-                      style="width:81px;height:33px;background:#327cf3;color:#fff;font-size:20px;border:1px solid #327cf3;border-radius:5px;margin:15px 0 15px 650px;"
+                      style="width:81px;height:33px;background:#02B9B8;color:#fff;font-size:20px;border:1px solid #02B9B8;border-radius:5px;margin:15px 0 15px 650px;"
                     >发表</button>
                   </div>
                  
@@ -289,7 +289,7 @@
           <div class="station-foot-aside-nav-img">
             <img
               @click="next(companyIdList.id)"
-              style="width 112px;height:112px;cursor:pointer;border-radius:5px"
+              style="width 112px;height:112px;cursor:pointer;border-radius:5px;"
               :src="url"
             />
           </div>
@@ -911,7 +911,7 @@ export default {
 
     .station-nav-name span:nth-child(2) {
       font-size: 24px;
-      color: #327cf3;
+      color: #02B9B8;
       font-weight: bold;
       line-height: 45px;
       margin: 60px 0 0 60px;
@@ -939,8 +939,8 @@ export default {
 
       .content-collect {
         .el-button.is-plain:hover {
-          color: #327cf3;
-          border-color: #327cf3;
+          color: #02B9B8;
+          border-color: #02B9B8;
         }
       }
     }
@@ -974,7 +974,7 @@ export default {
 
     .station-foot-content p:nth-child(1) {
       font-size: 18px;
-      color: #327cf3;
+      color: #02B9B8;
       margin: 40px 0 0 96px;
     }
 
@@ -988,7 +988,7 @@ export default {
 
     .station-foot-content p:nth-child(3) {
       font-size: 18px;
-      color: #327cf3;
+      color: #02B9B8;
       margin: 40px 0 0 96px;
     }
 
@@ -1158,7 +1158,7 @@ export default {
 
         div:nth-child(4) {
           font-family: PingFangSC-Medium;
-          color: #327CF3;
+          color: #02B9B8;
           font-size: 26px;
           line-height: 35px;
         }
@@ -1262,7 +1262,7 @@ export default {
           color: #272822;
           background-color: #fff;
           border-color: #dee1e6;
-          box-shadow: -1px 0 0 0 #409eff;
+          box-shadow: -1px 0 0 0 #02B9B8;
         }
       }
 
@@ -1328,7 +1328,7 @@ export default {
 
           .nav {
             font-family: PingFangSC-Regular;
-            color: #327CF3;
+            color: #02B9B8;
             font-size: 16px;
             margin: 16px 10px 0 16px;
           }
@@ -1353,7 +1353,7 @@ export default {
       .station-foot-foot-one {
         margin: 40px 0 0 96px;
         font-size: 18px;
-        color: #327cf3;
+        color: #02B9B8;
       }
 
       .station-foot-foot-two {

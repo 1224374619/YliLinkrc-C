@@ -83,7 +83,7 @@ export default {
   },
   computed: {
     uploadUrl() {
-      return '/api/v2/file-service/files/upload';
+      return '/api/v3/file-service/files/upload';
     }
   },
   methods: {
@@ -146,7 +146,7 @@ export default {
   margin-right: 30px;
 }
 .avatar-uploader .el-upload:hover {
-  border-color: #409eff;
+  border-color: #02B9B8;
 }
 .avatar-uploader-icon {
   font-size: 28px;

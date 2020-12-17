@@ -1,6 +1,6 @@
 <template>
 <div>
-  <div class="inforchanges" style="background-color:#327cf3;">
+  <div class="inforchanges" style="background-color:#02B9B8;">
     <customized-nav class="nav" />
     <div class="cards">
       <div class="tab">
@@ -41,7 +41,7 @@
                 </el-form-item>
                 <el-form-item>
                   <el-button
-                    style="width:270px;height:43px;margin:30px 50px 0 -60px;background: #327cf3;border-color:#327cf3"
+                    style="width:270px;height:43px;margin:30px 50px 0 -60px;background: #02B9B8;border-color:#02B9B8"
                     @click="submitForm('ruleForm')"
                     type="primary"
                   >重置密码</el-button>
@@ -84,7 +84,7 @@
                 <el-form-item>
                   <el-button
                     @click="phoneSubmitForm('newRuleForm')"
-                    style="width:270px;height:43px;margin:30px 50px 0 -55px;background: #327cf3;border-color:#327cf3"
+                    style="width:270px;height:43px;margin:30px 50px 0 -55px;background: #02B9B8;border-color:#02B9B8"
                     type="primary"
                   >换绑手机</el-button>
                 </el-form-item>
@@ -277,13 +277,13 @@ export default {
         .el-form-item__error
           left -15px
         .el-tabs__item.is-active 
-          color #327cf3  
+          color #02B9B8  
         .el-form-item__label
           margin 0 0 0 -20px
         .el-input__inner
           margin 0 0 0 -80px  
         .el-tabs__active-bar  
-          background-color #327cf3
+          background-color #02B9B8
         .el-tabs__content 
         .el-tab-pane
           margin 20px 0 0 0 

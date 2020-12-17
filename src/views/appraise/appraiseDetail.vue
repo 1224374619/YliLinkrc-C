@@ -493,7 +493,7 @@ export default {
           height: 29px;
           border: 1px solid rgba(50, 124, 243, 0.29);
           font-family: PingFangSC-Medium;
-          color: #327CF3;
+          color: #02B9B8;
           font-size: 18px;
           border-radius: 15px;
           background: #ffffff;
@@ -570,7 +570,7 @@ export default {
         border: 0.75px solid rgba(50, 124, 243, 1);
         background: #ffffff;
         font-family: PingFangSC-Medium;
-        color: #327CF3;
+        color: #02B9B8;
         font-size: 18px;
         border-radius: 5px;
         margin: 10px 0 0 160px;

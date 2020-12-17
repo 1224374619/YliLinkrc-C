@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <!-- <customized-nav class="nav"/> -->
+    
     <router-view/>
     <!-- <customized-footer :showSimple="true" /> -->
   </div>
@@ -36,5 +37,6 @@ html, body {
   color: #2c3e50;
   overflow-x: hidden;
   background: #ffffff;
+  overflow-y: scroll
 }
 </style>

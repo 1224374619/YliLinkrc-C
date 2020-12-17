@@ -8,9 +8,15 @@ import router from './router';
 import store from './store';
 import scroll from 'vue-seamless-scroll'
 import Moment from 'moment'
-import {Message} from 'element-ui'
-import { Notification } from 'element-ui';
-import {CodeToTag} from './cookie';
+import {
+  Message
+} from 'element-ui'
+import {
+  Notification
+} from 'element-ui';
+import {
+  CodeToTag
+} from './cookie';
 // import cookie from 'vue-cookie'; 
 import Cookies from 'js-cookie'
 
@@ -28,8 +34,8 @@ Vue.use(VueAMap);
 Vue.use(Cookies);
 
 Vue.use(BaiduMap, {
-      /* Visit http://lbsyun.baidu.com/apiconsole/key for details about app key. */
-      ak: 'jv12vuZqCBG30jV4FBDdKrSxcmG4lG0h'
+  /* Visit http://lbsyun.baidu.com/apiconsole/key for details about app key. */
+  ak: 'jv12vuZqCBG30jV4FBDdKrSxcmG4lG0h'
 })
 VueAMap.initAMapApiLoader({
   key: '594f89b2e0fb82adadc7113372876925',
@@ -50,29 +56,28 @@ Vue.prototype.$CodeToTag = {
   CodeToTag
 }
 // 定义全局时间戳过滤器
-Vue.filter('formatDate', function(value) {
-  var timestamp = (new Date()).getTime()-24*60*60*1000
-  var timestampOne = (new Date()).getTime()-48*60*60*1000
-  if(value > timestamp) {
-    return Moment(value).format('今天'+'HH:mm');
-  }
-  else if(value > timestampOne && value < timestamp) {
-    return Moment(value).format('昨天'+'HH:mm');
-  }
-  else{
+Vue.filter('formatDate', function (value) {
+  var timestamp = (new Date()).getTime() - 24 * 60 * 60 * 1000
+  var timestampOne = (new Date()).getTime() - 48 * 60 * 60 * 1000
+  if (value > timestamp) {
+    return Moment(value).format('今天' + 'HH:mm');
+  } else if (value > timestampOne && value < timestamp) {
+    return Moment(value).format('昨天' + 'HH:mm');
+  } else {
     return Moment(value).format('YYYY-MM-DD');
   }
 });
-Vue.filter('formatDateOne', function(value) {
+
+Vue.filter('formatDateOne', function (value) {
   return Moment(value).format('YYYY-MM-DD')
 })
-Vue.filter('formatDateTwo', function(value) {
+Vue.filter('formatDateTwo', function (value) {
   return Moment(value).format('YYYY-MM-DD HH:mm')
 })
-Vue.filter('formatDateThree', function(value) {
+Vue.filter('formatDateThree', function (value) {
   return Moment(value).format('YYYY-MM-DD HH:mm')
 })
-Vue.filter('formatDateFourth', function(value) {
+Vue.filter('formatDateFourth', function (value) {
   return Moment(value).format('YYYY.MM.DD')
 })
 Vue.config.productionTip = false;

@@ -152,13 +152,13 @@ export default {
         display flex
         flex-direction row
       .el-tabs__item.is-active 
-        color #327cf3
+        color #02B9B8
       .el-tabs__item
         font-size 22px
         font-weight 800
         color #373737
       .el-tabs__active-bar  
-        background-color #327cf3
+        background-color #02B9B8
       .el-tabs__content 
       .el-tab-pane
         margin 20px 0 0 0

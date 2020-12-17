@@ -377,7 +377,7 @@ export default {
   },
   computed: {
     uploadUrl() {
-      return '/api/v2/file-service/files/upload';
+      return '/api/v3/file-service/files/upload';
     }
   },
   watch: {
@@ -455,8 +455,8 @@ export default {
 }
 
 .el-button--primary {
-  background: #327cf3;
-  border-color: #327cf3;
+  background: #02B9B8;
+  border-color: #02B9B8;
 }
 
 .el-button {

@@ -577,12 +577,12 @@ export default {
     }
 
     .el-tabs__active-bar {
-      background-color: #327cf3;
+      background-color: #02B9B8;
       margin: 20px 0 0 0;
     }
 
     .el-tabs__item.is-active {
-      color: #327cf3;
+      color: #02B9B8;
     }
 
     .el-tabs__nav-scroll {
@@ -639,7 +639,7 @@ export default {
               border: 0.75px solid rgba(50, 124, 243, 1);
               background: #ffffff;
               font-family: PingFangSC-Medium;
-              color: #327CF3;
+              color: #02B9B8;
               font-size: 18px;
               border-radius: 5px;
               margin: 10px 0 0 230px;

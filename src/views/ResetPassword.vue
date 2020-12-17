@@ -127,7 +127,7 @@ export default {
     height 100%
     display flex
     flex-direction column
-    background #327cf3
+    background #02B9B8
     .nav
       position relative
     .body

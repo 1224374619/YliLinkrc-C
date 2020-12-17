@@ -204,7 +204,7 @@ export default {
   },
   methods: {
     close() {
-      this.$router.go(-1)
+      window.close();
     },
   }
 }
@@ -222,11 +222,11 @@ export default {
       align-items center
       justify-content center
       flex 1
-      background-color #327cf3
+      background-color #02B9B8
       position relative
       .form
         padding 40px 40px 40px 40px
-        width 680px
+        width 1200px
         height 680px
         overflow-y scroll
         overflow-x  hidden
@@ -245,7 +245,14 @@ export default {
           p
             text-indent 2em
             text-align left
-            font-size 12px
+            font-size 16px
+            font-family: PingFangSC-Regular;
+            color: #373737 ;
+        .btn {
+          width 202px;
+          height 42px
+          border-radius 21px
+        }    
         
         
 </style>

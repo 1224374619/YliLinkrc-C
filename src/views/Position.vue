@@ -193,11 +193,11 @@
                     style="color:#8A8A8A;font-size:18px;margin:0 0 0 0;width:300px;text-align:left;"
                   >{{list.workAddress.city}} | {{list.workAgeMin}}-{{list.workAgeMax}}年 | {{list.degreeMin}}</div>
                   <div
-                    style="margin:0 0 0 180px;width:100px;text-align:left;color:#327cf3;font-size:20px"
+                    style="margin:0 0 0 180px;width:100px;text-align:left;color:#02B9B8;font-size:20px"
                     v-if="list.salaryMin === 35"
                   >{{list.salaryMin}}k以上</div>
                   <div
-                    style="margin:0 0 0 180px;width:100px;text-align:left;color:#327cf3;font-size:20px"
+                    style="margin:0 0 0 180px;width:100px;text-align:left;color:#02B9B8;font-size:20px"
                     v-else
                   >{{list.salaryMin}}-{{list.salaryMax}}k</div>
                   <div
@@ -744,7 +744,7 @@ export default {
       margin: 0 0 0 96px;
 
       .el-tabs__item.is-active {
-        color: #327cf3;
+        color: #02B9B8;
       }
 
       .el-tabs__item {
@@ -760,7 +760,7 @@ export default {
       }
 
       .el-tabs__active-bar {
-        background-color: #327cf3;
+        background-color: #02B9B8;
       }
 
       .el-tabs__content, .el-tab-pane {
@@ -805,7 +805,7 @@ export default {
       .company {
         text-align: left;
         font-size: 18px;
-        color: #327cf3;
+        color: #02B9B8;
         margin: 5px 0 0 0;
         font-weight: bold;
       }
@@ -826,7 +826,7 @@ export default {
           .company-address {
             text-align: left;
             font-size: 18px;
-            color: #327cf3;
+            color: #02B9B8;
             font-weight: bold;
           }
         }
@@ -894,7 +894,7 @@ export default {
 
           div:nth-child(4) {
             font-family: PingFangSC-Medium;
-            color: #327CF3;
+            color: #02B9B8;
             font-size: 26px;
             line-height: 35px;
           }
@@ -942,8 +942,8 @@ export default {
 
           .el-radio-button__orig-radio:checked+.el-radio-button__inner {
             color: #fff;
-            background-color: #409eff;
-            border-color: #409eff;
+            background-color: #02B9B8;
+            border-color: #02B9B8;
             box-shadow: -1px 0 0 0 #8cc5ff;
           }
         }
@@ -985,9 +985,9 @@ export default {
 
           .el-radio-button__orig-radio:checked+.el-radio-button__inner {
             color: #fff;
-            background-color: #409eff;
-            border-color: #409eff;
-            box-shadow: -1px 0 0 0 #409eff;
+            background-color: #02B9B8;
+            border-color: #02B9B8;
+            box-shadow: -1px 0 0 0 #02B9B8;
           }
         }
 
@@ -1069,7 +1069,7 @@ export default {
             color: #272822;
             background-color: #fff;
             border-color: #dee1e6;
-            box-shadow: -1px 0 0 0 #409eff;
+            box-shadow: -1px 0 0 0 #02B9B8;
           }
         }
 
@@ -1145,7 +1145,7 @@ export default {
 
             .nav {
               font-family: PingFangSC-Regular;
-              color: #327CF3;
+              color: #02B9B8;
               font-size: 16px;
               margin: 16px 0 0 16px;
             }

@@ -1270,7 +1270,7 @@
             </div>
             <div style="margin:50px 0 0 170px;height:12px;font-size:15px;cursor:pointer;;">
               <span
-                style="font-size:16px;color:#327cf3;margin:0 0 0 0;display:flex;flex-direction:row;width:100px;"
+                style="font-size:16px;color:#02B9B8;margin:0 0 0 0;display:flex;flex-direction:row;width:100px;"
                 @click="showjpersonalList()"
               >
                 <i class="el-icon-edit"></i>编辑
@@ -1291,7 +1291,7 @@
         <!-- 求职意向 -->
         <div ref="jobintension" class="main-content" style="margin:0 0 -15px 0">
           <div class="main-content-first">
-            <span style="margin:18px 0 0 0;float:left;width:3px;height:15px;background:#327cf3;"></span>
+            <span style="margin:18px 0 0 0;float:left;width:3px;height:15px;background:#02B9B8;"></span>
             <span>求职意向</span>
           </div>
           <div class="main-content-second" v-if="joint" @click="jobintension">
@@ -1308,7 +1308,7 @@
           <li class="ul-a">
             <span class="actions-span" style="margin:8px 20px 0 0;cursor:pointer">
               <span
-                style="font-size:16px;color:#327cf3;margin:0 0 0 0;display:flex;flex-direction:row;"
+                style="font-size:16px;color:#02B9B8;margin:0 0 0 0;display:flex;flex-direction:row;"
                 @click="showjobintensionList()"
               >
                 <i class="el-icon-edit"></i>编辑
@@ -1335,7 +1335,7 @@
         <!-- 教育经历 -->
         <div ref="educational" class="main-content" style="margin:0 0 5px 0">
           <div class="main-content-first">
-            <span style="margin:18px 0 0 0;float:left;width:3px;height:15px;background:#327cf3;"></span>
+            <span style="margin:18px 0 0 0;float:left;width:3px;height:15px;background:#02B9B8;"></span>
             <span>教育经历</span>
           </div>
           <div class="main-content-second" @click="education">
@@ -1355,13 +1355,13 @@
               style="margin:10px 16px 0 0;cursor:pointer;display:flex;flex-direction:row"
             >
               <span
-                style="font-size:16px;color:#327cf3;margin:0 0 0 0;display:flex;flex-direction:row;"
+                style="font-size:16px;color:#02B9B8;margin:0 0 0 0;display:flex;flex-direction:row;"
                 @click="showedudialog(list)"
               >
                 <i class="el-icon-delete"></i>删除
               </span>
               <span
-                style="font-size:16px;color:#327cf3;margin:0 0 0 24px;display:flex;flex-direction:row;"
+                style="font-size:16px;color:#02B9B8;margin:0 0 0 24px;display:flex;flex-direction:row;"
                 @click="showeducationalList(list,index)"
               >
                 <i class="el-icon-edit"></i>编辑
@@ -1382,7 +1382,7 @@
         <!-- 工作经历 -->
         <div ref="work" class="main-content">
           <div class="main-content-first">
-            <span style="margin:18px 0 0 0;float:left;width:3px;height:15px;background:#327cf3;"></span>
+            <span style="margin:18px 0 0 0;float:left;width:3px;height:15px;background:#02B9B8;"></span>
             <span>工作经历</span>
           </div>
           <div class="main-content-second" @click="work">
@@ -1402,13 +1402,13 @@
               style="margin:8px 16px 0 0;cursor:pointer;display:flex;flex-direction:row"
             >
               <span
-                style="font-size:16px;color:#327cf3;margin:0 0 0 0;display:flex;flex-direction:row;"
+                style="font-size:16px;color:#02B9B8;margin:0 0 0 0;display:flex;flex-direction:row;"
                 @click="showworkdialog(list)"
               >
                 <i class="el-icon-delete"></i>删除
               </span>
               <span
-                style="font-size:16px;color:#327cf3;margin:0 0 0 24px;display:flex;flex-direction:row;"
+                style="font-size:16px;color:#02B9B8;margin:0 0 0 24px;display:flex;flex-direction:row;"
                 @click="showworkperienceList(list)"
               >
                 <i class="el-icon-edit"></i>编辑
@@ -1426,7 +1426,7 @@
         <!-- 项目经历 -->
         <div ref="progect" class="main-content">
           <div class="main-content-first">
-            <span style="margin:18px 0 0 0;float:left;width:3px;height:15px;background:#327cf3;"></span>
+            <span style="margin:18px 0 0 0;float:left;width:3px;height:15px;background:#02B9B8;"></span>
             <span>项目经历</span>
           </div>
           <div class="main-content-second" @click="project">
@@ -1446,13 +1446,13 @@
               style="margin:8px 16px 0 0;cursor:pointer;display:flex;flex-direction:row;"
             >
               <span
-                style="font-size:16px;color:#327cf3;margin:0 0 0 0;display:flex;flex-direction:row;"
+                style="font-size:16px;color:#02B9B8;margin:0 0 0 0;display:flex;flex-direction:row;"
                 @click="showprojectdialog(list)"
               >
                 <i class="el-icon-delete"></i>删除
               </span>
               <span
-                style="font-size:16px;color:#327cf3;margin:0 0 0 24px;display:flex;flex-direction:row;"
+                style="font-size:16px;color:#02B9B8;margin:0 0 0 24px;display:flex;flex-direction:row;"
                 @click="showprogectperienceList(list)"
               >
                 <i class="el-icon-edit"></i>编辑
@@ -1473,7 +1473,7 @@
         <!-- 培训经历 -->
         <div ref="training" class="main-content">
           <div class="main-content-first">
-            <span style="margin:18px 0 0 0;float:left;width:3px;height:15px;background:#327cf3;"></span>
+            <span style="margin:18px 0 0 0;float:left;width:3px;height:15px;background:#02B9B8;"></span>
             <span>培训经历</span>
           </div>
           <div class="main-content-second" @click="training">
@@ -1493,13 +1493,13 @@
               style="margin:10px 16px 0 0;cursor:pointer;display:flex;flex-direction:row;"
             >
               <span
-                style="font-size:16px;color:#327cf3;margin:0 0 0 0;display:flex;flex-direction:row;"
+                style="font-size:16px;color:#02B9B8;margin:0 0 0 0;display:flex;flex-direction:row;"
                 @click="showtraindialog(list)"
               >
                 <i class="el-icon-delete"></i>删除
               </span>
               <span
-                style="font-size:16px;color:#327cf3;margin:0 0 0 24px;display:flex;flex-direction:row;"
+                style="font-size:16px;color:#02B9B8;margin:0 0 0 24px;display:flex;flex-direction:row;"
                 @click="showtrainList(list)"
               >
                 <i class="el-icon-edit"></i>编辑
@@ -1517,7 +1517,7 @@
         <!-- 语言能力 -->
         <div ref="language" class="main-content">
           <div class="main-content-first">
-            <span style="margin:18px 0 0 0;float:left;width:3px;height:15px;background:#327cf3;"></span>
+            <span style="margin:18px 0 0 0;float:left;width:3px;height:15px;background:#02B9B8;"></span>
             <span>语言能力</span>
           </div>
           <div class="main-content-second" @click="language">
@@ -1537,13 +1537,13 @@
               style="margin:10px 16px 0 0;cursor:pointer;display:flex;flex-direction:row;"
             >
               <span
-                style="font-size:16px;color:#327cf3;margin:0 0 0 0;display:flex;flex-direction:row;"
+                style="font-size:16px;color:#02B9B8;margin:0 0 0 0;display:flex;flex-direction:row;"
                 @click="showlanguagedialog(list)"
               >
                 <i class="el-icon-delete"></i>删除
               </span>
               <span
-                style="font-size:16px;color:#327cf3;margin:0 0 0 24px;display:flex;flex-direction:row;"
+                style="font-size:16px;color:#02B9B8;margin:0 0 0 24px;display:flex;flex-direction:row;"
                 @click="showlanguagesList(list)"
               >
                 <i class="el-icon-edit"></i>编辑
@@ -1564,7 +1564,7 @@
         <!-- 职称等级 -->
         <div ref="professional" class="main-content">
           <div class="main-content-first">
-            <span style="margin:18px 0 0 0;float:left;width:3px;height:15px;background:#327cf3;"></span>
+            <span style="margin:18px 0 0 0;float:left;width:3px;height:15px;background:#02B9B8;"></span>
             <span>职称等级</span>
           </div>
           <div class="main-content-second" @click="professional()">
@@ -1584,13 +1584,13 @@
               style="margin:10px 16px 0 0;cursor:pointer;display:flex;flex-direction:row;"
             >
               <span
-                style="font-size:16px;color:#327cf3;margin:0 0 0 0;display:flex;flex-direction:row;"
+                style="font-size:16px;color:#02B9B8;margin:0 0 0 0;display:flex;flex-direction:row;"
                 @click="showprofessionaldialog(list)"
               >
                 <i class="el-icon-delete"></i>删除
               </span>
               <span
-                style="font-size:16px;color:#327cf3;margin:0 0 0 24px;display:flex;flex-direction:row;"
+                style="font-size:16px;color:#02B9B8;margin:0 0 0 24px;display:flex;flex-direction:row;"
                 @click="showprofessionalList(list)"
               >
                 <i class="el-icon-edit"></i>编辑
@@ -1611,7 +1611,7 @@
         <!-- 专业技术 -->
         <div ref="personal_skill" class="main-content">
           <div class="main-content-first">
-            <span style="margin:18px 0 0 0;float:left;width:3px;height:15px;background:#327cf3;"></span>
+            <span style="margin:18px 0 0 0;float:left;width:3px;height:15px;background:#02B9B8;"></span>
             <span>专业技能</span>
           </div>
           <div class="main-content-second" @click="personal_skill()">
@@ -1631,13 +1631,13 @@
               style="margin:10px 16px 0 0;cursor:pointer;display:flex;flex-direction:row;"
             >
               <span
-                style="font-size:16px;color:#327cf3;margin:0 0 0 0;display:flex;flex-direction:row;"
+                style="font-size:16px;color:#02B9B8;margin:0 0 0 0;display:flex;flex-direction:row;"
                 @click="showskilldialog(list)"
               >
                 <i class="el-icon-delete"></i>删除
               </span>
               <span
-                style="font-size:16px;color:#327cf3;margin:0 0 0 24px;display:flex;flex-direction:row;"
+                style="font-size:16px;color:#02B9B8;margin:0 0 0 24px;display:flex;flex-direction:row;"
                 @click="editskill(list)"
               >
                 <i class="el-icon-edit"></i>编辑
@@ -1654,7 +1654,7 @@
         <div class="content-line"></div>
         <div ref="awards" class="main-content">
           <div class="main-content-first">
-            <span style="margin:18px 0 0 0;float:left;width:3px;height:15px;background:#327cf3;"></span>
+            <span style="margin:18px 0 0 0;float:left;width:3px;height:15px;background:#02B9B8;"></span>
             <span>荣誉奖项</span>
           </div>
           <div class="main-content-second" @click="awards">
@@ -1674,13 +1674,13 @@
               style="margin:10px 16px 0 0;cursor:pointer;display:flex;flex-direction:row;"
             >
               <span
-                style="font-size:16px;color:#327cf3;margin:0 0 0 0;display:flex;flex-direction:row;"
+                style="font-size:16px;color:#02B9B8;margin:0 0 0 0;display:flex;flex-direction:row;"
                 @click="showawardsdialog(list)"
               >
                 <i class="el-icon-delete"></i>删除
               </span>
               <span
-                style="font-size:16px;color:#327cf3;margin:0 0 0 24px;display:flex;flex-direction:row;"
+                style="font-size:16px;color:#02B9B8;margin:0 0 0 24px;display:flex;flex-direction:row;"
                 @click="showawardList(list)"
               >
                 <i class="el-icon-edit"></i>编辑
@@ -1697,7 +1697,7 @@
         <div class="content-line"></div>
         <div ref="self-appraisal" class="main-content">
           <div class="main-content-first">
-            <span style="margin:18px 0 0 0;float:left;width:3px;height:15px;background:#327cf3;"></span>
+            <span style="margin:18px 0 0 0;float:left;width:3px;height:15px;background:#02B9B8;"></span>
             <span>自我评价</span>
           </div>
           <div class="main-content-second" v-if="selfjoint" @click="selfappraisal">
@@ -1717,7 +1717,7 @@
               style="margin:10px 16px 0 0;cursor:pointer;display:flex;flex-direction:row;"
             >
               <span
-                style="font-size:16px;color:#327cf3;margin:0 0 0 24px;display:flex;flex-direction:row;"
+                style="font-size:16px;color:#02B9B8;margin:0 0 0 24px;display:flex;flex-direction:row;"
                 @click="showselfappraisalList(list)"
               >
                 <i class="el-icon-edit"></i>编辑
@@ -1746,7 +1746,7 @@
                   >
                     <div class="aside-foot-first">附件简历（Beta）</div>
                     <el-button
-                      style="font-family: PingFangSC-Regular;color: #327CF3;font-size:12px;width:25px"
+                      style="font-family: PingFangSC-Regular;color: #02B9B8;font-size:12px;width:25px"
                       type="text"
                       @click="addfile"
                     >添加</el-button>
@@ -3750,11 +3750,11 @@ export default {
   computed: {
     uploadUrl() {
       // const {VUE_APP_SECRET,VUE_APP_DEV_MODE} = process.env
-      return "/api/v2/file-service/files/upload";
+      return "/api/v3/file-service/files/upload";
     },
     uploadUrlOne() {
       // const {VUE_APP_SECRET,VUE_APP_DEV_MODE} = process.env
-      return "/api/v2/file-service/files/upload";
+      return "/api/v3/file-service/files/upload";
     }
   },
   filters: {
@@ -3907,8 +3907,8 @@ export default {
       }
 
       .el-button.is-plain:hover {
-        color: #327cf3;
-        border-color: #327cf3;
+        color: #02B9B8;
+        border-color: #02B9B8;
       }
     }
 
@@ -3928,7 +3928,7 @@ export default {
         margin: 0 0 0 10px;
         font-size: 16px;
         font-family: PingFangSC-Regular;
-        color: #327cf3;
+        color: #02B9B8;
       }
     }
 
@@ -4015,7 +4015,7 @@ export default {
 
       .main-content-second span {
         font-family: PingFangSC-Regular;
-        color: #327cf3;
+        color: #02B9B8;
         font-size: 14px;
         margin: 0 0 0 5px;
       }
@@ -4107,7 +4107,7 @@ export default {
           }
 
           .tabulation-language:hover {
-            color: #327cf3;
+            color: #02B9B8;
           }
 
           .tabulation-language:active {
@@ -4163,12 +4163,12 @@ export default {
 </style>
 <style lang="stylus">
 .el-radio__input.is-checked .el-radio__inner {
-  border-color: #327cf3;
-  background: #327cf3;
+  border-color: #02B9B8;
+  background: #02B9B8;
 }
 
 .el-radio.is-bordered.is-checked {
-  border-color: #327cf3;
+  border-color: #02B9B8;
 }
 
 .el-radio__input.is-checked+.el-radio__label {
@@ -4210,11 +4210,11 @@ export default {
 }
 
 .el-date-table td.today span {
-  color: #327cf3;
+  color: #02B9B8;
 }
 
 .el-date-table td.current:not(.disabled) span {
-  background-color: #327cf3;
+  background-color: #02B9B8;
 }
 
 .el-icon-arrow-up:before {
@@ -4245,8 +4245,8 @@ export default {
 
 .dialog-footer {
   .el-button.is-plain:hover {
-    color: #327cf3;
-    border-color: #327cf3;
+    color: #02B9B8;
+    border-color: #02B9B8;
   }
 }
 
@@ -4256,8 +4256,8 @@ export default {
   }
 
   .el-button.is-plain:hover {
-    color: #327cf3;
-    border-color: #327cf3;
+    color: #02B9B8;
+    border-color: #02B9B8;
   }
 }
 
@@ -4273,7 +4273,7 @@ export default {
 }
 
 .el-progress-bar__inner {
-  background-color: #327cf3;
+  background-color: #02B9B8;
 }
 
 .el-dialog {
@@ -4289,11 +4289,11 @@ export default {
 }
 
 .el-button--primary:hover {
-  background: #327cf3;
+  background: #02B9B8;
 }
 
 .el-button.is-plain {
-  color: #327cf3;
+  color: #02B9B8;
   background: white;
 }
 
@@ -4307,7 +4307,7 @@ export default {
 }
 
 .avatar-upload .el-upload:hover {
-  border-color: #409EFF;
+  border-color: #02B9B8;
 }
 
 .avatar-upload-icon {
@@ -4326,13 +4326,13 @@ export default {
 }
 
 .el-icon-edit {
-  color: #327cf3;
+  color: #02B9B8;
   font-size: 16px;
   margin: 3px 5px 0 0;
 }
 
 .el-icon-delete {
-  color: #327cf3;
+  color: #02B9B8;
   font-size: 16px;
   margin: 3px 5px 0 0;
 }

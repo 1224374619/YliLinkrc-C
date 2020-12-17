@@ -125,26 +125,84 @@
           </div>
         </el-dialog>
 
-        <el-dialog title style="text-align:left" :visible.sync="dialogVisibleoutoffer" width="30%">
-          <div style="text-align:center" class="offer-titles">已超出可取消面试时间</div>
-          <div style="margin:45px 0 35px 200px">
-            <el-button type="primary" @click="dialogVisible = false">确认</el-button>
+        <el-dialog title style="text-align:left" :visible.sync="dialoOffer" width="50%">
+          <div style="width:100%;">
+            <div style="margin:0 40px" v-html="this.detailOfferlist.content"></div>
+            <div class="annex">
+              <span>附件</span>
+              <a @click="uploadfile">{{this.detailOfferlist.attachment.fileName}}</a>
+              <span style="margin:0 40px 0 10px;color:#ff6600">下载</span>
+            </div>
           </div>
+          <span
+            slot="footer"
+            class="dialog-footer"
+            v-if="this.detailOfferlist.offerStatus === 'TO_BE_ACCEPTED'"
+          >
+            <el-button plain @click="refuseOffer">残忍拒绝</el-button>
+            <el-button style="margin:0 0 0 100px" type="primary" @click="reqKeep()">确认接受</el-button>
+          </span>
+          <span slot="footer" class="dialog-footer" v-else>
+            <el-button plain @click="OfferBack">返回</el-button>
+            <el-button
+              style="margin:0 0 0 100px"
+              type="info"
+              disabled
+            >{{this.detailOfferlist.offerStatus|levels}}</el-button>
+            <!-- <el-button  type="primary" @click="reqKeep()">确认接受</el-button> -->
+          </span>
         </el-dialog>
 
-        <!-- <el-dialog
-        title
-        style="text-align:left"
-        :visible.sync="dialogVisibleloseoffer"
-        width="30%"
-        
-      >
-        <div style="text-align:center" class="lose-titles">由于您未在面试时间之前接受面试，面试邀请已失效，如有疑问请联系招聘人员。</div>
-        <div style="text-align:center" class="lose-content">招聘人员：王女士 联系方式：13738366688</div>
-        <div style="margin:45px 0 35px 200px">
-          <el-button type="primary" @click="dialogVisible = false">知道了</el-button>
-        </div>
-        </el-dialog>-->
+        <el-dialog title style="text-align:left" :visible.sync="dialoRefuse" width="25%">
+          <div class="dialoRefuse">
+            <div class="refuseReason">请输入Offer拒绝原因</div>
+            <el-input
+              type="textarea"
+              :rows="5"
+              maxlength="100"
+              show-word-limit
+              placeholder="请输入内容"
+              v-model="OfferReason"
+            ></el-input>
+          </div>
+          <span slot="footer" class="dialog-footer">
+            <el-button plain @click="dialoRefuse = false">取 消</el-button>
+            <el-button style="margin:0 0 0 100px" type="primary" @click="refuseKeepOffer()">确 认</el-button>
+          </span>
+        </el-dialog>
+
+        <el-dialog title style="text-align:left" :visible.sync="dialogVisibleoutoffer" width="30%">
+          <div style="text-align:center" class="offer-titles">已超出可取消面试时间</div>
+          <span slot="footer" class="dialog-footer">
+            <el-button
+              style="margin:0 0 0 100px"
+              type="primary"
+              @click="dialogVisibleoutoffer = false"
+            >确 定</el-button>
+          </span>
+        </el-dialog>
+
+        <el-dialog title style="text-align:left" :visible.sync="dialogReceiveOffer" width="30%">
+          <div style="text-align:center" class="lose-titles">恭喜您接收Offer！</div>
+          <div style="text-align:center" class="lose-content">
+            祝您前程似锦，一帆风顺，如果查看Offer详情信息请在
+            <span style="color:#02B9B8">投递记录-已录用</span> 里面查看
+          </div>
+          <span slot="footer" class="dialog-footer">
+            <el-button type="primary" @click="dialogReceiveOffer = false">知道了</el-button>
+          </span>
+        </el-dialog>
+
+        <el-dialog title style="text-align:left" :visible.sync="dialogReseOffer" width="30%">
+          <div style="text-align:center" class="lose-titles">您已拒绝接收Offer！</div>
+          <div style="text-align:center" class="lose-content">
+            如果查看Offer详情信息请在
+            <span style="color:#02B9B8">投递记录-已录用</span> 里面查看
+          </div>
+          <span slot="footer" class="dialog-footer">
+            <el-button type="primary" @click="dialogReseOffer = false">知道了</el-button>
+          </span>
+        </el-dialog>
 
         <el-dialog title style="text-align:left" :visible.sync="dialogVisibleloseoffer" width="30%">
           <div style="text-align:center" class="lose-titles">我们已将您的答复反馈给面试官！感谢您的使用</div>
@@ -152,23 +210,6 @@
             <el-button type="primary" @click="dialogVisible = false">知道了</el-button>
           </div>
         </el-dialog>
-        <!-- <div class="tab-operations">
-        <ul
-          class="el-dropdown-menu el-popper"
-          id="dropdown-menu-6024"
-          style="position: absolute; top: 175px; left: 460px; transform-origin: center top; z-index: 2011;width:110px;"
-          x-placement="bottom-end"
-        >
-          <li tabindex="-1" class="el-dropdown-menu__item">全部</li>
-          <li tabindex="-1" class="el-dropdown-menu__item">待接收</li>
-          <li tabindex="-1" class="el-dropdown-menu__item">已拒绝</li>
-          <li tabindex="-1" class="el-dropdown-menu__item">待面试</li>
-          <li tabindex="-1" class="el-dropdown-menu__item">取消面试</li>
-          <li tabindex="-1" class="el-dropdown-menu__item">已完成</li>
-          <li tabindex="-1" class="el-dropdown-menu__item">已失效</li>
-          <div x-arrow class="popper__arrow" style="left: 59px;"></div>
-        </ul>
-        </div>-->
         <el-tabs v-model="activeName" class="personal-tabs" v-if="showTabs">
           <el-tab-pane
             :label="`投递记录（${throwNum = this.page1.total}）`"
@@ -240,61 +281,6 @@
                 @click="Tabstatus(5)"
               >不合格</el-button>
             </div>
-
-            <!-- <div
-            style="width:854px;cursor:pointer"
-            class="hover"
-            v-for="(list,index) in submittedList"
-            :key="index"
-            @click="nextjoblist(list.id)"
-          >
-            <div class="tabs-first">
-              <span v-if="list.positionName.length > 8">
-                <el-tooltip placement="bottom" effect="light">
-                  <div slot="content">{{list.positionName}}</div>
-                  <span style="margin:0 0 0 0">{{list.positionName.slice(0, 8)+'...'}}</span>
-                </el-tooltip>
-              </span>
-              <span v-else>{{list.positionName}}</span>
-              <span v-if="list.salaryMin === 35">{{list.salaryMin}}k以上</span>
-              <span v-else>{{list.salaryMin}}-{{list.salaryMax}}k</span>
-            </div>
-            <div class="tabs-second">
-              <span v-if="list.company.companyName.length > 8">
-                <el-tooltip placement="bottom" effect="light">
-                  <div slot="content">{{list.company.companyName}}</div>
-                  <span style="margin:0 0 0 0">{{list.company.companyName.slice(0, 8)+'...'}}</span>
-                </el-tooltip>
-              </span>
-              <span v-else>{{list.company.companyName}}</span>
-              <span
-                v-if="list.workAgeMax == null"
-              >{{list.workAddress.city}} | 10年以上 | {{list.degreeMin}}</span>
-              <span
-                v-else-if="list.workAgeMin == 0"
-              >{{list.workAddress.city}} | 无工作经验 | {{list.degreeMin}}</span>
-              <span
-                v-else
-              >{{list.workAddress.city}} | {{list.workAgeMin}}-{{list.workAgeMax}}年 | {{list.degreeMin}}</span>
-              <span>
-                {{list.publishedTime|formatDate}}
-              </span>
-            
-            </div>
-            <div class="tabs-line"></div>
-          </div>
-          <div class="tabs-pagination">
-            <el-pagination
-              @size-change="handleSizeChange1"
-              @current-change="handleCurrentChange1"
-              :current-page="page1.current"
-              :page-sizes="page1.pageSizeOpts"
-              :page-size="page1.pageSize"
-              layout="total, sizes, prev, pager, next, jumper"
-              :total="page1.total"
-            ></el-pagination>
-            </div>-->
-
             <div
               style="width:854px;cursor:pointer"
               class="hover"
@@ -333,6 +319,10 @@
                   v-if="list.processedState === 'INTERVIEW'"
                   class="publishedTimes"
                 >{{list.updateTime|formatDate}}</span>
+                <span
+                  v-else-if="list.processedState === 'OFFERED'"
+                  class="publishedTimes"
+                >{{list.updateTime|formatDate}}</span>
                 <span v-else class="publishedTime">{{list.updateTime|formatDate}}</span>
                 <div class="operatedButton" v-if="list.processedState === 'INTERVIEW'">
                   <div v-if="list.interviewState === 'COMPLETED'">
@@ -346,7 +336,7 @@
                   >
                     <button
                       @click="abolish(list)"
-                      style="margin-right:20px;background:white;border:1px solid #327cf3;color:#327cf3"
+                      style="margin-right:20px;background:white;border:1px solid #02B9B8;color:#02B9B8"
                       class="button"
                       plain
                     >取消面试</button>
@@ -355,17 +345,14 @@
                   <button v-else class="button" @click="lookinterview(list)">查看面试</button>
                 </div>
                 <div class="operatedButton" v-if="list.processedState === 'OFFERED'">
-                  <div v-if="list.interviewState === 'COMPLETED'">
-                    <button v-if="list.evaluationId === 0" @click="laterM(list)" class="button">去评价</button>
-                    <button v-else @click="exist(list)" class="button">去查看</button>
+                  <div>
+                    <span
+                      class="publishedTime"
+                      v-if="list.offerId === 0"
+                    >{{list.updateTime|formatDate}}</span>
+                    <button v-else @click="examOffer(list)" class="button">查看Offer</button>
                   </div>
                 </div>
-                <!-- <div class="operatedButton" v-if="list.processedState === 'EMPLOYED'">
-                  <div v-if="list.interviewState === 'COMPLETED'">
-                    <button v-if="list.evaluationId === 0" @click="laterM(list)" class="button">去评价</button>
-                    <button v-else @click="exist(list)" class="button">去查看</button>
-                  </div>
-                </div> -->
               </div>
               <div class="tabs-line"></div>
             </div>
@@ -431,7 +418,7 @@
                   v-else
                 >{{list.workAddress.city}} | {{list.workAgeMin}}-{{list.workAgeMax}}年 | {{list.degreeMin}}</span>
                 <span class="collect-button" v-if="list.isSubmitted">
-                  <el-button style="color:#327cf3" type="text">已投递</el-button>
+                  <el-button style="color:#02B9B8" type="text">已投递</el-button>
                 </span>
                 <span class="collect-button">
                   <el-button type="primary" @click="iscancel(list.id)">取消收藏</el-button>
@@ -491,7 +478,7 @@
               type="textarea"
               style="width:824px"
               maxlength="300"
-  show-word-limit
+              show-word-limit
               :autosize="{ minRows: 4, maxRows: 8}"
               placeholder="请描述你的面试过程，例如：面试流程如何？面试氛围如何？最好是给其他用户一些建议…"
               v-model="textarea2"
@@ -617,11 +604,17 @@ export default {
   components: {},
   data() {
     return {
+      detailOffer: ``,
       checked: true,
+      dialoRefuse: false,
+      dialogReseOffer: false,
+      dialogReceiveOffer: false,
+      dialoOffer: false,
       detailEvaltion: true,
       evaltionDetail: {},
       radioReason: "",
       textarea2: "",
+      OfferReason: "",
       interviewStates: null,
       params: {},
       interviewparams: {},
@@ -703,10 +696,113 @@ export default {
           interviewLabel: "",
           customizeInterviewTag: ""
         }
-      ]
+      ],
+      detailOfferlist: {
+        attachment: {}
+      },
+      offerlist: {}
     };
   },
   methods: {
+    //下载
+    uploadfile() {
+      this.$http
+        .post(
+          `/consumer-core/offer/download`,
+          this.detailOfferlist.attachment,
+          {
+            responseType: "blob"
+          }
+        )
+        .then(res => {
+          console.log(res.headers);
+          this.dialogVisible = false;
+          const disposition = res.headers["content-disposition"];
+          console.log(disposition);
+          let fileName = disposition.substring(
+            disposition.indexOf("filename=") + 9,
+            disposition.length
+          );
+          // iso8859-1的字符转换成中文
+          fileName = decodeURI(escape(fileName));
+          console.log(fileName);
+          // 去掉双引号
+          fileName = fileName.replace(/\"/g, "");
+          const content = res.data;
+          let blob = new Blob([res.data], {
+            type: "application/vnd.ms-excel"
+          });
+          console.log(blob);
+          if (window.navigator.msSaveOrOpenBlob) {
+            // console.log(2)
+            navigator.msSaveBlob(blob, fileName);
+          } else {
+            // console.log(3)
+            var link = document.createElement("a");
+            link.href = window.URL.createObjectURL(blob);
+            link.download = fileName;
+            link.click();
+            //释放内存
+            window.URL.revokeObjectURL(link.href);
+          }
+        })
+        .catch(error => {});
+    },
+    //offer 详情返回
+    OfferBack() {
+      this.dialoOffer = false;
+    },
+    //残忍拒绝
+    refuseOffer() {
+      this.dialoRefuse = true;
+    },
+    refuseKeepOffer() {
+      let params = {
+        offerLetterId: this.offerlist.offerId,
+        positionId: this.offerlist.id,
+        resumeId: this.offerlist.resumeId,
+        reason: this.OfferReason
+      };
+      this.$http
+        .put(`/consumer-core/offer/refuse`, params)
+        .then(res => {
+          this.dialogReseOffer = true;
+          this.dialoRefuse = false;
+          this.dialoOffer = false;
+        })
+        .catch(error => {});
+    },
+    //确认接受
+    reqKeep() {
+      let params = {
+        offerLetterId: this.offerlist.offerId,
+        positionId: this.offerlist.id,
+        resumeId: this.offerlist.resumeId
+      };
+      this.$http
+        .put(`/consumer-core/offer/accept`, params)
+        .then(res => {
+          this.dialogReceiveOffer = true;
+          this.dialoOffer = false;
+        })
+        .catch(error => {});
+    },
+    //查看offer
+    examOffer(res) {
+      this.offerlist = res;
+      let params = {
+        offerLetterId: res.offerId,
+        positionId: res.id,
+        resumeId: res.resumeId
+      };
+      this.dialoOffer = true;
+      this.$http
+        .post(`/consumer-core/offer/details`, params)
+        .then(res => {
+          this.detailOfferlist = res.data.data;
+        })
+        .catch(error => {});
+    },
     //去评价
     exist(res) {
       this.positionId = res.id;
@@ -719,16 +815,6 @@ export default {
           this.textarea = res.data.data.content;
         })
         .catch(error => {});
-      // this.$http
-      //   .get(`/consumer-core/interview/exist/${res.interviewId}`)
-      //   .then(res => {
-      //     if (res.data.data) {
-
-      //     } else {
-      //       this.appraise = false;
-      //     }
-      //   })
-      //   .catch(error => {});
     },
     groupChange() {
       if (this.userList.length > 3) {
@@ -968,19 +1054,6 @@ export default {
         }
       });
     },
-    // open() {
-    //   // this.$confirm("请评价面试体验～", "", {
-    //   //   confirmButtonText: "确定",
-    //   //   cancelButtonText: "取消",
-    //   //   showClose: false,
-    //   //   center: true,
-    //   //   showCancelButton: false,
-    //   //   showConfirmButton: false
-    //   // })
-    //   //   .then(() => {})
-    //   //   .catch(() => {});
-
-    // },
     handleSizeChange(val) {
       this.page.pageSize = val;
       this.page.current = 1;
@@ -1121,9 +1194,7 @@ export default {
             this.page.total = res.data.data.total;
           }
         })
-        .catch(error => {
-          
-        });
+        .catch(error => {});
     },
     //取消对岗位的收藏
     iscancel(c) {
@@ -1133,9 +1204,7 @@ export default {
             this.favorite();
           }
         })
-        .catch(error => {
-          
-        });
+        .catch(error => {});
     },
 
     //城市
@@ -1183,9 +1252,7 @@ export default {
             }
           }
         })
-        .catch(error => {
-          
-        });
+        .catch(error => {});
     }
   },
   created() {
@@ -1229,6 +1296,21 @@ export default {
           break;
         case "WHEN_THE_SEAS_RUN_DRY_AND_THE_ROCKS_CRUMBLE":
           a = "等到海枯石烂";
+          break;
+      }
+      return a;
+    },
+    levels(levels) {
+      var a;
+      switch (levels) {
+        case "TO_BE_ACCEPTED":
+          a = "待接受";
+          break;
+        case "ACCEPTED":
+          a = "已接受";
+          break;
+        case "HAS_REFUSED_TO":
+          a = "已拒绝";
           break;
       }
       return a;
@@ -1285,9 +1367,16 @@ export default {
         margin: -15px 0 0 0;
         font-size: 20px;
         color: #ffffff;
-        background: #327CF3;
+        background: #02B9B8;
         border: 0.75px solid rgba(50, 124, 243, 1);
         border-radius: 5px;
+      }
+
+      .publishedTime {
+        color: #373737;
+        font-size: 18px;
+        margin: 0 28px 0 0;
+        width: 200px;
       }
     }
 
@@ -1327,7 +1416,7 @@ export default {
 
       span {
         font-family: PingFangSC-Regular;
-        color: #327CF3;
+        color: #02B9B8;
         font-size: 16px;
       }
     }
@@ -1340,7 +1429,7 @@ export default {
 
       span {
         font-family: PingFangSC-Regular;
-        color: #327CF3;
+        color: #02B9B8;
         font-size: 16px;
       }
     }
@@ -1372,7 +1461,7 @@ export default {
       font-family: PingFangSC-Regular;
       color: #5F5F5F;
       font-size: 18px;
-      margin: 16px 0 0 0;
+      margin: 16px 25px 0;
     }
 
     .offer-radio {
@@ -1383,8 +1472,12 @@ export default {
     }
 
     .el-dialog__header {
-      padding: 20px 20px 10px;
-      background: #327CF3;
+      padding: 15px 20px 15px;
+      background: #02B9B8;
+      text-align: center;
+      font-family: PingFangSC-Medium;
+      color: #FFFFFF;
+      font-size: 20px;
     }
 
     .el-icon-close:before {
@@ -1397,10 +1490,40 @@ export default {
     .el-dialog__title {
       line-height: 20px;
       font-size: 20px;
-      border: 1px solid #327CF3;
+      border: 1px solid #02B9B8;
       font-family: PingFangSC-Medium;
       color: #FFFFFF;
       text-align: center;
+    }
+
+    .el-dialog__footer {
+      padding: 0px 20px 50px;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    .annex {
+      font-family: PingFangSC-Regular;
+      color: #515151;
+      font-size: 18px;
+      margin: 0 0 30px 0;
+      display: flex;
+      justify-content: flex-end;
+
+      span:nth-child(1) {
+        margin: 0 10px 0 15px;
+      }
+    }
+
+    .dialoRefuse {
+      margin: 0 15px;
+
+      .refuseReason {
+        font-family: PingFangSC-Medium;
+        color: #222222;
+        font-size: 20px;
+        margin: 0 0 20px;
+      }
     }
 
     .personal-first {
@@ -1412,12 +1535,12 @@ export default {
       }
 
       .tabs-button:focus {
-        color: #327CF3;
+        color: #02B9B8;
       }
 
       .tabs-buttons {
         font-family: PingFangSC-Regular;
-        color: #327CF3;
+        color: #02B9B8;
         font-size: 20px;
         margin: 0 0 0 80px;
       }
@@ -1437,7 +1560,7 @@ export default {
 
       span:nth-child(2) {
         font-family: PingFangSC-Regular;
-        color: #327CF3;
+        color: #02B9B8;
       }
     }
 
@@ -1482,7 +1605,7 @@ export default {
         color: #272822;
         background-color: #fff;
         border-color: #dee1e6;
-        box-shadow: -1px 0 0 0 #409eff;
+        box-shadow: -1px 0 0 0 #02B9B8;
       }
     }
 
@@ -1573,8 +1696,8 @@ export default {
 
         .el-checkbox-button.is-checked .el-checkbox-button__inner {
           color: #fff;
-          background-color: #409eff;
-          border-color: #409eff;
+          background-color: #02B9B8;
+          border-color: #02B9B8;
           box-shadow: -1px 0 0 0 #8cc5ff;
         }
 
@@ -1621,7 +1744,7 @@ export default {
     }
 
     .el-tabs__item.is-active {
-      color: #327cf3;
+      color: #02B9B8;
     }
 
     .el-tabs__item {
@@ -1631,7 +1754,7 @@ export default {
     }
 
     .el-tabs__active-bar {
-      background-color: #327cf3;
+      background-color: #02B9B8;
     }
 
     .el-tabs__content, .el-tab-pane {
@@ -1682,8 +1805,8 @@ export default {
       flex-direction: row;
 
       .button {
-        background-color: #327cf3;
-        border: 1px solid #327cf3;
+        background-color: #02B9B8;
+        border: 1px solid #02B9B8;
         margin: -6px 0 0 0;
       }
 

@@ -1,25 +1,17 @@
 
 <template>
   <div class="containers">
-    <!-- <customized-nav class="nav" :ctlHideMenus="true" /> -->
     <div class="body">
       <div class="form">
-        <div class="logo">
-          <img
-            style="height:40px;margin:57px 0 0 0"
-            @click="gotoHomeUI"
-            :src="require('../assets/images/logo.png')"
-          />
-        </div>
         <div class="photo">
-          <div style="margin:89px 0 0 174px">
-            <img style="height:392px;" :src="require('../assets/images/de.png')" />
+          <div style="margin:72px 0 0 85px">
+            <img style="height:402px;" :src="require('../assets/images/login-photo.png')" />
           </div>
-          <div class="formlet" style="margin:0 0 0 158px">
+          <div class="formlet" style="margin:63px 0 0 104px">
             <div class="header">
               <span class="deng">登录</span>
               <el-button
-                style="margin:39px 0 0 0;color:#373737;font-size:16px;font-wight:500;text-align:right"
+                style="color:#373737;font-size:16px;font-wight:500;text-align:right"
                 @click="business"
                 type="text"
               >企业用户</el-button>
@@ -50,19 +42,17 @@
                       @click="show.old=!show.old"
                     />
                   </el-input>
-
-                  <!-- <password-input v-model="form.password" /> -->
                 </el-form-item>
                 <el-form-item>
                   <el-button
-                    style="margin:-20px 0 0 35px;float:right;font-size:14px;color:#818181;"
+                    style="margin:-20px 0 0 35px;float:right;font-size:14px;color:#818181;font-family: PingFangSC-Regular;"
                     type="text"
                     @click="gotoResetPwdUI"
                   >忘记密码？</el-button>
                 </el-form-item>
                 <el-form-item>
                   <el-button
-                    style="width:270px;height:43px;margin:20px 0 0 0;background:#327cf3;color:#fff"
+                    style="width:202px;height:43px;margin:20px 0 0 0;background:#02B9B8;color:#fff;border-radius:21px"
                     class="full"
                     @click="onSubmit"
                   >立即登录</el-button>
@@ -70,17 +60,13 @@
               </el-form>
             </div>
             <div class="adjunctive">
-              <el-button
-                style="margin:5px 0 0 0;color:#373737;font-size:16px"
-                type="text"
-                @click="gotoRegisterUI"
-              >立即注册</el-button>
+              <span>没有账号，</span>
+              <span @click="gotoRegisterUI">立即注册</span>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <!-- <div><customized-footer /></div> -->
   </div>
 </template>
 
@@ -188,29 +174,7 @@ export default {
             this.$router.push({ path: "/home" });
           }
         })
-        .catch(error => {
-          // this.$http.post("/consumer-core/resume").then(res => {
-          //   if (res.data.code == "201") {
-          //     this.$router.push({ path: "/home" });
-          //   }
-          // });
-          // if (error.response.status === 404) {
-          //   this.$notify.error({
-          //     title: "错误",
-          //     message: "页面丢失，请重新加载"
-          //   });
-          // } else if (error.response.status === 403) {
-          //   this.$notify.error({
-          //     title: "错误",
-          //     message: "登陆超时，请重新登录"
-          //   });
-          // } else {
-          //   this.$notify.error({
-          //     title: "错误",
-          //     message: error.response.data.message
-          //   });
-          // }
-        });
+        .catch(error => {});
     },
     gotoHomeUI() {
       this.$router.push({ path: "/" });
@@ -256,24 +220,32 @@ export default {
 
 <style lang="stylus">
 .containers {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  background: #327cf3;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  -moz-background-size: 100% 100%;
+  width: 1440px;
+  height: 900px;
+  background-image: url('../assets/images/login.jpg');
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
 
   .body {
     .form {
       background: #FFFFFF;
-      width: 1176px;
-      height: 684px;
+      width: 940px;
+      height: 546px;
       box-shadow: 0px 2px 12px 0px rgba(55, 6, 6, 0.5);
       border-radius: 3px;
-
-      .logo {
-        margin: 0 750px 0 0;
-      }
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      margin: auto;
 
       .photo {
         display: flex;
@@ -292,14 +264,14 @@ export default {
 
             .deng {
               font-family: PingFangSC-Medium;
-              color: #327cf3;
+              color: #02B9B8;
               font-size: 24px;
-              margin: 39px 0 0 0;
-              font-weight: 500;
             }
           }
 
           .formls {
+            margin: 30px 0 0 0;
+
             .el-input__inner {
               background-color: #f7f7f7;
               border: none;
@@ -312,6 +284,17 @@ export default {
 
             .el-form-item.is-error .el-input__inner {
               border-color: #f56c6c;
+            }
+          }
+
+          .adjunctive {
+            cursor:pointer
+            font-family: PingFangSC-Regular;
+            color: #373737;
+            font-size: 14px;
+
+            span:nth-child(2) {
+              color: #00b4b3;
             }
           }
         }

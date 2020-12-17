@@ -121,7 +121,7 @@ export const carousel = () => axios.get('/carousel');
 //tabs--推荐
 export const recommendation = () => axios.get('/consumer-core/home/recommended/position');
 //tabs--最新
-export const newposition = () => axios.get('/consumer-core/home/recent/position');
+export const newposition = (params) => axios.get('/consumer-core/home/recent/position',{params:params});
 //热门企业
 export const hotcompany = () => axios.get('/consumer-core/popular/company');
  //热门词

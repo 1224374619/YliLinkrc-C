@@ -1,6 +1,9 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { DONE_LOGOUT, DONE_LOGIN } from './mutation-types';
+import {
+  DONE_LOGOUT,
+  DONE_LOGIN
+} from './mutation-types';
 import Cookies from "js-cookie";
 
 Vue.use(Vuex);
@@ -8,9 +11,11 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     hasLogin: '',
-    avatarUrl:'',
+    avatarUrl: '',
     value: '',
-    childList:[],
+    childList: [],
+    adcode: "",
+    cityName: '',
     lsit: window.sessionStorage.getItem('lsit'),
     citycode: window.sessionStorage.getItem('citycode'),
     cityButton: window.sessionStorage.getItem('cityButton'),
@@ -21,19 +26,19 @@ export default new Vuex.Store({
     username: window.sessionStorage.getItem('user'),
   },
   mutations: {
-    [DONE_LOGIN] (state) {
+    [DONE_LOGIN](state) {
       state.hasLogin = true;
     },
-    [DONE_LOGOUT] (state) {
+    [DONE_LOGOUT](state) {
       state.hasLogin = false;
     },
     SET_TOKEN: (state, data) => {
       state.token = data
-      window.sessionStorage.setItem('token', data) 
+      window.sessionStorage.setItem('token', data)
     },
     SET_List: (state, data) => {
       state.lsitOne = data
-      window.sessionStorage.setItem('lsitOne', data) 
+      window.sessionStorage.setItem('lsitOne', data)
     },
     //获取用户名
     GET_USER: (state, data) => {
@@ -55,7 +60,7 @@ export default new Vuex.Store({
       Cookies.remove("token");
       window.sessionStorage.removeItem('token')
       window.sessionStorage.removeItem('user')
-      
+
     }
   }
 });

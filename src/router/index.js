@@ -2,6 +2,7 @@ import Vue from 'vue'
 import store from '../store/index'
 import Router from 'vue-router'
 import Cookies from 'js-cookie'
+// import Home from '../views/Home.vue'
 import Home from '../views/Home.vue'
 import Search from '../views/Search.vue'
 import Login from '../views/Login.vue'
@@ -46,11 +47,13 @@ const router = new Router({
                 name: 'home',
                 component: Home,
                 meta: {
+                    name:"baidu-site-verification",
                     title: '[银领人才网]海量技术人才求职_企业招聘_上银领人才网！',
-                    content: {
-                        keywords: '银领,银领人才,银领招聘,银领人才网,银领英才,灰领,技能人才,工匠',
-                        description: '银领人才网,是上海银领网络科技有限公司全力打造的"银领人才"招聘网站。专注于银领人才,银领英才,银领匠才,航空航天人才,军工人才等技能技术人才的求职与招聘服务',
-                    },
+                    // content: {
+                    //     keywords: '银领,银领人才,银领招聘,银领人才网,银领英才,灰领,技能人才,工匠',
+                    //     description: '银领人才网,是上海银领网络科技有限公司全力打造的"银领人才"招聘网站。专注于银领人才,银领英才,银领匠才,航空航天人才,军工人才等技能技术人才的求职与招聘服务',
+                    // },
+                    content:"code-JmM5W1gayq"
 
                 }
             }, ]

@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="NewsDetail">
     <div class="nav">
       <span style="margin:0 0 0 20px">消息中心</span>
     </div>
@@ -13,7 +13,7 @@
         >
           <div v-if="activeName === 'first'" class="tab-operations" @click="allRead">
             <span style="color:#FF7152;font-size:12px">全部已读</span>
-            <!-- <el-button style="color:#FF7152;" type="text">全部已读</el-button> -->
+            
           </div>
           <div v-else class="tab-operations"></div>
           <el-tab-pane label="未读消息" name="first">
@@ -27,11 +27,11 @@
                       name="1"
                     >
                       <div>{{scope.row.content}}</div>
-                      <!-- <div v-else>{{scope.row.content}}</div> -->
+                      
                     </el-collapse-item>
                     <el-collapse-item v-else :title="`${scope.row.title}`" name="1">
                       <div>{{scope.row.content}}</div>
-                      <!-- <div v-else>{{scope.row.content}}</div> -->
+                      
                     </el-collapse-item>
                   </el-collapse>
                 </template>
@@ -168,14 +168,13 @@ export default {
 };
 </script>
 
-<style lang="stylus" scoped>
-.container {
-  margin: 0 auto;
-  padding: 96px 0 0 0;
+<style lang="stylus">
+.NewsDetail {
+  margin 76px 0 0 0
   width: 1280px;
   border: 1px solid #ffffff;
   background: #ffffff;
-  overflow-y: hidden;
+  
 
   .nav {
     width: 960px;
@@ -183,7 +182,7 @@ export default {
     margin: 0 auto 0px;
     background: #FAFAFA;
     font-family: PingFangSC-Medium;
-    color: #327CF3;
+    color: #02B9B8;
     line-height: 40px;
     font-size: 16px;
     border: 1px solid rgba(244, 244, 244, 1);
@@ -207,6 +206,6 @@ export default {
 </style>
 <style>
 .el-tabs__item.is-active {
-  color: #409eff;
+  color: #02B9B8;
 }
 </style>

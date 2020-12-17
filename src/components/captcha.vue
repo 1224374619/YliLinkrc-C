@@ -77,7 +77,7 @@ export default {
     height 40px
     margin 0 0 2px 20px
     font-size 16px
-    color #327cf3
-    border 1px solid #327cf3
+    color #02B9B8
+    border 1px solid #02B9B8
 
 </style>
