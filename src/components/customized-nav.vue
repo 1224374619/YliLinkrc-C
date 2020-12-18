@@ -77,6 +77,7 @@
         <img
           style="height:40px;width:160px"
           @click="gotoHomeUI"
+          alt="银领人才网"
           :src="require('../assets/images/logo.png')"
         />
         <span

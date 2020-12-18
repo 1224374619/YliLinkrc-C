@@ -377,7 +377,7 @@ export default {
   },
   computed: {
     uploadUrl() {
-      return '/api/v3/file-service/files/upload';
+      return '/api/3/file-service/files/upload';
     }
   },
   watch: {
