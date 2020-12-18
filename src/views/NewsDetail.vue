@@ -170,7 +170,7 @@ export default {
 
 <style lang="stylus">
 .NewsDetail {
-  margin 76px 0 0 0
+  margin 76px auto
   width: 1280px;
   border: 1px solid #ffffff;
   background: #ffffff;
@@ -179,7 +179,7 @@ export default {
   .nav {
     width: 960px;
     height: 40px;
-    margin: 0 auto 0px;
+    margin: 50px auto 0;
     background: #FAFAFA;
     font-family: PingFangSC-Medium;
     color: #02B9B8;

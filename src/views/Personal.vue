@@ -130,7 +130,7 @@
             <div style="margin:0 40px" v-html="this.detailOfferlist.content"></div>
             <div class="annex">
               <span>附件</span>
-              <a @click="uploadfile">{{this.detailOfferlist.attachment.fileName}}</a>
+              <a @click="uploadfile" v-if="this.detailOfferlist.attachment !== null">{{this.detailOfferlist.attachment.fileName}}</a>
               <span style="margin:0 40px 0 10px;color:#ff6600">下载</span>
             </div>
           </div>
@@ -351,6 +351,7 @@
                       v-if="list.offerId === 0"
                     >{{list.updateTime|formatDate}}</span>
                     <button v-else @click="examOffer(list)" class="button">查看Offer</button>
+                    
                   </div>
                 </div>
               </div>

@@ -1289,14 +1289,20 @@ export default {
     }
   },
   created() {
-    this.joblistSearch = this.$route.query.homeSearch;
-    this.positionOrcompany = this.$route.query.positionOrcompany;
+    if (this.$route.query.homeSearch) {
+      this.joblistSearch = this.$route.query.homeSearch;
+      this.positionOrcompany = this.$route.query.positionOrcompany;
+    }
     this.industryList = industrys.data;
     this.city = citys.data;
     this.optionList = option.data;
+    console.log("111");
     this.option();
+    console.log("222");
     this.cityForm();
+    console.log("333");
     this.searches();
+    console.log("555");
   },
   filters: {
     level(level) {

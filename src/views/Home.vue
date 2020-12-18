@@ -41,8 +41,8 @@
         <img src="../assets/images/a12.png" class="img-alt" />
         <img src="../assets/images/a13.png" class="img-alt" />
         <img src="../assets/images/a14.png" class="img-alt" />
-        <img src="../assets/images/a6.png" class="img-alt" />
-        <img src="../assets/images/a7.png" class="img-alt" />
+        <img src="../assets/images/a15.png" class="img-alt" />
+        <img src="../assets/images/a16.png" class="img-alt" />
       </div>
     </div>
     <div class="home-svg">
@@ -120,7 +120,7 @@ export default {
     return {
       carouselImgs: [
         require("../assets/images/home-banner1.png"),
-        require("../assets/images/home-banner2.jpg"),
+        require("../assets/images/home-banner2.png"),
         require("../assets/images/home-banner3.png")
       ],
       newpositionList: [],
@@ -197,11 +197,10 @@ export default {
 
 <style lang="stylus">
 .home {
-  margin: 76px 0 0 0;
 
   .home-banner {
     img {
-      width: 100%;
+      width: 1440px;
       height: auto;
     }
   }

@@ -171,12 +171,12 @@
               </el-dropdown-menu>
             </el-dropdown>
             <span
-              v-if="this.fullName.length>2"
-              style="line-height:65px;color:#373737;margin:0 20px 0 0;font-size:18px;width:60px;"
-            >{{this.fullName.substring(0,2)}}...</span>
+              v-if="this.fullName.length>4"
+              style="line-height:65px;color:#373737;margin:0 20px 0 0;font-size:18px;width:90px;"
+            >{{this.fullName.substring(0,4)}}...</span>
             <span
               v-else
-              style="line-height:65px;color:#373737;margin:0 20px 0 0;font-size:18px;width:60px;"
+              style="line-height:65px;color:#373737;margin:0 20px 0 0;font-size:18px;width:90px;"
             >{{this.fullName}}</span>
             <!-- <span
               v-else
@@ -641,7 +641,7 @@ export default {
       cursor: pointer;
       display: flex;
       flex-direction: row;
-      margin: 0 96px 0 0;
+      margin: 0 126px 0 0;
     }
 
     .personals {
@@ -682,10 +682,10 @@ export default {
 }
 
 .navFl {
-  z-index: 200;
+  z-index: 400;
   font-family: PingFangSC-Regular;
   background: #FFFFFF;
-  opacity: 0.8;
+  opacity: 0.6;
   letter-spacing: 1.1;
   box-shadow: 0px 1px 9px #ccc;
   width: 100%;
@@ -700,10 +700,10 @@ export default {
 }
 
 .navFls {
-  z-index: 200;
+  z-index: 400;
   font-family: PingFangSC-Regular;
   background: #FFFFFF;
-  opacity: 0.8;
+  opacity: 1;
   letter-spacing: 1.1;
   box-shadow: 0px 1px 9px #ccc;
   width: 100%;
