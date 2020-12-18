@@ -23,10 +23,10 @@
     <div class="home-company">
       <div>
         <img src="../assets/images/home-company.png" class="img-nav" />
-        <img src="../assets/images/a1.png" class="img-alt" />
+        <img src="../assets/images/a13.png" class="img-alt" />
         <img src="../assets/images/a2.png" class="img-alt" />
         <img src="../assets/images/a3.png" class="img-alt" />
-        <img src="../assets/images/a4.png" class="img-alt" />
+        <img src="../assets/images/a16.png" class="img-alt" />
       </div>
       <div style="margin:-4px 0 0 0">
         <img src="../assets/images/a5.png" class="img-alt" />
@@ -39,10 +39,11 @@
       <div style="margin:-4px 0 0 0">
         <img src="../assets/images/a11.png" class="img-alt" />
         <img src="../assets/images/a12.png" class="img-alt" />
-        <img src="../assets/images/a13.png" class="img-alt" />
+        <img src="../assets/images/a1.png" class="img-alt" />
         <img src="../assets/images/a14.png" class="img-alt" />
         <img src="../assets/images/a15.png" class="img-alt" />
-        <img src="../assets/images/a16.png" class="img-alt" />
+
+        <img src="../assets/images/a4.png" class="img-alt" />
       </div>
     </div>
     <div class="home-svg">
@@ -197,7 +198,6 @@ export default {
 
 <style lang="stylus">
 .home {
-
   .home-banner {
     img {
       width: 1440px;
@@ -212,7 +212,7 @@ export default {
     box-shadow: 0px 2px 24px 0px rgba(180, 180, 180, 0.4);
     position: relative;
     bottom: 39px;
-    z-index 200
+    z-index: 200;
 
     .el-select .el-input {
       width: 120px;
