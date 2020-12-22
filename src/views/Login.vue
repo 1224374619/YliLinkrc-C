@@ -238,7 +238,7 @@ export default {
       background: #FFFFFF;
       width: 940px;
       height: 546px;
-      box-shadow: 0px 2px 12px 0px rgba(55, 6, 6, 0.5);
+      box-shadow: 0px 5px 44px 0px rgba(0, 128, 127, 0.5);
       border-radius: 3px;
       position: absolute;
       left: 0;

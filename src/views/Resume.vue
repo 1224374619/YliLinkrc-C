@@ -3,7 +3,10 @@
     <div class="resumes">
       <div class="content">
         <el-dialog title width="30%" :visible.sync="dialogDrag" style="border-radius:5px;">
-          <div style="font-size:18px;">简历附件上传功能正在准备中<br>敬请期待</div>
+          <div style="font-size:18px;">
+            简历附件上传功能正在准备中
+            <br />敬请期待
+          </div>
           <div style="margin:25px 0 0 0">
             <el-button @click="dialogDrag = false" type="primary">知道了</el-button>
           </div>
@@ -36,7 +39,7 @@
                 <i class="el-icon-delete"></i>
               </div>
             </div>
-          </div> -->
+          </div>-->
         </el-dialog>
         <el-dialog
           title
@@ -1738,7 +1741,7 @@
 
       <div class="aside-body">
         <div class="aside">
-          <div class="aside-nav" style='margin:0 0 70px 0'>
+          <div class="aside-nav" style="margin:0 0 70px 0">
             <div class="aside-foot">
               <div class="aside-foot-second">
                 <div
@@ -1775,26 +1778,25 @@
               </div>
             </div>
           </div>
-          
+                  <div class="aside-nav">
+              <div class="aside-nav-first">在线简历</div>
+              <div class="aside-nav-second">
+                <span>完整度</span>
+                <span>
+                  <el-progress
+                    :percentage="this.compPercent"
+                    class="progess"
+                    style="width:200px;padding:0 0 0 7px;height:9px"
+                  ></el-progress>
+                </span>
+              </div>
+              <div style="color:#f17130;font-size: 12px;margin: 10px 0 0 40px;">完整度超过66%可投递简历~</div>
+              <div class="aside-nav-third">最后更新：{{this.updatedTime|formatDateTwo}}</div>
+            </div>
         </div>
 
-        <Affix :offset="20">
-          <div class="aside">
-            <div class="aside-nav">
-            <div class="aside-nav-first">在线简历</div>
-            <div class="aside-nav-second">
-              <span>完整度</span>
-              <span>
-                <el-progress
-                  :percentage="this.compPercent"
-                  class="progess"
-                  style="width:200px;padding:0 0 0 7px;height:9px"
-                ></el-progress>
-              </span>
-            </div>
-            <div style="color:#f17130;font-size: 12px;margin: 10px 0 0 40px;">完整度超过66%可投递简历~</div>
-            <div class="aside-nav-third">最后更新：{{this.updatedTime|formatDateTwo}}</div>
-          </div>
+        <div class='fixed' id="searchBar">
+          <div class="aside" >
             <div class="aside-tabulation">
               <div class="tabulation">
                 <a @click="testRef('personalinformation')">
@@ -1864,7 +1866,7 @@
               </div>
             </div>
           </div>
-        </Affix>
+        </div>
       </div>
     </div>
   </Scroll>
@@ -3680,8 +3682,31 @@ export default {
       this.monthPayList = this.optionList.salaryRange;
       this.workStateList = this.optionList.jobType;
       this.jobSearchList = this.optionList.jobSearchStatus;
+    },
+    handleScroll(e) {
+      //改变元素#searchBar的top值
+      var scrollTop = e.target.scrollTop;
+      var offsetTop = document.querySelector("#searchBar").offsetTop;
+      console.log(scrollTop)
+      console.log(offsetTop)
+      if (scrollTop <= 200) {
+        offsetTop = 300 - Number(scrollTop);
+        document.querySelector("#searchBar").style.top = offsetTop + "px";
+        document.querySelector("#searchBar").style.marginTop = "20px";
+        console.log(offsetTop)
+      } else {
+        document.querySelector("#searchBar").style.top = "100px";
+        console.log(offsetTop)
+      }
     }
   },
+  mounted() {
+    //给window添加一个滚动滚动监听事件
+    window.addEventListener("scroll", this.handleScroll, true);
+  },
+  destroyed () {//离开该页面需要移除这个监听的事件
+  window.removeEventListener('scroll', this.handleScroll)
+},
   created() {
     let token = Cookies.get("token");
     this.industryList = industrys.data;
@@ -3700,6 +3725,7 @@ export default {
       this.informationouterVisible = false;
     });
   },
+  
   computed: {
     uploadUrl() {
       // const {VUE_APP_SECRET,VUE_APP_DEV_MODE} = process.env
@@ -4113,6 +4139,11 @@ export default {
 }
 </style>
 <style lang="stylus">
+.fixed {
+  position: fixed;
+  box-sizing: border-box;
+  z-index: 2;
+}
 .el-radio__input.is-checked .el-radio__inner {
   border-color: #02B9B8;
   background: #02B9B8;

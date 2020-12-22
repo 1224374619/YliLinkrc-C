@@ -237,8 +237,8 @@ router.beforeEach((to, from, next) => {
         if (token) { // 通过vuex state获取当前的token是否存在
             next()
         } else {
-            Notification.error({
-                title: "错误",
+            Notification.info({
+                title: "消息",
                 message: '请先登录'
             });
             setTimeout(() => next({

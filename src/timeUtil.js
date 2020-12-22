@@ -220,7 +220,7 @@ var size = function (index) {
   var a
   switch (index) {
     case 0:
-      a = '小于10'
+      a = '小于10人'
       break;
     case 1:
       a = '10-100'

@@ -122,7 +122,8 @@ export default {
       carouselImgs: [
         require("../assets/images/home-banner1.png"),
         require("../assets/images/home-banner2.png"),
-        require("../assets/images/home-banner3.png")
+        require("../assets/images/home-banner3.png"),
+        require("../assets/images/home-banner4.png")
       ],
       newpositionList: [],
       perList: [

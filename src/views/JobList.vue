@@ -761,11 +761,11 @@ export default {
         companySearch(params).then(res => {
           if (res.data.code == 200) {
             this.joblistJob = false;
-            this.companyList = res.data.data;
-            this.companyList = JSON.parse(
-              window.sessionStorage.getItem("lsittwo")
-            ).list;
-            this.page1.total = res.data.data.total;
+            this.companyList = res.data.data.list;
+            // this.companyList = JSON.parse(
+            //   window.sessionStorage.getItem("lsittwo")
+            // ).list;
+            this.page.total = res.data.data.total;
             if (res.data.data.total == 0) {
               this.joblistJob = false;
               this.joblistCompany = false;
@@ -1193,13 +1193,10 @@ export default {
     this.industryList = industrys.data;
     this.city = citys.data;
     this.optionList = option.data;
-    console.log("111");
     this.option();
-    console.log("222");
     this.cityForm();
-    console.log("333");
     this.searches();
-    console.log("555");
+    
   },
   filters: {
     level(level) {
