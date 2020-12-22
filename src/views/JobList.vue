@@ -165,7 +165,7 @@
               <el-checkbox-button
                 class="article-content"
                 @change="qualityHandle"
-                :label="index"
+                :label="list.tag"
                 v-for="(list,index) in qualityList"
                 :key="index"
               >{{list.tag}}</el-checkbox-button>
@@ -263,13 +263,13 @@
       </div>
       <div class="footer-pagination">
         <el-pagination
-          @size-change="handleSizeChange1"
-          @current-change="handleCurrentChange1"
-          :current-page="page1.current"
-          :page-sizes="page1.pageSizeOpts"
-          :page-size="page1.pageSize"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="page.current"
+          :page-sizes="page.pageSizeOpts"
+          :page-size="page.pageSize"
           layout="total, sizes, prev, pager, next, jumper"
-          :total="page1.total"
+          :total="page.total"
         ></el-pagination>
       </div>
     </div>
@@ -353,7 +353,7 @@ export default {
       salaryMax: "",
       contentNull: false,
       companyNull: false,
-      companyList: [],
+      companyList: [{ address: {} }],
       positionList: [],
       city: [],
       perList: [
@@ -412,12 +412,6 @@ export default {
         pageSize: 10,
         current: 1,
         pageSizeOpts: [10, 20, 30]
-      },
-      page1: {
-        total: 0,
-        pageSize: 10,
-        current: 1,
-        pageSizeOpts: [10, 20, 30]
       }
     };
   },
@@ -432,6 +426,7 @@ export default {
     },
     //企业性质不限
     qualityHandle() {
+      console.log(this.quality);
       this.qualitys = [];
     },
     qualitysHandle() {
@@ -448,6 +443,7 @@ export default {
       this.scale = "15";
       this.release = 5;
       this.qualitys = ["5"];
+      this.quality = [];
       this.industry = "10000";
       this.joblistSearch = "";
       this.isdistrict = false;
@@ -499,9 +495,10 @@ export default {
                 ],
           industryCodes: this.industry === "10000" ? null : [this.industry],
           keywords: this.joblistSearch,
-          pageNum: 1,
+          pageNum: this.page.current,
+          pageSize: this.page.pageSize,
           natures: null,
-          pageSize: 10,
+
           size:
             this.scale === "15" ? null : timeUtil.size(parseInt(this.scale)),
           sortBy: null,
@@ -510,14 +507,14 @@ export default {
         companySearch(params).then(res => {
           if (res.data.code == 200) {
             this.joblistJob = false;
-            this.$router.push({
-              path: "/joblist"
-            });
-            this.companyList = res.data.data;
-            this.companyList = JSON.parse(
-              window.sessionStorage.getItem("lsittwo")
-            ).list;
-            this.page1.total = res.data.data.total;
+            // this.$router.push({
+            //   path: "/joblist"
+            // });
+            this.companyList = res.data.data.list;
+            // this.companyList = JSON.parse(
+            //   window.sessionStorage.getItem("lsittwo")
+            // ).list;
+            this.page.total = res.data.data.total;
             if (res.data.data.total == 0) {
               this.joblistJob = false;
               this.joblistCompany = false;
@@ -672,9 +669,10 @@ export default {
               ? null
               : timeUtil.jobType(parseInt(this.workState)),
           keywords: this.joblistSearch ? this.joblistSearch : null,
-          pageNum: 1,
-          natures: null,
-          pageSize: 10,
+          pageNum: this.page.current,
+          pageSize: this.page.pageSize,
+          natures: this.qualitys[0] === "5" ? null : this.quality,
+
           publishedInterval:
             this.release === 5
               ? null
@@ -707,21 +705,6 @@ export default {
               this.joblistJob = true;
               this.contentNull = false;
               this.companyNull = false;
-              // window.sessionStorage.setItem(
-              //   "lsittwo",
-              //   JSON.stringify(res.data.data)
-              // );
-              // if (this.district === "") {
-              //   window.sessionStorage.setItem(
-              //     "citycode",
-              //     parseInt(this.citycode)
-              //   );
-              // } else {
-              //   window.sessionStorage.setItem(
-              //     "citycode",
-              //     parseInt(this.district)
-              //   );
-              // }
             }
           }
         });
@@ -938,7 +921,7 @@ export default {
               : timeUtil.jobType(parseInt(this.workState)),
           keywords: this.joblistSearch ? this.joblistSearch : null,
           pageNum: 1,
-          natures: null,
+          natures: this.qualitys[0] === "5" ? null : this.quality,
           pageSize: 10,
           publishedInterval:
             this.release === 5
@@ -1066,97 +1049,11 @@ export default {
     handleSizeChange(val) {
       this.page.pageSize = val;
       this.page.current = 1;
-      let params = {
-        pageNum: this.page.current,
-        pageSize: this.page.pageSize
-      };
-      positionSearch(params).then(res => {
-        if (res.data.code == 200) {
-          this.joblistCompany = false;
-          this.contentNull = false;
-          this.positionList = res.data.data.list;
-          this.page.total = res.data.data.total;
-          if (res.data.data.total == 0) {
-            this.joblistJob = false;
-            this.contentNull = true;
-          } else {
-            this.joblistJob = true;
-          }
-        }
-      });
-      // .catch(error => {});
+      this.search();
     },
     handleCurrentChange(val) {
       this.page.current = val;
-      let params = {
-        pageNum: this.page.current,
-        pageSize: this.page.pageSize
-      };
-      positionSearch(params)
-        .then(res => {
-          if (res.data.code == 200) {
-            this.joblistCompany = false;
-            this.contentNull = false;
-            this.positionList = res.data.data.list;
-            this.page.total = res.data.data.total;
-            if (res.data.data.total == 0) {
-              this.joblistJob = false;
-              this.contentNull = true;
-            } else {
-              this.joblistJob = true;
-            }
-          }
-        })
-        .catch(error => {});
-    },
-    handleSizeChange1(val) {
-      this.page1.pageSize = val;
-      this.page1.current = 1;
-      let params = {
-        pageNum: this.page1.current,
-        pageSize: this.page1.pageSize
-      };
-      companySearch(params)
-        .then(res => {
-          if (res.data.code == 200) {
-            this.joblistJob = false;
-            this.companyList = res.data.data.list;
-            if (res.data.data.total == 0) {
-              this.joblistCompany = false;
-              this.contentNull = false;
-              this.companyNull = true;
-            } else {
-              this.joblistCompany = true;
-              this.contentNull = false;
-              this.companyNull = false;
-            }
-          }
-        })
-        .catch(error => {});
-    },
-    handleCurrentChange1(val) {
-      this.page1.current = val;
-      let params = {
-        pageNum: this.page1.current,
-        pageSize: this.page1.pageSize
-      };
-      companySearch(params)
-        .then(res => {
-          if (res.data.code == 200) {
-            this.joblistJob = false;
-            this.companyList = res.data.data.list;
-            if (res.data.data.total == 0) {
-              this.joblistCompany = false;
-              this.contentNull = false;
-              this.companyNull = true;
-            } else {
-              this.joblistCompany = true;
-              this.contentNull = false;
-              this.companyNull = false;
-            }
-          }
-        })
-        .catch(error => {});
+      this.search();
     },
 
     CodeToTag(codeArr, list, Alias) {

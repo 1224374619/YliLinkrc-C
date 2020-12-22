@@ -152,8 +152,8 @@ export default {
               }
             })
             .catch(error => {
-              this.$message({
-                showClose: true,
+              this.$notify.info({
+                title: "消息",
                 message: "输入有误，请重新输入"
               });
             });
@@ -288,7 +288,7 @@ export default {
           }
 
           .adjunctive {
-            cursor:pointer
+            cursor: pointer;
             font-family: PingFangSC-Regular;
             color: #373737;
             font-size: 14px;

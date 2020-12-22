@@ -128,9 +128,11 @@
         <el-dialog title style="text-align:left" :visible.sync="dialoOffer" width="50%">
           <div style="width:100%;">
             <div style="margin:0 40px" v-html="this.detailOfferlist.content"></div>
-            <div class="annex">
+            <div class="annex" v-if="this.detailOfferlist.attachment !== null">
               <span>附件</span>
-              <a @click="uploadfile" v-if="this.detailOfferlist.attachment !== null">{{this.detailOfferlist.attachment.fileName}}</a>
+              <a
+                @click="uploadfile"
+              >{{this.detailOfferlist.attachment.fileName}}</a>
               <span style="margin:0 40px 0 10px;color:#ff6600">下载</span>
             </div>
           </div>
@@ -315,15 +317,7 @@
                 <span
                   v-else
                 >{{list.workAddress.city}} | {{list.workAgeMin}}-{{list.workAgeMax}}年 | {{list.degreeMin}}</span>
-                <span
-                  v-if="list.processedState === 'INTERVIEW'"
-                  class="publishedTimes"
-                >{{list.updateTime|formatDate}}</span>
-                <span
-                  v-else-if="list.processedState === 'OFFERED'"
-                  class="publishedTimes"
-                >{{list.updateTime|formatDate}}</span>
-                <span v-else class="publishedTime">{{list.updateTime|formatDate}}</span>
+                <span class="publishedTimes">{{list.updateTime|formatDate}}</span>
                 <div class="operatedButton" v-if="list.processedState === 'INTERVIEW'">
                   <div v-if="list.interviewState === 'COMPLETED'">
                     <button v-if="list.evaluationId === 0" @click="laterM(list)" class="button">去评价</button>
@@ -344,15 +338,17 @@
                   </div>
                   <button v-else class="button" @click="lookinterview(list)">查看面试</button>
                 </div>
-                <div class="operatedButton" v-if="list.processedState === 'OFFERED'">
-                  <div>
-                    <span
-                      class="publishedTime"
-                      v-if="list.offerId === 0"
-                    >{{list.updateTime|formatDate}}</span>
-                    <button v-else @click="examOffer(list)" class="button">查看Offer</button>
-                    
+                <div class="operatedButton" v-else-if="list.processedState === 'OFFERED'">
+                  <div v-if="list.offerId === undefined">
+                    <span class="publishedTime">{{list.updateTime|formatDate}}</span>
                   </div>
+                  <div v-else>
+                    <span v-if="list.offerId === 0" class="publishedTime">{{list.updateTime|formatDate}}</span>
+                    <button v-else @click="examOffer(list)" class="button">查看Offer</button>
+                  </div>
+                </div>
+                <div class="operatedButton" v-else>
+                  <span class="publishedTime">{{list.updateTime|formatDate}}</span>
                 </div>
               </div>
               <div class="tabs-line"></div>
@@ -1163,7 +1159,7 @@ export default {
           this.avatarUrl = res.data.data.base.avatarUrl;
           this.defaultResumeId = res.data.data.defaultResumeId;
           this.fullName = res.data.data.base.fullName;
-          this.city = res.data.data.base.province + res.data.data.base.city;
+          this.city = res.data.data.base.city;
           this.workAge = res.data.data.base.workAge;
           this.age = res.data.data.base.age;
           this.jobSearchStatus = res.data.data.target.jobSearchStatus;
@@ -1894,7 +1890,7 @@ export default {
     }
 
     .tabs-pagination {
-      margin: 30px 0 0 0;
+      margin: 60px 0 60px 0;
       padding: 0 0 20px 0;
       color: #1d366e;
     }

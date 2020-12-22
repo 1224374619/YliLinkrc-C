@@ -26,7 +26,7 @@
       return {
         affixed: true,
         styles: {},
-        affixedClientHeight: 0,
+        affixedClientHeight: 100,
         wrapStyle: {}
       };
     },
@@ -97,8 +97,10 @@
       offsets() {
         if (this.boundary) {
           return 0;
+          console.log(this.boundary)
         }
         return this.offset;
+        console.log(this.offset)
       }
     },
     mounted() {

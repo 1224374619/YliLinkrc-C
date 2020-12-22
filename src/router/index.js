@@ -22,6 +22,7 @@ import Station from '../views/Station.vue'
 import JobList from '../views/JobList.vue'
 import Personal from '../views/Personal.vue'
 import InforChange from '../views/inforchange.vue'
+import preview from '../views/preview.vue'
 // import captcha from '../components/captcha.vue'
 import NewsDetail from '../views/NewsDetail.vue'
 import AboutUs from '../views/AboutUs.vue'
@@ -184,6 +185,11 @@ const router = new Router({
                 },
 
             }
+        },
+        {
+            path: '/preview',
+            name: '预览',
+            component: preview
         },
         {
             path: '/register',

@@ -1191,7 +1191,7 @@
                   v-model="formSelfappraisal.personalDescription"
                   style="width:400px;margin-right:50px"
                   maxlength="300"
-  show-word-limit
+                  show-word-limit
                   placeholder="资料完善程度高，被选中的几率越大呦"
                 ></el-input>
               </el-form-item>
@@ -1735,61 +1735,66 @@
           />
         </div>
       </div>
+
       <div class="aside-body">
-        <Affix :offset="60">
-          <div class="aside">
-            <div class="aside-nav" style="margin:50px 0 80px 0">
-              <div class="aside-foot">
-                <div class="aside-foot-second">
-                  <div
-                    style="display: flex;flex-direction: row;justify-content: space-between;line-height:30px;width:270px;margin:0 0 20px 0"
-                  >
-                    <div class="aside-foot-first">附件简历（Beta）</div>
-                    <el-button
-                      style="font-family: PingFangSC-Regular;color: #02B9B8;font-size:12px;width:25px"
-                      type="text"
-                      @click="addfile"
-                    >添加</el-button>
-                  </div>
-                  <div v-for="(item,index) in fileList" :key="index">
-                    <div class="onResume">
-                      <div>
-                        <i class="el-icon-paperclip"></i>
-                        <span style="margin:0 0 0 5px">{{item.resumeName}}</span>
-                      </div>
-                      <div>
-                        <el-dropdown>
-                          <span class="el-dropdown-link">
-                            <i class="el-icon-more-outline"></i>
-                          </span>
-                          <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item @click.native="setDefault(item)">设为默认投递简历</el-dropdown-item>
-                            <el-dropdown-item>下载</el-dropdown-item>
-                            <el-dropdown-item @click.native="deleteFile(item)">删除</el-dropdown-item>
-                          </el-dropdown-menu>
-                        </el-dropdown>
-                      </div>
+        <div class="aside">
+          <div class="aside-nav" style='margin:0 0 70px 0'>
+            <div class="aside-foot">
+              <div class="aside-foot-second">
+                <div
+                  style="display: flex;flex-direction: row;justify-content: space-between;line-height:30px;width:270px;margin:0 0 20px 0"
+                >
+                  <div class="aside-foot-first">附件简历（Beta）</div>
+                  <el-button
+                    style="font-family: PingFangSC-Regular;color: #02B9B8;font-size:12px;width:25px"
+                    type="text"
+                    @click="addfile"
+                  >添加</el-button>
+                </div>
+                <div v-for="(item,index) in fileList" :key="index">
+                  <div class="onResume">
+                    <div>
+                      <i class="el-icon-paperclip"></i>
+                      <span style="margin:0 0 0 5px">{{item.resumeName}}</span>
                     </div>
-                    <div class="resumeLine"></div>
+                    <div>
+                      <el-dropdown>
+                        <span class="el-dropdown-link">
+                          <i class="el-icon-more-outline"></i>
+                        </span>
+                        <el-dropdown-menu slot="dropdown">
+                          <el-dropdown-item @click.native="setDefault(item)">设为默认投递简历</el-dropdown-item>
+                          <el-dropdown-item>下载</el-dropdown-item>
+                          <el-dropdown-item @click.native="deleteFile(item)">删除</el-dropdown-item>
+                        </el-dropdown-menu>
+                      </el-dropdown>
+                    </div>
                   </div>
+                  <div class="resumeLine"></div>
                 </div>
               </div>
             </div>
-            <div class="aside-nav" style="margin:50px 0 0 0">
-              <div class="aside-nav-first">在线简历</div>
-              <div class="aside-nav-second">
-                <span>完整度</span>
-                <span>
-                  <el-progress
-                    :percentage="this.compPercent"
-                    class="progess"
-                    style="width:200px;padding:0 0 0 7px;height:9px"
-                  ></el-progress>
-                </span>
-              </div>
-              <div style='color:#f17130;font-size: 12px;margin: 10px 0 0 40px;'>完整度超过66%可投递简历~</div>
-              <div class="aside-nav-third">最后更新：{{this.updatedTime|formatDateTwo}}</div>
+          </div>
+          
+        </div>
+
+        <Affix :offset="20">
+          <div class="aside">
+            <div class="aside-nav">
+            <div class="aside-nav-first">在线简历</div>
+            <div class="aside-nav-second">
+              <span>完整度</span>
+              <span>
+                <el-progress
+                  :percentage="this.compPercent"
+                  class="progess"
+                  style="width:200px;padding:0 0 0 7px;height:9px"
+                ></el-progress>
+              </span>
             </div>
+            <div style="color:#f17130;font-size: 12px;margin: 10px 0 0 40px;">完整度超过66%可投递简历~</div>
+            <div class="aside-nav-third">最后更新：{{this.updatedTime|formatDateTwo}}</div>
+          </div>
             <div class="aside-tabulation">
               <div class="tabulation">
                 <a @click="testRef('personalinformation')">
@@ -2006,7 +2011,10 @@ export default {
       },
       pickerOptions: {
         disabledDate(time) {
-          return time.getTime() > new Date().setFullYear((new Date().getFullYear()-16))
+          return (
+            time.getTime() >
+            new Date().setFullYear(new Date().getFullYear() - 16)
+          );
         }
       },
       pickerOptionsOne: {
@@ -2198,7 +2206,7 @@ export default {
       edurules: {
         educationName: [
           { required: true, message: "请输入学校名称", trigger: "blur" },
-          { min: 0, max: 12, message: '长度在 0 到 12 个字', trigger: 'blur' },
+          { min: 0, max: 12, message: "长度在 0 到 12 个字", trigger: "blur" }
           // { pattern:/^[a-zA-Z\u4e00-\u9fa5\s]{0,24}$/, message: '姓名仅支持中文汉字与英文字母', trigger: 'blur' },
         ],
         educationTime: [
@@ -2463,7 +2471,6 @@ export default {
     },
     //上传附件简历
     handleVideoSuccess(res, file) {
-      console.log(file);
       let label = "resume-file";
       let params = {
         accessUrl: res.data.fileAccessVo.accessUrl,
@@ -2472,27 +2479,13 @@ export default {
         size: res.data.fileAccessVo.size,
         fileName: res.data.fileAccessVo.fileName
       };
-      this.$http
-        .post(`/file-service/files/getPreviewUrl/?label=${label}`, params)
-        .then(res => {
-          let demo = aliyun.config({
-            url: res.data.data.previewURL, //设置文档预览URL地址。
-            mount: document.querySelector("#container")
-          });
-          //设置AccessToken。
-          demo.setToken({ token: res.data.data.accessToken });
-          console.log(demo.iframe)
-        })
-        .catch(error => {});
-      // this.$http
-      //   .post(`/consumer-core/resume/file/?resumeName=${file.name}`, params)
-      //   .then(res => {
-      //     this.dialogSuccess = true;
-      //     this.dialogsetDefault = false;
-      //     this.dialogDrag = false;
-      //     this.allfile();
-      //   })
-      //   .catch(error => {});
+      var arr = JSON.stringify(params);
+      let Logistics = this.$router.resolve(
+        "/preview?obj=" + encodeURIComponent(arr)
+      );
+
+      window.open(Logistics.href, "_blank");
+      this.dialogDrag = false;
     },
     //添加附件
     addfile() {
@@ -2510,8 +2503,8 @@ export default {
     //   }, 100);
     // },
     handleExceed(files, fileList) {
-      this.$notify.error({
-        title: "错误",
+      this.$notify.info({
+        title: "消息",
         message: "这是一条错误的提示消息"
       });
     },
@@ -2623,9 +2616,7 @@ export default {
                 this.brief();
               }
             })
-            .catch(error => {
-              
-            });
+            .catch(error => {});
         } else {
           return false;
         }
@@ -2716,9 +2707,7 @@ export default {
                 );
               }
             })
-            .catch(error => {
-             
-            });
+            .catch(error => {});
         }
       });
     },
@@ -2736,9 +2725,7 @@ export default {
                 this.resumeId();
               }
             })
-            .catch(error => {
-              
-            });
+            .catch(error => {});
         } else {
           return false;
         }
@@ -2749,8 +2736,8 @@ export default {
       this.file = res.data;
     },
     handleAvatarError(err, file, fileList) {
-      this.$notify.error({
-        title: "错误",
+      this.$notify.info({
+        title: "消息",
         message: "图片上传失败，请重新上传"
       });
     },
@@ -2779,9 +2766,7 @@ export default {
                 //     }).catch( => {});
               }
             })
-            .catch(error => {
-              
-            });
+            .catch(error => {});
         } else {
           return false;
         }
@@ -2811,9 +2796,7 @@ export default {
                 this.resumeId();
               }
             })
-            .catch(error => {
-              
-            });
+            .catch(error => {});
         } else {
           return false;
         }
@@ -2839,9 +2822,7 @@ export default {
                 this.resumeId();
               }
             })
-            .catch(error => {
-              
-            });
+            .catch(error => {});
         } else {
           return false;
         }
@@ -2861,9 +2842,7 @@ export default {
                 this.resumeId();
               }
             })
-            .catch(error => {
-              
-            });
+            .catch(error => {});
         } else {
           return false;
         }
@@ -2895,9 +2874,7 @@ export default {
                 this.resumeId();
               }
             })
-            .catch(error => {
-              
-            });
+            .catch(error => {});
         } else {
           return false;
         }
@@ -2931,9 +2908,7 @@ export default {
                 this.resumeId();
               }
             })
-            .catch(error => {
-              
-            });
+            .catch(error => {});
         } else {
           return false;
         }
@@ -2967,9 +2942,7 @@ export default {
                 this.resumeId();
               }
             })
-            .catch(error => {
-              
-            });
+            .catch(error => {});
         } else {
           return false;
         }
@@ -3021,9 +2994,7 @@ export default {
                 this.resumeId();
               }
             })
-            .catch(error => {
-              
-            });
+            .catch(error => {});
         } else {
           return false;
         }
@@ -3155,9 +3126,7 @@ export default {
             this.resumeId();
           }
         })
-        .catch(error => {
-          
-        });
+        .catch(error => {});
     },
     //职称等级删除
     deleteprofession() {
@@ -3168,9 +3137,7 @@ export default {
             this.resumeId();
           }
         })
-        .catch(error => {
-          
-        });
+        .catch(error => {});
     },
     //工作经历删除
     deletework() {
@@ -3181,9 +3148,7 @@ export default {
             this.resumeId();
           }
         })
-        .catch(error => {
-          
-        });
+        .catch(error => {});
     },
     //荣誉奖项删除
     deleteawards() {
@@ -3194,9 +3159,7 @@ export default {
             this.resumeId();
           }
         })
-        .catch(error => {
-        
-        });
+        .catch(error => {});
     },
     //教育经历删除
     deletedu() {
@@ -3207,9 +3170,7 @@ export default {
             this.resumeId();
           }
         })
-        .catch(error => {
-          
-        });
+        .catch(error => {});
     },
     //培训经历删除
     deletetrain() {
@@ -3220,9 +3181,7 @@ export default {
             this.resumeId();
           }
         })
-        .catch(error => {
-          
-        });
+        .catch(error => {});
     },
     //语言能力删除
     deletelanguage() {
@@ -3233,9 +3192,7 @@ export default {
             this.resumeId();
           }
         })
-        .catch(error => {
-          
-        });
+        .catch(error => {});
     },
     //项目经历删除
     deleteproject() {
@@ -3246,9 +3203,7 @@ export default {
             this.resumeId();
           }
         })
-        .catch(error => {
-          
-        });
+        .catch(error => {});
     },
     //自我评价
     selfappraisalemit(c) {
@@ -3338,9 +3293,7 @@ export default {
             this.imageUrlOne = res.data.data.tempUrl;
           }
         })
-        .catch(error => {
-          
-        });
+        .catch(error => {});
       this.awardsouterVisible = true;
     },
     //专业技能编辑
@@ -3884,7 +3837,7 @@ export default {
 
 <style lang="stylus">
 .web-office-iframe {
-  width:300px
+  width: 300px;
 }
 
 .resumes {
@@ -3894,7 +3847,6 @@ export default {
   background: #FFFFFF;
   flex-direction: row;
   cursor: default;
-  
 
   .content {
     width: 1010px;
@@ -4029,7 +3981,6 @@ export default {
   }
 
   .aside-body {
-    
     .aside {
       background: #FFFFFF;
       margin-top: 0px;
@@ -4048,7 +3999,7 @@ export default {
           color: #373737;
           font-size: 16px;
           font-weight: bold;
-          margin: 20px 0 0 40px
+          margin: 20px 0 0 40px;
         }
 
         .aside-nav-second {

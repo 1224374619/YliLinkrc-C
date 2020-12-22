@@ -5,7 +5,7 @@
         <div class="group-active">
           <span @click="introduce">企业介绍</span>
           <span @click="introduce(false)">投诉建议</span>
-          <span @click="introduceXy">用户协议</span>
+          <span @click="gotoUserPrivacyLicenseUI">用户协议</span>
         </div>
         <div class="group-infor">
           <span>公司：上海银领网络科技有限公司</span>
@@ -71,8 +71,11 @@ export default {
     introduce(id) {
       this.$router.push({ path: "/aboutus/" + id });
     },
-    introduceXy() {
-      this.$router.push({ path: "/user-license" });
+    gotoUserPrivacyLicenseUI() {
+      window.open(
+        this.$router.resolve({ name: "user-license" }).href,
+        "_blank"
+      );
     }
   }
 };

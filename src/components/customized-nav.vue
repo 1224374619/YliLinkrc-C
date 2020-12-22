@@ -1,9 +1,13 @@
 <template>
   <div>
     <div class="dialogCity">
-      <el-dialog title :visible.sync="dialogVisibleCity" width="30%" style="height:1000px">
+      <el-dialog
+        title
+        :visible.sync="dialogVisibleCity"
+        style="height:1000px;width:1150px;margin:0 auto"
+      >
         <div class="title">按省份选择</div>
-        <div style="margin:20px 0 0 0">
+        <div style="margin:20px 0 0 20px; display: flex;flex-direction: row;">
           <el-tooltip class="item" v-model="visible" effect="light" placement="bottom-start">
             <el-input
               placeholder="请选择省份"
@@ -28,8 +32,8 @@
             </div>
           </el-tooltip>
           <el-tooltip
-            style="margin:0 200px 0 20px"
-            :disabled="disabled"
+            style="margin:0 180px 0 40px;"
+            :disabled="true"
             v-model="visibleOne"
             effect="light"
             placement="bottom"
@@ -81,7 +85,7 @@
           :src="require('../assets/images/logo.png')"
         />
         <span
-          v-if="!ctlHideMenus"
+          
           style="margin:5px 0 0 50px;color:#858585;width:200px;text-align:left;"
           @click="dialogVisibleCity = true"
         >
@@ -89,7 +93,7 @@
           <i class="el-icon-caret-bottom"></i>
         </span>
         <div class="menu">
-          <div class="group" v-if="!ctlHideMenus">
+          <div class="group">
             <router-link style="margin:0 0 0 15px" to="/home" index="1">
               <span>首页</span>
             </router-link>
@@ -333,6 +337,7 @@ export default {
           }
         ]
       },
+      visibleOne:"",
       citylist: [],
       districtlist: [],
       visible: false,
@@ -383,10 +388,16 @@ export default {
                     "adcode",
                     result.addressComponent.adcode
                   );
-                  self.$store.state.adcode = result.addressComponent.adcode
-                  self.$store.state.cityName = result.addressComponent.province
-                  window.sessionStorage.setItem("adcode", result.addressComponent.adcode);
-                  window.sessionStorage.setItem("cityName", result.addressComponent.province);
+                  self.$store.state.adcode = result.addressComponent.adcode;
+                  self.$store.state.cityName = result.addressComponent.province;
+                  window.sessionStorage.setItem(
+                    "adcode",
+                    result.addressComponent.adcode
+                  );
+                  window.sessionStorage.setItem(
+                    "cityName",
+                    result.addressComponent.province
+                  );
                 }
               });
             }
@@ -419,8 +430,8 @@ export default {
       this.districtlist = item.children;
       window.sessionStorage.setItem("adcode", item.code);
       window.sessionStorage.setItem("cityName", item.tag);
-      this.$store.state.adcode = item.code
-      this.$store.state.cityName = item.tag
+      this.$store.state.adcode = item.code;
+      this.$store.state.cityName = item.tag;
     },
     initList() {
       // this.value = window.sessionStorage.getItem('value')
@@ -685,7 +696,7 @@ export default {
   z-index: 400;
   font-family: PingFangSC-Regular;
   background: #FFFFFF;
-  opacity: 0.6;
+  opacity: 0.9;
   letter-spacing: 1.1;
   box-shadow: 0px 1px 9px #ccc;
   width: 100%;

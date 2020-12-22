@@ -613,8 +613,8 @@ export default {
             
           });
       } else {
-        this.$notify.error({
-          title: "错误",
+        this.$notify.info({
+          title: "消息",
           message: "请先登录后再进行投递"
         });
         // this.$router.push({ path: "/login" });

@@ -25,7 +25,7 @@
 </script>
 <style>
     main{
-        width: 1445px;
+        width: 1345px;
         margin: auto;
         overflow: auto;
     }

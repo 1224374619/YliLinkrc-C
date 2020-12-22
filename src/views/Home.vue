@@ -198,6 +198,8 @@ export default {
 
 <style lang="stylus">
 .home {
+  width: 1440px;
+
   .home-banner {
     img {
       width: 1440px;
@@ -255,7 +257,7 @@ export default {
     .img-alt {
       background: #FFFFFF;
       border: 1px solid rgba(238, 238, 238, 1);
-      width: 201px;
+      width: 200px;
       height: 182px;
       position: relative;
       z-index: 100;
@@ -263,7 +265,7 @@ export default {
 
     .img-nav {
       width: 404px;
-      height: 182px;
+      height: 184px;
     }
 
     .img-nav:hover {
@@ -301,7 +303,7 @@ export default {
       padding: 60px 0 0 0;
 
       img {
-        width: 139px;
+        width: 180px;
         height: auto;
       }
     }
@@ -419,7 +421,6 @@ export default {
   }
 
   .home-backtop {
-    border: 1px solid red;
     height: 30px;
   }
 }
