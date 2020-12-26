@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="containers">
     <div class="body">
       <div class="form">
         <div class="photo">
@@ -8,12 +8,13 @@
           </div>
           <div class="formlet" style="margin:63px 0 0 104px">
             <div class="header">
-              <span class="deng">注册</span>
-              <el-button
-                style="color:#373737;font-size:16px;font-wight:500;text-align:right"
-                @click="business"
-                type="text"
-              >企业用户</el-button>
+              <div class="header-nav">
+                <div>
+                  <img src="../assets/images/register.png" />
+                </div>
+                <div style="margin:0 0 0 5px">已有银领账号，请绑定</div>
+              </div>
+              <div class="header-footer">完成绑定后可以微信账号一键登录</div>
             </div>
             <div class="formls">
               <el-form ref="form" :rules="rules" :model="form" label-width="-60px">
@@ -46,7 +47,7 @@
                 <el-form-item label prop="captcha">
                   <captcha :fromData="this.form.tel" v-model="form.captcha" />
                 </el-form-item>
-                <el-form-item prop="checkLicense" style="margin:-15px 0 20px 5px;">
+                <!-- <el-form-item prop="checkLicense" style="margin:-15px 0 20px 5px;">
                   <el-checkbox style="margin:0 100px 20px 0;" v-model="form.checkLicense">
                     我已同意
                     <el-button
@@ -55,55 +56,30 @@
                       @click="gotoUserPrivacyLicenseUI"
                     >《用户协议及隐私策略》</el-button>
                   </el-checkbox>
-                </el-form-item>
+                </el-form-item>-->
                 <el-form-item>
                   <el-button
-                    style="width:202px;height:43px;background:#02B9B8;color:#fff;border-radius:21px"
+                    style="width:202px;height:43px;background:#02B9B8;color:#fff;border-radius:21px;margin:45px 0 0 0"
                     class="full"
                     @click="onSubmit"
-                    :disabled="!form.checkLicense"
-                  >立即注册</el-button>
+                  >确认绑定</el-button>
                 </el-form-item>
               </el-form>
             </div>
             <div class="adjunctive">
-              <span>已有账号，</span>
-              <span @click="gotoLoginUI">立即登录</span>
+              <span>没有银领账号，</span>
+              <span @click="gotoRegisterUI">立即注册</span>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="successRegister" v-if="disabled">
-      <div>
-        <img
-          style="width:172px;margin:57px 0 0 0"
-          @click="gotoHomeUI"
-          :src="require('../assets/images/success.png')"
-        />
-      </div>
-      <div>
-        <p style="color:#2C2C2C;font-size:20px;font-weight:600">注册成功</p>
-        <p style="color:#565656;font-size:14px;margin:-10px 0 0 0">完善简历之后就可以去投递啦！</p>
-      </div>
-      <div>
-        <el-button
-          style="width:270px;height:43px;margin:60px 0 0 0;font-size:18px"
-          class="full"
-          type="primary"
-          @click="gotoLoginUI"
-        >立即登录</el-button>
-      </div>
-    </div>
-    <!-- <customized-footer :showSimple="true" /> -->
   </div>
 </template>
 
 <script>
-// import CustomizedFooter from 'components/customized-footer.vue';
-// import CustomizedNav from 'components/customized-nav.vue';
 import Captcha from "components/captcha.vue";
-// import PasswordInput from 'components/password-input.vue';
+import Cookies from "js-cookie";
 export default {
   name: "register",
   components: {
@@ -114,12 +90,14 @@ export default {
   },
   data() {
     return {
+      wxbind: "",
       form: {
         tel: "",
         password: "",
         captcha: "",
         checkLicense: false
       },
+
       show: {
         old: false,
         new: false,
@@ -155,16 +133,21 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           this.$local
-            .post("consumer-user/account/register", {
-              phone: this.form.tel,
-              password: this.form.password,
-              vcode: this.form.captcha,
-              agree: true
+            .post("consumer-user/account/wechat/binding/login", {
+              accessTokenVO: JSON.parse(this.wxbind),
+              phoneChangeBody: {
+                phone: this.form.tel,
+                password: this.form.password,
+                vcode: this.form.captcha
+              }
             })
             .then(res => {
               if (res.data.code == "200") {
-                this.open2();
-                this.$router.push({ path: "/login" });
+                let token = res.headers["auth-token"];
+                Cookies.set("token", token);
+                window.sessionStorage.setItem("user", this.form.tel);
+                this.brief();
+                // this.$router.push({ path: "/login" });
               }
             })
             .catch(error => {
@@ -189,6 +172,19 @@ export default {
           return false;
         }
       });
+    },
+    //获取简历简讯
+    brief() {
+      this.$http
+        .get("/consumer-core/resume/brief")
+        .then(res => {
+          if (res.data.data.base !== null) {
+            this.$store.state.avatarUrl = res.data.data.base.avatarUrl;
+          } else {
+          }
+          this.$router.push({ path: "/home" });
+        })
+        .catch(error => {});
     },
     getCaptcha() {
       this.$router.push({ path: "/login" });
@@ -221,6 +217,7 @@ export default {
               on: {
                 //鼠标移出的回调
                 click: this.getCaptcha
+
                 // //鼠标移入的回调
                 // mouseover: function(e){
                 //   e.target.style.backgroundColor = '#e7e7e7'
@@ -236,8 +233,8 @@ export default {
     business() {
       window.open("http://47.102.145.186/business/#/register");
     },
-    gotoLoginUI() {
-      this.$router.push({ path: "login" });
+    gotoRegisterUI() {
+      this.$router.push({ path: "register" });
     },
     gotoUserPrivacyLicenseUI() {
       window.open(
@@ -245,12 +242,15 @@ export default {
         "_blank"
       );
     }
+  },
+  created() {
+    this.wxbind = decodeURIComponent(this.$route.query.wxlogin);
   }
 };
 </script>
 
 <style lang="stylus">
-.container {
+.containers {
   background-repeat: no-repeat;
   background-size: 100% 100%;
   -moz-background-size: 100% 100%;
@@ -263,6 +263,7 @@ export default {
   top: 0;
   bottom: 0;
   margin: auto;
+
   .body {
     .form {
       background: #FFFFFF;
@@ -276,61 +277,94 @@ export default {
       top: 0;
       bottom: 0;
       margin: auto;
+
       .photo {
         display: flex;
         flex-direction: row;
+
         .formlet {
           display: flex;
           flex-direction: column;
           width: 270px;
+
           .header {
             display: flex;
-            flex-direction: row;
-            margin-bottom: 20px;
+            flex-direction: column;
+            margin-bottom: 0px;
             justify-content: space-between;
-            .deng {
+
+            .header-nav {
+              display: flex;
+              flex-direction: row;
+
+              img {
+                width: 18px;
+              }
+
+              div {
+                font-family: PingFangSC-Medium;
+                color: #02B9B8;
+                font-size: 18px;
+                line-height: 18px;
+              }
+            }
+
+            .header-footer {
               font-family: PingFangSC-Medium;
-              color: #02B9B8;
-              font-size: 24px;
+              color: #C5C5C5;
+              font-size: 13px;
+              text-align: left;
+              margin: 5px 0 0 25px;
             }
           }
+
           .formls {
             margin: 30px 0 0 0;
+
             .el-input__inner {
               background-color: #f7f7f7;
               border: none;
             }
+
             .el-input__inner:focus {
               border: 1px solid #CCCCCC;
               background-color: #ffffff;
             }
+
             .el-form-item.is-error .el-input__inner {
               border-color: #f56c6c;
             }
+
             .el-checkbox__input.is-checked .el-checkbox__inner {
               background-color: #02B9B8;
               border-color: #02B9B8;
             }
+
             .el-checkbox__inner {
               border: 1px solid #979797;
             }
+
             .el-checkbox__inner:hover {
               border: 1px solid #02B9B8;
             }
+
             .el-input__inner {
               &::placeholder {
                 color: #cbcbcb;
               }
             }
+
             .el-input__inner:focus {
               color: #373737;
             }
           }
+
           .adjunctive {
             cursor: pointer;
             font-family: PingFangSC-Regular;
             color: #373737;
             font-size: 14px;
+
             span:nth-child(2) {
               color: #00b4b3;
             }
@@ -339,6 +373,7 @@ export default {
       }
     }
   }
+
   .successRegister {
     width: 350px;
     height: 473px;
@@ -349,3 +384,4 @@ export default {
   }
 }
 </style>
+

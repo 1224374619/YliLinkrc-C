@@ -13,13 +13,14 @@ module.exports = {
         port: 443,
         host: 'localhost',
         https: false,
+        disableHostCheck: true, //  新增该配置项
         open: true,
         proxy: {
             '/api': {
                 // target: 'https://www.yinlinkrc.com/api/v1',// target host
                 // target: 'https://www.yinlinkrc.com/api/v1',// target host
-                target: 'https://www.yinlinkrc.com/api/v3', // target host
-                // target: 'http://192.168.1.151:8081', // target host
+                // target: 'https://www.yinlinkrc.com/api/v3', // target host
+                target: 'http://192.168.1.151:8081', // target host
                 ws: true, // proxy websockets
                 changeOrigin: true, // needed for virtual hosted sites
                 pathRewrite: {

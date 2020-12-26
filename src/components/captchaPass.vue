@@ -65,11 +65,11 @@ export default {
   .input
     width 120px
     height 43px
-    margin 0 0 0 25px
+    margin 0 0 0 10px
   .btn
     width 117px
     height 40px
-    margin 0 0 2px -30px
+    margin 0 0 2px 20px
     color #02B9B8
     border 1px solid #02B9B8
 </style>

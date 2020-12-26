@@ -6,6 +6,8 @@ import Cookies from 'js-cookie'
 import Home from '../views/Home.vue'
 import Search from '../views/Search.vue'
 import Login from '../views/Login.vue'
+import wxbind from '../views/Wxbind.vue'
+import wxlogin from '../views/wxlogin.vue'
 import ResetPassword from '../views/ResetPassword.vue'
 import ResetResult from '../views/ResetResult.vue'
 import Register from '../views/Register.vue'
@@ -37,7 +39,7 @@ import AppraiseDetail from '../views/appraise/appraiseDetail.vue'
 Vue.use(Router);
 // Vue.use(Message)
 const router = new Router({
-    mode: 'hash',
+    mode: 'history',
     routes: [{
             path: '/',
             name: 'front',
@@ -195,6 +197,16 @@ const router = new Router({
             path: '/register',
             name: 'register',
             component: Register
+        },
+        {
+            path: '/wxbind',
+            name: 'wxbind',
+            component: wxbind
+        },
+        {
+            path: '/wxlogin',
+            name: 'wxlogin',
+            component: wxlogin
         },
         {
             path: '/reset-password',

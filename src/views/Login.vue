@@ -1,6 +1,21 @@
 
 <template>
   <div class="containers">
+    <div class="popContainer" v-show="writeMessageShow" @click="writeMessageFun($event)">
+      <div class="messageMaskContent" ref="msk">
+        <div class="nav">微信登录</div>
+        <!-- <div >
+          <img src="../assets/images/foot-wxs.png" />
+        </div>-->
+        <div class="imgSrc" id="login_container"></div>
+        <div class="foot">
+          <button>
+            请使用微信扫描二维码登录
+            “银领人才网”
+          </button>
+        </div>
+      </div>
+    </div>
     <div class="body">
       <div class="form">
         <div class="photo">
@@ -8,7 +23,7 @@
             <img style="height:402px;" :src="require('../assets/images/login-photo.png')" />
           </div>
           <div class="formlet" style="margin:63px 0 0 104px">
-            <div class="header">
+            <div class="headers">
               <span class="deng">登录</span>
               <el-button
                 style="color:#373737;font-size:16px;font-wight:500;text-align:right"
@@ -60,8 +75,11 @@
               </el-form>
             </div>
             <div class="adjunctive">
-              <span>没有账号，</span>
-              <span @click="gotoRegisterUI">立即注册</span>
+              <div class="adjunctive-nav" @click="wxLogin">
+                <img src="../assets/images/wx.png" alt="微信登录" />
+                <div>微信登录</div>
+              </div>
+              <div class="adjunctive-aside" @click="gotoRegisterUI">立即注册</div>
             </div>
           </div>
         </div>
@@ -92,6 +110,7 @@ export default {
         tel: "",
         password: ""
       },
+      writeMessageShow: false,
       show: {
         old: false,
         new: false,
@@ -128,6 +147,28 @@ export default {
   },
   methods: {
     ...mapMutations([DONE_LOGIN]),
+    //微信扫码
+    wxLogin() {
+      this.writeMessageShow = true;
+
+      // let redirectUrl = encodeURIComponent(window.origin + "/api/" + this.url);
+      // console.log(redirectUrl);
+      var obj = new WxLogin({
+        self_redirect: false,
+        id: "login_container",
+        appid: "wxbca1daaa5765cc51",
+        scope: "snsapi_login",
+        redirect_uri: "http://www.yinlinkrc.com/wxlogin",
+        state: "asdsfdfgwerwrer2345325123",
+        style: "black"
+      });
+    },
+    //遮罩层
+    writeMessageFun(ev) {
+      if (!this.$refs.msk.contains(ev.target)) {
+        this.writeMessageShow = false;
+      }
+    },
     onSubmit() {
       this.$refs["form"].validate(async valid => {
         if (valid) {
@@ -168,11 +209,10 @@ export default {
         .get("/consumer-core/resume/brief")
         .then(res => {
           if (res.data.data.base !== null) {
-            this.$router.push({ path: "/home" });
             this.$storerouter.state.avatarUrl = res.data.data.base.avatarUrl;
           } else {
-            this.$router.push({ path: "/home" });
           }
+          this.$router.push({ path: "/home" });
         })
         .catch(error => {});
     },
@@ -202,7 +242,7 @@ export default {
   },
 
   created() {
-    this.$cookies.get("session");
+    // this.$cookies.get("session");
   },
   watch: {
     oldsix: function() {
@@ -256,7 +296,7 @@ export default {
           flex-direction: column;
           width: 270px;
 
-          .header {
+          .headers {
             display: flex;
             flex-direction: row;
             justify-content: space-between;
@@ -292,12 +332,77 @@ export default {
             font-family: PingFangSC-Regular;
             color: #373737;
             font-size: 14px;
+            display: flex;
+            flex-direction: row;
+            margin: 0 auto;
 
-            span:nth-child(2) {
-              color: #00b4b3;
+            .adjunctive-nav {
+              font-family: PingFangSC-Regular;
+              color: #848484;
+              display: flex;
+              flex-direction: row;
+
+              div {
+                margin: 0 0 0 5px;
+              }
+            }
+
+            .adjunctive-aside {
+              font-family: PingFangSC-Regular;
+              color: #01AFAF;
+              margin: 0 0 0 30px;
             }
           }
         }
+      }
+    }
+  }
+}
+
+.popContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #323232;
+  opacity: 0.9;
+  z-index: 1000;
+
+  .messageMaskContent {
+    position: relative;
+    left: 0;
+    width: 50%;
+    top: 30;
+    margin: auto;
+
+    .nav {
+      font-family: PingFangSC-Medium;
+      color: #FFFFFF;
+      font-size: 20px;
+      margin: 230px 0 0 0;
+    }
+
+    .imgSrc {
+      margin: 20px 0 0 0;
+
+      img {
+        width: 284px;
+      }
+    }
+
+    .foot {
+      button {
+        background: #222324;
+        width: 286px;
+        height: 66px;
+        font-family: PingFangSC-Medium;
+        color: #FFFFFF;
+        font-size: 16px;
+        border-radius: 33px;
+        border: 1px solid #222324;
+        padding: 0 47px;
+        margin: 10px 0 0 0;
       }
     }
   }

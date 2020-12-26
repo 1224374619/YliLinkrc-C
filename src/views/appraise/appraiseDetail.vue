@@ -239,14 +239,7 @@
         <div class="img">
           <img src="../../assets/images/huo.png" />
         </div>
-        <div class="content" v-html="this.appraiseList.activityContent">
-          <el-input
-  type="textarea"
-  :autosize="{ minRows: 2, maxRows: 4}"
-  placeholder="请输入内容"
-  v-model="textarea2">
-</el-input>
-        </div>
+        <div class="content" v-html="this.appraiseList.activityContent"></div>
       </div>
       <!-- <div class="contact">
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
