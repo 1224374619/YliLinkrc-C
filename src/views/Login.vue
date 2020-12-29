@@ -7,6 +7,9 @@
         <!-- <div >
           <img src="../assets/images/foot-wxs.png" />
         </div>-->
+         <remotejs
+          src="https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"
+        />
         <div class="imgSrc" id="login_container"></div>
         <div class="foot">
           <button>
@@ -92,6 +95,7 @@
 import CustomizedFooter from "components/customized-footer.vue";
 // import CustomizedNav from "components/customized-nav.vue";
 // import PasswordInput from "components/password-input.vue";
+import remotejs from "./RemoteJs";
 import { brief } from "apis/account";
 import { mapMutations } from "vuex";
 import { DONE_LOGIN } from "store/mutation-types";
@@ -100,12 +104,12 @@ import Cookies from "js-cookie";
 export default {
   name: "login",
   components: {
-    CustomizedFooter
-    // CustomizedNav,
-    // PasswordInput
+    CustomizedFooter,
+    remotejs
   },
   data() {
     return {
+      redirectUri: encodeURIComponent('https://www.yinlinkrc.com/#/wxlogin'),
       form: {
         tel: "",
         password: ""
@@ -145,6 +149,7 @@ export default {
       }
     };
   },
+  
   methods: {
     ...mapMutations([DONE_LOGIN]),
     //微信扫码
@@ -158,8 +163,8 @@ export default {
         id: "login_container",
         appid: "wxbca1daaa5765cc51",
         scope: "snsapi_login",
-        redirect_uri: "http://www.yinlinkrc.com/wxlogin",
-        state: "asdsfdfgwerwrer2345325123",
+        redirect_uri: this.redirectUri,
+        state: "asdsfdfgwerwreff",
         style: "black"
       });
     },
@@ -209,7 +214,7 @@ export default {
         .get("/consumer-core/resume/brief")
         .then(res => {
           if (res.data.data.base !== null) {
-            this.$storerouter.state.avatarUrl = res.data.data.base.avatarUrl;
+            this.$store.state.avatarUrl = res.data.data.base.avatarUrl;
           } else {
           }
           this.$router.push({ path: "/home" });

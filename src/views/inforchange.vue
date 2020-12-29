@@ -201,6 +201,9 @@ export default {
       }
     };
     return {
+      redirectUri: encodeURIComponent(
+        "https://www.yinlinkrc.com/#/inforchange"
+      ),
       wxCode: "",
       dialogVisible: false,
       writeMessageShow: false,
@@ -265,15 +268,12 @@ export default {
     //微信扫码
     wxLogin() {
       this.writeMessageShow = true;
-
-      // let redirectUrl = encodeURIComponent(window.origin + "/api/" + this.url);
-      // console.log(redirectUrl);
       var obj = new WxLogin({
         self_redirect: false,
         id: "login_container",
         appid: "wxbca1daaa5765cc51",
         scope: "snsapi_login",
-        redirect_uri: "http://www.yinlinkrc.com/wxlogin",
+        redirect_uri: this.redirectUri,
         state: "asdsfdfgwerwrer2345325123",
         style: "black"
       });
@@ -290,10 +290,10 @@ export default {
     //绑定
     bund() {
       let params = {
-        code: "wxbca1daaa5765cc51",
+        code: this.code,
         phone: this.phoneOne,
         scode: this.wxCode,
-        state: "asdsfdfgwerwrer2345325123"
+        state: this.state
       };
       this.$http
         .post("consumer-user/binding/wechat", params)
@@ -397,6 +397,15 @@ export default {
   },
   created() {
     this.phoneOne = window.sessionStorage.getItem("user");
+    let url = window.location.href;
+    // let url = 'http://www.yinlinkrc.com/business/account/base?code=041OLJFa1cDKeA0nswGa1YTr9q0OLJFS&state=asdsfdfgwerwrer';
+
+    if (url.indexOf("?") != -1) {
+      var str = url.substr(1);
+      var strs = str.split("=");
+      this.code = strs[1].split("&")[0];
+      this.state = strs[2];
+    }
     this.bindWechat();
   }
 };
