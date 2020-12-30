@@ -25,7 +25,7 @@
         </div>
         <span slot="footer" class="dialog-footer">
           <el-button plain @click="dialogVisible = false">取 消</el-button>
-          <el-button style="margin:0 0 0 100px" type="primary" @click="bund">绑 定</el-button>
+          <el-button style="margin:0 0 0 100px" type="primary" @click="keepUnbund">解 绑</el-button>
         </span>
       </el-dialog>
       <div class="cards">
@@ -195,10 +195,10 @@ export default {
       }
     };
     return {
-      redirectUri: encodeURIComponent(
-        "https://www.yinlinkrc.com/#/inforchange"
-      ),
+      redirectUri: encodeURIComponent("https://www.yinlinkrc.com/#/inforchange"),
       wxCode: "",
+      code: "",
+      state: "",
       dialogVisible: false,
       writeMessageShow: false,
       wxState: true,
@@ -258,6 +258,20 @@ export default {
       }
     };
   },
+  watch: {
+    $route(to, from) {
+      let url = window.location.href;
+      if (url.indexOf("?") != -1) {
+        var str = url.substr(1);
+        var strs = str.split("=");
+        this.code = strs[1].split("&")[0];
+        this.state = strs[2];
+      }
+      console.log(this.code, this.state);
+      this.writeMessageShow = false;
+      this.bund()
+    }
+  },
   methods: {
     //微信扫码
     wxLogin() {
@@ -267,6 +281,7 @@ export default {
         id: "login_container",
         appid: "wxbca1daaa5765cc51",
         scope: "snsapi_login",
+        // redirect_uri: "http://www.yinlinkrc.com/inforchange",
         redirect_uri: this.redirectUri,
         state: "asdsfdfgwerwrer2345325123",
         style: "black",
@@ -276,10 +291,18 @@ export default {
     },
     //解绑
     Unbund() {
+      this.dialogVisible = true;
+    },
+    keepUnbund() {
+      let params = {
+        phone: this.phoneOne,
+        scode: this.wxCode,
+      };
       this.$http
-        .delete(`consumer-user/binding/${this.thirdPartyId}`)
+        .post(`consumer-user/binding/wechat/unbind`, params)
         .then(res => {
           this.wxState = false;
+          this.dialogVisible = false;
         })
         .catch(error => {});
     },
@@ -287,8 +310,6 @@ export default {
     bund() {
       let params = {
         code: this.code,
-        phone: this.phoneOne,
-        scode: this.wxCode,
         state: this.state
       };
       this.$http
@@ -394,14 +415,16 @@ export default {
   created() {
     this.phoneOne = window.sessionStorage.getItem("user");
     let url = window.location.href;
-    // let url = 'http://www.yinlinkrc.com/business/account/base?code=041OLJFa1cDKeA0nswGa1YTr9q0OLJFS&state=asdsfdfgwerwrer';
-
     if (url.indexOf("?") != -1) {
       var str = url.substr(1);
       var strs = str.split("=");
       this.code = strs[1].split("&")[0];
       this.state = strs[2];
+      console.log(this.code, this.state);
+      this.bund()
     }
+    
+    this.writeMessageShow = false;
     this.bindWechat();
   }
 };

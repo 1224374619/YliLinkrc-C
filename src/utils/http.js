@@ -53,7 +53,7 @@ _axios.interceptors.response.use(
                 title: "消息",
                 message: "页面丢失，请重新加载"
             });
-        } else {
+        }  else  {
             Notification.info({
                 title: "消息",
                 message: error.response.data.message
