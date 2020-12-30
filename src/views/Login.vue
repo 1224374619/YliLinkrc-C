@@ -1,22 +1,20 @@
 
 <template>
   <div class="containers">
-    <div class="popContainer" v-show="writeMessageShow" @click="writeMessageFun($event)">
+    <div class="popContainers" v-show="writeMessageShow" @click="writeMessageFun($event)">
       <div class="messageMaskContent" ref="msk">
         <div class="nav">微信登录</div>
         <!-- <div >
           <img src="../assets/images/foot-wxs.png" />
         </div>-->
-         <remotejs
-          src="https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"
-        />
-        <div class="imgSrc" id="login_container"></div>
-        <div class="foot">
+        <remotejs src="https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js" />
+        <div class="imgSrc" style id="login_container"></div>
+        <!-- <div class="foot">
           <button>
             请使用微信扫描二维码登录
             “银领人才网”
           </button>
-        </div>
+        </div>-->
       </div>
     </div>
     <div class="body">
@@ -109,7 +107,7 @@ export default {
   },
   data() {
     return {
-      redirectUri: encodeURIComponent('https://www.yinlinkrc.com/#/wxlogin'),
+      redirectUri: encodeURIComponent("https://www.yinlinkrc.com/#/wxlogin"),
       form: {
         tel: "",
         password: ""
@@ -149,7 +147,7 @@ export default {
       }
     };
   },
-  
+
   methods: {
     ...mapMutations([DONE_LOGIN]),
     //微信扫码
@@ -165,7 +163,9 @@ export default {
         scope: "snsapi_login",
         redirect_uri: this.redirectUri,
         state: "asdsfdfgwerwreff",
-        style: "black"
+        style: "black",
+        href:
+          "data:text/css;base64,LmltcG93ZXJCb3ggLnN0YXR1cyB7CiAgbWFyZ2luOiAxMHB4IDAgNjBweCAwOwogIGJhY2tncm91bmQtY29sb3I6ICNmZmZmZmY7CiAgLXdlYmtpdC1ib3JkZXItcmFkaXVzOiAxMDBweDsKICB6LWluZGV4OiA2MDA7CiAgLXdlYmtpdC1ib3gtc2hhZG93OiBpbnNldCAwIDVweCAxMHB4IC01cHggIzE5MTkxOSwgMCAxcHggMCAwICM0NDQ7CiAgYm94LXNoYWRvdzogaW5zZXQgMCA1cHggMTBweCAtNXB4ICMxOTE5MTksIDAgMXB4IDAgMCAjNDQ0Owp9"
       });
     },
     //遮罩层
@@ -364,7 +364,7 @@ export default {
   }
 }
 
-.popContainer {
+.popContainers {
   position: fixed;
   top: 0;
   left: 0;
@@ -385,12 +385,10 @@ export default {
       font-family: PingFangSC-Medium;
       color: #FFFFFF;
       font-size: 20px;
-      margin: 230px 0 0 0;
+      margin: 130px 0 0 0;
     }
 
     .imgSrc {
-      margin: 20px 0 0 0;
-
       img {
         width: 284px;
       }

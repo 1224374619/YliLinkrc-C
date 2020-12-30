@@ -146,8 +146,7 @@ export default {
                 let token = res.headers["auth-token"];
                 Cookies.set("token", token);
                 window.sessionStorage.setItem("user", this.form.tel);
-                this.brief();
-                // this.$router.push({ path: "/login" });
+                this.$router.push({ path: "/home" });
               }
             })
             .catch(error => {
@@ -172,19 +171,6 @@ export default {
           return false;
         }
       });
-    },
-    //获取简历简讯
-    brief() {
-      this.$http
-        .get("/consumer-core/resume/brief")
-        .then(res => {
-          if (res.data.data.base !== null) {
-            this.$store.state.avatarUrl = res.data.data.base.avatarUrl;
-          } else {
-          }
-          this.$router.push({ path: "/home" });
-        })
-        .catch(error => {});
     },
     getCaptcha() {
       this.$router.push({ path: "/login" });

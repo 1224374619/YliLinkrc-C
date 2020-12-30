@@ -2,17 +2,11 @@
   <div>
     <div class="popContainer" v-show="writeMessageShow" @click="writeMessageFun($event)">
       <div class="messageMaskContent" ref="msk">
-        <div class="navs">微信登录</div>
+        <div class="navs">微信绑定</div>
         <!-- <div >
           <img src="../assets/images/foot-wxs.png" />
         </div>-->
         <div class="imgSrc" id="login_container"></div>
-        <div class="foot">
-          <button>
-            请使用微信扫描二维码登录
-            “银领人才网”
-          </button>
-        </div>
       </div>
     </div>
     <div class="inforchanges" style="background-color:#02B9B8;">
@@ -275,7 +269,9 @@ export default {
         scope: "snsapi_login",
         redirect_uri: this.redirectUri,
         state: "asdsfdfgwerwrer2345325123",
-        style: "black"
+        style: "black",
+        href:
+          "data:text/css;base64,LmltcG93ZXJCb3ggLnN0YXR1cyB7CiAgbWFyZ2luOiAxMHB4IDAgNjBweCAwOwogIGJhY2tncm91bmQtY29sb3I6ICNmZmZmZmY7CiAgLXdlYmtpdC1ib3JkZXItcmFkaXVzOiAxMDBweDsKICB6LWluZGV4OiA2MDA7CiAgLXdlYmtpdC1ib3gtc2hhZG93OiBpbnNldCAwIDVweCAxMHB4IC01cHggIzE5MTkxOSwgMCAxcHggMCAwICM0NDQ7CiAgYm94LXNoYWRvdzogaW5zZXQgMCA1cHggMTBweCAtNXB4ICMxOTE5MTksIDAgMXB4IDAgMCAjNDQ0Owp9"
       });
     },
     //解绑
@@ -434,7 +430,7 @@ export default {
       font-family: PingFangSC-Medium;
       color: #FFFFFF;
       font-size: 20px;
-      margin: 230px 0 0 0;
+      margin: 130px 0 0 0;
     }
 
     .imgSrc {

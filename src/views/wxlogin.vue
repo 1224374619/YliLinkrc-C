@@ -32,24 +32,11 @@ export default {
           } else {
             let token = res.headers["auth-token"];
             Cookies.set("token", token);
-            this.brief();
+            this.$router.push({ path: "/home" });
           }
         })
         .catch(error => {});
     },
-    //获取简历简讯
-    brief() {
-      this.$http
-        .get("/consumer-core/resume/brief")
-        .then(res => {
-          if (res.data.data.base !== null) {
-            this.$store.state.avatarUrl = res.data.data.base.avatarUrl;
-          } else {
-          }
-          this.$router.push({ path: "/home" });
-        })
-        .catch(error => {});
-    }
   },
   created() {
     this.wxlogin();
