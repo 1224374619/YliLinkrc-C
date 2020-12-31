@@ -39,7 +39,7 @@ import AppraiseDetail from '../views/appraise/appraiseDetail.vue'
 Vue.use(Router);
 // Vue.use(Message)
 const router = new Router({
-    mode: 'history',
+    mode: 'hash',
     routes: [{
             path: '/',
             name: 'front',
