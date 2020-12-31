@@ -34,6 +34,7 @@ export default {
       }, 1000);
       this.$local.post('consumer-user/account/phone/vcode',{phone:this.fromData})
       .catch(error => {
+        console.log('1111111')
               if (error.response.status === 404) {
                 this.$notify.info({
                   title: "消息",

@@ -6,6 +6,7 @@
         <!-- <div >
           <img src="../assets/images/foot-wxs.png" />
         </div>-->
+        <remotejs src="https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js" />
         <div class="imgSrc" id="login_container"></div>
       </div>
     </div>
@@ -108,7 +109,7 @@
                   </el-form-item>
                   <el-form-item label="验证码" prop="newCode" class="form-item">
                     <captchaPhone
-                      :fromData="this.newRuleForm.newPhone"
+                      :fromData="this.phoneOne"
                       v-model="newRuleForm.newCode"
                     />
                   </el-form-item>
@@ -174,6 +175,7 @@ import CustomizedFooter from "components/customized-footer.vue";
 import captchaPass from "components/captchaPass.vue";
 import captchaPhone from "components/captchaPhone.vue";
 import { resetPassword, resetPhone } from "apis/account";
+import remotejs from "./RemoteJs";
 export default {
   name: "inforchange",
   components: {
@@ -181,6 +183,7 @@ export default {
     CustomizedNav,
     CustomizedFooter,
     captchaPass,
+    remotejs,
     // PasswordInput,
     captchaPhone
   },
@@ -273,6 +276,12 @@ export default {
     }
   },
   methods: {
+    //遮罩层
+    writeMessageFun(ev) {
+      if (!this.$refs.msk.contains(ev.target)) {
+        this.writeMessageShow = false;
+      }
+    },
     //微信扫码
     wxLogin() {
       this.writeMessageShow = true;
@@ -445,7 +454,7 @@ export default {
   .messageMaskContent {
     position: relative;
     left: 0;
-    width: 50%;
+    width: 16%;
     top: 30;
     margin: auto;
 
