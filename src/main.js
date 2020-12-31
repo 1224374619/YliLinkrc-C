@@ -67,14 +67,24 @@ Vue.filter('formatDate', function (value) {
     return Moment(value).format('YYYY-MM-DD');
   }
 });
-
+Vue.filter('formatDateMjz', function (value) {
+  var timestamp = (new Date()).getTime() + 24 * 60 * 60 * 1000
+  var timestampOne = (new Date()).getTime() + 48 * 60 * 60 * 1000
+  var timestampSecond = (new Date()).getTime() + 72 * 60 * 60 * 1000
+  if (value < timestamp && value > new Date().getTime()) {
+    return Moment(value).format('今天' + 'HH:mm');
+  } else if (value < timestampOne && value > timestamp) {
+    return Moment(value).format('明天' + 'HH:mm');
+  } else if (value < timestampSecond && value > timestampOne) {
+    return Moment(value).format('后天' + 'HH:mm');
+  } else {
+    return Moment(value).format('YYYY-MM-DD');
+  }
+});
 Vue.filter('formatDateOne', function (value) {
   return Moment(value).format('YYYY-MM-DD')
 })
 Vue.filter('formatDateTwo', function (value) {
-  return Moment(value).format('YYYY-MM-DD HH:mm')
-})
-Vue.filter('formatDateThree', function (value) {
   return Moment(value).format('YYYY-MM-DD HH:mm')
 })
 Vue.filter('formatDateFourth', function (value) {

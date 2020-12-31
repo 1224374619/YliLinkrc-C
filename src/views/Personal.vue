@@ -130,9 +130,7 @@
             <div style="margin:0 40px" v-html="this.detailOfferlist.content"></div>
             <div class="annex" v-if="this.detailOfferlist.attachment !== null">
               <span>附件</span>
-              <a
-                @click="uploadfile"
-              >{{this.detailOfferlist.attachment.fileName}}</a>
+              <a @click="uploadfile">{{this.detailOfferlist.attachment.fileName}}</a>
               <span style="margin:0 40px 0 10px;color:#ff6600">下载</span>
             </div>
           </div>
@@ -317,7 +315,15 @@
                 <span
                   v-else
                 >{{list.workAddress.city}} | {{list.workAgeMin}}-{{list.workAgeMax}}年 | {{list.degreeMin}}</span>
-                <span class="publishedTimes">{{list.updateTime|formatDate}}</span>
+                <span class="publishedTimes" v-if="list.processedState === 'INTERVIEW'">
+                  {{list.updateTime|formatDateMjz}}
+                  <span
+                    style="font-family: PingFangSC-Regular;
+                            color: #02B9B8;
+                            margin-left:5px"
+                  >面试</span>
+                </span>
+                <span class="publishedTimes" v-else>{{list.updateTime|formatDate}}</span>
                 <div class="operatedButton" v-if="list.processedState === 'INTERVIEW'">
                   <div v-if="list.interviewState === 'COMPLETED'">
                     <button v-if="list.evaluationId === 0" @click="laterM(list)" class="button">去评价</button>
@@ -343,7 +349,10 @@
                     <span class="publishedTime">{{list.updateTime|formatDate}}</span>
                   </div>
                   <div v-else>
-                    <span v-if="list.offerId === 0" class="publishedTime">{{list.updateTime|formatDate}}</span>
+                    <span
+                      v-if="list.offerId === 0"
+                      class="publishedTime"
+                    >{{list.updateTime|formatDate}}</span>
                     <button v-else @click="examOffer(list)" class="button">查看Offer</button>
                   </div>
                 </div>
@@ -843,6 +852,7 @@ export default {
         .then(res => {
           this.dialogSuccess = true;
           this.appraise = true;
+          this.interviewstatus()
         })
 
         .catch(error => {});

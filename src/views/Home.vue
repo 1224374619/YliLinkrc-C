@@ -56,7 +56,7 @@
       <div class="home-content">
         <div class="home-card" v-for="(list,index) in newpositionList" :key="index">
           <div class="desc-first" @click="descVnf(list.id)" style="cursor:pointer">
-            <span v-if="list.positionName.length > 10">{{list.positionName.substr(0,10) + '...'}}</span>
+            <span v-if="list.positionName.length > 8">{{list.positionName.substr(0,8) + '...'}}</span>
             <span v-else>{{list.positionName}}</span>
             <span v-if="list.salaryMin === 35">{{list.salaryMin}}k以上</span>
             <span v-else>{{list.salaryMin}}-{{list.salaryMax}}k</span>
