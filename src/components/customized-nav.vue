@@ -33,7 +33,6 @@
           </el-tooltip>
           <el-tooltip
             style="margin:0 180px 0 40px;"
-            :disabled="true"
             v-model="visibleOne"
             effect="light"
             placement="bottom"
