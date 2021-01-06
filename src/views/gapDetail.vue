@@ -557,56 +557,96 @@ export default {
     };
   },
   methods: {
-    keep(formName) {
-      this.$refs[formName].validate(valid => {
-        if (valid) {
-          let til = this.eduformInline.schoolTime[0].getTime();
-          let till = this.eduformInline.schoolTime[1].getTime();
-          let ti = this.$moment(till).format("YYYY-MM");
-          let end = this.$moment(new Date().getTime()).format("YYYY-MM");
-          if (ti === end) {
-            var eduTime = null;
-          } else {
-            eduTime = till;
-          }
-          if (this.eduformInline.general == 0) {
-            this.eduformInline.general = true;
-          } else if (this.eduformInline.general == 1) {
-            this.eduformInline.general = false;
-          }
-          let params = {
-            beginTime: til,
-            endTime: eduTime,
-            degree: timeUtil.qualifications(
-              parseInt(this.eduformInline.qualifications)
-            ),
-            degreeCode: this.eduformInline.qualifications,
-            major: this.eduformInline.major,
-            school: this.eduformInline.schoolName,
-            isUnified: this.eduformInline.general
-          };
-          eduadd(this.defaultResumeId, params)
-            .then(res => {
-              if (res.data.code == 201) {
-                this.$router.push({ path: "/resume" });
-              }
-            })
-            .catch(error => {
-              
-            });
-        } else {
-          return false;
-        }
-      });
-    },
-    Jobstate() {
-      if (this.formInline.status == 1) {
-        this.datePicker = true;
-      } else {
-        this.datePicker = false;
+    GltBase() {
+      if (this.formInline.politicCountenance == "群众") {
+        this.formInline.politicCountenance = 0;
+      } else if (this.formInline.politicCountenance == "团员") {
+        this.formInline.politicCountenance = 1;
+      } else if (this.formInline.politicCountenance == "民主党派") {
+        this.formInline.politicCountenance = 1;
+      } else if (this.formInline.politicCountenance == "预备党员") {
+        this.formInline.politicCountenance = 3;
+      } else if (this.formInline.politicCountenance == "中共党员") {
+        this.formInline.politicCountenance = 4;
       }
+      let CodeToTag = timeUtil.CodeToTag(
+        [
+          this.formInline.city[0],
+          this.formInline.city[1],
+          this.formInline.city[2]
+        ],
+        this.options
+      );
+      let params = {
+        province: CodeToTag[0],
+        provinceCode: this.formInline.city[0],
+        city: CodeToTag[1],
+        cityCode: this.formInline.city[1],
+        district: CodeToTag[2],
+        districtCode: this.formInline.city[2],
+        politicalStatus: timeUtil.politicalStatus(
+          parseInt(this.formInline.politicCountenance)
+        ),
+        politicalStatusCode: Number(this.formInline.politicCountenance),
+
+        avatar: this.file == "" ? null : this.file,
+        overseasAge: Number(this.formInline.overseasAge),
+        workYear: this.formInline.workingSeniority.getTime(),
+        birthday: this.formInline.birthday.getTime(),
+        fullName: this.formInline.name,
+        sex: timeUtil.sex(parseInt(this.formInline.gender)),
+        sexCode: this.formInline.gender,
+        degree: timeUtil.qualifications(
+          parseInt(this.formInline.educationLevel)
+        ),
+        degreeCode: Number(this.formInline.educationLevel),
+        email: this.formInline.email,
+        phone: this.formInline.phone,
+        isGraduate: this.formInline.isGraduate == 0 ? true : false
+      };
+      informationkeep(this.defaultResumeId, params)
+        .then(res => {
+          if (res.data.code == 200) {
+            this.GltJob();
+          }
+        })
+        .catch(error => {});
     },
-    JobT(formName) {
+    GltEdu() {
+      let til = this.eduformInline.schoolTime[0].getTime();
+      let till = this.eduformInline.schoolTime[1].getTime();
+      let ti = this.$moment(till).format("YYYY-MM");
+      let end = this.$moment(new Date().getTime()).format("YYYY-MM");
+      if (ti === end) {
+        var eduTime = null;
+      } else {
+        eduTime = till;
+      }
+      if (this.eduformInline.general == 0) {
+        this.eduformInline.general = true;
+      } else if (this.eduformInline.general == 1) {
+        this.eduformInline.general = false;
+      }
+      let params = {
+        beginTime: til,
+        endTime: eduTime,
+        degree: timeUtil.qualifications(
+          parseInt(this.eduformInline.qualifications)
+        ),
+        degreeCode: this.eduformInline.qualifications,
+        major: this.eduformInline.major,
+        school: this.eduformInline.schoolName,
+        isUnified: this.eduformInline.general
+      };
+      eduadd(this.defaultResumeId, params)
+        .then(res => {
+          if (res.data.code == 201) {
+            this.$router.push({ path: "/resume" });
+          }
+        })
+        .catch(error => {});
+    },
+    GltJob() {
       switch (this.JobformInline.scope) {
         case 0:
           this.salaryMin = 0;
@@ -681,20 +721,37 @@ export default {
         salaryMin: this.salaryMin,
         salaryMax: this.salaryMax
       };
+      jobintensionadd(this.defaultResumeId, params)
+        .then(res => {
+          if (res.data.code == 200) {
+            this.GltEdu()
+          }
+        })
+        .catch(error => {});
+    },
+    keep(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          jobintensionadd(this.defaultResumeId, params)
-            .then(res => {
-              if (res.data.code == 200) {
-                this.basicinfo = false;
-                this.jobintension = false;
-                this.education = true;
-                this.num = 2;
-              }
-            })
-            .catch(error => {
-              
-            });
+          this.GltBase()
+        } else {
+          return false;
+        }
+      });
+    },
+    Jobstate() {
+      if (this.formInline.status == 1) {
+        this.datePicker = true;
+      } else {
+        this.datePicker = false;
+      }
+    },
+    JobT(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          this.basicinfo = false;
+          this.jobintension = false;
+          this.education = true;
+          this.num = 2;
         } else {
           return false;
         }
@@ -704,64 +761,10 @@ export default {
     keepBase(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          if (this.formInline.politicCountenance == "群众") {
-            this.formInline.politicCountenance = 0;
-          } else if (this.formInline.politicCountenance == "团员") {
-            this.formInline.politicCountenance = 1;
-          } else if (this.formInline.politicCountenance == "民主党派") {
-            this.formInline.politicCountenance = 1;
-          } else if (this.formInline.politicCountenance == "预备党员") {
-            this.formInline.politicCountenance = 3;
-          } else if (this.formInline.politicCountenance == "中共党员") {
-            this.formInline.politicCountenance = 4;
-          }
-          let CodeToTag = timeUtil.CodeToTag(
-            [
-              this.formInline.city[0],
-              this.formInline.city[1],
-              this.formInline.city[2]
-            ],
-            this.options
-          );
-          let params = {
-            province: CodeToTag[0],
-            provinceCode: this.formInline.city[0],
-            city: CodeToTag[1],
-            cityCode: this.formInline.city[1],
-            district: CodeToTag[2],
-            districtCode: this.formInline.city[2],
-            politicalStatus: timeUtil.politicalStatus(
-              parseInt(this.formInline.politicCountenance)
-            ),
-            politicalStatusCode: Number(this.formInline.politicCountenance),
-
-            avatar: this.file == "" ? null : this.file,
-            overseasAge: Number(this.formInline.overseasAge),
-            workYear: this.formInline.workingSeniority.getTime(),
-            birthday: this.formInline.birthday.getTime(),
-            fullName: this.formInline.name,
-            sex: timeUtil.sex(parseInt(this.formInline.gender)),
-            sexCode: this.formInline.gender,
-            degree: timeUtil.qualifications(
-              parseInt(this.formInline.educationLevel)
-            ),
-            degreeCode: Number(this.formInline.educationLevel),
-            email: this.formInline.email,
-            phone: this.formInline.phone,
-            isGraduate: this.formInline.isGraduate == 0 ? true : false
-          };
-          informationkeep(this.defaultResumeId, params)
-            .then(res => {
-              if (res.data.code == 200) {
-                this.basicinfo = false;
-                this.jobintension = true;
-                this.education = false;
-                this.num = 1;
-              }
-            })
-            .catch(error => {
-              
-            });
+          this.basicinfo = false;
+          this.jobintension = true;
+          this.education = false;
+          this.num = 1;
         }
       });
     },
@@ -786,9 +789,7 @@ export default {
           } else {
           }
         })
-        .catch(error => {
-          
-        });
+        .catch(error => {});
     },
     option() {
       this.workStateList = this.optionList.jobType;
