@@ -538,7 +538,8 @@ export default {
         .then(res => {
           if (res.status === 200) {
             this.defaultResumeId = res.data.data.defaultResumeId;
-            if (res.data.data.base === null) {
+            console.log(res.data.data.base.fullName)
+            if (res.data.data.base.fullName === null) {
               this.fullName = "";
             } else {
               this.fullName = res.data.data.base.fullName;
