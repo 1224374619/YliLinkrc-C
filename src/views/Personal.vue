@@ -130,8 +130,11 @@
             <div style="margin:0 40px" v-html="this.detailOfferlist.content"></div>
             <div class="annex" v-if="this.detailOfferlist.attachment !== null">
               <span>附件</span>
-              <a @click="uploadfile">{{this.detailOfferlist.attachment.fileName}}</a>
-              <span style="margin:0 40px 0 10px;color:#ff6600">下载</span>
+              <a>{{this.detailOfferlist.attachment.fileName}}</a>
+              <span
+                @click="uploadfile(detailOfferlist.id)"
+                style="margin:0 40px 0 10px;color:#ff6600;cursor:pointer"
+              >下载</span>
             </div>
           </div>
           <span
@@ -344,7 +347,10 @@
                   </div>
                   <button v-else class="button" @click="lookinterview(list)">查看面试</button>
                 </div>
-                <div class="operatedButton" v-else-if="list.processedState === 'OFFERED'">
+                <div
+                  class="operatedButton"
+                  v-else-if="list.processedState === 'OFFERED' || list.processedState === 'EMPLOYED'"
+                >
                   <div v-if="list.offerId === undefined">
                     <span class="publishedTime">{{list.updateTime|formatDate}}</span>
                   </div>
@@ -408,21 +414,24 @@
                   class="collect-company"
                   v-else
                 >{{list.company.companyName}}</span>
-                <span
-                  @click="nextjoblist(list.id)"
-                  class="collect-city"
-                  v-if="list.workAgeMax == null"
-                >{{list.workAddress.city}} | 10年以上 | {{list.degreeMin}}</span>
-                <span
-                  @click="nextjoblist(list.id)"
-                  class="collect-city"
-                  v-else-if="list.workAgeMin == 0"
-                >{{list.workAddress.city}} | 无工作经验 | {{list.degreeMin}}</span>
-                <span
-                  @click="nextjoblist(list.id)"
-                  class="collect-city"
-                  v-else
-                >{{list.workAddress.city}} | {{list.workAgeMin}}-{{list.workAgeMax}}年 | {{list.degreeMin}}</span>
+                <div style="width:500px">
+                  <span
+                    @click="nextjoblist(list.id)"
+                    class="collect-city"
+                    v-if="list.workAgeMax == null"
+                  >{{list.workAddress.city}} | 10年以上 | {{list.degreeMin}}</span>
+                  <span
+                    @click="nextjoblist(list.id)"
+                    class="collect-city"
+                    v-else-if="list.workAgeMin == 0"
+                  >{{list.workAddress.city}} | 无工作经验 | {{list.degreeMin}}</span>
+                  <span
+                    @click="nextjoblist(list.id)"
+                    class="collect-city"
+                    v-else
+                  >{{list.workAddress.city}} | {{list.workAgeMin}}-{{list.workAgeMax}}年 | {{list.degreeMin}}</span>
+                </div>
+
                 <span class="collect-button" v-if="list.isSubmitted">
                   <el-button style="color:#02B9B8" type="text">已投递</el-button>
                 </span>
@@ -711,15 +720,11 @@ export default {
   },
   methods: {
     //下载
-    uploadfile() {
+    uploadfile(res) {
       this.$http
-        .post(
-          `/consumer-core/offer/download`,
-          this.detailOfferlist.attachment,
-          {
-            responseType: "blob"
-          }
-        )
+        .get(`/consumer-core/offer/download/${res}`, {
+          responseType: "blob"
+        })
         .then(res => {
           console.log(res.headers);
           this.dialogVisible = false;
@@ -852,7 +857,7 @@ export default {
         .then(res => {
           this.dialogSuccess = true;
           this.appraise = true;
-          this.interviewstatus()
+          this.interviewstatus();
         })
 
         .catch(error => {});
@@ -1367,6 +1372,7 @@ export default {
 
     .operatedButton {
       display: inline;
+      
 
       .button {
         width: 128px;

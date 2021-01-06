@@ -11,7 +11,7 @@ export default {
     aliyu() {
       let label = "resume-file";
       this.$http
-        .post(`/file-service-dev/files/getPreviewUrl/?label=${label}`, this.obj)
+        .post(`/file-service/files/getPreviewUrl/?label=${label}`, this.obj)
         .then(res => {
           console.log(res);
           let demo = aliyun.config({

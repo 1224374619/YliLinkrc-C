@@ -157,7 +157,7 @@
           </div>
           <div class="station-appraise-line"></div>
 
-          <div v-for="(item,index) in evaluationLists.evaluations.list" :key="index" >
+          <div v-for="(item,index) in evaluationLists.evaluations.list" :key="index">
             <div class="station-appraise-aside">
               <div>
                 <img style="width:50px;height:50px;margin:0 0 0 30px" :src="item.avatar" />
@@ -167,7 +167,12 @@
               </div>
               <div class="appraise-aside" style="margin:15px 0 0 54px">
                 面试体验：
-                <el-rate disabled style="width:140px;" v-model="item.interviewExperience" :colors="colors"></el-rate>
+                <el-rate
+                  disabled
+                  style="width:140px;"
+                  v-model="item.interviewExperience"
+                  :colors="colors"
+                ></el-rate>
               </div>
               <div
                 class="appraise-aside"
@@ -199,7 +204,10 @@
               <div>企业回复</div>
               <div class="third">
                 <div>
-                  <img style="width:50px;height:50px;margin:15px 0 0 15px" :src="item.sublist[0].avatar" />
+                  <img
+                    style="width:50px;height:50px;margin:15px 0 0 15px"
+                    :src="item.sublist[0].avatar"
+                  />
                 </div>
                 <div>
                   <div
@@ -456,9 +464,7 @@ export default {
             this.showcoll();
           }
         })
-        .catch(error => {
-         
-        });
+        .catch(error => {});
     },
     //评论分页
     handleSizeChange(val) {
@@ -609,9 +615,7 @@ export default {
               this.dialogVisibleOne = true;
             }
           })
-          .catch(error => {
-            
-          });
+          .catch(error => {});
       } else {
         this.$notify.info({
           title: "消息",
@@ -634,9 +638,7 @@ export default {
             this.industryList = res.data.data;
           }
         })
-        .catch(error => {
-          
-        });
+        .catch(error => {});
     },
     //获取公司详情
     comId() {
@@ -646,9 +648,7 @@ export default {
             this.companyIdList = res.data.data;
           }
         })
-        .catch(error => {
-          
-        });
+        .catch(error => {});
     },
     //岗位列表
     positionCompany() {
@@ -665,9 +665,7 @@ export default {
             }
           }
         })
-        .catch(error => {
-          
-        });
+        .catch(error => {});
     },
     //获取岗位详情
     positionId() {
@@ -714,9 +712,7 @@ export default {
             this.positionCompany(), this.comId();
           }
         })
-        .catch(error => {
-          
-        });
+        .catch(error => {});
     },
     //判断简历是否投递
     showdeli() {
@@ -732,9 +728,7 @@ export default {
             }
           }
         })
-        .catch(error => {
-          
-        });
+        .catch(error => {});
     },
     //判断简历是否收藏
     showcoll() {
@@ -750,9 +744,7 @@ export default {
             }
           }
         })
-        .catch(error => {
-          
-        });
+        .catch(error => {});
     },
     //向岗位投递简历
     isclick() {
@@ -776,21 +768,26 @@ export default {
             this.citysal = res.data.data;
           }
         })
-        .catch(error => {
-          
-        });
+        .catch(error => {});
     },
     iscollect() {
-      iscollect(this.positiId)
-        .then(res => {
-          if (res.data.code == 200) {
-            this.isshowCollect = false;
-            this.showCollect = true;
-          }
-        })
-        .catch(error => {
-          
+      let token = Cookies.get("token");
+      if (token) {
+        iscollect(this.positiId)
+          .then(res => {
+            if (res.data.code == 200) {
+              this.isshowCollect = false;
+              this.showCollect = true;
+            }
+          })
+          .catch(error => {});
+      } else {
+        this.$notify.info({
+          title: "消息",
+          message: "请先登录后再进行投递"
         });
+        // this.$router.push({ path: "/login" });
+      }
     },
     //获取简历简讯
     brief() {
@@ -800,9 +797,7 @@ export default {
             this.resumesId = res.data.data.defaultResumeId;
           }
         })
-        .catch(error => {
-          
-        });
+        .catch(error => {});
     },
     isdeliver() {
       this.dialogVisibleOne = false;
@@ -821,7 +816,6 @@ export default {
       this.showdeli();
       this.showcoll();
       this.resumeList();
-      
     }
     this.positionId();
     this.evaluationList();

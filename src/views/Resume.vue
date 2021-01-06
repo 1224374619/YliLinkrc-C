@@ -2,15 +2,23 @@
   <Scroll ref="scroll">
     <div class="resumes">
       <div class="content">
+        <el-dialog title width="30%" :visible.sync="dialogetx" style="border-radius:5px;">
+          <div>
+            <pdf ref="pdf" :src="url"></pdf>
+          </div>
+        </el-dialog>
         <el-dialog title width="30%" :visible.sync="dialogDrag" style="border-radius:5px;">
-          <div style="font-size:18px;">
+          <!-- <div style="font-size:18px;">
             简历附件上传功能正在准备中
             <br />敬请期待
           </div>
           <div style="margin:25px 0 0 0">
             <el-button @click="dialogDrag = false" type="primary">知道了</el-button>
-          </div>
+          </div>-->
           <!-- <div>
+            <pdf ref="pdf" :src="url"></pdf>
+          </div>-->
+          <div>
             <el-upload
               class="upload-demo"
               :action="uploadUrl"
@@ -19,6 +27,7 @@
               :data="uploadfile"
               :headers="myHeaders"
               :show-file-list="false"
+              :before-upload="beforeAvatarUpload"
               :on-success="handleVideoSuccess"
             >
               <div>
@@ -39,7 +48,7 @@
                 <i class="el-icon-delete"></i>
               </div>
             </div>
-          </div>-->
+          </div>
         </el-dialog>
         <el-dialog
           title
@@ -1778,25 +1787,25 @@
               </div>
             </div>
           </div>
-                  <div class="aside-nav">
-              <div class="aside-nav-first">在线简历</div>
-              <div class="aside-nav-second">
-                <span>完整度</span>
-                <span>
-                  <el-progress
-                    :percentage="this.compPercent"
-                    class="progess"
-                    style="width:200px;padding:0 0 0 7px;height:9px"
-                  ></el-progress>
-                </span>
-              </div>
-              <div style="color:#f17130;font-size: 12px;margin: 10px 0 0 40px;">完整度超过66%可投递简历~</div>
-              <div class="aside-nav-third">最后更新：{{this.updatedTime|formatDateTwo}}</div>
+          <div class="aside-nav">
+            <div class="aside-nav-first">在线简历</div>
+            <div class="aside-nav-second">
+              <span>完整度</span>
+              <span>
+                <el-progress
+                  :percentage="this.compPercent"
+                  class="progess"
+                  style="width:200px;padding:0 0 0 7px;height:9px"
+                ></el-progress>
+              </span>
             </div>
+            <div style="color:#f17130;font-size: 12px;margin: 10px 0 0 40px;">完整度超过66%可投递简历~</div>
+            <div class="aside-nav-third">最后更新：{{this.updatedTime|formatDateTwo}}</div>
+          </div>
         </div>
 
-        <div class='fixed' id="searchBar">
-          <div class="aside" >
+        <div class="fixed" id="searchBar">
+          <div class="aside">
             <div class="aside-tabulation">
               <div class="tabulation">
                 <a @click="testRef('personalinformation')">
@@ -1909,6 +1918,7 @@ import industrys from "../assets/industry.json";
 import citys from "../assets/city.json";
 import options from "../assets/option.json";
 import positionCatalog from "../assets/positionCatalog.json";
+import pdf from "vue-pdf";
 
 import {
   jobintensionkeep,
@@ -1941,6 +1951,7 @@ import {
 export default {
   name: "Resumes",
   components: {
+    pdf,
     // PersonalinformationFrom,
     BasicInfo,
     JobIntension,
@@ -1979,7 +1990,7 @@ export default {
       }
     };
     return {
-      aaaa: false,
+      url: "",
       fileList: [],
       videoFlag: false,
       videoUploadPercent: 0,
@@ -2056,6 +2067,7 @@ export default {
       dialogSuccess: false,
       dialogsetDefault: false,
       dialogDrag: false,
+      dialogetx: false,
       dialogwork: false,
       dialogproject: false,
       dialogtrain: false,
@@ -2430,6 +2442,9 @@ export default {
   //   },
   // },
   methods: {
+    beforeAvatarUpload(file) {
+       console.log(file)
+    },
     //设置附件简历
     setDefault(res) {
       this.$http
@@ -2473,20 +2488,26 @@ export default {
     },
     //上传附件简历
     handleVideoSuccess(res, file) {
-      let label = "resume-file";
-      let params = {
-        accessUrl: res.data.fileAccessVo.accessUrl,
-        expireTime: res.data.fileAccessVo.expireTime,
-        ext: res.data.fileAccessVo.ext,
-        size: res.data.fileAccessVo.size,
-        fileName: res.data.fileAccessVo.fileName
-      };
-      var arr = JSON.stringify(params);
-      let Logistics = this.$router.resolve(
-        "/preview?obj=" + encodeURIComponent(arr)
-      );
-
-      window.open(Logistics.href, "_blank");
+      console.log(res,file)
+      let format = file.response.data.fileAccessVo.ext;
+      if (format === "doc" || format === "docx") {
+        let label = "resume-file";
+        let params = {
+          accessUrl: res.data.fileAccessVo.accessUrl,
+          expireTime: res.data.fileAccessVo.expireTime,
+          ext: res.data.fileAccessVo.ext,
+          size: res.data.fileAccessVo.size,
+          fileName: res.data.fileAccessVo.fileName
+        };
+        var arr = JSON.stringify(params);
+        let Logistics = this.$router.resolve(
+          "/preview?obj=" + encodeURIComponent(arr)
+        );
+        window.open(Logistics.href, "_blank");
+      } else {
+        this.dialogetx = true
+        this.url = res.data.fileAccessVo.accessUrl;
+      }
       this.dialogDrag = false;
     },
     //添加附件
@@ -3687,16 +3708,16 @@ export default {
       //改变元素#searchBar的top值
       var scrollTop = e.target.scrollTop;
       var offsetTop = document.querySelector("#searchBar").offsetTop;
-      console.log(scrollTop)
-      console.log(offsetTop)
+      console.log(scrollTop);
+      console.log(offsetTop);
       if (scrollTop <= 200) {
-        offsetTop = 300 - Number(scrollTop);
+        offsetTop = 340 - Number(scrollTop);
         document.querySelector("#searchBar").style.top = offsetTop + "px";
         document.querySelector("#searchBar").style.marginTop = "20px";
-        console.log(offsetTop)
+        console.log(offsetTop);
       } else {
-        document.querySelector("#searchBar").style.top = "100px";
-        console.log(offsetTop)
+        document.querySelector("#searchBar").style.top = "50px";
+        console.log(offsetTop);
       }
     }
   },
@@ -3704,9 +3725,10 @@ export default {
     //给window添加一个滚动滚动监听事件
     window.addEventListener("scroll", this.handleScroll, true);
   },
-  destroyed () {//离开该页面需要移除这个监听的事件
-  window.removeEventListener('scroll', this.handleScroll)
-},
+  destroyed() {
+    //离开该页面需要移除这个监听的事件
+    window.removeEventListener("scroll", this.handleScroll);
+  },
   created() {
     let token = Cookies.get("token");
     this.industryList = industrys.data;
@@ -3725,7 +3747,7 @@ export default {
       this.informationouterVisible = false;
     });
   },
-  
+
   computed: {
     uploadUrl() {
       // const {VUE_APP_SECRET,VUE_APP_DEV_MODE} = process.env
@@ -4144,6 +4166,7 @@ export default {
   box-sizing: border-box;
   z-index: 2;
 }
+
 .el-radio__input.is-checked .el-radio__inner {
   border-color: #02B9B8;
   background: #02B9B8;
