@@ -231,11 +231,6 @@
                 type="text"
                 @click="Tabstatus(2)"
               >已查看</el-button>
-              <!-- <el-button
-              :class="this.index== 'INTERVIEW' ? 'tabs-buttons' : 'tabs-button'"
-              type="text"
-              @click="Tabstatus(3)"
-              >面试</el-button>-->
               <el-dropdown>
                 <el-button
                   :class="this.index== 'INTERVIEW' ? 'tabs-buttons' : 'tabs-button'"
@@ -347,12 +342,37 @@
                   </div>
                   <button v-else class="button" @click="lookinterview(list)">查看面试</button>
                 </div>
-                <div
-                  class="operatedButton"
-                  v-else-if="list.processedState === 'OFFERED' || list.processedState === 'EMPLOYED'"
-                >
+
+                <div class="operatedButton" v-else-if="list.processedState === 'OFFERED'">
+                  <div v-if="list.interviewState === 'COMPLETED'">
+                    <button v-if="list.evaluationId === 0" @click="laterM(list)" class="button">去评价</button>
+                    <button v-else @click="exist(list)" class="button">去查看</button>
+                  </div>
+                  <div v-else>
+                    <div v-if="list.offerId === undefined">
+                      <span class="publishedTime">{{list.updateTime|formatDate}}</span>
+                    </div>
+                    <div v-else>
+                      <span
+                        v-if="list.offerId === 0"
+                        class="publishedTime"
+                      >{{list.updateTime|formatDate}}</span>
+                      <button v-else @click="examOffer(list)" class="button">查看Offer</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="operatedButton" v-else-if="list.processedState === 'EMPLOYED'">
                   <div v-if="list.offerId === undefined">
-                    <span class="publishedTime">{{list.updateTime|formatDate}}</span>
+                    <div v-if="list.interviewState === 'COMPLETED'">
+                      <button
+                        v-if="list.evaluationId === 0"
+                        @click="laterM(list)"
+                        class="button"
+                      >去评价</button>
+                      <button v-else @click="exist(list)" class="button">去查看</button>
+                    </div>
+                    <span v-else class="publishedTime">{{list.updateTime|formatDate}}</span>
                   </div>
                   <div v-else>
                     <span
@@ -362,6 +382,7 @@
                     <button v-else @click="examOffer(list)" class="button">查看Offer</button>
                   </div>
                 </div>
+
                 <div class="operatedButton" v-else>
                   <span class="publishedTime">{{list.updateTime|formatDate}}</span>
                 </div>
@@ -857,7 +878,10 @@ export default {
         .then(res => {
           this.dialogSuccess = true;
           this.appraise = true;
-          this.interviewstatus();
+          this.userList = [];
+          this.value2 = '';
+          this.textarea2 = '';
+          this.interviewstatus(1);
         })
 
         .catch(error => {});
@@ -1009,7 +1033,6 @@ export default {
     },
     interviewstatus(e) {
       if (e === 1) {
-        console.log();
         this.interviewStates = null;
         this.index = "INTERVIEW";
         this.interviewparams = {
@@ -1372,7 +1395,6 @@ export default {
 
     .operatedButton {
       display: inline;
-      
 
       .button {
         width: 128px;

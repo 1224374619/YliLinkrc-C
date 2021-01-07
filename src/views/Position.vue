@@ -131,10 +131,10 @@
                       >
                         <img
                           v-if="item.isLike"
-                          style="width:25px;height:25px"
+                          style="width:25px;height:25px;cursor:pointer"
                           src="../assets/images/zan.png"
                         />
-                        <img v-else style="width:25px;height:25px" src="../assets/images/hzan.png" />
+                        <img v-else style="width:25px;height:25px;cursor:pointer" src="../assets/images/hzan.png" />
                         <span style="line-height:25px">{{item.likeNum}}</span>
                       </div>
                     </div>
