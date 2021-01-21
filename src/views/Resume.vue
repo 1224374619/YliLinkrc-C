@@ -2278,7 +2278,7 @@ export default {
       edurules: {
         educationName: [
           { required: true, message: "请输入学校名称", trigger: "blur" },
-          { min: 0, max: 12, message: "长度在 0 到 12 个字", trigger: "blur" }
+          { min: 0, max: 35, message: "长度在 0 到 35 个字", trigger: "blur" }
           // { pattern:/^[a-zA-Z\u4e00-\u9fa5\s]{0,24}$/, message: '姓名仅支持中文汉字与英文字母', trigger: 'blur' },
         ],
         educationTime: [
@@ -3814,11 +3814,11 @@ export default {
   computed: {
     uploadUrl() {
       // const {VUE_APP_SECRET,VUE_APP_DEV_MODE} = process.env
-      return "/api/file-service/files/upload";
+      return "/api/v3/file-service/files/upload";
     },
     uploadUrlOne() {
       // const {VUE_APP_SECRET,VUE_APP_DEV_MODE} = process.env
-      return "/api/file-service/files/upload";
+      return "/api/v3/file-service/files/upload";
     }
   },
   filters: {

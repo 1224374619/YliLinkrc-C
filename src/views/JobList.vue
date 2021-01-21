@@ -639,7 +639,7 @@ export default {
                   {
                     city: null,
                     district: null,
-                    province: this.$store.state.cityName
+                    province: window.sessionStorage.getItem("cityName")
                   }
                 ]
               : [

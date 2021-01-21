@@ -82,7 +82,7 @@ export default {
       rules: {
         schoolName: [
           { required: true, message: "请输入学校名称", trigger: "blur" },
-          { min: 0, max: 12, message: '仅限12个字', trigger: 'blur' },
+          { min: 0, max: 35, message: '仅限35个字', trigger: 'blur' },
           // { pattern:/^[a-zA-Z\u4e00-\u9fa5\s]{0,24}$/, message: '姓名仅支持中文汉字与英文字母', trigger: 'blur' },
         ],
         schoolTime: [
