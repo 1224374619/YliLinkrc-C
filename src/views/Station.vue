@@ -84,7 +84,8 @@
           <i class="el-icon-circle-check"></i>
         </span>
         <br />
-        <span style="font-size:16px;color:#455379;">投递成功，静候佳音吧~~~</span>
+        <span style="font-size:16px;color:#455379;" v-if="collectState">投递成功，静候佳音吧~~~</span>
+        <span style="font-size:16px;color:#455379;" v-else>收藏成功，静候期待吧~~~</span>
         <span slot="footer" class="dialog-footer">
           <el-button
             type="primary"
@@ -399,6 +400,7 @@ export default {
   },
   data() {
     return {
+      collectState:true,
       morejumpers: false,
       morepagers: false,
       apprasiseEvaluation: true,
@@ -623,6 +625,7 @@ export default {
             if (res.data.code == 200) {
               this.almsg = false;
               this.msg = true;
+              this.collectState = true
               this.dialogVisibleTwo = false;
               this.dialogVisibleOne = true;
             }
@@ -790,6 +793,9 @@ export default {
             if (res.data.code == 200) {
               this.isshowCollect = false;
               this.showCollect = true;
+              this.dialogVisibleTwo = false;
+              this.dialogVisibleOne = true;
+              this.collectState = false
             }
           })
           .catch(error => {});

@@ -890,7 +890,7 @@ export default {
                   {
                     city: null,
                     district: null,
-                    province: window.sessionStorage.getItem("cityName")
+                    province: this.$store.state.cityName
                   }
                 ]
               : [
@@ -1186,6 +1186,10 @@ export default {
     }
   },
   created() {
+    console.log(window.sessionStorage.getItem("cityName"));
+    window.setTimeout(function() {
+      window.sessionStorage.getItem("cityName")
+    }, 3000);
     if (this.$route.query.homeSearch) {
       this.joblistSearch = this.$route.query.homeSearch;
       this.positionOrcompany = this.$route.query.positionOrcompany;
@@ -1196,7 +1200,6 @@ export default {
     this.option();
     this.cityForm();
     this.searches();
-    
   },
   filters: {
     level(level) {

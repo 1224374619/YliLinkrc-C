@@ -15,7 +15,7 @@ export default new Vuex.Store({
     value: '',
     childList: [],
     adcode: "",
-    cityName: '',
+    cityName: window.sessionStorage.getItem("cityName"),
     lsit: window.sessionStorage.getItem('lsit'),
     citycode: window.sessionStorage.getItem('citycode'),
     cityButton: window.sessionStorage.getItem('cityButton'),

@@ -388,15 +388,17 @@ export default {
                     result.addressComponent.adcode
                   );
                   self.$store.state.adcode = result.addressComponent.adcode;
-                  self.$store.state.cityName = result.addressComponent.province;
+                  // self.$store.state.cityName = result.addressComponent.province
                   window.sessionStorage.setItem(
                     "adcode",
                     result.addressComponent.adcode
                   );
+                  console.log(result.addressComponent.province)
                   window.sessionStorage.setItem(
                     "cityName",
                     result.addressComponent.province
                   );
+                  console.log(window.sessionStorage.getItem("cityName"))
                 }
               });
             }
