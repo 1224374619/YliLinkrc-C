@@ -40,7 +40,7 @@ export default {
   methods: {
     next() {
       this.$http.post("/consumer-core/resume").then(res => {
-        if (res.data.code == "201") {
+        if (res.data.data.code == "201") {
           this.$router.push({ path: "/gapDetail" });
         }
       });

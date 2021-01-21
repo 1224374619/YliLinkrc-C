@@ -97,13 +97,11 @@ export default {
             file:this.file === ''?null:this.file,acquiredTime:til,award:this.formInline.prizeAward
           }
             awardsadd(this.professionalDegree,params).then(res => {
-                if (res.data.code == 201) {
+                if (res.data.code == "201") {
                   this.$emit("awardsemit",false,true)
                   this.perId = res.data.data.addedModule.id
                   awardskeepurl(this.professionalDegree,this.perId)
-                  // .then(res => {
-        
-                  //   }).catch(error => {});
+                  this.file = ''
                 }
               }).catch(error => {
               
@@ -127,7 +125,7 @@ export default {
   },
   computed: {
       uploadUrl() {
-        return '/api/v3/file-service/files/upload';
+        return '/api/file-service/files/upload';
       }
     },
 };

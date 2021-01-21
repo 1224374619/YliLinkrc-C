@@ -40,7 +40,8 @@ Vue.use(Router);
 // Vue.use(Message)
 const router = new Router({
     mode: 'hash',
-    routes: [{
+    routes: [
+        {
             path: '/',
             name: 'front',
             component: resolve => require(['../layout/front/index'], resolve),
@@ -169,6 +170,11 @@ const router = new Router({
             name: 'inforchange',
             component: InforChange
         },
+        {
+            path: '/preview',
+            name: '预览',
+            component: preview
+        },
 
         // {
         //     path: '/captcha',
@@ -188,11 +194,7 @@ const router = new Router({
 
             }
         },
-        {
-            path: '/preview',
-            name: '预览',
-            component: preview
-        },
+       
         {
             path: '/register',
             name: 'register',

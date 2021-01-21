@@ -8,14 +8,14 @@
           </div>
         </el-dialog>
         <el-dialog title width="30%" :visible.sync="dialogDrag" style="border-radius:5px;">
-          <div style="font-size:18px;">
+          <!-- <div style="font-size:18px;">
             简历附件上传功能正在准备中
             <br />敬请期待
           </div>
           <div style="margin:25px 0 0 0">
             <el-button @click="dialogDrag = false" type="primary">知道了</el-button>
-          </div>
-          <!-- <div>
+          </div>-->
+          <div>
             <el-upload
               class="upload-demo"
               :action="uploadUrl"
@@ -45,7 +45,7 @@
                 <i class="el-icon-delete"></i>
               </div>
             </div>
-          </div> -->
+          </div>
         </el-dialog>
         <el-dialog
           title
@@ -692,6 +692,7 @@
                   v-model="formEducation.educationSpecialty"
                 ></el-input>
               </el-form-item>
+
               <el-form-item label="学历" prop="educationDegree">
                 <el-select
                   style="width:300px;height:36px;margin-left:-100px"
@@ -706,6 +707,21 @@
                   <el-option label="硕士" value="5"></el-option>
                   <el-option label="博士" value="6"></el-option>
                 </el-select>
+              </el-form-item>
+
+              <el-form-item label="是否统招" style="width:355px;margin:0 0 0 0" prop="general">
+                <el-radio
+                  style="width:112px;height:40px"
+                  v-model="formEducation.general"
+                  border
+                  label="0"
+                >是</el-radio>
+                <el-radio
+                  style="width:112px;height:40px;margin:0 0 0 -20px"
+                  v-model="formEducation.general"
+                  border
+                  label="1"
+                >否</el-radio>
               </el-form-item>
             </el-form>
           </div>
@@ -1064,6 +1080,42 @@
                   <el-option label="精通" value="3"></el-option>
                 </el-select>
               </el-form-item>
+              <el-form-item label="掌握程度" prop="level">
+                <el-select
+                  style="width:300px;height:36px;margin-left:-100px"
+                  v-model="formPersonalskill.level"
+                  placeholder
+                >
+                  <el-option label="一般" value="0"></el-option>
+                  <el-option label="良好" value="1"></el-option>
+                  <el-option label="熟练" value="2"></el-option>
+                  <el-option label="精通" value="3"></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="技能证书">
+                <el-upload
+                  class="avatar-upload"
+                  style="margin-right:280px"
+                  :action="uploadUrl"
+                  :data="uploadAward"
+                  :headers="myHeaders"
+                  :show-file-list="false"
+                  :on-success="handleSkillSuccess"
+                >
+                  <img v-if="imageUrlSskill" :src="imageUrlSskill" class="avatar" />
+                  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                  <div
+                    style="margin:-20px 0 0 0;width:120px"
+                    class="el-upload__tip"
+                    slot="tip"
+                  >只能上传jpg/png文件</div>
+                  <div
+                    style="margin:-20px 0 0 0;width:120px"
+                    class="el-upload__tip"
+                    slot="tip"
+                  >且不超过10Mb</div>
+                </el-upload>
+              </el-form-item>
             </el-form>
           </div>
           <div slot="footer" class="dialog-footer" style="margin:-20px 0 20px 0">
@@ -1134,6 +1186,8 @@
                   class="avatar-upload"
                   style="margin-right:315px"
                   :action="uploadUrl"
+                  :data="uploadAward"
+                  :headers="myHeaders"
                   :show-file-list="false"
                   :on-success="handleAvatarSuccess"
                   :on-error="handleAvatarError"
@@ -1149,7 +1203,7 @@
                     style="margin:-20px 0 0 0;width:120px"
                     class="el-upload__tip"
                     slot="tip"
-                  >且不超过2Mb</div>
+                  >且不超过10Mb</div>
                 </el-upload>
               </el-form-item>
             </el-form>
@@ -1991,6 +2045,9 @@ export default {
       fileList: [],
       videoFlag: false,
       videoUploadPercent: 0,
+      uploadAward: {
+        label: "resume-cert"
+      },
       uploadData: {
         label: "resume-avatar"
       },
@@ -2098,7 +2155,9 @@ export default {
       showaward: true,
       showpersonappraisal: true,
       file: "",
+      fileSkill: "",
       imageUrlOne: "",
+      imageUrlSskill:"",
       defaultId: "",
       languageouterVisible: false,
       languageinnerVisible: false,
@@ -2132,12 +2191,14 @@ export default {
       listpersonalskill: [],
       listaward: [],
       listpersonappraisal: "",
+      isshowpersonalinformation:false,
       compPercent: 0,
       formEducation: {
         educationDegree: "",
         educationName: "",
         educationTime: [],
-        educationSpecialty: ""
+        educationSpecialty: "",
+        general: ""
       },
       formInformation: {
         name: "",
@@ -2391,7 +2452,7 @@ export default {
         phone: [
           { required: true, message: "请填写手机号", trigger: "change" },
           {
-            pattern: /^[1][3578][0-9]{9}$/,
+            pattern: /^[1][356789][0-9]{9}$/,
             message: "请输入正确的手机号",
             trigger: ["change", "blur"]
           }
@@ -2440,7 +2501,7 @@ export default {
   // },
   methods: {
     beforeAvatarUpload(file) {
-       console.log(file)
+      console.log(file);
     },
     //设置附件简历
     setDefault(res) {
@@ -2485,7 +2546,7 @@ export default {
     },
     //上传附件简历
     handleVideoSuccess(res, file) {
-      console.log(res,file)
+      console.log(res, file);
       let format = file.response.data.fileAccessVo.ext;
       if (format === "doc" || format === "docx") {
         let label = "resume-file";
@@ -2502,7 +2563,7 @@ export default {
         );
         window.open(Logistics.href, "_blank");
       } else {
-        this.dialogetx = true
+        this.dialogetx = true;
         this.url = res.data.fileAccessVo.accessUrl;
       }
       this.dialogDrag = false;
@@ -2755,6 +2816,10 @@ export default {
       this.imageUrlOne = URL.createObjectURL(file.raw);
       this.file = res.data;
     },
+    handleSkillSuccess(res, file) {
+      this.imageUrlSskill = URL.createObjectURL(file.raw);
+      this.fileSkill = res.data;
+    },
     handleAvatarError(err, file, fileList) {
       this.$notify.info({
         title: "消息",
@@ -2781,9 +2846,10 @@ export default {
                 this.awardsouterVisible = false;
                 this.resumeId();
                 this.perId = res.data.data.updatedModule.id;
-                awardskeepurl(this.resumesId, this.perId);
-                // .then(res => {
-                //     }).catch( => {});
+                this.file == ""
+                // awardskeepurl(this.resumesId, this.perId);
+                // // .then(res => {
+                // //     }).catch( => {});
               }
             })
             .catch(error => {});
@@ -2796,23 +2862,16 @@ export default {
     skillkeep(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          // if (this.formPersonalskill.level == "一般") {
-          //   this.formPersonalskill.level = 0;
-          // } else if (this.formPersonalskill.level == "良好") {
-          //   this.formPersonalskill.level = 1;
-          // } else if (this.formPersonalskill.level == "熟练") {
-          //   this.formPersonalskill.level = 2;
-          // } else if (this.formPersonalskill.level == "精通") {
-          //   this.formPersonalskill.level = 3;
-          // }
           let params = {
             level: timeUtil.levels(parseInt(this.formPersonalskill.level)),
-            skill: this.formPersonalskill.technicalName
+            skill: this.formPersonalskill.technicalName,
+            file: this.fileSkill == "" ? null : this.fileSkill
           };
           skillkeep(this.resumesId, this.skillId, params)
             .then(res => {
               if (res.data.code == 200) {
                 this.personalskillouterVisible = false;
+                this.fileSkill == ""
                 this.resumeId();
               }
             })
@@ -3005,7 +3064,7 @@ export default {
             degreeCode: parseInt(this.formEducation.educationDegree),
             major: this.formEducation.educationSpecialty,
             school: this.formEducation.educationName,
-            isUnified: false
+            isUnified: this.formEducation.general === "0" ? true : false
           };
           educationkeep(this.resumesId, this.educationId, params)
             .then(res => {
@@ -3089,7 +3148,7 @@ export default {
           if (res.data.code == 200) {
             this.resumesId = res.data.data.defaultResumeId;
             this.resumeId();
-            if (res.data.data.base === null) {
+            if (res.data.data.base.fullName === null) {
               (this.showPersonalinformation = false),
                 (this.isshowpersonalinformation = true),
                 (this.personalinformation = true);
@@ -3307,22 +3366,24 @@ export default {
       this.formAwards.prizeTime = this.$moment(
         new Date(list.acquiredTime).getTime()
       ).format("YYYY-MM");
-      awardskeepurl(this.resumesId, this.awardsId)
-        .then(res => {
-          if (res.data.code == 201) {
-            this.imageUrlOne = res.data.data.tempUrl;
-          }
-        })
-        .catch(error => {});
+      if (list.certUrl !== undefined) {
+        this.imageUrlOne = list.certUrl.accessUrl;
+      }else {
+        this.imageUrlOne = '';
+      }
       this.awardsouterVisible = true;
     },
     //专业技能编辑
     editskill(list) {
       this.personalskillouterVisible = true;
       this.skillId = list.id;
-      console.log(this.skillId);
       this.formPersonalskill.technicalName = list.skill;
       this.formPersonalskill.level = timeUtil.level(list.level);
+      if (list.certUrl !== undefined) {
+        this.imageUrlSskill = list.certUrl.accessUrl;
+      }else {
+        this.imageUrlSskill = '';
+      }
     },
     //语言能力
     showlanguagesList(list) {
@@ -3398,6 +3459,11 @@ export default {
       this.formEducation.educationSpecialty = list.major;
       this.formEducation.educationName = list.school;
       this.formEducation.educationDegree = list.degree;
+      if (list.isUnified == true) {
+        this.formEducation.general = "0";
+      } else {
+        this.formEducation.general = "1";
+      }
       if (list.endTime == null) {
         var date = new Date();
         var dataOne = new Date(list.endTime).getTime();
@@ -3748,11 +3814,11 @@ export default {
   computed: {
     uploadUrl() {
       // const {VUE_APP_SECRET,VUE_APP_DEV_MODE} = process.env
-      return "/api/v3/file-service/files/upload";
+      return "/api/file-service/files/upload";
     },
     uploadUrlOne() {
       // const {VUE_APP_SECRET,VUE_APP_DEV_MODE} = process.env
-      return "/api/v3/file-service/files/upload";
+      return "/api/file-service/files/upload";
     }
   },
   filters: {

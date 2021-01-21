@@ -140,7 +140,7 @@ export const homeSearch = (params) => axios.post('/consumer-core/position/search
 //获取投递过的岗位
 export const submitted = (params) => axios.post('/consumer-core/submitted/position',params);
 //获取收藏的岗位
-export const favorite = (params) => axios.get('/consumer-core/favorite/position',{params});
+export const favorite = (params) => axios.get('/consumer-core/favorite/position',{params:params});
 //取消对岗位的收藏
 export const isfavorite = (id) => axios.delete(`/consumer-core/favorite/position/${id}`);
 //获取推荐岗位

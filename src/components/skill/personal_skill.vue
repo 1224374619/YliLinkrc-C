@@ -83,7 +83,7 @@ export default {
   },
   computed: {
     uploadUrl() {
-      return '/api/v3/file-service/files/upload';
+      return '/api/file-service/files/upload';
     }
   },
   methods: {
@@ -103,6 +103,7 @@ export default {
             if (res.data.code == 201) {
               this.perId = res.data.data.addedModule.id;
               skilladdurl(this.professionalDegree, this.perId);
+              this.file = ''
             }
           });
           this.$emit("skillEmit", false, true);

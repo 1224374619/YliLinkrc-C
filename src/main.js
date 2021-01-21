@@ -27,6 +27,8 @@ import BaiduMap from 'vue-baidu-map';
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import '../node_modules/swiper/dist/css/swiper.css'
 import VueFullpage from 'vue-fullpage.js'
+// import VueJsonp from 'vue-jsonp'
+// Vue.use(VueJsonp)
 Vue.use(VueFullpage)
 Vue.use(VueAwesomeSwiper)
 

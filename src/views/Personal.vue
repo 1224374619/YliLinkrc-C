@@ -879,8 +879,8 @@ export default {
           this.dialogSuccess = true;
           this.appraise = true;
           this.userList = [];
-          this.value2 = '';
-          this.textarea2 = '';
+          this.value2 = "";
+          this.textarea2 = "";
           this.interviewstatus(1);
         })
 
@@ -973,12 +973,13 @@ export default {
       });
     },
     Tabstatus(e) {
+      this.page1.current = 1
       if (e === 1) {
         this.index = "TO_PROCESS";
         this.params = {
           resumeProcessedState: this.index,
-          pageNum: 1,
-          pageSize: 10,
+          pageNum: this.page1.current,
+          pageSize: this.page1.pageSize,
           interviewState: null,
           sortBy: null,
           sortOrder: null
@@ -987,8 +988,8 @@ export default {
         this.index = "PROCESSING";
         this.params = {
           resumeProcessedState: this.index,
-          pageNum: 1,
-          pageSize: 10,
+          pageNum: this.page1.current,
+          pageSize: this.page1.pageSize,
           interviewState: null,
           sortBy: null,
           sortOrder: null
@@ -997,8 +998,8 @@ export default {
         this.index = "INTERVIEW";
         this.params = {
           resumeProcessedState: this.index,
-          pageNum: 1,
-          pageSize: 10,
+          pageNum: this.page1.current,
+          pageSize: this.page1.pageSize,
           interviewState: null,
           sortBy: null,
           sortOrder: null
@@ -1007,8 +1008,8 @@ export default {
         this.index = "OFFERED";
         this.params = {
           resumeProcessedState: this.index,
-          pageNum: 1,
-          pageSize: 10,
+          pageNum: this.page1.current,
+          pageSize: this.page1.pageSize,
           interviewState: null,
           sortBy: null,
           sortOrder: null
@@ -1017,8 +1018,8 @@ export default {
         this.index = "UNFIT";
         this.params = {
           resumeProcessedState: this.index,
-          pageNum: 1,
-          pageSize: 10,
+          pageNum: this.page1.current,
+          pageSize: this.page1.pageSize,
           interviewState: null,
           sortBy: null,
           sortOrder: null
@@ -1097,7 +1098,7 @@ export default {
         pageSize: this.page.pageSize
       };
       favorite(params).then(res => {
-        if (res.data.code === 200) {
+        if (res.data.code === '200') {
           this.favoriteList = res.data.data.list;
           this.page.total = res.data.data.total;
         }
@@ -1110,7 +1111,7 @@ export default {
         pageSize: this.page.pageSize
       };
       favorite(params).then(res => {
-        if (res.data.code === 200) {
+        if (res.data.code === '200') {
           this.favoriteList = res.data.data.list;
           this.page.total = res.data.data.total;
         }
@@ -1119,11 +1120,15 @@ export default {
     handleSizeChange1(val) {
       this.page1.pageSize = val;
       this.page1.current = 1;
-      let params = {
+      this.params = {
+        resumeProcessedState: this.index,
         pageNum: this.page1.current,
-        pageSize: this.page1.pageSize
+        pageSize: this.page1.pageSize,
+        interviewState: null,
+        sortBy: null,
+        sortOrder: null
       };
-      submitted(params).then(res => {
+      submitted(this.params).then(res => {
         if (res.data.code == 200) {
           this.submittedList = res.data.data.list;
           this.page1.total = res.data.data.total;
@@ -1132,11 +1137,15 @@ export default {
     },
     handleCurrentChange1(val) {
       this.page1.current = val;
-      let params = {
+      this.params = {
+        resumeProcessedState: this.index,
         pageNum: this.page1.current,
-        pageSize: this.page1.pageSize
+        pageSize: this.page1.pageSize,
+        interviewState: null,
+        sortBy: null,
+        sortOrder: null
       };
-      submitted(params).then(res => {
+      submitted(this.params).then(res => {
         if (res.data.code == 200) {
           this.submittedList = res.data.data.list;
           this.page1.total = res.data.data.total;

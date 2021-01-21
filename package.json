@@ -24,6 +24,7 @@
     "vue-cookies": "^1.5.13",
     "vue-fullpage": "^2.0.5",
     "vue-fullpage.js": "^0.1.5",
+    "vue-jsonp": "^2.0.0",
     "vue-pdf": "^4.2.0",
     "vue-router": "^3.0.1",
     "vue-seamless-scroll": "^1.1.17",

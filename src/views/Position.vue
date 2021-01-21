@@ -35,9 +35,10 @@
                 </div>
                 <div class="map-ad">
                   <div class="map-address">
-                    <span class="map-address-span">{{companyIdList.address.detail}}</span>
+                    <span class="map-address-span">{{companyIdList.address.city+companyIdList.address.district+companyIdList.address.detail}}</span>
                   </div>
                   <baidu-map
+                    id="container"
                     :center="center"
                     :zoom="zoom"
                     style="width:859px;height:188px;margin:0 0 45px 0"
@@ -68,10 +69,7 @@
                   </el-radio-group>
                 </div>
                 <div class="station-appraise-line"></div>
-                <div
-                  v-for="(item,index) in evaluationLists.evaluations.list"
-                  :key="index"
-                >
+                <div v-for="(item,index) in evaluationLists.evaluations.list" :key="index">
                   <div class="station-appraise-aside">
                     <div>
                       <img style="width:50px;height:50px;margin:0 0 0 30px" :src="item.avatar" />
@@ -112,7 +110,7 @@
                     <div v-if="item.sublist !== null" style="margin-left: -720px">企业回复</div>
                     <div v-if="item.sublist !== null" class="third">
                       <div>
-                        <img style="width:50px;height:50px;margin:15px 0 0 15px" :src="item.avatar" />
+                        <img style="width:50px;height:50px;margin:15px 0 0 15px" :src="item.sublist[0].avatar" />
                       </div>
                       <div>
                         <div
@@ -134,7 +132,11 @@
                           style="width:25px;height:25px;cursor:pointer"
                           src="../assets/images/zan.png"
                         />
-                        <img v-else style="width:25px;height:25px;cursor:pointer" src="../assets/images/hzan.png" />
+                        <img
+                          v-else
+                          style="width:25px;height:25px;cursor:pointer"
+                          src="../assets/images/hzan.png"
+                        />
                         <span style="line-height:25px">{{item.likeNum}}</span>
                       </div>
                     </div>
@@ -277,7 +279,7 @@ export default {
       id: "",
 
       center: { lng: "", lat: "" },
-      zoom: 13
+      zoom: 15
 
       // nearbyInfo: [], // 周边信息---高德反馈（周边建筑信息）
       // addressInfo: "", // 城市信息---高德反馈（省市区、adcode）
@@ -453,16 +455,37 @@ export default {
         .catch(error => {});
     },
     getLocationPoint(e) {
+      // 根据地址获取经纬度
+      let self = this;
       // this.lng = e.point.lng;
       // this.lat = e.point.lat;
       /* 创建地址解析器的实例 */
       let geoCoder = new BMap.Geocoder();
-      /* 获取位置对应的坐标 */
-      geoCoder.getPoint(this.companyIdList.address.detail, point => {
-        console.log(point);
-        this.center.lng = point.lng;
-        this.center.lat = point.lat;
-      });
+      geoCoder.getPoint(
+        self.companyIdList.address.city+self.companyIdList.address.district+self.companyIdList.address.detail,
+        function(point) {
+          if (point) {
+            //经度
+            var pointx = point.lng;
+            //纬度
+            var pointy = point.lat;
+            self.center.lng = point.lng;
+            self.center.lat = point.lat;
+            console.log(pointx, pointy);
+          }
+        },
+        self.companyIdList.address.city+self.companyIdList.address.district+self.companyIdList.address.detail,
+      );
+      // /* 获取位置对应的坐标 */
+      // console.log(e)
+      // console.log(self.companyIdList.address.detail)
+      // geoCoder.getPoint('上海', point => {
+      //   console.log(point);
+      //   self.center.lng = point.lng;
+      //   self.center.lat = point.lat;
+      //   console.log(point.lng,point.lat)
+      // });
+      // console.log(self.center)
       // /* 利用坐标获取地址的详细信息 */
       // geoCoder.getLocation(e.point, res=>{
       //     console.log(res);

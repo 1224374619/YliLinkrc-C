@@ -122,7 +122,7 @@
           <div class="station-foot-foot-two">
             <span
               style="font-size:18px"
-            >{{this.positionIdListworkAddress.province+' ' +' '+this.positionIdListworkAddress.city}} {{this.positionIdListworkAddress.detail}}</span>
+            >{{positionIdListworkAddress.city+positionIdListworkAddress.district+positionIdListworkAddress.detail}}</span>
             <!-- <span>查看地图</span> -->
           </div>
           <!-- <el-amap
@@ -205,6 +205,10 @@
               <div class="third">
                 <div>
                   <img
+                    v-if="item.sublist.length === 0"
+                  />
+                  <img
+                    v-else
                     style="width:50px;height:50px;margin:15px 0 0 15px"
                     :src="item.sublist[0].avatar"
                   />
@@ -213,7 +217,7 @@
                   <div
                     style="margin:5px 0 0 10px;color: #A2A2A2"
                   >{{evaluationLists.companyName}}HR.人事</div>
-                  <div style="margin:0 0 0 10px" v-if="item.sublist === null"></div>
+                  <div style="margin:0 0 0 10px" v-if="item.sublist.length === 0"></div>
                   <div style="margin:5px 0 0 10px" v-else>{{item.sublist[0].content}}</div>
                 </div>
                 <div>
@@ -571,16 +575,24 @@ export default {
         .catch(error => {});
     },
     getLocationPoint(e) {
+      let self = this;
       // this.lng = e.point.lng;
       // this.lat = e.point.lat;
       /* 创建地址解析器的实例 */
       let geoCoder = new BMap.Geocoder();
       /* 获取位置对应的坐标 */
-      geoCoder.getPoint(this.positionIdList.workAddress.detail, point => {
-        console.log(point);
-        this.center.lng = point.lng;
-        this.center.lat = point.lat;
-      });
+      geoCoder.getPoint(self.positionIdList.workAddress.city+self.positionIdList.workAddress.district+self.positionIdList.workAddress.detail, function(point) {
+          if (point) {
+            //经度
+            var pointx = point.lng;
+            //纬度
+            var pointy = point.lat;
+            self.center.lng = point.lng;
+            self.center.lat = point.lat;
+            console.log(pointx, pointy);
+          }
+        },
+        self.positionIdList.workAddress.city+self.positionIdList.workAddress.district+self.positionIdList.workAddress.detail,);
       // /* 利用坐标获取地址的详细信息 */
       // geoCoder.getLocation(e.point, res=>{
       //     console.log(res);
