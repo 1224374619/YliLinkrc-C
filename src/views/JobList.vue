@@ -457,6 +457,7 @@ export default {
     },
     //搜索职位 公司
     search() {
+      let that = this
       if (this.positionOrcompany == "公司") {
         let CodeToTag = timeUtil.CodeToTag(
           [
@@ -474,7 +475,7 @@ export default {
                   {
                     city: null,
                     district: null,
-                    province: this.$store.state.cityName
+                    province: that.$store.state.cityName
                   }
                 ]
               : [
@@ -639,7 +640,7 @@ export default {
                   {
                     city: null,
                     district: null,
-                    province: window.sessionStorage.getItem("cityName")
+                    province: that.$store.state.cityName
                   }
                 ]
               : [
@@ -712,6 +713,7 @@ export default {
       }
     },
     searches() {
+      let that = this
       if (this.positionOrcompany == "公司") {
         let CodeToTag = timeUtil.CodeToTag(
           [
@@ -729,7 +731,7 @@ export default {
                   {
                     city: null,
                     district: null,
-                    province: window.sessionStorage.getItem("cityName")
+                    province: that.$store.state.cityName
                   }
                 ]
               : [
@@ -890,7 +892,7 @@ export default {
                   {
                     city: null,
                     district: null,
-                    province: this.$store.state.cityName
+                    province: that.$store.state.cityName
                   }
                 ]
               : [
@@ -1186,10 +1188,7 @@ export default {
     }
   },
   created() {
-    console.log(window.sessionStorage.getItem("cityName"));
-    window.setTimeout(function() {
-      window.sessionStorage.getItem("cityName")
-    }, 3000);
+    let that = this
     if (this.$route.query.homeSearch) {
       this.joblistSearch = this.$route.query.homeSearch;
       this.positionOrcompany = this.$route.query.positionOrcompany;
@@ -1199,7 +1198,11 @@ export default {
     this.optionList = option.data;
     this.option();
     this.cityForm();
-    this.searches();
+    setTimeout(function() {
+      
+      that.searches();
+    }, 1000);
+    
   },
   filters: {
     level(level) {

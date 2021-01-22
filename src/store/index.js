@@ -15,7 +15,7 @@ export default new Vuex.Store({
     value: '',
     childList: [],
     adcode: "",
-    cityName: window.sessionStorage.getItem("cityName"),
+    cityName: '',
     lsit: window.sessionStorage.getItem('lsit'),
     citycode: window.sessionStorage.getItem('citycode'),
     cityButton: window.sessionStorage.getItem('cityButton'),
@@ -31,6 +31,10 @@ export default new Vuex.Store({
     },
     [DONE_LOGOUT](state) {
       state.hasLogin = false;
+    },
+    SET_cityCode: (state, data) => {
+      state.cityName = data
+      window.sessionStorage.setItem('cityName', data)
     },
     SET_TOKEN: (state, data) => {
       state.token = data

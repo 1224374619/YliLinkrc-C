@@ -225,6 +225,8 @@
 
 <script>
 import { mapState } from "vuex";
+import { mapMutations } from "vuex";
+import { SET_cityCode } from "store/mutation-types";
 import Cookies from "js-cookie";
 import citys from "../assets/city.json";
 export default {
@@ -393,12 +395,11 @@ export default {
                     "adcode",
                     result.addressComponent.adcode
                   );
-                  console.log(result.addressComponent.province)
+                  self.$store.commit('SET_cityCode',result.addressComponent.province)
                   window.sessionStorage.setItem(
                     "cityName",
                     result.addressComponent.province
                   );
-                  console.log(window.sessionStorage.getItem("cityName"))
                 }
               });
             }
