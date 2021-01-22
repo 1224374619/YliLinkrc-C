@@ -107,8 +107,8 @@
                       <span style="margin:0 0 0 -7px">【面试过程】</span>
                       <span>{{item.content}}</span>
                     </div>
-                    <div v-if="item.sublist !== null" style="margin-left: -720px">企业回复</div>
-                    <div v-if="item.sublist !== null" class="third">
+                    <div v-if="item.sublist.length !== 0" style="margin-left: -720px">企业回复</div>
+                    <div v-if="item.sublist.length !== 0" class="third">
                       <div>
                         <img style="width:50px;height:50px;margin:15px 0 0 15px" :src="item.sublist[0].avatar" />
                       </div>

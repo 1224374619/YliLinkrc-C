@@ -333,7 +333,7 @@
         <div class="station-foot-aside-footer">
           <div class="footer-nav">
             <span>公司职位</span>
-            <span style="cursor:pointer" @click="next(companyIdList.id,companyIdList.id)">查看更多 》</span>
+            <span style="cursor:pointer" @click="next(companyIdList.id)">查看更多 》</span>
           </div>
           <div style="margin:25px 0 0 0">
             <div
@@ -342,7 +342,7 @@
               v-for="(list,index) in hotpositionList.slice(0,6)"
               :key="index"
             >
-              <div class="company-post">
+              <div class="company-post" @click="nextposition(list.id)">
                 <span v-if="list.positionName.length > 10">
                   <el-tooltip placement="bottom" effect="light">
                     <div slot="content">{{list.positionName}}</div>
@@ -353,7 +353,7 @@
                 <span v-if="list.salaryMin === 35">{{list.salaryMin}}k以上</span>
                 <span v-else>{{list.salaryMin}}-{{list.salaryMax}}k</span>
               </div>
-              <div class="company-address">
+              <div class="company-address" @click="nextposition(list.id)">
                 <span>{{companyName}}</span>
 
                 <span>{{list.workAddress.city}}</span>
@@ -613,6 +613,15 @@ export default {
         query: {
           id: id,
           sid: sid
+        }
+      });
+    },
+    nextposition(id) {
+      console.log('111111111111111')
+      this.$router.push({
+        path: "/station",
+        query: {
+          id: id,
         }
       });
     },

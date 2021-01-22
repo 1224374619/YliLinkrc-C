@@ -2635,7 +2635,7 @@ export default {
               break;
             case 9:
               this.salaryMin = 35;
-              this.salaryMax = null;
+              this.salaryMax = 0;
               break;
           }
 

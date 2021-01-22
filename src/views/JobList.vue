@@ -511,6 +511,8 @@ export default {
             // this.$router.push({
             //   path: "/joblist"
             // });
+            this.page.current = 1,
+            this.page.pageSize = 10,
             this.companyList = res.data.data.list;
             // this.companyList = JSON.parse(
             //   window.sessionStorage.getItem("lsittwo")
@@ -694,6 +696,8 @@ export default {
             this.$router.push({
               path: "/joblist"
             });
+            this.page.current = 1,
+            this.page.pageSize = 10,
             this.joblistCompany = false;
             this.positionList = res.data.data.list;
             this.page.total = res.data.data.total;
