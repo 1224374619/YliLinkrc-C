@@ -2,7 +2,7 @@
   <div class="position">
     <div class="positon-nav">
       <div class="block">
-        <img style="height:118px;border-radius:5px" :src="this.companyIdList.logoUrl" />
+        <img style="height:118px;width:118px;border-radius:5px" :src="this.companyIdList.logoUrl" />
       </div>
       <div class="aside">
         <div class="aside-nav" @click="isclick()">{{companyIdList.fullName}}</div>
@@ -115,7 +115,7 @@
                       <div>
                         <div
                           style="margin:5px 0 0 5px;color: #A2A2A2;text-align:left"
-                        >{{evaluationLists.companyName}}HR.人事</div>
+                        >{{evaluationLists.companyName}}.HR.人事</div>
                         <div style="margin:0 0 0 5px;text-align:left">{{item.sublist[0].content}}</div>
                       </div>
                       <div>

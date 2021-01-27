@@ -217,7 +217,7 @@
                 <div>
                   <div
                     style="margin:5px 0 0 10px;color: #A2A2A2"
-                  >{{evaluationLists.companyName}}HR.人事</div>
+                  >{{evaluationLists.companyName}}.HR.人事</div>
                   <div style="margin:0 0 0 10px" v-if="item.sublist.length === 0"></div>
                   <div style="margin:5px 0 0 10px" v-else>{{item.sublist[0].content}}</div>
                 </div>
@@ -302,7 +302,7 @@
           <div class="station-foot-aside-nav-img">
             <img
               @click="next(companyIdList.id)"
-              style="width 112px;height:112px;cursor:pointer;border-radius:5px;"
+              style="width:112px;height:112px;cursor:pointer;border-radius:5px;"
               :src="url"
             />
           </div>

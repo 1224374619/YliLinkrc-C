@@ -65,7 +65,7 @@
     </div>
     <nav :class="scroll>0?'navFls':'navFl'">
       <div class="nav-body">
-        <el-amap
+        <!-- <el-amap
           vid="amap"
           :plugin="plugin"
           :events="events"
@@ -75,7 +75,7 @@
           :zoom="zoom"
         >
           <el-amap-marker :position="center" vid="amapMarker"></el-amap-marker>
-        </el-amap>
+        </el-amap>-->
 
         <img
           style="height:40px;width:160px"
@@ -84,7 +84,6 @@
           :src="require('../assets/images/logo.png')"
         />
         <span
-          
           style="margin:5px 0 0 50px;color:#858585;width:200px;text-align:left;"
           @click="dialogVisibleCity = true"
         >
@@ -229,6 +228,7 @@ import { mapMutations } from "vuex";
 import { SET_cityCode } from "store/mutation-types";
 import Cookies from "js-cookie";
 import citys from "../assets/city.json";
+import loadBMap from "../utils/loadBMap";
 export default {
   name: "customized-nav",
   data() {
@@ -338,7 +338,7 @@ export default {
           }
         ]
       },
-      visibleOne:"",
+      visibleOne: "",
       citylist: [],
       districtlist: [],
       visible: false,
@@ -354,58 +354,68 @@ export default {
 
       provinces: "",
       cities: "",
-      nearbyInfo: [], // 周边信息---高德反馈（周边建筑信息）
-      addressInfo: "", // 城市信息---高德反馈（省市区、adcode）
-      center: [121.59996, 31.197646], // 高德地图中心点
-      zoom: 15, // 地图缩放
-      events: {
-        click: e => {
-          // 点击地图的时候，获取点击的经纬度，并将地图中心点移自此处
-          let m = e.lnglat;
-          self.addrInput = "";
-          self.center = [m.lng, m.lat];
-          self.GDmapGetInfoOfNearby(m.lng, m.lat, self); // 获取周边信息
+      form: {
+        address: "", //详细地址
+        addrPoint: {
+          //详细地址经纬度
+          lng: 0,
+          lat: 0
         }
       },
-      plugin: [
-        {
-          pName: "Geolocation",
-          events: {
-            init(o) {
-              // o 是高德地图定位插件实例
-              o.getCurrentPosition((status, result) => {
-                console.log(result);
-                self.provinces = result.addressComponent.province;
-                if (result && result.position) {
-                  // 经纬度
-                  self.lng = result.position.lng;
-                  self.lat = result.position.lat;
-                  // 地址信息
-                  self.str = result.formattedAddress;
-                  self.center = [self.lng, self.lat];
-                  self.loaded = true;
-                  self.$nextTick();
-                  sessionStorage.setItem(
-                    "adcode",
-                    result.addressComponent.adcode
-                  );
-                  self.$store.state.adcode = result.addressComponent.adcode;
-                  // self.$store.state.cityName = result.addressComponent.province
-                  window.sessionStorage.setItem(
-                    "adcode",
-                    result.addressComponent.adcode
-                  );
-                  self.$store.commit('SET_cityCode',result.addressComponent.province)
-                  window.sessionStorage.setItem(
-                    "cityName",
-                    result.addressComponent.province
-                  );
-                }
-              });
-            }
-          }
-        }
-      ]
+      map: "", //地图实例
+      mk: "" //Marker实例,
+
+      // nearbyInfo: [], // 周边信息---高德反馈（周边建筑信息）
+      // addressInfo: "", // 城市信息---高德反馈（省市区、adcode）
+      // center: [121.59996, 31.197646], // 高德地图中心点
+      // zoom: 15, // 地图缩放
+      // events: {
+      //   click: e => {
+      //     // 点击地图的时候，获取点击的经纬度，并将地图中心点移自此处
+      //     let m = e.lnglat;
+      //     self.addrInput = "";
+      //     self.center = [m.lng, m.lat];
+      //     self.GDmapGetInfoOfNearby(m.lng, m.lat, self); // 获取周边信息
+      //   }
+      // },
+      // plugin: [
+      //   {
+      //     pName: "Geolocation",
+      //     events: {
+      //       init(o) {
+      //         // o 是高德地图定位插件实例
+      //         o.getCurrentPosition((status, result) => {
+      //           console.log(result);
+      //           self.provinces = result.addressComponent.province;
+      //           if (result && result.position) {
+      //             // 经纬度
+      //             self.lng = result.position.lng;
+      //             self.lat = result.position.lat;
+      //             // 地址信息
+      //             self.str = result.formattedAddress;
+      //             self.center = [self.lng, self.lat];
+      //             self.loaded = true;
+      //             self.$nextTick();
+      //             self.$store.state.adcode = result.addressComponent.adcode;
+      //             // self.$store.state.cityName = result.addressComponent.province
+      //             window.sessionStorage.setItem(
+      //               "adcode",
+      //               result.addressComponent.adcode
+      //             );
+      //             self.$store.commit(
+      //               "SET_cityCode",
+      //               result.addressComponent.province
+      //             );
+      //             window.sessionStorage.setItem(
+      //               "cityName",
+      //               result.addressComponent.province
+      //             );
+      //           }
+      //         });
+      //       }
+      //     }
+      //   }
+      // ]
     };
   },
   computed: mapState({
@@ -413,10 +423,35 @@ export default {
       return state.hasLogin;
     }
   }),
+
   mounted() {
     window.addEventListener("scroll", this.handleScroll, true);
+    this.initMap();
   },
+
   methods: {
+    /**
+     * 浏览器定位函数
+     */
+    geolocation() {
+      var that = this;
+      var geolocation = new BMap.Geolocation();
+      geolocation.getCurrentPosition(
+        function(res) {
+          if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+            that.provinces = res.address.province;
+            that.$store.commit("SET_cityCode", res.address.province);
+            // that.getAddrByPoint(res.point); //当成功时，调用逆地址解析函数
+          } else {
+            alert("failed" + this.getStatus()); //失败时，弹出失败状态码
+          }
+        },
+        { enableHighAccuracy: true }
+      ); //enableHighAccuracy：是否要求浏览器获取最佳效果，默认为false
+    },
+    initMap() {
+      this.geolocation();
+    },
     handleScroll(e) {
       this.scroll = e.target.scrollTop;
     },
@@ -541,7 +576,7 @@ export default {
         .then(res => {
           if (res.status === 200) {
             this.defaultResumeId = res.data.data.defaultResumeId;
-            console.log(res.data.data.base.fullName)
+            console.log(res.data.data.base.fullName);
             if (res.data.data.base.fullName === null) {
               this.fullName = "";
             } else {
@@ -564,7 +599,7 @@ export default {
   created() {
     this.citylist = citys.data;
     this.districtlist = this.items.children;
-    this.provinces = this.items.tag;
+    // this.provinces = this.items.tag;
     this.cities = this.items.children[0].tag;
     this.token = Cookies.get("token");
     if (this.token) {

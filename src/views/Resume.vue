@@ -1177,6 +1177,8 @@
                 <el-date-picker
                   style="width:300px;height:36px;margin-left:-120px"
                   v-model="formAwards.prizeTime"
+                  :picker-options="pickerOptionsOne"
+                  
                   type="month"
                   placeholder="选择月"
                 ></el-date-picker>

@@ -119,6 +119,16 @@ import positionCatalog from "../assets/positionCatalog.json";
 export default {
   data() {
     return {
+      form: {
+        address: "", //详细地址
+        addrPoint: {
+          //详细地址经纬度
+          lng: 0,
+          lat: 0
+        }
+      },
+      map: "", //地图实例
+      mk: "", //Marker实例,
       carouselImgs: [
         require("../assets/images/home-banner1.png"),
         require("../assets/images/home-banner2.png"),

@@ -7,6 +7,7 @@
       <el-form-item label="获奖时间" prop="prizeTime" style="margin:0 0 20px 80px">
         <el-date-picker
           style="width:234px;height:36px"
+          :picker-options="pickerOptions"
           v-model="formInline.prizeTime"
           type="month"
           placeholder="选择月">
@@ -53,6 +54,11 @@ export default {
   props: ["professionalDegree"],
   data() {
     return {
+      pickerOptions: {
+        disabledDate(time) {
+          return time.getTime() > Date.now();
+        }
+      },
       imageUrl:'',
       file:'',
       myHeaders: { "Auth-Token": Cookies.get("token") },

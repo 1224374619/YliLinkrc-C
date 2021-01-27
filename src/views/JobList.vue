@@ -457,7 +457,7 @@ export default {
     },
     //搜索职位 公司
     search() {
-      let that = this
+      let that = this;
       if (this.positionOrcompany == "公司") {
         let CodeToTag = timeUtil.CodeToTag(
           [
@@ -511,9 +511,9 @@ export default {
             // this.$router.push({
             //   path: "/joblist"
             // });
-            this.page.current = 1,
-            this.page.pageSize = 10,
-            this.companyList = res.data.data.list;
+            (this.page.current = 1),
+              (this.page.pageSize = 10),
+              (this.companyList = res.data.data.list);
             // this.companyList = JSON.parse(
             //   window.sessionStorage.getItem("lsittwo")
             // ).list;
@@ -696,9 +696,9 @@ export default {
             this.$router.push({
               path: "/joblist"
             });
-            this.page.current = 1,
-            this.page.pageSize = 10,
-            this.joblistCompany = false;
+            (this.page.current = 1),
+              (this.page.pageSize = 10),
+              (this.joblistCompany = false);
             this.positionList = res.data.data.list;
             this.page.total = res.data.data.total;
             if (res.data.data.total == 0) {
@@ -717,7 +717,7 @@ export default {
       }
     },
     searches() {
-      let that = this
+      let that = this;
       if (this.positionOrcompany == "公司") {
         let CodeToTag = timeUtil.CodeToTag(
           [
@@ -1028,8 +1028,14 @@ export default {
     },
     //城市数据
     cityForm() {
-      let adcode = window.sessionStorage.getItem("adcode");
-      let resDate = parseInt(adcode / 10000) * 10000;
+      let cityName = this.$store.state.cityName;
+      this.city.forEach((item, index, array) => {
+        //执行代码
+        if (item.tag === cityName) {
+          this.adcode = item.code
+        }
+      });
+      let resDate = parseInt(this.adcode / 10000) * 10000;
       if (
         resDate === 110000 ||
         resDate === 120000 ||
@@ -1038,14 +1044,14 @@ export default {
       ) {
         this.city.forEach((item, index, array) => {
           //执行代码
-          if (item.code === parseInt(adcode / 10000) * 10000) {
+          if (item.code === parseInt(this.adcode / 10000) * 10000) {
             this.districtArr = item.children[0].children;
           }
         });
       } else {
         this.city.forEach((item, index, array) => {
           //执行代码
-          if (item.code === parseInt(adcode / 10000) * 10000) {
+          if (item.code === parseInt(this.adcode / 10000) * 10000) {
             this.districtArr = item.children;
           }
         });
@@ -1192,7 +1198,8 @@ export default {
     }
   },
   created() {
-    let that = this
+    let that = this;
+    console.log(that.$store.state.cityName);
     if (this.$route.query.homeSearch) {
       this.joblistSearch = this.$route.query.homeSearch;
       this.positionOrcompany = this.$route.query.positionOrcompany;
@@ -1203,10 +1210,8 @@ export default {
     this.option();
     this.cityForm();
     setTimeout(function() {
-      
       that.searches();
     }, 1000);
-    
   },
   filters: {
     level(level) {

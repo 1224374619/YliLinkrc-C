@@ -321,6 +321,11 @@
                             margin-left:5px"
                   >面试</span>
                 </span>
+                <span class="publishedTimes" v-else-if="list.processedState === 'OFFERED'">{{list.updateTime|formatDateMjz}}<span
+                    style="font-family: PingFangSC-Regular;
+                            color: #02B9B8;
+                            margin-left:5px"
+                  >已录用</span></span>
                 <span class="publishedTimes" v-else>{{list.updateTime|formatDate}}</span>
                 <div class="operatedButton" v-if="list.processedState === 'INTERVIEW'">
                   <div v-if="list.interviewState === 'COMPLETED'">
