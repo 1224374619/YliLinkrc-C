@@ -54,7 +54,7 @@
                       :src="show.old?require('../assets/images/yan.png'):require('../assets/images/bi.png')"
                       slot="suffix"
                       alt
-                      style="margin:0 5px 0 0"
+                      style="margin:0 5px 0 0;height:auto;width:20px;line-height:43px"
                       @click="show.old=!show.old"
                     />
                   </el-input>
