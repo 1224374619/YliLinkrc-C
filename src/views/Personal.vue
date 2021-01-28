@@ -47,7 +47,7 @@
     <div v-if="detailEvaltion">
       <div class="personal-left" v-if="appraise">
         <el-dialog title="面试邀请" style="text-align:left" :visible.sync="dialogVisible" width="30%">
-          <div class="title">{{jobSeekers.jobSeekersName}}先生 您好！</div>
+          <div class="title">{{jobSeekers.jobSeekersName}}先生/女士 您好！</div>
           <div class="title">恭喜您获得面试邀请，现邀请您参加面试，面试信息如下：</div>
           <div class="content" style="margin:20px 0 0 0">
             面试公司：
@@ -85,7 +85,7 @@
                 class="tabs-read"
                 :data-clipboard-text="this.textlink"
                 @click="copy"
-              >service@163.com</span>
+              >service@yinlinkrc.com</span>
             </el-tooltip>
           </div>
           <div class="foot">请您最晚于面试前2小时确认是否参加面试</div>

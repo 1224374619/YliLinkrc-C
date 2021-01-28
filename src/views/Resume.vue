@@ -8,14 +8,14 @@
           </div>
         </el-dialog>
         <el-dialog title width="30%" :visible.sync="dialogDrag" style="border-radius:5px;">
-          <div style="font-size:18px;">
+          <!-- <div style="font-size:18px;">
             简历附件上传功能正在准备中
             <br />敬请期待
           </div>
           <div style="margin:25px 0 0 0">
             <el-button @click="dialogDrag = false" type="primary">知道了</el-button>
-          </div>
-          <!-- <div>
+          </div>-->
+          <div>
             <el-upload
               class="upload-demo"
               :action="uploadUrl"
@@ -32,7 +32,7 @@
                 <div class="el-upload__text">
                   将文件拖到此处，或
                   <em>点击上传</em>
-                  <div class="el-upload__tip" slot="tip">支持DOC、DOCX、PDF、JPG、PNG格式，文件大小需小于10M。</div>
+                  <div class="el-upload__tip" slot="tip">支持DOC、DOCX、PDF格式，文件大小需小于10M。</div>
                 </div>
               </div>
             </el-upload>
@@ -45,7 +45,7 @@
                 <i class="el-icon-delete"></i>
               </div>
             </div>
-          </div> -->
+          </div>
         </el-dialog>
         <el-dialog
           title
@@ -1178,7 +1178,6 @@
                   style="width:300px;height:36px;margin-left:-120px"
                   v-model="formAwards.prizeTime"
                   :picker-options="pickerOptionsOne"
-                  
                   type="month"
                   placeholder="选择月"
                 ></el-date-picker>
@@ -1802,14 +1801,14 @@
       </div>
 
       <div class="aside-body">
-        <div class="aside">
+        <div class="aside" id="demo">
           <div class="aside-nav" style="margin:0 0 70px 0">
             <div class="aside-foot">
               <div class="aside-foot-second">
                 <div
                   style="display: flex;flex-direction: row;justify-content: space-between;line-height:30px;width:270px;margin:0 0 20px 0"
                 >
-                  <div class="aside-foot-first">附件简历（Beta）</div>
+                  <div class="aside-foot-first">附件简历</div>
                   <el-button
                     style="font-family: PingFangSC-Regular;color: #02B9B8;font-size:12px;width:25px"
                     type="text"
@@ -2159,7 +2158,7 @@ export default {
       file: "",
       fileSkill: "",
       imageUrlOne: "",
-      imageUrlSskill:"",
+      imageUrlSskill: "",
       defaultId: "",
       languageouterVisible: false,
       languageinnerVisible: false,
@@ -2193,7 +2192,7 @@ export default {
       listpersonalskill: [],
       listaward: [],
       listpersonappraisal: "",
-      isshowpersonalinformation:false,
+      isshowpersonalinformation: false,
       compPercent: 0,
       formEducation: {
         educationDegree: "",
@@ -2534,6 +2533,7 @@ export default {
         .then(res => {
           this.dialogResume = false;
           this.allfile();
+          this.handleScrolles();
         })
         .catch(error => {});
     },
@@ -2568,7 +2568,18 @@ export default {
         this.dialogetx = true;
         this.url = res.data.fileAccessVo.accessUrl;
       }
-      this.dialogDrag = false;
+      let params = {
+        file: res.data,
+        remark: "附件简历"
+      };
+      this.$http
+        .post("/consumer-core/resume/file", params)
+        .then(res => {
+          this.allfile();
+          this.dialogDrag = false;
+          this.handleScrolls();
+        })
+        .catch(error => {});
     },
     //添加附件
     addfile() {
@@ -2848,7 +2859,7 @@ export default {
                 this.awardsouterVisible = false;
                 this.resumeId();
                 this.perId = res.data.data.updatedModule.id;
-                this.file == ""
+                this.file == "";
                 // awardskeepurl(this.resumesId, this.perId);
                 // // .then(res => {
                 // //     }).catch( => {});
@@ -2873,7 +2884,7 @@ export default {
             .then(res => {
               if (res.data.code == 200) {
                 this.personalskillouterVisible = false;
-                this.fileSkill == ""
+                this.fileSkill == "";
                 this.resumeId();
               }
             })
@@ -3370,8 +3381,8 @@ export default {
       ).format("YYYY-MM");
       if (list.certUrl !== undefined) {
         this.imageUrlOne = list.certUrl.accessUrl;
-      }else {
-        this.imageUrlOne = '';
+      } else {
+        this.imageUrlOne = "";
       }
       this.awardsouterVisible = true;
     },
@@ -3383,8 +3394,8 @@ export default {
       this.formPersonalskill.level = timeUtil.level(list.level);
       if (list.certUrl !== undefined) {
         this.imageUrlSskill = list.certUrl.accessUrl;
-      }else {
-        this.imageUrlSskill = '';
+      } else {
+        this.imageUrlSskill = "";
       }
     },
     //语言能力
@@ -3771,21 +3782,40 @@ export default {
     },
     handleScroll(e) {
       //改变元素#searchBar的top值
-      var scrollTop = e.target.scrollTop;
-      var offsetTop = document.querySelector("#searchBar").offsetTop;
-      console.log(scrollTop);
-      console.log(offsetTop);
-      if (scrollTop <= 200) {
-        offsetTop = 340 - Number(scrollTop);
-        document.querySelector("#searchBar").style.top = offsetTop + "px";
-        document.querySelector("#searchBar").style.marginTop = "20px";
-        console.log(offsetTop);
+      let scrollTop = e.target.scrollTop;
+      let offsetTop = document.querySelector("#searchBar").offsetTop;
+      let offsetHeight = document.getElementById("demo").offsetHeight;
+      if (scrollTop <= offsetHeight) {
+        offsetTop = Number(offsetHeight) - Number(scrollTop);
+
+        document.querySelector("#searchBar").style.top = offsetTop + 80 + "px";
+        document.querySelector("#searchBar").style.position = "fixed";
+        // document.querySelector("#searchBar").style.marginTop = offsetTop+"px";
       } else {
-        document.querySelector("#searchBar").style.top = "50px";
-        console.log(offsetTop);
+        document.querySelector("#searchBar").style.top = "80px";
+        document.querySelector("#searchBar").style.marginTop = "20px";
       }
+    },
+    handleScrolls() {
+      //改变元素#searchBar的top值
+      let scrollTop = 10;
+      let offsetTop = document.querySelector("#searchBar").offsetTop;
+      let offsetHeight = document.getElementById("demo").offsetHeight;
+      offsetTop = Number(offsetHeight) - Number(scrollTop) + 40;
+      document.querySelector("#searchBar").style.top = offsetTop + 80 + "px";
+      document.querySelector("#searchBar").style.position = "fixed";
+    },
+    handleScrolles() {
+      //改变元素#searchBar的top值
+      let scrollTop = 10;
+      let offsetTop = document.querySelector("#searchBar").offsetTop;
+      let offsetHeight = document.getElementById("demo").offsetHeight;
+      offsetTop = Number(offsetHeight) - Number(scrollTop)-40 ;
+      document.querySelector("#searchBar").style.top = offsetTop + 80 + "px";
+      document.querySelector("#searchBar").style.position = "fixed";
     }
   },
+
   mounted() {
     //给window添加一个滚动滚动监听事件
     window.addEventListener("scroll", this.handleScroll, true);
@@ -4187,6 +4217,11 @@ export default {
       }
     }
 
+    .fixed {
+      box-sizing: border-box;
+      z-index: 2;
+    }
+
     .aside-foot {
       background: #FAFAFA;
       /* margin 0 0 0 790px */
@@ -4226,12 +4261,6 @@ export default {
 }
 </style>
 <style lang="stylus">
-.fixed {
-  position: fixed;
-  box-sizing: border-box;
-  z-index: 2;
-}
-
 .el-radio__input.is-checked .el-radio__inner {
   border-color: #02B9B8;
   background: #02B9B8;

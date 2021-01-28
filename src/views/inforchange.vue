@@ -407,7 +407,7 @@ export default {
             vcode: this.newRuleForm.newCode
           };
           this.$local
-            .put("business-user/account/phone", params)
+            .put("consumer-user/account/phone", params)
             .then(res => {
               if (res.data.code == 200) {
                 this.$store.commit("LOGOUT");

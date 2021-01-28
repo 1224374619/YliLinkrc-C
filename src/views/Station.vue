@@ -95,7 +95,7 @@
         </span>
       </el-dialog>
     </div>
-    <!-- <div style="margin:0 0 0 990px;width:300px">
+    <div style="margin:0 0 0 990px;width:300px">
       <el-radio-group
         v-model="paperclip"
         class="radio-group"
@@ -104,14 +104,14 @@
       >
         <el-radio
           style="font-family: PingFangSC-Regular;color: #666666;font-size:18px;margin:15px 0 0 0"
-          :label="item.isDefault"
+          :label="item.id"
         >
           <i class="el-icon-paperclip"></i>
           {{item.resumeName}}
         </el-radio>
         <br />
       </el-radio-group>
-    </div>-->
+    </div>
     <div class="station-foot" v-if="stationFoot">
       <div class="station-foot-content">
         <p>职位描述</p>
@@ -205,9 +205,7 @@
               <div>企业回复</div>
               <div class="third">
                 <div>
-                  <img
-                    v-if="item.sublist.length === 0"
-                  />
+                  <img v-if="item.sublist.length === 0" />
                   <img
                     v-else
                     style="width:50px;height:50px;margin:15px 0 0 15px"
@@ -400,7 +398,7 @@ export default {
   },
   data() {
     return {
-      collectState:true,
+      collectState: true,
       morejumpers: false,
       morepagers: false,
       apprasiseEvaluation: true,
@@ -412,7 +410,7 @@ export default {
         pageSizeOpts: [10, 20, 30]
       },
       interviewExperience: 0,
-      paperclip: true,
+      paperclip: "",
       resumeLists: [],
       evaluationLists: {
         evaluations: {
@@ -583,7 +581,11 @@ export default {
       /* 创建地址解析器的实例 */
       let geoCoder = new BMap.Geocoder();
       /* 获取位置对应的坐标 */
-      geoCoder.getPoint(self.positionIdList.workAddress.city+self.positionIdList.workAddress.district+self.positionIdList.workAddress.detail, function(point) {
+      geoCoder.getPoint(
+        self.positionIdList.workAddress.city +
+          self.positionIdList.workAddress.district +
+          self.positionIdList.workAddress.detail,
+        function(point) {
           if (point) {
             //经度
             var pointx = point.lng;
@@ -594,7 +596,10 @@ export default {
             console.log(pointx, pointy);
           }
         },
-        self.positionIdList.workAddress.city+self.positionIdList.workAddress.district+self.positionIdList.workAddress.detail,);
+        self.positionIdList.workAddress.city +
+          self.positionIdList.workAddress.district +
+          self.positionIdList.workAddress.detail
+      );
       // /* 利用坐标获取地址的详细信息 */
       // geoCoder.getLocation(e.point, res=>{
       //     console.log(res);
@@ -617,29 +622,37 @@ export default {
       });
     },
     nextposition(id) {
-      console.log('111111111111111')
+      console.log("111111111111111");
       this.$router.push({
         path: "/station",
         query: {
-          id: id,
+          id: id
         }
       });
     },
     //确认投递
     showdeliver() {
       let token = Cookies.get("token");
+      console.log(this.paperclip);
       if (token) {
-        showdeliver(this.positiId, this.resumesId)
-          .then(res => {
-            if (res.data.code == 200) {
-              this.almsg = false;
-              this.msg = true;
-              this.collectState = true
-              this.dialogVisibleTwo = false;
-              this.dialogVisibleOne = true;
-            }
-          })
-          .catch(error => {});
+        if (this.paperclip) {
+          showdeliver(this.positiId, this.paperclip)
+            .then(res => {
+              if (res.data.code == 200) {
+                this.almsg = false;
+                this.msg = true;
+                this.collectState = true;
+                this.dialogVisibleTwo = false;
+                this.dialogVisibleOne = true;
+              }
+            })
+            .catch(error => {});
+        } else {
+          this.$notify.info({
+          title: "消息",
+          message: "请选择简历"
+        });
+        }
       } else {
         this.$notify.info({
           title: "消息",
@@ -713,14 +726,6 @@ export default {
               this.positionIdList.isGraduate = "应届生";
             } else {
               this.positionIdList.isGraduate = "非应届生";
-            }
-
-            if (this.positionIdList.jobType == 0) {
-              this.positionIdList.jobType = "全职";
-            } else if (this.positionIdList.jobType == 1) {
-              this.positionIdList.jobType = "兼职";
-            } else {
-              this.positionIdList.jobType = "实习";
             }
             if (res.data.data.isValid == false) {
               this.showDeliver = true;
@@ -804,7 +809,7 @@ export default {
               this.showCollect = true;
               this.dialogVisibleTwo = false;
               this.dialogVisibleOne = true;
-              this.collectState = false
+              this.collectState = false;
             }
           })
           .catch(error => {});
