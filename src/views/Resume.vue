@@ -2,7 +2,21 @@
   <Scroll ref="scroll">
     <div class="resumes">
       <div class="content">
-        <el-dialog title width="30%" :visible.sync="dialogetx" style="border-radius:5px;">
+        <el-dialog
+          title
+          :show-close="false"
+          :append-to-body="true"
+          :visible.sync="dialogVisible"
+          width="25%"
+        >
+          <div>
+            <div class="loading">
+              <i style="font-size:60px;color:#02b9b8;" class="el-icon-loading"></i>
+            </div>
+            <div class="loading-text">下载中...</div>
+          </div>
+        </el-dialog>
+        <el-dialog title width="40%" :visible.sync="dialogetx" style="border-radius:5px;">
           <div>
             <pdf ref="pdf" :src="url"></pdf>
           </div>
@@ -1827,8 +1841,8 @@
                           <i class="el-icon-more-outline"></i>
                         </span>
                         <el-dropdown-menu slot="dropdown">
-                          <el-dropdown-item @click.native="setDefault(item)">设为默认投递简历</el-dropdown-item>
-                          <el-dropdown-item>下载</el-dropdown-item>
+                          <!-- <el-dropdown-item @click.native="setDefault(item)">设为默认投递简历</el-dropdown-item> -->
+                          <el-dropdown-item @click.native="uploadFile(item)">下载</el-dropdown-item>
                           <el-dropdown-item @click.native="deleteFile(item)">删除</el-dropdown-item>
                         </el-dropdown-menu>
                       </el-dropdown>
@@ -2059,6 +2073,7 @@ export default {
       monthPayList: [],
       optionList: [],
       isshowJob: false,
+      dialogVisible:false,
       joint: true,
       selfjoint: true,
       perId: "",
@@ -2526,6 +2541,44 @@ export default {
       }
       this.defaultId = res.id;
     },
+    //下载附件
+    uploadFile(res) {
+      this.dialogVisible = true;
+      this.$http
+        .get(`/consumer-core/resume/download/${res.id}`,{
+          responseType: "blob"
+        })
+        .then(res => {
+          this.dialogVisible = false;
+          const disposition = res.headers["content-disposition"];
+          let fileName = disposition.substring(
+            disposition.indexOf("filename=") + 9,
+            disposition.length
+          );
+          // iso8859-1的字符转换成中文
+          fileName = decodeURI(escape(fileName));
+          // 去掉双引号
+          fileName = fileName.replace(/\"/g, "");
+          const content = res.data;
+          let blob = new Blob([res.data], {
+            type: "application/vnd.ms-excel"
+          });
+          console.log(blob);
+          if (window.navigator.msSaveOrOpenBlob) {
+            // console.log(2)
+            navigator.msSaveBlob(blob, fileName);
+          } else {
+            // console.log(3)
+            var link = document.createElement("a");
+            link.href = window.URL.createObjectURL(blob);
+            link.download = fileName;
+            link.click();
+            //释放内存
+            window.URL.revokeObjectURL(link.href);
+          }
+        })
+        .catch(error => {});
+    },
     //确认删除附件简历
     keepDelete() {
       this.$http
@@ -2579,7 +2632,10 @@ export default {
           this.dialogDrag = false;
           this.handleScrolls();
         })
-        .catch(error => {});
+        .catch(error => {
+          this.dialogDrag = false;
+          this.dialogetx = false;
+        });
     },
     //添加附件
     addfile() {
@@ -3810,7 +3866,7 @@ export default {
       let scrollTop = 10;
       let offsetTop = document.querySelector("#searchBar").offsetTop;
       let offsetHeight = document.getElementById("demo").offsetHeight;
-      offsetTop = Number(offsetHeight) - Number(scrollTop)-40 ;
+      offsetTop = Number(offsetHeight) - Number(scrollTop) - 40;
       document.querySelector("#searchBar").style.top = offsetTop + 80 + "px";
       document.querySelector("#searchBar").style.position = "fixed";
     }
@@ -4261,6 +4317,17 @@ export default {
 }
 </style>
 <style lang="stylus">
+.loading {
+  text-align: center;
+  margin: -20px 0 0 0;
+}
+
+.loading-text {
+  font-size: 24px;
+  color: #222222;
+  text-align: center;
+  margin: 30px 0 30px 0;
+}
 .el-radio__input.is-checked .el-radio__inner {
   border-color: #02B9B8;
   background: #02B9B8;

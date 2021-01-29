@@ -13,13 +13,10 @@ export default {
       this.$http
         .post(`/file-service/files/getPreviewUrl/?label=${label}`, this.obj)
         .then(res => {
-          console.log(res);
           let demo = aliyun.config({
             url: res.data.data.previewURL, //设置文档预览URL地址。
             mount: document.querySelector("#container")
           });
-
-          console.log(demo);
           //设置AccessToken。
           demo.setToken({ token: res.data.data.accessToken });
         })
