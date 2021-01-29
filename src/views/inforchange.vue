@@ -406,7 +406,7 @@ export default {
             phone: this.newRuleForm.newPhone,
             vcode: this.newRuleForm.newCode
           };
-          this.$local
+          this.$http
             .put("consumer-user/account/phone", params)
             .then(res => {
               if (res.data.code == 200) {
