@@ -83,9 +83,7 @@
               </div>
               <div class="company-detail">
                 <h3>FESCO Adecco</h3>
-                <div class="meta">
-                  <span>企业服务 / 天使轮 / 15-50人</span>
-                </div>
+                
               </div>
               <div class="logo">
                 <img :src="require('../assets/images/occupation7.jpg')" />
