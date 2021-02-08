@@ -191,6 +191,10 @@
                     style="color:#8A8A8A;font-size:18px;margin:0 0 0 0;width:300px;text-align:left;"
                   >{{list.workAddress.city}} | 10年以上 | {{list.degreeMin}}</div>
                   <div
+                    v-else-if="list.workAgeMax == 0"
+                    style="color:#8A8A8A;font-size:18px;margin:0 0 0 0;width:300px;text-align:left;"
+                  >{{list.workAddress.city}} | 无工作经验 | {{list.degreeMin}}</div>
+                  <div
                     v-else
                     style="color:#8A8A8A;font-size:18px;margin:0 0 0 0;width:300px;text-align:left;"
                   >{{list.workAddress.city}} | {{list.workAgeMin}}-{{list.workAgeMax}}年 | {{list.degreeMin}}</div>

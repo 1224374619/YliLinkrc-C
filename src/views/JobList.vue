@@ -16,7 +16,7 @@
               :value="item.value"
             ></el-option>
           </el-select>
-          <el-button slot="append" @click="search" icon="el-icon-search"></el-button>
+          <el-button slot="append" @click="searches" icon="el-icon-search"></el-button>
         </el-input>
       </div>
     </div>
@@ -453,7 +453,7 @@ export default {
     },
     //立即筛选
     keepButton() {
-      this.search();
+      this.searches();
     },
     //搜索职位 公司
     search() {
@@ -696,8 +696,6 @@ export default {
             this.$router.push({
               path: "/joblist"
             });
-            (this.page.current = 1),
-              (this.page.pageSize = 10),
               (this.joblistCompany = false);
             this.positionList = res.data.data.list;
             this.page.total = res.data.data.total;

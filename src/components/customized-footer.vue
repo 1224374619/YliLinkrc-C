@@ -36,17 +36,29 @@
       </div>
       <div class="line"></div>
       <div class="copyright">
-        <span>上海银领网络科技有限公司 沪ICP备19030136号-1</span>
-        <span>
+        <span>©2019 上海银领网络科技有限公司 版权所有 </span>
+        <span style="margin:0 0 0 20px">
+          <a
+            target="_blank"
+            href="https://beian.miit.gov.cn"
+            style="display:inline-block;text-decoration:none;height:20px;"
+          >
+            <!-- <img src style="float:left;" /> -->
+            <p
+              style="float:left;height:20px;line-height:25px;margin: 3px 0px 0px 5px; color: #4A4A4A;;"
+            >沪ICP备19030136号-1</p>
+          </a>
+        </span>
+        <span style="margin:0 0 0 20px">
           <img style="height:15px;width:15px" :src="require('../assets/images/guo.png')" />
           <a
             target="_blank"
             href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=31010602005194"
-            style="display:inline-block;text-decoration:none;height:20px;line-height:20px;"
+            style="display:inline-block;text-decoration:none;height:20px;"
           >
             <!-- <img src style="float:left;" /> -->
             <p
-              style="float:left;height:20px;line-height:25px;margin: 0px 0px 0px 5px; color: #4A4A4A;;"
+              style="float:left;height:20px;line-height:25px;margin: 3px 0px 0px 5px; color: #4A4A4A;;"
             >沪公网安备 31010602005194号</p>
           </a>
         </span>
