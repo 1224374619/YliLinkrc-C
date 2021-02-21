@@ -10,7 +10,7 @@
             </div>
         </div>
         <div style="margin:20px 0 0 37px;color:#6D6D6D;font-size:16px">
-            <span>工作内容：<span>{{fromData.description}}</span></span>
+            <span style="white-space: pre-line;">工作内容：<span>{{fromData.description}}</span></span>
         </div>
     </div>
 </template>

@@ -10,10 +10,10 @@
             </div>
         </div>
         <div style="margin:20px 0 0 37px;color:#6D6D6D;font-size:16px">
-            <span>个人职责：<span>{{fromData.duty}}</span></span>
+            <span style="white-space: pre-line;">个人职责：<span>{{fromData.duty}}</span></span>
         </div>
         <div style="margin:20px 0 0 37px;color:#6D6D6D;font-size:16px">
-            <span>项目介绍：<span>{{fromData.description}}</span></span>
+            <span style="white-space: pre-line;">项目介绍：<span>{{fromData.description}}</span></span>
         </div>
     </div>
 </template>

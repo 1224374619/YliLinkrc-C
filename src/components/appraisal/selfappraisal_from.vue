@@ -1,6 +1,6 @@
 <template>
    <div class="from">
-        <p style="margin:8px 0 5px 30px;">{{fromData.content}}</p>
+        <p style="margin:8px 0 5px 30px;white-space: pre-line;">{{fromData.content}}</p>
     </div>
 </template>
 
