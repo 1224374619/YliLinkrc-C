@@ -1,6 +1,7 @@
 <template>
-<ha></ha>
-<hb></hb>
+<!-- <ha></ha>
+<hb></hb> -->
+<div>11111111111</div>
 </template>
 <script>
 import Ha from "components/BasicInfo.vue";
