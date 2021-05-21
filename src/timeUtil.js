@@ -74,6 +74,34 @@ var qualifications = function (index) {
   return a;
 }
 
+var qualificationes = function (index) {
+  var a
+  switch (index) {
+    case '初中及以下':
+      a = 0
+      break;
+    case '职中':
+      a = 1
+      break;
+    case '高中':
+      a = 2
+      break;
+    case '大专':
+      a = 3
+      break;
+    case '本科':
+      a = 4
+      break;
+    case '硕士':
+      a = 5
+      break;
+    case '博士':
+      a = 6
+      break;
+  }
+  return a;
+}
+
 var jobType = function (index) {
   var a
   switch (index) {
@@ -270,6 +298,28 @@ var politicalStatus = function (index) {
   return a;
 }
 
+var politicalStatues = function (index) {
+  var a
+  switch (index) {
+    case '群众':
+      a = 0
+      break;
+    case '团员':
+      a = 1
+      break;
+    case '民主党派':
+      a = 2
+      break;
+    case '预备党员':
+      a = 3
+      break;
+    case '中共党员':
+      a = 4
+      break;
+  }
+  return a;
+}
+
 var CodeToTag = function (codeArr, list, Alias) {
   var defaultTarget = {
     targetCode: 'code',
@@ -314,11 +364,13 @@ var CodeToTag = function (codeArr, list, Alias) {
 }
 module.exports = {
   qualifications: qualifications,
+  qualificationes: qualificationes,
   jobType: jobType,
   quality: quality,
   size: size,
   CodeToTag: CodeToTag,
   politicalStatus: politicalStatus,
+  politicalStatues: politicalStatues,
   isUnified: isUnified,
   level: level,
   jobSearchStatus: jobSearchStatus,

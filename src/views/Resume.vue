@@ -400,13 +400,13 @@
                   v-model="formInformation.educationLevel"
                   placeholder
                 >
-                  <el-option label="初中及以下" value="0"></el-option>
-                  <el-option label="职中" value="1"></el-option>
-                  <el-option label="高中" value="2"></el-option>
-                  <el-option label="大专" value="3"></el-option>
-                  <el-option label="本科" value="4"></el-option>
-                  <el-option label="硕士" value="5"></el-option>
-                  <el-option label="博士" value="6"></el-option>
+                  <el-option label="初中及以下" value="初中及以下"></el-option>
+                  <el-option label="职中" value="职中"></el-option>
+                  <el-option label="高中" value="高中"></el-option>
+                  <el-option label="大专" value="大专"></el-option>
+                  <el-option label="本科" value="本科"></el-option>
+                  <el-option label="硕士" value="硕士"></el-option>
+                  <el-option label="博士" value="博士"></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item label="生日" prop="birthday">
@@ -438,11 +438,11 @@
                   v-model="formInformation.politicCountenance"
                   placeholder="请选择政治面貌"
                 >
-                  <el-option label="群众" value="0"></el-option>
-                  <el-option label="团员" value="1"></el-option>
-                  <el-option label="民主党派" value="2"></el-option>
-                  <el-option label="预备党员" value="3"></el-option>
-                  <el-option label="中共党员" value="4"></el-option>
+                  <el-option label="群众" value="群众"></el-option>
+                  <el-option label="团员" value="团员"></el-option>
+                  <el-option label="民主党派" value="民主党派"></el-option>
+                  <el-option label="预备党员" value="预备党员"></el-option>
+                  <el-option label="中共党员" value="中共党员"></el-option>
                 </el-select>
               </el-form-item>
             </el-form>
@@ -2776,32 +2776,32 @@ export default {
     informationkeep(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          if (this.formInformation.politicCountenance == "群众") {
-            this.formInformation.politicCountenance = 0;
-          } else if (this.formInformation.politicCountenance == "团员") {
-            this.formInformation.politicCountenance = 1;
-          } else if (this.formInformation.politicCountenance == "民主党派") {
-            this.formInformation.politicCountenance = 1;
-          } else if (this.formInformation.politicCountenance == "预备党员") {
-            this.formInformation.politicCountenance = 3;
-          } else if (this.formInformation.politicCountenance == "中共党员") {
-            this.formInformation.politicCountenance = 4;
-          }
-          if (this.formInformation.educationLevel === "初中及以下") {
-            this.formInformation.educationLevel = 0;
-          } else if (this.formInformation.educationLevel === "职中") {
-            this.formInformation.educationLevel = 1;
-          } else if (this.formInformation.educationLevel === "高中") {
-            this.formInformation.educationLevel = 2;
-          } else if (this.formInformation.educationLevel === "大专") {
-            this.formInformation.educationLevel = 3;
-          } else if (this.formInformation.educationLevel === "本科") {
-            this.formInformation.educationLevel = 4;
-          } else if (this.formInformation.educationLevel === "硕士") {
-            this.formInformation.educationLevel = 5;
-          } else if (this.formInformation.educationLevel === "博士") {
-            this.formInformation.educationLevel = 6;
-          }
+          // if (this.formInformation.politicCountenance == "群众") {
+          //   this.formInformation.politicCountenance = 0;
+          // } else if (this.formInformation.politicCountenance == "团员") {
+          //   this.formInformation.politicCountenance = 1;
+          // } else if (this.formInformation.politicCountenance == "民主党派") {
+          //   this.formInformation.politicCountenance = 1;
+          // } else if (this.formInformation.politicCountenance == "预备党员") {
+          //   this.formInformation.politicCountenance = 3;
+          // } else if (this.formInformation.politicCountenance == "中共党员") {
+          //   this.formInformation.politicCountenance = 4;
+          // }
+          // if (this.formInformation.educationLevel == "初中及以下") {
+          //   this.formInformation.educationLevel = 0;
+          // } else if (this.formInformation.educationLevel == "职中") {
+          //   this.formInformation.educationLevel = 1;
+          // } else if (this.formInformation.educationLevel == "高中") {
+          //   this.formInformation.educationLevel = 2;
+          // } else if (this.formInformation.educationLevel == "大专") {
+          //   this.formInformation.educationLevel = 3;
+          // } else if (this.formInformation.educationLevel == "本科") {
+          //   this.formInformation.educationLevel = 4;
+          // } else if (this.formInformation.educationLevel == "硕士") {
+          //   this.formInformation.educationLevel = 5;
+          // } else if (this.formInformation.educationLevel == "博士") {
+          //   this.formInformation.educationLevel = 6;
+          // }
           // if(this.formInformation.graduate == '0') {
           //     this.formInformation.graduate = true
           // }else if(this.formInformation.graduate == '1') {
@@ -2824,10 +2824,10 @@ export default {
             cityCode: this.formInformation.city[1],
             district: CodeToTag[2],
             districtCode: this.formInformation.city[2],
-            politicalStatus: timeUtil.politicalStatus(
-              parseInt(this.formInformation.politicCountenance)
+            politicalStatus: this.formInformation.politicCountenance,
+            politicalStatusCode: timeUtil.politicalStatues(
+              this.formInformation.politicCountenance
             ),
-            politicalStatusCode: this.formInformation.politicCountenance,
 
             avatar: this.fileOne ? this.fileOne : null,
             overseasAge: Number(this.formInformation.overseasAge),
@@ -2836,10 +2836,10 @@ export default {
             fullName: this.formInformation.name,
             sex: timeUtil.sex(parseInt(this.formInformation.sex)),
             sexCode: this.formInformation.sex,
-            degree: timeUtil.qualifications(
-              parseInt(this.formInformation.educationLevel)
+            degree: this.formInformation.educationLevel,
+            degreeCode: timeUtil.qualificationes(
+              this.formInformation.educationLevel
             ),
-            degreeCode: this.formInformation.educationLevel,
             email: this.formInformation.email,
             phone: this.formInformation.phone,
             isGraduate: this.formInformation.graduate === "0" ? true : false
@@ -3617,32 +3617,32 @@ export default {
         this.formInformation.graduate = "1";
       }
       this.formInformation.overseasAge = this.resumeIdList.overseasAge;
-      if (this.resumeIdList.degreeCode == 2) {
-        this.formInformation.educationLevel = "高中";
-      } else if (this.resumeIdList.degreeCode == 0) {
-        this.formInformation.educationLevel = "初中及以下";
-      } else if (this.resumeIdList.degreeCode == 1) {
-        this.formInformation.educationLevel = "职中";
-      } else if (this.resumeIdList.degreeCode == 3) {
-        this.formInformation.educationLevel = "大专";
-      } else if (this.resumeIdList.degreeCode == 4) {
-        this.formInformation.educationLevel = "本科";
-      } else if (this.resumeIdList.degreeCode == 5) {
-        this.formInformation.educationLevel = "硕士";
-      } else if (this.resumeIdList.degreeCode == 6) {
-        this.formInformation.educationLevel = "博士";
-      }
-      if (this.resumeIdList.politicalStatusCode == 2) {
-        this.formInformation.politicCountenance = "民主党派";
-      } else if (this.resumeIdList.politicalStatusCode == 0) {
-        this.formInformation.politicCountenance = "群众";
-      } else if (this.resumeIdList.politicalStatusCode == 1) {
-        this.formInformation.politicCountenance = "团员";
-      } else if (this.resumeIdList.politicalStatusCode == 3) {
-        this.formInformation.politicCountenance = "预备党员";
-      } else if (this.resumeIdList.politicalStatusCode == 4) {
-        this.formInformation.politicCountenance = "中共党员";
-      }
+      // if (this.resumeIdList.degreeCode == 2) {
+      //   this.formInformation.educationLevel = "高中";
+      // } else if (this.resumeIdList.degreeCode == 0) {
+      //   this.formInformation.educationLevel = "初中及以下";
+      // } else if (this.resumeIdList.degreeCode == 1) {
+      //   this.formInformation.educationLevel = "职中";
+      // } else if (this.resumeIdList.degreeCode == 3) {
+      //   this.formInformation.educationLevel = "大专";
+      // } else if (this.resumeIdList.degreeCode == 4) {
+      //   this.formInformation.educationLevel = "本科";
+      // } else if (this.resumeIdList.degreeCode == 5) {
+      //   this.formInformation.educationLevel = "硕士";
+      // } else if (this.resumeIdList.degreeCode == 6) {
+      //   this.formInformation.educationLevel = "博士";
+      // }
+      // if (this.resumeIdList.politicalStatusCode == 2) {
+      //   this.formInformation.politicCountenance = "民主党派";
+      // } else if (this.resumeIdList.politicalStatusCode == 0) {
+      //   this.formInformation.politicCountenance = "群众";
+      // } else if (this.resumeIdList.politicalStatusCode == 1) {
+      //   this.formInformation.politicCountenance = "团员";
+      // } else if (this.resumeIdList.politicalStatusCode == 3) {
+      //   this.formInformation.politicCountenance = "预备党员";
+      // } else if (this.resumeIdList.politicalStatusCode == 4) {
+      //   this.formInformation.politicCountenance = "中共党员";
+      // }
       if (this.resumeIdList.overseasAge == 0) {
         this.formInformation.overseasAge = "";
       }
@@ -3654,6 +3654,8 @@ export default {
       this.formInformation.workAge = this.$moment(work).format("YYYY-MM-DD");
       this.formInformation.email = this.resumeIdList.email;
       this.formInformation.phone = this.resumeIdList.phone;
+      this.formInformation.politicCountenance = this.resumeIdList.politicalStatus;
+      this.formInformation.educationLevel = this.resumeIdList.degree;
       this.formInformation.city = [
         this.resumeIdList.provinceCode,
         this.resumeIdList.cityCode,

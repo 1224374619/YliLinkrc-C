@@ -311,19 +311,20 @@ export default {
   data() {
     return {
       rules: {
-        surname: [{ required: true, message: "请输入", trigger: "blur" },{ min: 0, max: 12, message: "长度在 0 到 12 个字", trigger: "blur" }],
-        sex: [{ required: true, message: "请输入", trigger: "blur" },{ min: 0, max: 1, message: "长度在 0 到 1 个字", trigger: "blur" }],
-        age: [{ required: true, message: "请输入", trigger: "blur" },{ min: 0, max: 1, message: "长度在 0 到 1 个字", trigger: "blur" }],
+        surname: [{ required: true, message: "请输入姓名", trigger: "blur" },{ min: 0, max: 12, message: "长度在 0 到 12 个字", trigger: "blur" },{ pattern:/^[a-zA-Z\u4e00-\u9fa5\s]{0,24}$/, message: '姓名仅支持中文汉字与英文字母', trigger: 'blur' },],
+        sex: [{ required: true, message: "请输入性别", trigger: "blur" },{ min: 0, max: 1, message: "长度在 0 到 1 个字", trigger: "blur" }],
+        age: [{ required: true, message: "请输入年龄", trigger: "blur" },{ min: 0, max: 1, message: "长度在 0 到 1 个字", trigger: "blur" }],
         position: [{ required: true, message: "请输入", trigger: "blur" },{ min: 0, max: 10, message: "长度在 0 到 10 个字", trigger: "blur" }],
         record: [{ required: true, message: "请输入", trigger: "blur" },{ min: 0, max: 10, message: "长度在 0 到 10 个字", trigger: "blur" }],
-        school: [{ required: true, message: "请输入", trigger: "blur" },{ min: 0, max: 10, message: "长度在 0 到 10 个字", trigger: "blur" }],
-        major: [{ required: true, message: "请输入", trigger: "blur" },{ min: 0, max: 20, message: "长度在 5 到 20 个字", trigger: "blur" }],
+        school: [{ required: true, message: "请输入学校", trigger: "blur" },{ min: 0, max: 10, message: "长度在 0 到 10 个字", trigger: "blur" }],
+        major: [{ required: true, message: "请输入学历", trigger: "blur" },{ min: 0, max: 20, message: "长度在 5 到 20 个字", trigger: "blur" }],
         phone: [
           { required: true, message: "请输入", trigger: "blur" },
           {
+            
             pattern: /^[1][356789][0-9]{9}$/,
             message: "请输入正确的手机号",
-            trigger: ["change", "blur"]
+            trigger: [ "blur"]
           }
         ],
         email: [
@@ -331,7 +332,7 @@ export default {
           {
             pattern: /^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+\.)+(com|cn|net|com.cn|com.tw|com.hk)$/,
             message: "邮箱格式错误",
-            trigger: ["change", "blur"]
+            trigger: [ "blur"]
           }
         ]
       },

@@ -338,7 +338,7 @@ export default {
           }
         ]
       },
-      visibleOne: "",
+      visibleOne: false,
       citylist: [],
       districtlist: [],
       visible: false,
@@ -353,7 +353,7 @@ export default {
       scroll: "",
 
       provinces: "",
-      cities: "",
+      cities: false,
       form: {
         address: "", //详细地址
         addrPoint: {

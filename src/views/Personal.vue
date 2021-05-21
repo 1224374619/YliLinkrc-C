@@ -285,7 +285,7 @@
               v-for="(list,index) in submittedList"
               :key="index"
             >
-              <div class="tabs-first">
+              <div class="tabs-first" @click="descVnf(list.id)">
                 <span v-if="list.positionName.length > 8">
                   <el-tooltip placement="bottom" effect="light">
                     <div slot="content">{{list.positionName}}</div>
@@ -792,6 +792,15 @@ export default {
     //残忍拒绝
     refuseOffer() {
       this.dialoRefuse = true;
+    },
+    //职位详情
+    descVnf(id) {
+      this.$router.push({
+        path: "/station",
+        query: {
+          id: id
+        }
+      });
     },
     refuseKeepOffer() {
       let params = {

@@ -2,7 +2,11 @@
   <div class="joblist">
     <div class="joblist-search">
       <div class="joblist-input">
-        <el-input placeholder="搜索公司或职位" v-model="joblistSearch" class="input-with-select">
+        <el-input
+          placeholder="搜索公司或职位"
+          v-model="joblistSearch"
+          class="input-with-select"
+        >
           <el-select
             v-model="positionOrcompany"
             @change="getVendorId"
@@ -10,255 +14,347 @@
             placeholder="请选择"
           >
             <el-option
-              v-for="(item,index) in perList"
+              v-for="(item, index) in perList"
               :key="index"
               :label="item.label"
               :value="item.value"
             ></el-option>
           </el-select>
-          <el-button slot="append" @click="searches" icon="el-icon-search"></el-button>
+          <el-button
+            slot="append"
+            @click="searches"
+            icon="el-icon-search"
+          ></el-button>
         </el-input>
       </div>
     </div>
     <div class="joblist-article">
       <div class="article-searchList">
-        <div style="margin:40px 0 30px 0;">
-          <div class="article" style="margin-top:10px">
-            <span class="article-title" style="margin-left:-10px">行政区域：</span>
+        <div style="margin: 40px 0 30px 0">
+          <div class="article" style="margin-top: 10px">
+            <span class="article-title" style="margin-left: -10px"
+              >行政区域：</span
+            >
             <el-radio-group
               size="small"
               v-model="district"
-              style="margin-top:-1px;margin-left:28px;"
+              style="margin-top: -1px; margin-left: 28px"
             >
-              <el-radio-button size="small" style="margin-left:-10px" label="50">不限</el-radio-button>
+              <el-radio-button
+                size="small"
+                style="margin-left: -10px"
+                label="50"
+                >不限</el-radio-button
+              >
             </el-radio-group>
             <el-radio-group
               size="small"
               v-model="district"
-              style="width:750px;margin-top:-1px;margin-left:-3px;"
+              style="width: 750px; margin-top: -1px; margin-left: -3px"
             >
               <el-radio-button
                 class="article-content"
                 :label="list.code"
-                v-for="(list,index) in districtArr.slice(0, 5)"
+                v-for="(list, index) in districtArr.slice(0, 5)"
                 :key="index"
-              >{{list.tag}}</el-radio-button>
+                >{{ list.tag }}</el-radio-button
+              >
             </el-radio-group>
             <br />
 
             <span
-              style="font-size:14px;margin-top:3px;margin-left:185px;cursor:pointer;color:#02B9B8;"
+              style="
+                font-size: 14px;
+                margin-top: 3px;
+                margin-left: 185px;
+                cursor: pointer;
+                color: #02b9b8;
+              "
               @click="moreCity"
             >
               更多
-              <i v-if="this.moreDistrict === false" class="el-icon-caret-bottom"></i>
+              <i
+                v-if="this.moreDistrict === false"
+                class="el-icon-caret-bottom"
+              ></i>
               <i v-else class="el-icon-caret-top"></i>
             </span>
           </div>
-          <div style="margin:5px 0 0 78px" class="article">
+          <div style="margin: 5px 0 0 78px" class="article">
             <el-radio-group
               size="small"
-              style="width:650px;"
+              style="width: 650px"
               v-model="district"
               v-if="moreDistrict"
             >
               <el-radio-button
                 class="article-content"
-                style="padding:0 20px 0 0;"
-                v-for="(list,index) in districtArr.slice(5)"
+                style="padding: 0 20px 0 0"
+                v-for="(list, index) in districtArr.slice(5)"
                 :label="list.code"
                 :key="index"
-              >{{list.tag}}</el-radio-button>
+                >{{ list.tag }}</el-radio-button
+              >
             </el-radio-group>
           </div>
-          <div class="article" v-if="showPosition" style="margin-top:17px">
+          <div class="article" v-if="showPosition" style="margin-top: 17px">
             <span class="article-title">工作经验：</span>
             <el-radio-group
               size="small"
               v-model="workExperience"
-              style="margin-top:-1px;margin-left:0px"
+              style="margin-top: -1px; margin-left: 0px"
             >
-              <el-radio-button size="small" class="article-content" label="15">不限</el-radio-button>
+              <el-radio-button size="small" class="article-content" label="15"
+                >不限</el-radio-button
+              >
               <el-radio-button
                 class="article-content"
                 :label="index"
-                v-for="(list,index) in workExperienceList"
+                v-for="(list, index) in workExperienceList"
                 :key="index"
-              >{{list.tag}}</el-radio-button>
+                >{{ list.tag }}</el-radio-button
+              >
             </el-radio-group>
           </div>
-          <div class="article" v-if="showPosition" style="margin-top:17px">
+          <div class="article" v-if="showPosition" style="margin-top: 17px">
             <span class="article-title">最低学历：</span>
             <el-radio-group
               size="small"
               v-model="Education"
-              style="margin-top:-1px;margin-left:0px"
+              style="margin-top: -1px; margin-left: 0px"
             >
-              <el-radio-button size="small" class="article-content" label="15">不限</el-radio-button>
+              <el-radio-button size="small" class="article-content" label="15"
+                >不限</el-radio-button
+              >
               <el-radio-button
                 class="article-content"
                 :label="index"
-                v-for="(list,index) in EducationList"
+                v-for="(list, index) in EducationList"
                 :key="index"
-              >{{list.tag}}</el-radio-button>
+                >{{ list.tag }}</el-radio-button
+              >
             </el-radio-group>
           </div>
-          <div class="article" v-if="showPosition" style="margin-top:17px">
+          <div class="article" v-if="showPosition" style="margin-top: 17px">
             <span class="article-title">月薪范围：</span>
-            <el-radio-group size="small" v-model="monthPay" style="margin-top:-1px;margin-left:0px">
-              <el-radio-button size="small" class="article-content" label="15">不限</el-radio-button>
+            <el-radio-group
+              size="small"
+              v-model="monthPay"
+              style="margin-top: -1px; margin-left: 0px"
+            >
+              <el-radio-button size="small" class="article-content" label="15"
+                >不限</el-radio-button
+              >
               <el-radio-button
                 class="article-content"
                 :label="index"
-                v-for="(list,index) in monthPayList"
+                v-for="(list, index) in monthPayList"
                 :key="index"
-              >{{list.tag}}</el-radio-button>
+                >{{ list.tag }}</el-radio-button
+              >
             </el-radio-group>
           </div>
-          <div class="article" v-if="showPosition" style="margin-top:17px">
+          <div class="article" v-if="showPosition" style="margin-top: 17px">
             <span class="article-title">工作类型：</span>
             <el-radio-group
               size="small"
               v-model="workState"
-              style="margin-top:-1px;margin-left:0px"
+              style="margin-top: -1px; margin-left: 0px"
             >
-              <el-radio-button size="small" class="article-content" label="15">不限</el-radio-button>
+              <el-radio-button size="small" class="article-content" label="15"
+                >不限</el-radio-button
+              >
               <el-radio-button
                 class="article-content"
                 :label="index"
-                v-for="(list,index) in workStateList"
+                v-for="(list, index) in workStateList"
                 :key="index"
-              >{{list.tag}}</el-radio-button>
+                >{{ list.tag }}</el-radio-button
+              >
             </el-radio-group>
           </div>
-          <div class="article" style="margin-top:17px">
+          <div class="article" style="margin-top: 17px">
             <span class="article-title">公司规模：</span>
-            <el-radio-group size="small" v-model="scale" style="margin-top:-1px;margin-left:0px">
-              <el-radio-button size="small" class="article-content" label="15">不限</el-radio-button>
+            <el-radio-group
+              size="small"
+              v-model="scale"
+              style="margin-top: -1px; margin-left: 0px"
+            >
+              <el-radio-button size="small" class="article-content" label="15"
+                >不限</el-radio-button
+              >
               <el-radio-button
                 class="article-content"
                 :label="index"
-                v-for="(list,index) in scaleList"
+                v-for="(list, index) in scaleList"
                 :key="index"
-              >{{list.tag}}</el-radio-button>
+                >{{ list.tag }}</el-radio-button
+              >
             </el-radio-group>
           </div>
-          <div class="article" style="margin-top:17px">
+          <div class="article" style="margin-top: 17px">
             <span class="article-title">企业性质：</span>
             <el-checkbox-group
               size="small"
               v-model="qualitys"
-              style="margin-top:-1px;margin-left:30px;"
+              style="margin-top: -1px; margin-left: 30px"
             >
               <el-checkbox-button
                 size="small"
                 @change="qualitysHandle"
-                style="margin-left:-10px"
+                style="margin-left: -10px"
                 label="5"
-              >不限</el-checkbox-button>
+                >不限</el-checkbox-button
+              >
             </el-checkbox-group>
             <el-checkbox-group
               size="small"
               v-model="quality"
-              style="margin-top:-1px;margin-left:0px"
+              style="margin-top: -1px; margin-left: 0px"
             >
               <el-checkbox-button
                 class="article-content"
                 @change="qualityHandle"
                 :label="list.tag"
-                v-for="(list,index) in qualityList"
+                v-for="(list, index) in qualityList"
                 :key="index"
-              >{{list.tag}}</el-checkbox-button>
+                >{{ list.tag }}</el-checkbox-button
+              >
             </el-checkbox-group>
           </div>
-          <div class="article" v-if="showPosition" style="margin-top:17px">
+          <div class="article" v-if="showPosition" style="margin-top: 17px">
             <el-radio-group size="small" v-model="release">
-              <span style="margin-left:-50px" class="article-title">发布时间：</span>
-              <el-radio-button class="article-content" label="5">不限</el-radio-button>
+              <span style="margin-left: -50px" class="article-title"
+                >发布时间：</span
+              >
+              <el-radio-button class="article-content" label="5"
+                >不限</el-radio-button
+              >
               <el-radio-button
                 class="article-content"
                 :label="index"
-                v-for="(list,index) in releaseList"
+                v-for="(list, index) in releaseList"
                 :key="index"
-              >{{list.tag}}</el-radio-button>
+                >{{ list.tag }}</el-radio-button
+              >
             </el-radio-group>
           </div>
-          <div class="article" style="margin-top:17px">
+          <div class="article" style="margin-top: 17px">
             <span class="article-title">公司行业：</span>
             <el-radio-group
               size="small"
               v-model="industry"
-              style="margin-top:-1px;;margin-left:20px;"
+              style="margin-top: -1px; margin-left: 20px"
             >
               <el-radio-button size="small" label="10000">不限</el-radio-button>
             </el-radio-group>
             <el-radio-group
               size="small"
               v-model="industry"
-              style="width:750px;margin-top:-1px;;margin-left:2px;"
+              style="width: 750px; margin-top: -1px; margin-left: 2px"
             >
               <el-radio-button
                 class="article-content"
                 :label="list.code"
-                v-for="(list,index) in industryList.slice(0, 5)"
+                v-for="(list, index) in industryList.slice(0, 5)"
                 :key="index"
-              >{{list.tag}}</el-radio-button>
+                >{{ list.tag }}</el-radio-button
+              >
             </el-radio-group>
             <span
-              style="font-size:14px;margin-top:3px;margin-left:185px;cursor:pointer;color:#02B9B8"
+              style="
+                font-size: 14px;
+                margin-top: 3px;
+                margin-left: 185px;
+                cursor: pointer;
+                color: #02b9b8;
+              "
               @click="moreIndustry"
             >
               更多
-              <i v-if="this.moreIndustries === false" class="el-icon-caret-bottom"></i>
+              <i
+                v-if="this.moreIndustries === false"
+                class="el-icon-caret-bottom"
+              ></i>
               <i v-else class="el-icon-caret-top"></i>
             </span>
           </div>
-          <div style="margin:5px 0 0 135px;" class="article">
+          <div style="margin: 5px 0 0 135px" class="article">
             <el-radio-group
               size="small"
               v-model="industry"
-              style="width:770px"
+              style="width: 770px"
               v-if="moreIndustries"
             >
               <el-radio-button
                 class="article-content"
-                style="margin-left:-40px;padding:0 60px 0 0;margin-top:5px"
-                v-for="(list,index) in industryList.slice(5)"
+                style="margin-left: -40px; padding: 0 60px 0 0; margin-top: 5px"
+                v-for="(list, index) in industryList.slice(5)"
                 :label="list.code"
                 :key="index"
-              >{{list.tag}}</el-radio-button>
+                >{{ list.tag }}</el-radio-button
+              >
             </el-radio-group>
           </div>
         </div>
-        <div class="article-button" v-if="articleButton" style="margin:40px 0 30px 0">
+        <div
+          class="article-button"
+          v-if="articleButton"
+          style="margin: 40px 0 30px 0"
+        >
           <el-button
             @click="cancelButton"
-            style="margin:0 0 16px 870px;width:105px;height:35px;line-height:3px;color:#ffffff;font-size:16px;padding:0px;background:#02B9B8"
-          >清除筛选</el-button>
+            style="
+              margin: 0 0 16px 870px;
+              width: 105px;
+              height: 35px;
+              line-height: 3px;
+              color: #ffffff;
+              font-size: 16px;
+              padding: 0px;
+              background: #02b9b8;
+            "
+            >清除筛选</el-button
+          >
           <el-button
             @click="keepButton"
-            style="margin:0 0 16px 30px;width:105px;height:35px;line-height:3px;color:#ffffff;font-size:16px;padding:0px;background:#02B9B8"
-          >立即筛选</el-button>
+            style="
+              margin: 0 0 16px 30px;
+              width: 105px;
+              height: 35px;
+              line-height: 3px;
+              color: #ffffff;
+              font-size: 16px;
+              padding: 0px;
+              background: #02b9b8;
+            "
+            >立即筛选</el-button
+          >
         </div>
       </div>
     </div>
     <div class="joblist-content" v-if="joblistCompany">
-      <div class="content" v-for="(item,index) in companyList" :key="index">
+      <div class="content" v-for="(item, index) in companyList" :key="index">
         <div class="content-img">
           <img :src="item.logoUrl" />
         </div>
         <div class="content-infor">
-          <span>{{item.companyName}}</span>
-          <span>{{item.address.city}} | {{item.size}}人 | {{item.industryFirst}}</span>
+          <span>{{ item.companyName }}</span>
+          <span
+            >{{ item.address.city }} | {{ item.size }}人 |
+            {{ item.industryFirst }}</span
+          >
         </div>
         <div class="content-job">
           <span>
             在招职位
-            {{item.recruitedPositionNum}}个
+            {{ item.recruitedPositionNum }}个
           </span>
         </div>
         <div class="content-button">
-          <el-button @click="compan(item.id)" class="button" type="primary">进入企业主页</el-button>
+          <el-button @click="compan(item.id)" class="button" type="primary"
+            >进入企业主页</el-button
+          >
         </div>
       </div>
       <div class="footer-pagination">
@@ -276,33 +372,39 @@
     <div class="joblist-footer" v-if="joblistJob">
       <div
         class="joblist-hover"
-        style="cursor:pointer"
-        v-for="(item,index) in positionList"
+        style="cursor: pointer"
+        v-for="(item, index) in positionList"
         :key="index"
         @click="posion(item.id)"
       >
-        <div class="footer-first" style="margin-top:-20px">
-          <span>{{item.positionName}}</span>
-          <span v-if="item.salaryMin == 35">{{item.salaryMin}}k以上</span>
-          <span v-else>{{item.salaryMin}}-{{item.salaryMax}}k</span>
-          <span
-            v-if="item.company.companyName.length > 10"
-          >{{item.company.companyName.substr(0,9) + '...'}}</span>
-          <span v-else>{{item.company.companyName}}</span>
+        <div class="footer-first" style="margin-top: -20px">
+          <span>{{ item.positionName }}</span>
+          <span v-if="item.salaryMin == 35">{{ item.salaryMin }}k以上</span>
+          <span v-else>{{ item.salaryMin }}-{{ item.salaryMax }}k</span>
+          <span v-if="item.company.companyName.length > 10">{{
+            item.company.companyName.substr(0, 9) + "..."
+          }}</span>
+          <span v-else>{{ item.company.companyName }}</span>
         </div>
         <div class="footer-second">
-          <span
-            v-if="item.workAgeMax == null"
-          >{{item.workAddress.city}} | 10年以上 | {{item.degreeMin}}</span>
-          <span
-            v-else-if="item.workAgeMin == 0"
-          >{{item.workAddress.city}} | 无工作经验 | {{item.degreeMin}}</span>
-          <span
-            v-else
-          >{{item.workAddress.city}} | {{item.workAgeMin}}-{{item.workAgeMax}}年 | {{item.degreeMin}}</span>
+          <span v-if="item.workAgeMax == null"
+            >{{ item.workAddress.city }} | 10年以上 | {{ item.degreeMin }}</span
+          >
+          <span v-else-if="item.workAgeMin == 0"
+            >{{ item.workAddress.city }} | 无工作经验 |
+            {{ item.degreeMin }}</span
+          >
+          <span v-else
+            >{{ item.workAddress.city }} | {{ item.workAgeMin }}-{{
+              item.workAgeMax
+            }}年 | {{ item.degreeMin }}</span
+          >
 
-          <span>{{item.company.industrySecondary}} | {{item.company.size}}人</span>
-          <span>{{item.publishedTime | formatDate}}</span>
+          <span
+            >{{ item.company.industrySecondary }} |
+            {{ item.company.size }}人</span
+          >
+          <span>{{ item.publishedTime | formatDate }}</span>
         </div>
         <div class="footer-line"></div>
       </div>
@@ -318,15 +420,29 @@
         ></el-pagination>
       </div>
     </div>
-    <div class="joblist-footer" v-if="contentNull" style="margin-top:-10px">
-      <img style="margin:250px 0 0 0" :src="require('../assets/images/np.png')" />
-      <h5 style="color:#7C7C7C;font-size:16px;margin:-10px 0 0 0">未找到相关职位呦</h5>
-      <h5 style="color:#7C7C7C;font-size:16px;margin:2px 0 250px 0">换个筛选条件试试呗</h5>
+    <div class="joblist-footer" v-if="contentNull" style="margin-top: -10px">
+      <img
+        style="margin: 250px 0 0 0"
+        :src="require('../assets/images/np.png')"
+      />
+      <h5 style="color: #7c7c7c; font-size: 16px; margin: -10px 0 0 0">
+        未找到相关职位呦
+      </h5>
+      <h5 style="color: #7c7c7c; font-size: 16px; margin: 2px 0 250px 0">
+        换个筛选条件试试呗
+      </h5>
     </div>
-    <div class="joblist-footer" v-if="companyNull" style="margin-top:-10px">
-      <img style="margin:250px 0 0 0" :src="require('../assets/images/np.png')" />
-      <h5 style="color:#7C7C7C;font-size:16px;margin:-10px 0 0 0">未找到相关公司呦</h5>
-      <h5 style="color:#7C7C7C;font-size:16px;margin:2px 0 250px 0">换个筛选条件试试呗</h5>
+    <div class="joblist-footer" v-if="companyNull" style="margin-top: -10px">
+      <img
+        style="margin: 250px 0 0 0"
+        :src="require('../assets/images/np.png')"
+      />
+      <h5 style="color: #7c7c7c; font-size: 16px; margin: -10px 0 0 0">
+        未找到相关公司呦
+      </h5>
+      <h5 style="color: #7c7c7c; font-size: 16px; margin: 2px 0 250px 0">
+        换个筛选条件试试呗
+      </h5>
     </div>
   </div>
 </template>
@@ -359,12 +475,12 @@ export default {
       perList: [
         {
           value: "职位",
-          label: "职位"
+          label: "职位",
         },
         {
           value: "公司",
-          label: "公司"
-        }
+          label: "公司",
+        },
       ],
       positionOrcompany: "职位",
       joblistSearch: "",
@@ -398,7 +514,7 @@ export default {
         { code: 1, tag: "三天以内" },
         { code: 2, tag: "五天以内" },
         { code: 3, tag: "七天以内" },
-        { code: 4, tag: "十五天以内" }
+        { code: 4, tag: "十五天以内" },
       ],
       release: 5,
       //行业
@@ -411,8 +527,8 @@ export default {
         total: 0,
         pageSize: 10,
         current: 1,
-        pageSizeOpts: [10, 20, 30]
-      }
+        pageSizeOpts: [10, 20, 30],
+      },
     };
   },
   methods: {
@@ -463,7 +579,7 @@ export default {
           [
             parseInt(this.district / 10000) * 10000,
             parseInt(this.district / 100) * 100,
-            this.district
+            this.district,
           ],
           this.city
         );
@@ -475,15 +591,15 @@ export default {
                   {
                     city: null,
                     district: null,
-                    province: that.$store.state.cityName
-                  }
+                    province: that.$store.state.cityName,
+                  },
                 ]
               : [
                   {
                     city: CodeToTag[1],
                     district: CodeToTag[2],
-                    province: CodeToTag[0]
-                  }
+                    province: CodeToTag[0],
+                  },
                 ],
           industries:
             this.industry === "10000"
@@ -491,8 +607,8 @@ export default {
               : [
                   {
                     first: timeUtil.positionCatalog(parseInt(this.industry)),
-                    secondary: null
-                  }
+                    secondary: null,
+                  },
                 ],
           industryCodes: this.industry === "10000" ? null : [this.industry],
           keywords: this.joblistSearch,
@@ -503,9 +619,9 @@ export default {
           size:
             this.scale === "15" ? null : timeUtil.size(parseInt(this.scale)),
           sortBy: null,
-          sortOrder: null
+          sortOrder: null,
         };
-        companySearch(params).then(res => {
+        companySearch(params).then((res) => {
           if (res.data.code == 200) {
             this.joblistJob = false;
             // this.$router.push({
@@ -631,7 +747,7 @@ export default {
           [
             parseInt(this.district / 10000) * 10000,
             parseInt(this.district / 100) * 100,
-            this.district
+            this.district,
           ],
           this.city
         );
@@ -642,15 +758,15 @@ export default {
                   {
                     city: null,
                     district: null,
-                    province: that.$store.state.cityName
-                  }
+                    province: that.$store.state.cityName,
+                  },
                 ]
               : [
                   {
                     city: CodeToTag[1],
                     district: CodeToTag[2],
-                    province: CodeToTag[0]
-                  }
+                    province: CodeToTag[0],
+                  },
                 ],
           degreeMin:
             this.Education === "15"
@@ -662,8 +778,8 @@ export default {
               : [
                   {
                     first: timeUtil.positionCatalog(parseInt(this.industry)),
-                    secondary: null
-                  }
+                    secondary: null,
+                  },
                 ],
           isGraduate: null,
           industryCodes: this.industry === "10000" ? null : [this.industry],
@@ -689,14 +805,14 @@ export default {
           sortBy: null,
           sortOrder: null,
           workAgeMax: this.workAgeMax,
-          workAgeMin: this.workAgeMin
+          workAgeMin: this.workAgeMin,
         };
-        positionSearch(paramsPosition).then(res => {
+        positionSearch(paramsPosition).then((res) => {
           if (res.data.code == 200) {
             this.$router.push({
-              path: "/joblist"
+              path: "/joblist",
             });
-              (this.joblistCompany = false);
+            this.joblistCompany = false;
             this.positionList = res.data.data.list;
             this.page.total = res.data.data.total;
             if (res.data.data.total == 0) {
@@ -721,7 +837,7 @@ export default {
           [
             parseInt(this.district / 10000) * 10000,
             parseInt(this.district / 100) * 100,
-            this.district
+            this.district,
           ],
           this.city
         );
@@ -733,15 +849,15 @@ export default {
                   {
                     city: null,
                     district: null,
-                    province: that.$store.state.cityName
-                  }
+                    province: that.$store.state.cityName,
+                  },
                 ]
               : [
                   {
                     city: CodeToTag[1],
                     district: CodeToTag[2],
-                    province: CodeToTag[0]
-                  }
+                    province: CodeToTag[0],
+                  },
                 ],
           industries:
             this.industry === "10000"
@@ -749,8 +865,8 @@ export default {
               : [
                   {
                     first: timeUtil.positionCatalog(parseInt(this.industry)),
-                    secondary: null
-                  }
+                    secondary: null,
+                  },
                 ],
           industryCodes: this.industry === "10000" ? null : [this.industry],
           keywords: this.joblistSearch,
@@ -760,9 +876,9 @@ export default {
           size:
             this.scale === "15" ? null : timeUtil.size(parseInt(this.scale)),
           sortBy: null,
-          sortOrder: null
+          sortOrder: null,
         };
-        companySearch(params).then(res => {
+        companySearch(params).then((res) => {
           if (res.data.code == 200) {
             this.joblistJob = false;
             this.companyList = res.data.data.list;
@@ -883,7 +999,7 @@ export default {
           [
             parseInt(this.district / 10000) * 10000,
             parseInt(this.district / 100) * 100,
-            this.district
+            this.district,
           ],
           this.city
         );
@@ -894,15 +1010,15 @@ export default {
                   {
                     city: null,
                     district: null,
-                    province: that.$store.state.cityName
-                  }
+                    province: that.$store.state.cityName,
+                  },
                 ]
               : [
                   {
                     city: CodeToTag[1],
                     district: CodeToTag[2],
-                    province: CodeToTag[0]
-                  }
+                    province: CodeToTag[0],
+                  },
                 ],
           degreeMin:
             this.Education === "15"
@@ -914,8 +1030,8 @@ export default {
               : [
                   {
                     first: timeUtil.positionCatalog(parseInt(this.industry)),
-                    secondary: null
-                  }
+                    secondary: null,
+                  },
                 ],
           isGraduate: null,
           industryCodes: this.industry === "10000" ? null : [this.industry],
@@ -940,10 +1056,11 @@ export default {
           sortBy: null,
           sortOrder: null,
           workAgeMax: this.workAgeMax,
-          workAgeMin: this.workAgeMin
+          workAgeMin: this.workAgeMin,
         };
-        positionSearch(paramsPosition).then(res => {
+        positionSearch(paramsPosition).then((res) => {
           if (res.data.code == 200) {
+            // window.scrollTo(1000,1000);
             this.joblistCompany = false;
             this.positionList = res.data.data.list;
             this.page.total = res.data.data.total;
@@ -999,14 +1116,14 @@ export default {
       this.$router.push({
         path: "/joblist",
         query: {
-          id: 1
-        }
+          id: 1,
+        },
       });
       this.$router.push({
         path: "/position",
         query: {
-          id: id
-        }
+          id: id,
+        },
       });
     },
     //职位详情
@@ -1014,14 +1131,14 @@ export default {
       this.$router.push({
         path: "/joblist",
         query: {
-          id: 1
-        }
+          id: 1,
+        },
       });
       this.$router.push({
         path: "/station",
         query: {
-          id: id
-        }
+          id: id,
+        },
       });
     },
     //城市数据
@@ -1030,7 +1147,7 @@ export default {
       this.city.forEach((item, index, array) => {
         //执行代码
         if (item.tag === cityName) {
-          this.adcode = item.code
+          this.adcode = item.code;
         }
       });
       let resDate = parseInt(this.adcode / 10000) * 10000;
@@ -1104,7 +1221,7 @@ export default {
     * */
       let defaultTarget = {
         targetCode: "code",
-        targetTag: "tag"
+        targetTag: "tag",
       };
       if (!(Array.isArray(codeArr) && Array.isArray(list))) {
         throw new Error("codeArr&list must be Array!");
@@ -1120,7 +1237,7 @@ export default {
       const { targetCode, targetTag } = defaultTarget;
       const getTag = (itemCode, itemList) => {
         const targetList = itemList.filter(
-          item => item[targetCode] === itemCode
+          (item) => item[targetCode] === itemCode
         )[0];
         if (targetList) {
           tagArr.push(targetList[targetTag]);
@@ -1131,10 +1248,10 @@ export default {
       };
       getTag(codeArr[tagArr.length], list);
       return tagArr;
-    }
+    },
   },
   watch: {
-    "$store.state.adcode": function(val) {
+    "$store.state.adcode": function (val) {
       console.log(val);
       this.district = "50";
       //你需要执行的代码
@@ -1161,43 +1278,44 @@ export default {
       }
     },
 
-    monthPay: function() {
+    monthPay: function () {
       this.articleButton = true;
     },
-    district: function() {
+    district: function () {
       this.articleButton = true;
     },
-    workExperience: function() {
+    workExperience: function () {
       this.articleButton = true;
     },
-    Education: function() {
+    Education: function () {
       this.articleButton = true;
     },
-    workState: function() {
+    workState: function () {
       this.articleButton = true;
     },
-    industry: function() {
+    industry: function () {
       this.articleButton = true;
     },
-    scale: function() {
+    scale: function () {
       this.articleButton = true;
     },
-    release: function() {
+    release: function () {
       this.articleButton = true;
     },
-    quality: function() {
+    quality: function () {
       this.articleButton = true;
       if (this.quality.length === 0) {
         this.qualitys = ["5"];
       }
     },
-    industry: function() {
+    industry: function () {
       this.articleButton = true;
-    }
+    },
   },
   created() {
     let that = this;
-    console.log(that.$store.state.cityName);
+    window.scroll(0, 500);
+    console.log(document.documentElement.scrollTop);
     if (this.$route.query.homeSearch) {
       this.joblistSearch = this.$route.query.homeSearch;
       this.positionOrcompany = this.$route.query.positionOrcompany;
@@ -1207,7 +1325,7 @@ export default {
     this.optionList = option.data;
     this.option();
     this.cityForm();
-    setTimeout(function() {
+    setTimeout(function () {
       that.searches();
     }, 1000);
   },
@@ -1220,15 +1338,15 @@ export default {
         "大专",
         "本科",
         "硕士",
-        "博士"
+        "博士",
       ];
       return map[level];
     },
     size(size) {
       const map = ["小于10人", "10-100人", "100-500人", "500人以上"];
       return map[size];
-    }
-  }
+    },
+  },
 };
 </script>
 

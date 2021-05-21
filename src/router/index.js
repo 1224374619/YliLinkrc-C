@@ -99,7 +99,10 @@ const router = new Router({
                 {
                     path: '/joblist',
                     name: '职位',
-                    component: JobList
+                    component: JobList,
+                    meta: {
+                        title: '银领人才网-职位'
+                    }
                 },
                 {
                     path: '/comingsoon',
@@ -109,7 +112,10 @@ const router = new Router({
                 {
                     path: '/appraise',
                     name: '活动中心',
-                    component: Appraise
+                    component: Appraise,
+                    meta: {
+                        title: '银领人才网-活动中心'
+                    }
                 },
                 {
                     path: '/appraiseDetail',
@@ -121,7 +127,7 @@ const router = new Router({
                     name: '联系我们',
                     component: AboutUs,
                     meta: {
-                        title: '银领人才网-关于我们',
+                        title: '银领人才网-联系我们',
                         content: {
                             keywords: '上海银领网络科技有限公司,银领求职专业网站',
                             description: '银领人才网将为“既动手又动脑”的银领人才求职提供多维度、精准化的招聘服务，为中国智能制造、制造业强国提供高技能人才的支撑。',
