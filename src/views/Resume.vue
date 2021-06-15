@@ -11,17 +11,30 @@
         >
           <div>
             <div class="loading">
-              <i style="font-size:60px;color:#02b9b8;" class="el-icon-loading"></i>
+              <i
+                style="font-size: 60px; color: #02b9b8"
+                class="el-icon-loading"
+              ></i>
             </div>
             <div class="loading-text">下载中...</div>
           </div>
         </el-dialog>
-        <el-dialog title width="40%" :visible.sync="dialogetx" style="border-radius:5px;">
+        <el-dialog
+          title
+          width="40%"
+          :visible.sync="dialogetx"
+          style="border-radius: 5px"
+        >
           <div>
             <pdf ref="pdf" :src="url"></pdf>
           </div>
         </el-dialog>
-        <el-dialog title width="30%" :visible.sync="dialogDrag" style="border-radius:5px;">
+        <el-dialog
+          title
+          width="30%"
+          :visible.sync="dialogDrag"
+          style="border-radius: 5px"
+        >
           <!-- <div style="font-size:18px;">
             简历附件上传功能正在准备中
             <br />敬请期待
@@ -33,7 +46,7 @@
             <el-upload
               class="upload-demo"
               :action="uploadUrl"
-              style="margin:0 0 20px 0"
+              style="margin: 0 0 20px 0"
               drag
               :data="uploadfile"
               :headers="myHeaders"
@@ -46,14 +59,16 @@
                 <div class="el-upload__text">
                   将文件拖到此处，或
                   <em>点击上传</em>
-                  <div class="el-upload__tip" slot="tip">支持DOC、DOCX、PDF格式，文件大小需小于10M。</div>
+                  <div class="el-upload__tip" slot="tip">
+                    支持DOC、DOCX、PDF格式，文件大小需小于10M。
+                  </div>
                 </div>
               </div>
             </el-upload>
             <div class="dialogResume" v-if="videoFlag == true">
               <div>
                 <i class="el-icon-paperclip"></i>
-                <span style="margin:0 0 0 5px">123</span>
+                <span style="margin: 0 0 0 5px">123</span>
               </div>
               <div>
                 <i class="el-icon-delete"></i>
@@ -64,39 +79,79 @@
         <el-dialog
           title
           :visible.sync="dialogSuccess"
-          style="width:700px;margin-left:25%;margin-top:5%;border-radius:5px"
+          style="
+            width: 700px;
+            margin-left: 25%;
+            margin-top: 5%;
+            border-radius: 5px;
+          "
         >
-          <div style="display:flex;flex-direction:column;" v-if="this.dialogsetDefault">
+          <div
+            style="display: flex; flex-direction: column"
+            v-if="this.dialogsetDefault"
+          >
             <div>
               <img :src="require('../assets/images/succ.png')" />
             </div>
-            <div style="font-family: PingFangSC-Medium;color: #2C2C2C;font-size:20px">设置成功</div>
             <div
-              style="font-family: PingFangSC-Regular;color: #565656;font-size:14px;margin:10px 0 70px 0"
-            >成功设置为默认投递简历～</div>
+              style="
+                font-family: PingFangSC-Medium;
+                color: #2c2c2c;
+                font-size: 20px;
+              "
+            >
+              设置成功
+            </div>
+            <div
+              style="
+                font-family: PingFangSC-Regular;
+                color: #565656;
+                font-size: 14px;
+                margin: 10px 0 70px 0;
+              "
+            >
+              成功设置为默认投递简历～
+            </div>
             <div>
               <el-button
                 @click="dialogSuccess = false"
-                style="width:270px;height:40px;margin:0 0 40px 0"
+                style="width: 270px; height: 40px; margin: 0 0 40px 0"
                 type="primary"
-              >确定</el-button>
+                >确定</el-button
+              >
             </div>
           </div>
 
-          <div style="display:flex;flex-direction:column;" v-else>
+          <div style="display: flex; flex-direction: column" v-else>
             <div>
               <img :src="require('../assets/images/sz.png')" />
             </div>
-            <div style="font-family: PingFangSC-Medium;color: #2C2C2C;font-size:20px">上传成功</div>
             <div
-              style="font-family: PingFangSC-Regular;color: #565656;font-size:14px;margin:10px 0 70px 0"
-            >成功上传附件简历~</div>
+              style="
+                font-family: PingFangSC-Medium;
+                color: #2c2c2c;
+                font-size: 20px;
+              "
+            >
+              上传成功
+            </div>
+            <div
+              style="
+                font-family: PingFangSC-Regular;
+                color: #565656;
+                font-size: 14px;
+                margin: 10px 0 70px 0;
+              "
+            >
+              成功上传附件简历~
+            </div>
             <div>
               <el-button
                 @click="dialogSuccess = false"
-                style="width:270px;height:40px;margin:0 0 40px 0"
+                style="width: 270px; height: 40px; margin: 0 0 40px 0"
                 type="primary"
-              >确定</el-button>
+                >确定</el-button
+              >
             </div>
           </div>
         </el-dialog>
@@ -104,21 +159,52 @@
           class="deleteDialog"
           title
           :visible.sync="dialogResume"
-          style="width:900px;margin-left:25%;margin-top:10%;border-radius:5px"
+          style="
+            width: 900px;
+            margin-left: 25%;
+            margin-top: 10%;
+            border-radius: 5px;
+          "
         >
-          <div style="display:flex;flex-direction:row;margin-left:30px">
+          <div style="display: flex; flex-direction: row; margin-left: 30px">
             <span
               v-if="this.isDefault"
-              style="font-size:20px;line-height:20px;margin:15px 0 0 0;color:#373737"
-            >确定删除？删除后默认投递简历将会改变</span>
+              style="
+                font-size: 20px;
+                line-height: 20px;
+                margin: 15px 0 0 0;
+                color: #373737;
+              "
+              >确定删除？删除后默认投递简历将会改变</span
+            >
             <span
               v-else
-              style="font-size:20px;line-height:20px;margin:15px 0 0 130px;color:#373737"
-            >确定删除？</span>
+              style="
+                font-size: 20px;
+                line-height: 20px;
+                margin: 15px 0 0 130px;
+                color: #373737;
+              "
+              >确定删除？</span
+            >
           </div>
-          <div slot="footer" class="dialog-footer" style="margin-top:-70px;margin-right:60px">
-            <el-button style="margin:0 100px 0 0" @click="dialogResume = false" plain>取 消</el-button>
-            <el-button type="primary" style="margin:0 0 0 0" @click="keepDelete()">确 定</el-button>
+          <div
+            slot="footer"
+            class="dialog-footer"
+            style="margin-top: -70px; margin-right: 60px"
+          >
+            <el-button
+              style="margin: 0 100px 0 0"
+              @click="dialogResume = false"
+              plain
+              >取 消</el-button
+            >
+            <el-button
+              type="primary"
+              style="margin: 0 0 0 0"
+              @click="keepDelete()"
+              >确 定</el-button
+            >
           </div>
         </el-dialog>
         <!-- 教育经历删除确认 -->
@@ -126,16 +212,41 @@
           class="deleteDialog"
           title
           :visible.sync="dialogedu"
-          style="width:900px;margin-left:25%;margin-top:10%;border-radius:5px"
+          style="
+            width: 900px;
+            margin-left: 25%;
+            margin-top: 10%;
+            border-radius: 5px;
+          "
         >
-          <div style="display:flex;flex-direction:row;margin-left:90px">
+          <div style="display: flex; flex-direction: row; margin-left: 90px">
             <span
-              style="font-size:20px;line-height:20px;margin:15px 0 0 -10px;color:#373737"
-            >删除后不能恢复，请确定删除？</span>
+              style="
+                font-size: 20px;
+                line-height: 20px;
+                margin: 15px 0 0 -10px;
+                color: #373737;
+              "
+              >删除后不能恢复，请确定删除？</span
+            >
           </div>
-          <div slot="footer" class="dialog-footer" style="margin-top:-70px;margin-right:50px">
-            <el-button style="margin:0 100px 0 0" @click="dialogedu = false" plain>取 消</el-button>
-            <el-button type="primary" style="margin:0 0 0 0" @click="deletedu()">确 定</el-button>
+          <div
+            slot="footer"
+            class="dialog-footer"
+            style="margin-top: -70px; margin-right: 50px"
+          >
+            <el-button
+              style="margin: 0 100px 0 0"
+              @click="dialogedu = false"
+              plain
+              >取 消</el-button
+            >
+            <el-button
+              type="primary"
+              style="margin: 0 0 0 0"
+              @click="deletedu()"
+              >确 定</el-button
+            >
           </div>
           <!-- <div style="height:93px"></div> -->
         </el-dialog>
@@ -144,16 +255,41 @@
           class="deleteDialog"
           title
           :visible.sync="dialogwork"
-          style="width:900px;margin-left:25%;margin-top:10%;border-radius:5px"
+          style="
+            width: 900px;
+            margin-left: 25%;
+            margin-top: 10%;
+            border-radius: 5px;
+          "
         >
-          <div style="display:flex;flex-direction:row;margin-left:90px">
+          <div style="display: flex; flex-direction: row; margin-left: 90px">
             <span
-              style="font-size:20px;line-height:20px;margin:15px 0 0 -10px;color:#373737"
-            >删除后不能恢复，请确定删除？</span>
+              style="
+                font-size: 20px;
+                line-height: 20px;
+                margin: 15px 0 0 -10px;
+                color: #373737;
+              "
+              >删除后不能恢复，请确定删除？</span
+            >
           </div>
-          <div slot="footer" class="dialog-footer" style="margin-top:-70px;margin-right:50px">
-            <el-button style="margin:0 100px 0 0" @click="dialogwork = false" plain>取 消</el-button>
-            <el-button type="primary" style="margin:0 0 0 0" @click="deletework()">确 定</el-button>
+          <div
+            slot="footer"
+            class="dialog-footer"
+            style="margin-top: -70px; margin-right: 50px"
+          >
+            <el-button
+              style="margin: 0 100px 0 0"
+              @click="dialogwork = false"
+              plain
+              >取 消</el-button
+            >
+            <el-button
+              type="primary"
+              style="margin: 0 0 0 0"
+              @click="deletework()"
+              >确 定</el-button
+            >
           </div>
         </el-dialog>
         <!-- 项目经历删除确认 -->
@@ -161,16 +297,41 @@
           class="deleteDialog"
           title
           :visible.sync="dialogproject"
-          style="width:900px;margin-left:25%;margin-top:10%;border-radius:5px"
+          style="
+            width: 900px;
+            margin-left: 25%;
+            margin-top: 10%;
+            border-radius: 5px;
+          "
         >
-          <div style="display:flex;flex-direction:row;margin-left:90px">
+          <div style="display: flex; flex-direction: row; margin-left: 90px">
             <span
-              style="font-size:20px;line-height:20px;margin:15px 0 0 -10px;color:#373737"
-            >删除后不能恢复，请确定删除？</span>
+              style="
+                font-size: 20px;
+                line-height: 20px;
+                margin: 15px 0 0 -10px;
+                color: #373737;
+              "
+              >删除后不能恢复，请确定删除？</span
+            >
           </div>
-          <div slot="footer" class="dialog-footer" style="margin-top:-70px;margin-right:50px">
-            <el-button style="margin:0 100px 0 0" @click="dialogproject = false" plain>取 消</el-button>
-            <el-button type="primary" style="margin:0 0 0 0" @click="deleteproject()">确 定</el-button>
+          <div
+            slot="footer"
+            class="dialog-footer"
+            style="margin-top: -70px; margin-right: 50px"
+          >
+            <el-button
+              style="margin: 0 100px 0 0"
+              @click="dialogproject = false"
+              plain
+              >取 消</el-button
+            >
+            <el-button
+              type="primary"
+              style="margin: 0 0 0 0"
+              @click="deleteproject()"
+              >确 定</el-button
+            >
           </div>
         </el-dialog>
         <!-- 培训经历删除确认 -->
@@ -178,16 +339,41 @@
           class="deleteDialog"
           title
           :visible.sync="dialogtrain"
-          style="width:900px;margin-left:25%;margin-top:10%;border-radius:5px"
+          style="
+            width: 900px;
+            margin-left: 25%;
+            margin-top: 10%;
+            border-radius: 5px;
+          "
         >
-          <div style="display:flex;flex-direction:row;margin-left:90px">
+          <div style="display: flex; flex-direction: row; margin-left: 90px">
             <span
-              style="font-size:20px;line-height:20px;margin:15px 0 0 -10px;color:#373737"
-            >删除后不能恢复，请确定删除？</span>
+              style="
+                font-size: 20px;
+                line-height: 20px;
+                margin: 15px 0 0 -10px;
+                color: #373737;
+              "
+              >删除后不能恢复，请确定删除？</span
+            >
           </div>
-          <div slot="footer" class="dialog-footer" style="margin-top:-70px;margin-right:50px">
-            <el-button style="margin:0 100px 0 0" @click="dialogtrain = false" plain>取 消</el-button>
-            <el-button type="primary" style="margin:0 0 0 0" @click="deletetrain()">确 定</el-button>
+          <div
+            slot="footer"
+            class="dialog-footer"
+            style="margin-top: -70px; margin-right: 50px"
+          >
+            <el-button
+              style="margin: 0 100px 0 0"
+              @click="dialogtrain = false"
+              plain
+              >取 消</el-button
+            >
+            <el-button
+              type="primary"
+              style="margin: 0 0 0 0"
+              @click="deletetrain()"
+              >确 定</el-button
+            >
           </div>
         </el-dialog>
         <!-- 语言能力删除确认 -->
@@ -195,16 +381,41 @@
           class="deleteDialog"
           title
           :visible.sync="dialoglanguage"
-          style="width:900px;margin-left:25%;margin-top:10%;border-radius:5px"
+          style="
+            width: 900px;
+            margin-left: 25%;
+            margin-top: 10%;
+            border-radius: 5px;
+          "
         >
-          <div style="display:flex;flex-direction:row;margin-left:90px">
+          <div style="display: flex; flex-direction: row; margin-left: 90px">
             <span
-              style="font-size:20px;line-height:20px;margin:15px 0 0 -10px;color:#373737"
-            >删除后不能恢复，请确定删除？</span>
+              style="
+                font-size: 20px;
+                line-height: 20px;
+                margin: 15px 0 0 -10px;
+                color: #373737;
+              "
+              >删除后不能恢复，请确定删除？</span
+            >
           </div>
-          <div slot="footer" class="dialog-footer" style="margin-top:-70px;margin-right:50px">
-            <el-button style="margin:0 100px 0 0" @click="dialoglanguage = false" plain>取 消</el-button>
-            <el-button type="primary" style="margin:0 0 0 0" @click="deletelanguage()">确 定</el-button>
+          <div
+            slot="footer"
+            class="dialog-footer"
+            style="margin-top: -70px; margin-right: 50px"
+          >
+            <el-button
+              style="margin: 0 100px 0 0"
+              @click="dialoglanguage = false"
+              plain
+              >取 消</el-button
+            >
+            <el-button
+              type="primary"
+              style="margin: 0 0 0 0"
+              @click="deletelanguage()"
+              >确 定</el-button
+            >
           </div>
         </el-dialog>
         <!-- 专业技能删除确认 -->
@@ -212,16 +423,41 @@
           class="deleteDialog"
           title
           :visible.sync="dialogskill"
-          style="width:900px;margin-left:25%;margin-top:10%;border-radius:5px"
+          style="
+            width: 900px;
+            margin-left: 25%;
+            margin-top: 10%;
+            border-radius: 5px;
+          "
         >
-          <div style="display:flex;flex-direction:row;margin-left:90px">
+          <div style="display: flex; flex-direction: row; margin-left: 90px">
             <span
-              style="font-size:20px;line-height:20px;margin:15px 0 0 -10px;color:#373737"
-            >删除后不能恢复，请确定删除？</span>
+              style="
+                font-size: 20px;
+                line-height: 20px;
+                margin: 15px 0 0 -10px;
+                color: #373737;
+              "
+              >删除后不能恢复，请确定删除？</span
+            >
           </div>
-          <div slot="footer" class="dialog-footer" style="margin-top:-70px;margin-right:50px">
-            <el-button style="margin:0 100px 0 0" @click="dialogskill = false" plain>取 消</el-button>
-            <el-button type="primary" style="margin:0 0 0 0" @click="deleteskill()">确 定</el-button>
+          <div
+            slot="footer"
+            class="dialog-footer"
+            style="margin-top: -70px; margin-right: 50px"
+          >
+            <el-button
+              style="margin: 0 100px 0 0"
+              @click="dialogskill = false"
+              plain
+              >取 消</el-button
+            >
+            <el-button
+              type="primary"
+              style="margin: 0 0 0 0"
+              @click="deleteskill()"
+              >确 定</el-button
+            >
           </div>
         </el-dialog>
         <!-- 职称等级删除确认 -->
@@ -229,16 +465,41 @@
           class="deleteDialog"
           title
           :visible.sync="dialogprofess"
-          style="width:900px;margin-left:25%;margin-top:10%;border-radius:5px"
+          style="
+            width: 900px;
+            margin-left: 25%;
+            margin-top: 10%;
+            border-radius: 5px;
+          "
         >
-          <div style="display:flex;flex-direction:row;margin-left:90px">
+          <div style="display: flex; flex-direction: row; margin-left: 90px">
             <span
-              style="font-size:20px;line-height:20px;margin:15px 0 0 -10px;color:#373737"
-            >删除后不能恢复，请确定删除？</span>
+              style="
+                font-size: 20px;
+                line-height: 20px;
+                margin: 15px 0 0 -10px;
+                color: #373737;
+              "
+              >删除后不能恢复，请确定删除？</span
+            >
           </div>
-          <div slot="footer" class="dialog-footer" style="margin-top:-70px;margin-right:50px">
-            <el-button style="margin:0 100px 0 0" @click="dialogprofess = false" plain>取 消</el-button>
-            <el-button type="primary" style="margin:0 0 0 0" @click="deleteprofession()">确 定</el-button>
+          <div
+            slot="footer"
+            class="dialog-footer"
+            style="margin-top: -70px; margin-right: 50px"
+          >
+            <el-button
+              style="margin: 0 100px 0 0"
+              @click="dialogprofess = false"
+              plain
+              >取 消</el-button
+            >
+            <el-button
+              type="primary"
+              style="margin: 0 0 0 0"
+              @click="deleteprofession()"
+              >确 定</el-button
+            >
           </div>
         </el-dialog>
         <!-- 荣誉奖项删除确认 -->
@@ -246,49 +507,94 @@
           class="deleteDialog"
           title
           :visible.sync="dialogaward"
-          style="width:900px;margin-left:25%;margin-top:10%;border-radius:10px"
+          style="
+            width: 900px;
+            margin-left: 25%;
+            margin-top: 10%;
+            border-radius: 10px;
+          "
         >
-          <div style="display:flex;flex-direction:row;margin-left:90px">
+          <div style="display: flex; flex-direction: row; margin-left: 90px">
             <span
-              style="font-size:20px;line-height:20px;margin:15px 0 0 -10px;color:#373737"
-            >删除后不能恢复，请确定删除？</span>
+              style="
+                font-size: 20px;
+                line-height: 20px;
+                margin: 15px 0 0 -10px;
+                color: #373737;
+              "
+              >删除后不能恢复，请确定删除？</span
+            >
           </div>
-          <div slot="footer" class="dialog-footer" style="margin-top:-70px;margin-right:50px">
-            <el-button style="margin:0 100px 0 0" @click="dialogaward = false" plain>取 消</el-button>
-            <el-button type="primary" style="margin:0 0 0 0" @click="deleteawards()">确 定</el-button>
+          <div
+            slot="footer"
+            class="dialog-footer"
+            style="margin-top: -70px; margin-right: 50px"
+          >
+            <el-button
+              style="margin: 0 100px 0 0"
+              @click="dialogaward = false"
+              plain
+              >取 消</el-button
+            >
+            <el-button
+              type="primary"
+              style="margin: 0 0 0 0"
+              @click="deleteawards()"
+              >确 定</el-button
+            >
           </div>
         </el-dialog>
         <!-- 基本信息编辑 -->
         <el-dialog
           title="基本信息编辑"
-          style="width:1250px;margin-left:15%;overflow:hidden;"
+          style="width: 1250px; margin-left: 15%; overflow: hidden"
           :visible.sync="informationouterVisible"
         >
           <el-dialog
             class="sureDialog"
-            style="width:900px;margin-left:24%;margin-top:10%;border-radius:10px"
+            style="
+              width: 900px;
+              margin-left: 24%;
+              margin-top: 10%;
+              border-radius: 10px;
+            "
             :visible.sync="informationinnerVisible"
             append-to-body
           >
-            <div style="display:flex;flex-direction:row;margin-left:90px">
+            <div style="display: flex; flex-direction: row; margin-left: 90px">
               <span
-                style="font-size:20px;line-height:20px;margin:15px 0 0 -10px;color:#373737"
-              >离开修改内容将不会保存的噢</span>
+                style="
+                  font-size: 20px;
+                  line-height: 20px;
+                  margin: 15px 0 0 -10px;
+                  color: #373737;
+                "
+                >离开修改内容将不会保存的噢</span
+              >
             </div>
-            <div slot="footer" class="dialog-footer" style="margin-top:-70px;margin-right:50px">
+            <div
+              slot="footer"
+              class="dialog-footer"
+              style="margin-top: -70px; margin-right: 50px"
+            >
               <el-button
-                style="margin:0 100px 0 0"
+                style="margin: 0 100px 0 0"
                 @click="informationinnerVisible = false"
                 plain
-              >取 消</el-button>
+                >取 消</el-button
+              >
               <el-button
-                style="margin:0 0 0 0"
+                style="margin: 0 0 0 0"
                 type="primary"
-                @click="informationouterVisible = false,informationinnerVisible = false"
-              >确定</el-button>
+                @click="
+                  (informationouterVisible = false),
+                    (informationinnerVisible = false)
+                "
+                >确定</el-button
+              >
             </div>
           </el-dialog>
-          <div style="height:470px;overflow-y:scroll;overflow-x:hidden">
+          <div style="height: 470px; overflow-y: scroll; overflow-x: hidden">
             <el-form
               :model="formInformation"
               class="demo-form-inline"
@@ -306,73 +612,95 @@
                   :on-error="handleAvatarError"
                 >
                   <img
-                    style="margin:-10px 0 0 -190px"
+                    style="margin: -10px 0 0 -190px"
                     v-if="imageUrlTwo"
                     :src="imageUrlTwo"
                     class="avatar"
                   />
                   <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                   <div
-                    style="margin:-20px 0 0 -5px;width:120px"
+                    style="margin: -20px 0 0 -5px; width: 120px"
                     class="el-upload__tip"
                     slot="tip"
-                  >只能上传jpg/png文件</div>
+                  >
+                    只能上传jpg/png文件
+                  </div>
                   <div
-                    style="margin:-20px 0 0 -5px;width:120px"
+                    style="margin: -20px 0 0 -5px; width: 120px"
                     class="el-upload__tip"
                     slot="tip"
-                  >且不超过2Mb</div>
+                  >
+                    且不超过2Mb
+                  </div>
                 </el-upload>
               </el-form-item>
               <el-form-item label="姓名" prop="name">
                 <el-input
-                  style="width:300px;height:36px;margin-left:-100px"
+                  style="width: 300px; height: 36px; margin-left: -100px"
                   v-model="formInformation.name"
                   placeholder="请输入姓名"
                 ></el-input>
               </el-form-item>
-              <el-form-item label="性别" style="margin:0 0 0 0;width:500px;" prop="sex">
+              <el-form-item
+                label="性别"
+                style="margin: 0 0 0 0; width: 500px"
+                prop="sex"
+              >
                 <el-radio
-                  style="width:112px;height:40px;margin:0 0 0 -145px"
+                  style="width: 112px; height: 40px; margin: 0 0 0 -145px"
                   v-model="formInformation.sex"
                   border
                   label="0"
-                >男性</el-radio>
+                  >男性</el-radio
+                >
                 <el-radio
-                  style="width:112px;height:40px;margin:0 0 0 20px"
+                  style="width: 112px; height: 40px; margin: 0 0 0 20px"
                   v-model="formInformation.sex"
                   border
                   label="1"
-                >女性</el-radio>
+                  >女性</el-radio
+                >
               </el-form-item>
               <br />
-              <el-form-item label="是否应届" style="margin:0 0 0 0;width:500px;" prop="graduate">
+              <el-form-item
+                label="是否应届"
+                style="margin: 0 0 0 0; width: 500px"
+                prop="graduate"
+              >
                 <el-radio
-                  style="width:112px;height:40px;margin:0 0 0 -145px"
+                  style="width: 112px; height: 40px; margin: 0 0 0 -145px"
                   v-model="formInformation.graduate"
                   border
                   label="0"
-                >是</el-radio>
+                  >是</el-radio
+                >
                 <el-radio
-                  style="width:112px;height:40px;margin:0 0 0 20px"
+                  style="width: 112px; height: 40px; margin: 0 0 0 20px"
                   v-model="formInformation.graduate"
                   border
                   label="1"
-                >否</el-radio>
+                  >否</el-radio
+                >
               </el-form-item>
               <br />
               <el-form-item label="起始工作时间" prop="workAge">
                 <el-date-picker
                   v-model="formInformation.workAge"
                   type="year"
-                  style="width:300px;height:36px;margin-left:-100px"
+                  style="width: 300px; height: 36px; margin-left: -100px"
                   placeholder="选择日期"
                 ></el-date-picker>
               </el-form-item>
-              <el-form-item label="海外工作年限" prop="overseasAge" class="selsct">
+              <el-form-item
+                label="海外工作年限"
+                prop="overseasAge"
+                class="selsct"
+              >
                 <el-select
-                  style="width:300px;height:36px;margin-left:-100px"
-                  :disabled="this.formInformation.graduate === '0'?true:false"
+                  style="width: 300px; height: 36px; margin-left: -100px"
+                  :disabled="
+                    this.formInformation.graduate === '0' ? true : false
+                  "
                   v-model="formInformation.overseasAge"
                   placeholder
                 >
@@ -388,7 +716,7 @@
               </el-form-item>
               <el-form-item label="所在城市" prop="city" class="suozai">
                 <el-cascader
-                  style="width:300px;height:36px;margin-left:-100px"
+                  style="width: 300px; height: 36px; margin-left: -100px"
                   v-model="formInformation.city"
                   :options="options"
                   :props="propss"
@@ -396,7 +724,7 @@
               </el-form-item>
               <el-form-item label="最高学历" prop="educationLevel">
                 <el-select
-                  style="width:300px;height:36px;margin-left:-100px"
+                  style="width: 300px; height: 36px; margin-left: -100px"
                   v-model="formInformation.educationLevel"
                   placeholder
                 >
@@ -414,27 +742,27 @@
                   v-model="formInformation.birthday"
                   type="date"
                   :picker-options="pickerOptions"
-                  style="width:300px;height:36px;margin-left:-100px"
+                  style="width: 300px; height: 36px; margin-left: -100px"
                   placeholder="选择日期"
                 ></el-date-picker>
               </el-form-item>
               <el-form-item label="邮箱" prop="email">
                 <el-input
-                  style="width:300px;height:36px;margin-left:-100px"
+                  style="width: 300px; height: 36px; margin-left: -100px"
                   v-model="formInformation.email"
                   placeholder
                 ></el-input>
               </el-form-item>
               <el-form-item label="手机" prop="phone">
                 <el-input
-                  style="width:300px;height:36px;margin-left:-100px"
+                  style="width: 300px; height: 36px; margin-left: -100px"
                   v-model="formInformation.phone"
                   placeholder
                 ></el-input>
               </el-form-item>
               <el-form-item label="政治面貌" prop="politicCountenance">
                 <el-select
-                  style="width:300px;height:36px;margin-left:-100px"
+                  style="width: 300px; height: 36px; margin-left: -100px"
                   v-model="formInformation.politicCountenance"
                   placeholder="请选择政治面貌"
                 >
@@ -447,44 +775,74 @@
               </el-form-item>
             </el-form>
           </div>
-          <div slot="footer" class="dialog-footer" style="margin:-20px 0 20px 0">
-            <el-button style="margin:0 20px 0 0" @click="informationinnerVisible = true" plain>取 消</el-button>
+          <div
+            slot="footer"
+            class="dialog-footer"
+            style="margin: -20px 0 20px 0"
+          >
             <el-button
-              style="margin:0 35px 0 0"
+              style="margin: 0 20px 0 0"
+              @click="informationinnerVisible = true"
+              plain
+              >取 消</el-button
+            >
+            <el-button
+              style="margin: 0 35px 0 0"
               type="primary"
               @click="informationkeep('formInformation')"
-            >保存</el-button>
+              >保存</el-button
+            >
           </div>
         </el-dialog>
         <!-- 求职意向编辑 -->
         <el-dialog
           title="求职意向编辑"
           :close-on-click-modal="false"
-          style="width:1250px;margin-left:15%"
+          style="width: 1250px; margin-left: 15%"
           :visible.sync="jobintensionouterVisible"
         >
           <el-dialog
             class="sureDialog"
-            style="width:900px;margin-left:24%;margin-top:10%;border-radius:10px"
+            style="
+              width: 900px;
+              margin-left: 24%;
+              margin-top: 10%;
+              border-radius: 10px;
+            "
             :visible.sync="jobintensioninnerVisible"
             append-to-body
           >
-            <div style="display:flex;flex-direction:row;margin-left:90px">
+            <div style="display: flex; flex-direction: row; margin-left: 90px">
               <span
-                style="font-size:20px;line-height:20px;margin:15px 0 0 -10px;color:#373737"
-              >离开修改内容将不会保存的噢</span>
+                style="
+                  font-size: 20px;
+                  line-height: 20px;
+                  margin: 15px 0 0 -10px;
+                  color: #373737;
+                "
+                >离开修改内容将不会保存的噢</span
+              >
             </div>
-            <div slot="footer" class="dialog-footer" style="margin-top:-70px;margin-right:50px">
+            <div
+              slot="footer"
+              class="dialog-footer"
+              style="margin-top: -70px; margin-right: 50px"
+            >
               <el-button
-                style="margin:0 100px 0 0"
+                style="margin: 0 100px 0 0"
                 @click="jobintensioninnerVisible = false"
                 plain
-              >取 消</el-button>
+                >取 消</el-button
+              >
               <el-button
-                style="margin:0 0 0 0"
+                style="margin: 0 0 0 0"
                 type="primary"
-                @click="jobintensionouterVisible = false,jobintensioninnerVisible = false"
-              >确定</el-button>
+                @click="
+                  (jobintensionouterVisible = false),
+                    (jobintensioninnerVisible = false)
+                "
+                >确定</el-button
+              >
             </div>
           </el-dialog>
           <div>
@@ -497,7 +855,7 @@
             >
               <el-form-item label="职位类型" prop="postType">
                 <el-cascader
-                  style="width:300px;height:36px;margin-left:-100px"
+                  style="width: 300px; height: 36px; margin-left: -100px"
                   :options="positionCatalogList"
                   :props="propsTwo"
                   v-model="formJobintension.postType"
@@ -505,7 +863,7 @@
               </el-form-item>
               <el-form-item label="工作城市" prop="city">
                 <el-cascader
-                  style="width:300px;height:36px;margin-left:-100px"
+                  style="width: 300px; height: 36px; margin-left: -100px"
                   :options="options"
                   :props="props"
                   v-model="formJobintension.city"
@@ -513,7 +871,7 @@
               </el-form-item>
               <el-form-item label="企业行业" prop="trad">
                 <el-cascader
-                  style="width:300px;height:36px;margin-left:-100px"
+                  style="width: 300px; height: 36px; margin-left: -100px"
                   :options="industryList"
                   :props="propsOne"
                   v-model="formJobintension.trad"
@@ -521,12 +879,12 @@
               </el-form-item>
               <el-form-item label="薪资范围" prop="scope">
                 <el-select
-                  style="width:300px;height:36px;margin-left:-100px"
+                  style="width: 300px; height: 36px; margin-left: -100px"
                   v-model="formJobintension.scope"
                   placeholder
                 >
                   <el-option
-                    v-for="(list,index) in monthPayList"
+                    v-for="(list, index) in monthPayList"
                     :key="index"
                     :label="list.tag"
                     :value="list.code"
@@ -536,13 +894,13 @@
               <el-form-item label="求职状态" prop="status">
                 <el-select
                   id="name"
-                  style="width:300px;height:36px;margin-left:-100px"
+                  style="width: 300px; height: 36px; margin-left: -100px"
                   v-model="formJobintension.status"
                   placeholder
                   @change="Jobstate()"
                 >
                   <el-option
-                    v-for="(list,index) in jobSearchList"
+                    v-for="(list, index) in jobSearchList"
                     :key="index"
                     :label="list.tag"
                     :value="list.code"
@@ -551,12 +909,12 @@
               </el-form-item>
               <el-form-item label="工作类型" prop="jobType">
                 <el-select
-                  style="width:300px;height:36px;margin-left:-100px"
+                  style="width: 300px; height: 36px; margin-left: -100px"
                   v-model="formJobintension.jobType"
                   placeholder
                 >
                   <el-option
-                    v-for="(list,index) in workStateList"
+                    v-for="(list, index) in workStateList"
                     :key="index"
                     :label="list.tag"
                     :value="list.code"
@@ -566,50 +924,86 @@
               <!-- :disabled="this.formJobintension.status === '离职-延时到岗'?false:true" -->
               <el-form-item label="到岗时间" class="block">
                 <el-date-picker
-                  :disabled="this.formJobintension.status === 1||this.formJobintension.status === '离职-延时到岗'?false:true"
+                  :disabled="
+                    this.formJobintension.status === 1 ||
+                    this.formJobintension.status === '离职-延时到岗'
+                      ? false
+                      : true
+                  "
                   v-model="formJobintension.reportTime"
                   :picker-options="pickerOptionsOne"
-                  style="width:300px;height:36px;margin-left:-100px"
+                  style="width: 300px; height: 36px; margin-left: -100px"
                   type="date"
                   placeholder="选择日期"
                 ></el-date-picker>
               </el-form-item>
             </el-form>
           </div>
-          <div slot="footer" class="dialog-footer" style="margin:-20px 0 20px 0">
-            <el-button style="margin:0 20px 0 0" @click="jobintensioninnerVisible = true" plain>取 消</el-button>
+          <div
+            slot="footer"
+            class="dialog-footer"
+            style="margin: -20px 0 20px 0"
+          >
             <el-button
-              style="margin:0 55px 0 0"
+              style="margin: 0 20px 0 0"
+              @click="jobintensioninnerVisible = true"
+              plain
+              >取 消</el-button
+            >
+            <el-button
+              style="margin: 0 55px 0 0"
               type="primary"
               @click="jobintensionkeep('formJobintension')"
-            >保存</el-button>
+              >保存</el-button
+            >
           </div>
         </el-dialog>
         <!-- 工作经历编辑 -->
         <el-dialog
           title="工作经历编辑"
           :close-on-click-modal="false"
-          style="width:1250px;margin-left:15%"
+          style="width: 1250px; margin-left: 15%"
           :visible.sync="workouterVisible"
         >
           <el-dialog
             class="sureDialog"
-            style="width:900px;margin-left:24%;margin-top:10%;border-radius:10px"
+            style="
+              width: 900px;
+              margin-left: 24%;
+              margin-top: 10%;
+              border-radius: 10px;
+            "
             :visible.sync="workinnerVisible"
             append-to-body
           >
-            <div style="display:flex;flex-direction:row;margin-left:90px">
+            <div style="display: flex; flex-direction: row; margin-left: 90px">
               <span
-                style="font-size:20px;line-height:20px;margin:15px 0 0 -10px;color:#373737"
-              >离开修改内容将不会保存的噢</span>
+                style="
+                  font-size: 20px;
+                  line-height: 20px;
+                  margin: 15px 0 0 -10px;
+                  color: #373737;
+                "
+                >离开修改内容将不会保存的噢</span
+              >
             </div>
-            <div slot="footer" class="dialog-footer" style="margin-top:-70px;margin-right:50px">
-              <el-button style="margin:0 100px 0 0" @click="workinnerVisible = false" plain>取 消</el-button>
+            <div
+              slot="footer"
+              class="dialog-footer"
+              style="margin-top: -70px; margin-right: 50px"
+            >
               <el-button
-                style="margin:0 0 0 0"
+                style="margin: 0 100px 0 0"
+                @click="workinnerVisible = false"
+                plain
+                >取 消</el-button
+              >
+              <el-button
+                style="margin: 0 0 0 0"
                 type="primary"
-                @click="workouterVisible = false,workinnerVisible = false"
-              >确定</el-button>
+                @click="(workouterVisible = false), (workinnerVisible = false)"
+                >确定</el-button
+              >
             </div>
           </el-dialog>
           <div>
@@ -622,28 +1016,28 @@
             >
               <el-form-item label="公司名称" prop="companyName">
                 <el-input
-                  style="width:300px;height:36px;margin-left:-100px"
+                  style="width: 300px; height: 36px; margin-left: -100px"
                   v-model="formWork.companyName"
                   placeholder
                 ></el-input>
               </el-form-item>
               <el-form-item label="职位名称" prop="postName">
                 <el-input
-                  style="width:300px;height:36px;margin-left:-100px"
+                  style="width: 300px; height: 36px; margin-left: -100px"
                   v-model="formWork.postName"
                   placeholder
                 ></el-input>
               </el-form-item>
               <el-form-item label="税前月薪(k)">
                 <el-input
-                  style="width:300px;height:36px;margin-left:-100px"
+                  style="width: 300px; height: 36px; margin-left: -100px"
                   v-model="formWork.monthPay"
                   placeholder
                 ></el-input>
               </el-form-item>
               <el-form-item label="工作时间" class="block" prop="workTime">
                 <el-date-picker
-                  style="width:300px;height:36px;margin-left:-100px"
+                  style="width: 300px; height: 36px; margin-left: -100px"
                   v-model="formWork.workTime"
                   type="daterange"
                   unlink-panels
@@ -656,21 +1050,35 @@
                 <el-input
                   type="textarea"
                   v-model="formWork.jobDescription"
-                  style="width:300px;margin-left:-100px"
+                  style="width: 300px; margin-left: -100px"
                 ></el-input>
               </el-form-item>
             </el-form>
           </div>
-          <div slot="footer" class="dialog-footer" style="margin:-20px 0 20px 0">
-            <el-button style="margin:0 20px 0 0" @click="workinnerVisible = true" plain>取 消</el-button>
-            <el-button style="margin:0 55px 0 0" type="primary" @click="workkeep('formWork')">保存</el-button>
+          <div
+            slot="footer"
+            class="dialog-footer"
+            style="margin: -20px 0 20px 0"
+          >
+            <el-button
+              style="margin: 0 20px 0 0"
+              @click="workinnerVisible = true"
+              plain
+              >取 消</el-button
+            >
+            <el-button
+              style="margin: 0 55px 0 0"
+              type="primary"
+              @click="workkeep('formWork')"
+              >保存</el-button
+            >
           </div>
         </el-dialog>
         <!-- 教育经历编辑 -->
         <el-dialog
           title="教育经历编辑"
           :close-on-click-modal="false"
-          style="width:1250px;margin-left:15%"
+          style="width: 1250px; margin-left: 15%"
           :visible.sync="educationouterVisible"
         >
           <div>
@@ -684,13 +1092,13 @@
               <el-form-item label="学校名称" prop="educationName">
                 <el-input
                   v-model="formEducation.educationName"
-                  style="width:300px;height:36px;margin-left:-100px"
+                  style="width: 300px; height: 36px; margin-left: -100px"
                   placeholder
                 ></el-input>
               </el-form-item>
               <el-form-item label="在校时间" class="block" prop="educationTime">
                 <el-date-picker
-                  style="width:300px;height:36px;margin-left:-100px"
+                  style="width: 300px; height: 36px; margin-left: -100px"
                   v-model="formEducation.educationTime"
                   type="daterange"
                   unlink-panels
@@ -701,7 +1109,7 @@
               </el-form-item>
               <el-form-item label="专业" prop="educationSpecialty">
                 <el-input
-                  style="width:300px;height:36px;margin-left:-100px"
+                  style="width: 300px; height: 36px; margin-left: -100px"
                   placeholder
                   v-model="formEducation.educationSpecialty"
                 ></el-input>
@@ -709,7 +1117,7 @@
 
               <el-form-item label="学历" prop="educationDegree">
                 <el-select
-                  style="width:300px;height:36px;margin-left:-100px"
+                  style="width: 300px; height: 36px; margin-left: -100px"
                   placeholder
                   v-model="formEducation.educationDegree"
                 >
@@ -723,48 +1131,88 @@
                 </el-select>
               </el-form-item>
 
-              <el-form-item label="是否统招" style="width:355px;margin:0 0 0 0" prop="general">
+              <el-form-item
+                label="是否统招"
+                style="width: 355px; margin: 0 0 0 0"
+                prop="general"
+              >
                 <el-radio
-                  style="width:112px;height:40px"
+                  style="width: 112px; height: 40px"
                   v-model="formEducation.general"
                   border
                   label="0"
-                >是</el-radio>
+                  >是</el-radio
+                >
                 <el-radio
-                  style="width:112px;height:40px;margin:0 0 0 -20px"
+                  style="width: 112px; height: 40px; margin: 0 0 0 -20px"
                   v-model="formEducation.general"
                   border
                   label="1"
-                >否</el-radio>
+                  >否</el-radio
+                >
               </el-form-item>
             </el-form>
           </div>
-          <div slot="footer" class="dialog-footer" style="margin:-20px 0 20px 0">
-            <el-button style="margin:0 20px 0 0" @click="educationinnerVisible = true" plain>取 消</el-button>
+          <div
+            slot="footer"
+            class="dialog-footer"
+            style="margin: -20px 0 20px 0"
+          >
             <el-button
-              style="margin:0 55px 0 0"
+              style="margin: 0 20px 0 0"
+              @click="educationinnerVisible = true"
+              plain
+              >取 消</el-button
+            >
+            <el-button
+              style="margin: 0 55px 0 0"
               type="primary"
               @click="educationkeep('formEducation')"
-            >保存</el-button>
+              >保存</el-button
+            >
           </div>
           <el-dialog
             class="sureDialog"
-            style="width:900px;margin-left:24%;margin-top:10%;border-radius:10px"
+            style="
+              width: 900px;
+              margin-left: 24%;
+              margin-top: 10%;
+              border-radius: 10px;
+            "
             :visible.sync="educationinnerVisible"
             append-to-body
           >
-            <div style="display:flex;flex-direction:row;margin-left:90px">
+            <div style="display: flex; flex-direction: row; margin-left: 90px">
               <span
-                style="font-size:20px;line-height:20px;margin:15px 0 0 -10px;color:#373737"
-              >离开修改内容将不会保存的噢</span>
+                style="
+                  font-size: 20px;
+                  line-height: 20px;
+                  margin: 15px 0 0 -10px;
+                  color: #373737;
+                "
+                >离开修改内容将不会保存的噢</span
+              >
             </div>
-            <div slot="footer" class="dialog-footer" style="margin-top:-70px;margin-right:50px">
-              <el-button style="margin:0 100px 0 0" @click="educationinnerVisible = false" plain>取 消</el-button>
+            <div
+              slot="footer"
+              class="dialog-footer"
+              style="margin-top: -70px; margin-right: 50px"
+            >
               <el-button
-                style="margin:0 0 0 0"
+                style="margin: 0 100px 0 0"
+                @click="educationinnerVisible = false"
+                plain
+                >取 消</el-button
+              >
+              <el-button
+                style="margin: 0 0 0 0"
                 type="primary"
-                @click="educationouterVisible = false,educationinnerVisible = false"
-              >确定</el-button>
+                @click="
+                  (educationouterVisible = false),
+                    (educationinnerVisible = false)
+                "
+                >确定</el-button
+              >
             </div>
           </el-dialog>
         </el-dialog>
@@ -772,7 +1220,7 @@
         <el-dialog
           title="项目经历编辑"
           :close-on-click-modal="false"
-          style="width:1250px;margin-left:15%"
+          style="width: 1250px; margin-left: 15%"
           :visible.sync="progectouterVisible"
         >
           <div>
@@ -785,21 +1233,21 @@
             >
               <el-form-item label="项目名称" prop="itemName">
                 <el-input
-                  style="width:300px;height:36px;margin-left:-100px"
+                  style="width: 300px; height: 36px; margin-left: -100px"
                   v-model="formProject.itemName"
                   placeholder
                 ></el-input>
               </el-form-item>
               <el-form-item label="公司名称" prop="companyName">
                 <el-input
-                  style="width:300px;height:36px;margin-left:-100px"
+                  style="width: 300px; height: 36px; margin-left: -100px"
                   v-model="formProject.companyName"
                   placeholder
                 ></el-input>
               </el-form-item>
               <el-form-item label="项目时间" class="block" prop="schoolTime">
                 <el-date-picker
-                  style="width:300px;height:36px;margin-left:-100px"
+                  style="width: 300px; height: 36px; margin-left: -100px"
                   v-model="formProject.schoolTime"
                   type="daterange"
                   range-separator="至"
@@ -813,7 +1261,7 @@
                   v-model="formProject.duty"
                   maxlength="1600"
                   show-word-limit
-                  style="width:300px;margin-left:-100px"
+                  style="width: 300px; margin-left: -100px"
                 ></el-input>
               </el-form-item>
               <el-form-item label="项目介绍" prop="project">
@@ -822,37 +1270,70 @@
                   maxlength="1600"
                   show-word-limit
                   v-model="formProject.project"
-                  style="width:300px;margin-left:-100px"
+                  style="width: 300px; margin-left: -100px"
                 ></el-input>
               </el-form-item>
             </el-form>
           </div>
-          <div slot="footer" class="dialog-footer" style="margin:-20px 0 20px 0">
-            <el-button style="margin:0 20px 0 0" @click="progectinnerVisible = true" plain>取 消</el-button>
+          <div
+            slot="footer"
+            class="dialog-footer"
+            style="margin: -20px 0 20px 0"
+          >
             <el-button
-              style="margin:0 55px 0 0"
+              style="margin: 0 20px 0 0"
+              @click="progectinnerVisible = true"
+              plain
+              >取 消</el-button
+            >
+            <el-button
+              style="margin: 0 55px 0 0"
               type="primary"
               @click="progectkeep('formProject')"
-            >保存</el-button>
+              >保存</el-button
+            >
           </div>
           <el-dialog
             class="sureDialog"
-            style="width:900px;margin-left:24%;margin-top:10%;border-radius:10px"
+            style="
+              width: 900px;
+              margin-left: 24%;
+              margin-top: 10%;
+              border-radius: 10px;
+            "
             :visible.sync="progectinnerVisible"
             append-to-body
           >
-            <div style="display:flex;flex-direction:row;margin-left:90px">
+            <div style="display: flex; flex-direction: row; margin-left: 90px">
               <span
-                style="font-size:20px;line-height:20px;margin:15px 0 0 -10px;color:#373737"
-              >离开修改内容将不会保存的噢</span>
+                style="
+                  font-size: 20px;
+                  line-height: 20px;
+                  margin: 15px 0 0 -10px;
+                  color: #373737;
+                "
+                >离开修改内容将不会保存的噢</span
+              >
             </div>
-            <div slot="footer" class="dialog-footer" style="margin-top:-70px;margin-right:50px">
-              <el-button style="margin:0 100px 0 0" @click="progectinnerVisible = false" plain>取 消</el-button>
+            <div
+              slot="footer"
+              class="dialog-footer"
+              style="margin-top: -70px; margin-right: 50px"
+            >
               <el-button
-                style="margin:0 0 0 0"
+                style="margin: 0 100px 0 0"
+                @click="progectinnerVisible = false"
+                plain
+                >取 消</el-button
+              >
+              <el-button
+                style="margin: 0 0 0 0"
                 type="primary"
-                @click="progectouterVisible = false,progectinnerVisible = false"
-              >确定</el-button>
+                @click="
+                  (progectouterVisible = false), (progectinnerVisible = false)
+                "
+                >确定</el-button
+              >
             </div>
           </el-dialog>
         </el-dialog>
@@ -860,7 +1341,7 @@
         <el-dialog
           title="培训经历编辑"
           :close-on-click-modal="false"
-          style="width:1250px;margin-left:15%"
+          style="width: 1250px; margin-left: 15%"
           :visible.sync="trainingouterVisible"
         >
           <div>
@@ -873,21 +1354,21 @@
             >
               <el-form-item label="培训课程" prop="trainCourse">
                 <el-input
-                  style="width:300px;height:36px;margin-left:-100px"
+                  style="width: 300px; height: 36px; margin-left: -100px"
                   v-model="formtraining.trainCourse"
                   placeholder
                 ></el-input>
               </el-form-item>
               <el-form-item label="培训机构" prop="trainCours">
                 <el-input
-                  style="width:300px;height:36px;margin-left:-100px"
+                  style="width: 300px; height: 36px; margin-left: -100px"
                   v-model="formtraining.trainCours"
                   placeholder
                 ></el-input>
               </el-form-item>
               <el-form-item label="培训时间" class="block" prop="trainTime">
                 <el-date-picker
-                  style="width:300px;height:36px;margin-left:-100px"
+                  style="width: 300px; height: 36px; margin-left: -100px"
                   v-model="formtraining.trainTime"
                   type="daterange"
                   range-separator="至"
@@ -897,32 +1378,65 @@
               </el-form-item>
             </el-form>
           </div>
-          <div slot="footer" class="dialog-footer" style="margin:-20px 0 20px 0">
-            <el-button style="margin:0 20px 0 0" @click="traininginnerVisible = true" plain>取 消</el-button>
+          <div
+            slot="footer"
+            class="dialog-footer"
+            style="margin: -20px 0 20px 0"
+          >
             <el-button
-              style="margin:0 55px 0 0"
+              style="margin: 0 20px 0 0"
+              @click="traininginnerVisible = true"
+              plain
+              >取 消</el-button
+            >
+            <el-button
+              style="margin: 0 55px 0 0"
               type="primary"
               @click="trainingkeep('formtraining')"
-            >保存</el-button>
+              >保存</el-button
+            >
           </div>
           <el-dialog
             class="sureDialog"
-            style="width:900px;margin-left:24%;margin-top:10%;border-radius:10px"
+            style="
+              width: 900px;
+              margin-left: 24%;
+              margin-top: 10%;
+              border-radius: 10px;
+            "
             :visible.sync="traininginnerVisible"
             append-to-body
           >
-            <div style="display:flex;flex-direction:row;margin-left:90px">
+            <div style="display: flex; flex-direction: row; margin-left: 90px">
               <span
-                style="font-size:20px;line-height:20px;margin:15px 0 0 -10px;color:#373737"
-              >离开修改内容将不会保存的噢</span>
+                style="
+                  font-size: 20px;
+                  line-height: 20px;
+                  margin: 15px 0 0 -10px;
+                  color: #373737;
+                "
+                >离开修改内容将不会保存的噢</span
+              >
             </div>
-            <div slot="footer" class="dialog-footer" style="margin-top:-70px;margin-right:50px">
-              <el-button style="margin:0 100px 0 0" @click="traininginnerVisible = false" plain>取 消</el-button>
+            <div
+              slot="footer"
+              class="dialog-footer"
+              style="margin-top: -70px; margin-right: 50px"
+            >
               <el-button
-                style="margin:0 0 0 0"
+                style="margin: 0 100px 0 0"
+                @click="traininginnerVisible = false"
+                plain
+                >取 消</el-button
+              >
+              <el-button
+                style="margin: 0 0 0 0"
                 type="primary"
-                @click="trainingouterVisible = false,traininginnerVisible = false"
-              >确定</el-button>
+                @click="
+                  (trainingouterVisible = false), (traininginnerVisible = false)
+                "
+                >确定</el-button
+              >
             </div>
           </el-dialog>
         </el-dialog>
@@ -930,7 +1444,7 @@
         <el-dialog
           title="语言能力编辑"
           :close-on-click-modal="false"
-          style="width:1250px;margin-left:15%"
+          style="width: 1250px; margin-left: 15%"
           :visible.sync="languageouterVisible"
         >
           <div>
@@ -943,14 +1457,14 @@
             >
               <el-form-item label="语种" prop="languages">
                 <el-input
-                  style="width:300px;height:36px;margin-left:-100px"
+                  style="width: 300px; height: 36px; margin-left: -100px"
                   v-model="formlanguage.languages"
                   placeholder
                 ></el-input>
               </el-form-item>
               <el-form-item label="听力能力" prop="listenAbility">
                 <el-select
-                  style="width:300px;height:36px;margin-left:-100px"
+                  style="width: 300px; height: 36px; margin-left: -100px"
                   v-model="formlanguage.listenAbility"
                   placeholder
                 >
@@ -962,7 +1476,7 @@
               </el-form-item>
               <el-form-item label="读写能力" prop="readAbility">
                 <el-select
-                  style="width:300px;height:36px;margin-left:-100px"
+                  style="width: 300px; height: 36px; margin-left: -100px"
                   v-model="formlanguage.readAbility"
                   placeholder
                 >
@@ -974,32 +1488,65 @@
               </el-form-item>
             </el-form>
           </div>
-          <div slot="footer" class="dialog-footer" style="margin:-20px 0 20px 0">
-            <el-button style="margin:0 20px 0 0" @click="languageinnerVisible = true" plain>取 消</el-button>
+          <div
+            slot="footer"
+            class="dialog-footer"
+            style="margin: -20px 0 20px 0"
+          >
             <el-button
-              style="margin:0 55px 0 0"
+              style="margin: 0 20px 0 0"
+              @click="languageinnerVisible = true"
+              plain
+              >取 消</el-button
+            >
+            <el-button
+              style="margin: 0 55px 0 0"
               type="primary"
               @click="languagekeep('formlanguage')"
-            >保存</el-button>
+              >保存</el-button
+            >
           </div>
           <el-dialog
             class="sureDialog"
-            style="width:900px;margin-left:24%;margin-top:10%;border-radius:10px"
+            style="
+              width: 900px;
+              margin-left: 24%;
+              margin-top: 10%;
+              border-radius: 10px;
+            "
             :visible.sync="languageinnerVisible"
             append-to-body
           >
-            <div style="display:flex;flex-direction:row;margin-left:90px">
+            <div style="display: flex; flex-direction: row; margin-left: 90px">
               <span
-                style="font-size:20px;line-height:20px;margin:15px 0 0 -10px;color:#373737"
-              >离开修改内容将不会保存的噢</span>
+                style="
+                  font-size: 20px;
+                  line-height: 20px;
+                  margin: 15px 0 0 -10px;
+                  color: #373737;
+                "
+                >离开修改内容将不会保存的噢</span
+              >
             </div>
-            <div slot="footer" class="dialog-footer" style="margin-top:-70px;margin-right:50px">
-              <el-button style="margin:0 100px 0 0" @click="languageinnerVisible = false" plain>取 消</el-button>
+            <div
+              slot="footer"
+              class="dialog-footer"
+              style="margin-top: -70px; margin-right: 50px"
+            >
               <el-button
-                style="margin:0 0 0 0"
+                style="margin: 0 100px 0 0"
+                @click="languageinnerVisible = false"
+                plain
+                >取 消</el-button
+              >
+              <el-button
+                style="margin: 0 0 0 0"
                 type="primary"
-                @click="languageouterVisible = false,languageinnerVisible = false"
-              >确定</el-button>
+                @click="
+                  (languageouterVisible = false), (languageinnerVisible = false)
+                "
+                >确定</el-button
+              >
             </div>
           </el-dialog>
         </el-dialog>
@@ -1007,7 +1554,7 @@
         <el-dialog
           title="职称等级编辑"
           :close-on-click-modal="false"
-          style="width:1250px;margin-left:15%"
+          style="width: 1250px; margin-left: 15%"
           :visible.sync="professionouterVisible"
         >
           <div>
@@ -1020,43 +1567,73 @@
             >
               <el-form-item label="职称等级名称" prop="qual">
                 <el-input
-                  style="width:300px;height:36px;margin-left:-100px"
+                  style="width: 300px; height: 36px; margin-left: -100px"
                   v-model="formProfession.qual"
                   placeholder
                 ></el-input>
               </el-form-item>
             </el-form>
           </div>
-          <div slot="footer" class="dialog-footer" style="margin:-20px 0 20px 0">
-            <el-button style="margin:0 20px 0 0" @click="professioninnerVisible = true" plain>取 消</el-button>
+          <div
+            slot="footer"
+            class="dialog-footer"
+            style="margin: -20px 0 20px 0"
+          >
             <el-button
-              style="margin:0 55px 0 0"
+              style="margin: 0 20px 0 0"
+              @click="professioninnerVisible = true"
+              plain
+              >取 消</el-button
+            >
+            <el-button
+              style="margin: 0 55px 0 0"
               type="primary"
               @click="professionkeep('formProfession')"
-            >保存</el-button>
+              >保存</el-button
+            >
           </div>
           <el-dialog
             class="sureDialog"
-            style="width:900px;margin-left:24%;margin-top:10%;border-radius:10px"
+            style="
+              width: 900px;
+              margin-left: 24%;
+              margin-top: 10%;
+              border-radius: 10px;
+            "
             :visible.sync="professioninnerVisible"
             append-to-body
           >
-            <div style="display:flex;flex-direction:row;margin-left:90px">
+            <div style="display: flex; flex-direction: row; margin-left: 90px">
               <span
-                style="font-size:20px;line-height:20px;margin:15px 0 0 -10px;color:#373737"
-              >离开修改内容将不会保存的噢</span>
+                style="
+                  font-size: 20px;
+                  line-height: 20px;
+                  margin: 15px 0 0 -10px;
+                  color: #373737;
+                "
+                >离开修改内容将不会保存的噢</span
+              >
             </div>
-            <div slot="footer" class="dialog-footer" style="margin-top:-70px;margin-right:50px">
+            <div
+              slot="footer"
+              class="dialog-footer"
+              style="margin-top: -70px; margin-right: 50px"
+            >
               <el-button
-                style="margin:0 100px 0 0"
+                style="margin: 0 100px 0 0"
                 @click="professioninnerVisible = false"
                 plain
-              >取 消</el-button>
+                >取 消</el-button
+              >
               <el-button
-                style="margin:0 0 0 0"
+                style="margin: 0 0 0 0"
                 type="primary"
-                @click="professionouterVisible = false,professioninnerVisible = false"
-              >确定</el-button>
+                @click="
+                  (professionouterVisible = false),
+                    (professioninnerVisible = false)
+                "
+                >确定</el-button
+              >
             </div>
           </el-dialog>
         </el-dialog>
@@ -1064,7 +1641,7 @@
         <el-dialog
           title="专业技能编辑"
           :close-on-click-modal="false"
-          style="width:1250px;margin-left:15%"
+          style="width: 1250px; margin-left: 15%"
           :visible.sync="personalskillouterVisible"
         >
           <div>
@@ -1077,14 +1654,14 @@
             >
               <el-form-item label="技能名称" prop="technicalName">
                 <el-input
-                  style="width:300px;height:36px;margin-left:-100px"
+                  style="width: 300px; height: 36px; margin-left: -100px"
                   v-model="formPersonalskill.technicalName"
                   placeholder
                 ></el-input>
               </el-form-item>
               <el-form-item label="掌握程度" prop="level">
                 <el-select
-                  style="width:300px;height:36px;margin-left:-100px"
+                  style="width: 300px; height: 36px; margin-left: -100px"
                   v-model="formPersonalskill.level"
                   placeholder
                 >
@@ -1096,7 +1673,7 @@
               </el-form-item>
               <el-form-item label="掌握程度" prop="level">
                 <el-select
-                  style="width:300px;height:36px;margin-left:-100px"
+                  style="width: 300px; height: 36px; margin-left: -100px"
                   v-model="formPersonalskill.level"
                   placeholder
                 >
@@ -1109,59 +1686,97 @@
               <el-form-item label="技能证书">
                 <el-upload
                   class="avatar-upload"
-                  style="margin-right:280px"
+                  style="margin-right: 280px"
                   :action="uploadUrl"
                   :data="uploadAward"
                   :headers="myHeaders"
                   :show-file-list="false"
                   :on-success="handleSkillSuccess"
                 >
-                  <img v-if="imageUrlSskill" :src="imageUrlSskill" class="avatar" />
+                  <img
+                    v-if="imageUrlSskill"
+                    :src="imageUrlSskill"
+                    class="avatar"
+                  />
                   <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                   <div
-                    style="margin:-20px 0 0 0;width:120px"
+                    style="margin: -20px 0 0 0; width: 120px"
                     class="el-upload__tip"
                     slot="tip"
-                  >只能上传jpg/png文件</div>
+                  >
+                    只能上传jpg/png文件
+                  </div>
                   <div
-                    style="margin:-20px 0 0 0;width:120px"
+                    style="margin: -20px 0 0 0; width: 120px"
                     class="el-upload__tip"
                     slot="tip"
-                  >且不超过10Mb</div>
+                  >
+                    且不超过10Mb
+                  </div>
                 </el-upload>
               </el-form-item>
             </el-form>
           </div>
-          <div slot="footer" class="dialog-footer" style="margin:-20px 0 20px 0">
-            <el-button style="margin:0 20px 0 0" @click="personalskillinnerVisible = true" plain>取 消</el-button>
+          <div
+            slot="footer"
+            class="dialog-footer"
+            style="margin: -20px 0 20px 0"
+          >
             <el-button
-              style="margin:0 55px 0 0"
+              style="margin: 0 20px 0 0"
+              @click="personalskillinnerVisible = true"
+              plain
+              >取 消</el-button
+            >
+            <el-button
+              style="margin: 0 55px 0 0"
               type="primary"
               @click="skillkeep('formPersonalskill')"
-            >保存</el-button>
+              >保存</el-button
+            >
           </div>
           <el-dialog
             class="sureDialog"
-            style="width:900px;margin-left:24%;margin-top:10%;border-radius:10px"
+            style="
+              width: 900px;
+              margin-left: 24%;
+              margin-top: 10%;
+              border-radius: 10px;
+            "
             :visible.sync="personalskillinnerVisible"
             append-to-body
           >
-            <div style="display:flex;flex-direction:row;margin-left:90px">
+            <div style="display: flex; flex-direction: row; margin-left: 90px">
               <span
-                style="font-size:20px;line-height:20px;margin:15px 0 0 -10px;color:#373737"
-              >离开修改内容将不会保存的噢</span>
+                style="
+                  font-size: 20px;
+                  line-height: 20px;
+                  margin: 15px 0 0 -10px;
+                  color: #373737;
+                "
+                >离开修改内容将不会保存的噢</span
+              >
             </div>
-            <div slot="footer" class="dialog-footer" style="margin-top:-70px;margin-right:50px">
+            <div
+              slot="footer"
+              class="dialog-footer"
+              style="margin-top: -70px; margin-right: 50px"
+            >
               <el-button
-                style="margin:0 100px 0 0"
+                style="margin: 0 100px 0 0"
                 @click="personalskillinnerVisible = false"
                 plain
-              >取 消</el-button>
+                >取 消</el-button
+              >
               <el-button
-                style="margin:0 0 0 0"
+                style="margin: 0 0 0 0"
                 type="primary"
-                @click="personalskillouterVisible = false,personalskillinnerVisible = false"
-              >确定</el-button>
+                @click="
+                  (personalskillouterVisible = false),
+                    (personalskillinnerVisible = false)
+                "
+                >确定</el-button
+              >
             </div>
           </el-dialog>
         </el-dialog>
@@ -1169,7 +1784,7 @@
         <el-dialog
           title="荣誉奖项编辑"
           :close-on-click-modal="false"
-          style="width:1250px;margin-left:15%"
+          style="width: 1250px; margin-left: 15%"
           :visible.sync="awardsouterVisible"
         >
           <div>
@@ -1182,14 +1797,14 @@
             >
               <el-form-item label="奖项名称" prop="prizeAward">
                 <el-input
-                  style="width:300px;height:36px;margin-left:-120px"
+                  style="width: 300px; height: 36px; margin-left: -120px"
                   v-model="formAwards.prizeAward"
                   placeholder
                 ></el-input>
               </el-form-item>
               <el-form-item label="获奖时间" prop="prizeTime">
                 <el-date-picker
-                  style="width:300px;height:36px;margin-left:-120px"
+                  style="width: 300px; height: 36px; margin-left: -120px"
                   v-model="formAwards.prizeTime"
                   :picker-options="pickerOptionsOne"
                   type="month"
@@ -1199,7 +1814,7 @@
               <el-form-item label="获奖证书">
                 <el-upload
                   class="avatar-upload"
-                  style="margin-right:315px"
+                  style="margin-right: 315px"
                   :action="uploadUrl"
                   :data="uploadAward"
                   :headers="myHeaders"
@@ -1210,41 +1825,82 @@
                   <img v-if="imageUrlOne" :src="imageUrlOne" class="avatar" />
                   <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                   <div
-                    style="margin:-20px 0 0 0;width:120px"
+                    style="margin: -20px 0 0 0; width: 120px"
                     class="el-upload__tip"
                     slot="tip"
-                  >只能上传jpg/png文件</div>
+                  >
+                    只能上传jpg/png文件
+                  </div>
                   <div
-                    style="margin:-20px 0 0 0;width:120px"
+                    style="margin: -20px 0 0 0; width: 120px"
                     class="el-upload__tip"
                     slot="tip"
-                  >且不超过10Mb</div>
+                  >
+                    且不超过10Mb
+                  </div>
                 </el-upload>
               </el-form-item>
             </el-form>
           </div>
-          <div slot="footer" class="dialog-footer" style="margin:-20px 0 20px 0">
-            <el-button style="margin:0 20px 0 0" @click="awardsinnerVisible = true" plain>取 消</el-button>
-            <el-button style="margin:0 55px 0 0" type="primary" @click="awardskeep('formAwards')">保存</el-button>
+          <div
+            slot="footer"
+            class="dialog-footer"
+            style="margin: -20px 0 20px 0"
+          >
+            <el-button
+              style="margin: 0 20px 0 0"
+              @click="awardsinnerVisible = true"
+              plain
+              >取 消</el-button
+            >
+            <el-button
+              style="margin: 0 55px 0 0"
+              type="primary"
+              @click="awardskeep('formAwards')"
+              >保存</el-button
+            >
           </div>
           <el-dialog
             class="sureDialog"
-            style="width:900px;margin-left:24%;margin-top:10%;border-radius:10px"
+            style="
+              width: 900px;
+              margin-left: 24%;
+              margin-top: 10%;
+              border-radius: 10px;
+            "
             :visible.sync="awardsinnerVisible"
             append-to-body
           >
-            <div style="display:flex;flex-direction:row;margin-left:90px">
+            <div style="display: flex; flex-direction: row; margin-left: 90px">
               <span
-                style="font-size:20px;line-height:20px;margin:15px 0 0 -10px;color:#373737"
-              >离开修改内容将不会保存的噢</span>
+                style="
+                  font-size: 20px;
+                  line-height: 20px;
+                  margin: 15px 0 0 -10px;
+                  color: #373737;
+                "
+                >离开修改内容将不会保存的噢</span
+              >
             </div>
-            <div slot="footer" class="dialog-footer" style="margin-top:-70px;margin-right:50px">
-              <el-button style="margin:0 100px 0 0" @click="awardsinnerVisible = false" plain>取 消</el-button>
+            <div
+              slot="footer"
+              class="dialog-footer"
+              style="margin-top: -70px; margin-right: 50px"
+            >
               <el-button
-                style="margin:0 0 0 0"
+                style="margin: 0 100px 0 0"
+                @click="awardsinnerVisible = false"
+                plain
+                >取 消</el-button
+              >
+              <el-button
+                style="margin: 0 0 0 0"
                 type="primary"
-                @click="awardsouterVisible = false,awardsinnerVisible = false"
-              >确定</el-button>
+                @click="
+                  (awardsouterVisible = false), (awardsinnerVisible = false)
+                "
+                >确定</el-button
+              >
             </div>
           </el-dialog>
         </el-dialog>
@@ -1252,7 +1908,7 @@
         <el-dialog
           title="自我评价编辑"
           :close-on-click-modal="false"
-          style="width:1250px;margin-left:15%"
+          style="width: 1250px; margin-left: 15%"
           :visible.sync="selfappraisalouterVisible"
         >
           <div>
@@ -1267,7 +1923,7 @@
                 <el-input
                   type="textarea"
                   v-model="formSelfappraisal.personalDescription"
-                  style="width:400px;margin-right:50px"
+                  style="width: 400px; margin-right: 50px"
                   maxlength="300"
                   show-word-limit
                   placeholder="资料完善程度高，被选中的几率越大呦"
@@ -1275,80 +1931,134 @@
               </el-form-item>
             </el-form>
           </div>
-          <div slot="footer" class="dialog-footer" style="margin:-20px 0 20px 0">
-            <el-button style="margin:0 20px 0 0" @click="selfappraisalinnerVisible = true" plain>取 消</el-button>
+          <div
+            slot="footer"
+            class="dialog-footer"
+            style="margin: -20px 0 20px 0"
+          >
             <el-button
-              style="margin:0 55px 0 0"
+              style="margin: 0 20px 0 0"
+              @click="selfappraisalinnerVisible = true"
+              plain
+              >取 消</el-button
+            >
+            <el-button
+              style="margin: 0 55px 0 0"
               type="primary"
               @click="selfappraisalkeep('formSelfappraisal')"
-            >保存</el-button>
+              >保存</el-button
+            >
           </div>
           <el-dialog
             class="sureDialog"
-            style="width:900px;margin-left:21%;margin-top:10%;border-radius:10px"
+            style="
+              width: 900px;
+              margin-left: 21%;
+              margin-top: 10%;
+              border-radius: 10px;
+            "
             :visible.sync="selfappraisalinnerVisible"
             append-to-body
           >
-            <div style="display:flex;flex-direction:row;margin-left:90px">
+            <div style="display: flex; flex-direction: row; margin-left: 90px">
               <span
-                style="font-size:20px;line-height:20px;margin:15px 0 0 -10px;color:#373737"
-              >离开修改内容将不会保存的噢</span>
+                style="
+                  font-size: 20px;
+                  line-height: 20px;
+                  margin: 15px 0 0 -10px;
+                  color: #373737;
+                "
+                >离开修改内容将不会保存的噢</span
+              >
             </div>
-            <div slot="footer" class="dialog-footer" style="margin-top:-70px;margin-right:50px">
+            <div
+              slot="footer"
+              class="dialog-footer"
+              style="margin-top: -70px; margin-right: 50px"
+            >
               <el-button
-                style="margin:0 100px 0 0"
+                style="margin: 0 100px 0 0"
                 @click="selfappraisalinnerVisible = false"
                 plain
-              >取 消</el-button>
+                >取 消</el-button
+              >
               <el-button
-                style="margin:0 0 0 0"
+                style="margin: 0 0 0 0"
                 type="primary"
-                @click="selfappraisalouterVisible = false,selfappraisalinnerVisible = false"
-              >确定</el-button>
+                @click="
+                  (selfappraisalouterVisible = false),
+                    (selfappraisalinnerVisible = false)
+                "
+                >确定</el-button
+              >
             </div>
           </el-dialog>
         </el-dialog>
         <!-- 添加个人信息 -->
         <div class="personalinformation" v-if="isshowpersonalinformation">
-          <div style="margin:20px 0 0 96px;">
-            <img style="margin:30px 0 -30px 0" v-if="imageUrl" :src="imageUrl" class="avatar" />
+          <div style="margin: 20px 0 0 96px">
             <img
-              style="margin:30px 0 -30px 0"
+              style="margin: 30px 0 -30px 0"
+              v-if="imageUrl"
+              :src="imageUrl"
+              class="avatar"
+            />
+            <img
+              style="margin: 30px 0 -30px 0"
               class="avatar"
               v-else
               :src="require('../assets/images/mo.png')"
             />
           </div>
-          <div class="main-content" style="margin:140px 0 0 0;">
+          <div class="main-content" style="margin: 140px 0 0 0">
             <div class="main-content-second" @click="ispersonalinformation">
               <img :src="require('../assets/images/jia.png')" />
-              <span style="cursor:pointer;line-height:10px">添加个人信息</span>
+              <span style="cursor: pointer; line-height: 10px"
+                >添加个人信息</span
+              >
             </div>
           </div>
           <!-- <div class="img-add" @click="ispersonalinformation"><img :src="require('../assets/images/jia.png')"/><span
           class="add">添加个人信息</span></div>-->
         </div>
         <div class="showdemo" v-if="showDemo">
-          <Basic-Info :fromData="this.resumesId" @BasicEmit="BasicEmit(arguments)" />
+          <Basic-Info
+            :fromData="this.resumesId"
+            @BasicEmit="BasicEmit(arguments)"
+          />
         </div>
         <ul
           ref="personalinformation"
           v-if="showPersonalinformation"
-          style="margin:0 30px 10px 0"
+          style="margin: 0 30px 10px 0"
           @mouseover="over(11)"
           @mouseleave="leave(11)"
         >
           <li class="li-a">
-            <div style="width:700px;margin:0 0 0 -30px">
+            <div style="width: 700px; margin: 0 0 0 -30px">
               <Personalinformation-From
                 :fromData="resumeIdList"
                 :todo="avatarUrl"
                 @editsinformation="editsinformation(arguments)"
               />
             </div>
-            <div style="margin:50px 0 0 170px;height:12px;font-size:15px;cursor:pointer;;">
+            <div
+              style="
+                margin: 50px 0 0 170px;
+                height: 12px;
+                font-size: 15px;
+                cursor: pointer; ;
+              "
+            >
               <span
-                style="font-size:16px;color:#02B9B8;margin:0 0 0 0;display:flex;flex-direction:row;width:100px;"
+                style="
+                  font-size: 16px;
+                  color: #02b9b8;
+                  margin: 0 0 0 0;
+                  display: flex;
+                  flex-direction: row;
+                  width: 100px;
+                "
                 @click="showjpersonalList()"
               >
                 <i class="el-icon-edit"></i>编辑
@@ -1367,32 +2077,53 @@
         </div>-->
         <div class="content-line"></div>
         <!-- 求职意向 -->
-        <div ref="jobintension" class="main-content" style="margin:0 0 -15px 0">
+        <div
+          ref="jobintension"
+          class="main-content"
+          style="margin: 0 0 -15px 0"
+        >
           <div class="main-content-first">
-            <span style="margin:18px 0 0 0;float:left;width:3px;height:15px;background:#02B9B8;"></span>
+            <span
+              style="
+                margin: 18px 0 0 0;
+                float: left;
+                width: 3px;
+                height: 15px;
+                background: #02b9b8;
+              "
+            ></span>
             <span>求职意向</span>
           </div>
           <div class="main-content-second" v-if="joint" @click="jobintension">
             <img :src="require('../assets/images/jia.png')" />
-            <span style="cursor:pointer">添加</span>
+            <span style="cursor: pointer">添加</span>
           </div>
         </div>
         <ul
           v-if="showjobintension"
-          style="margin:-15px 0 10px 52px"
+          style="margin: -15px 0 10px 52px"
           @mouseover="over(10)"
           @mouseleave="leave(10)"
         >
           <li class="ul-a">
-            <span class="actions-span" style="margin:8px 20px 0 0;cursor:pointer">
+            <span
+              class="actions-span"
+              style="margin: 8px 20px 0 0; cursor: pointer"
+            >
               <span
-                style="font-size:16px;color:#02B9B8;margin:0 0 0 0;display:flex;flex-direction:row;"
+                style="
+                  font-size: 16px;
+                  color: #02b9b8;
+                  margin: 0 0 0 0;
+                  display: flex;
+                  flex-direction: row;
+                "
                 @click="showjobintensionList()"
               >
                 <i class="el-icon-edit"></i>编辑
               </span>
             </span>
-            <div style="width:879px;margin:0 0 5px 0">
+            <div style="width: 879px; margin: 0 0 5px 0">
               <from :fromData="targeIdList"></from>
             </div>
           </li>
@@ -1402,7 +2133,7 @@
           @mouseleave="leave(10)"
           class="showJob"
           v-if="showJob"
-          style="margin:20px 0 0 0"
+          style="margin: 20px 0 0 0"
         >
           <job-intension
             @jobintensionEmit="jobintensionEmit(arguments)"
@@ -1411,42 +2142,73 @@
         </div>
         <div class="content-line"></div>
         <!-- 教育经历 -->
-        <div ref="educational" class="main-content" style="margin:0 0 5px 0">
+        <div ref="educational" class="main-content" style="margin: 0 0 5px 0">
           <div class="main-content-first">
-            <span style="margin:18px 0 0 0;float:left;width:3px;height:15px;background:#02B9B8;"></span>
+            <span
+              style="
+                margin: 18px 0 0 0;
+                float: left;
+                width: 3px;
+                height: 15px;
+                background: #02b9b8;
+              "
+            ></span>
             <span>教育经历</span>
           </div>
           <div class="main-content-second" @click="education">
             <img :src="require('../assets/images/jia.png')" />
-            <span style="cursor:pointer">添加</span>
+            <span style="cursor: pointer">添加</span>
           </div>
         </div>
         <ul
           v-if="showeducational"
-          style="margin:-15px 0 10px 55px"
+          style="margin: -15px 0 10px 55px"
           @mouseover="over(9)"
           @mouseleave="leave(9)"
         >
-          <li v-for="(list,index) in listeducational" :key="index" class="ul-a">
+          <li
+            v-for="(list, index) in listeducational"
+            :key="index"
+            class="ul-a"
+          >
             <span
               class="actions-span"
-              style="margin:10px 16px 0 0;cursor:pointer;display:flex;flex-direction:row"
+              style="
+                margin: 10px 16px 0 0;
+                cursor: pointer;
+                display: flex;
+                flex-direction: row;
+              "
             >
               <span
-                style="font-size:16px;color:#02B9B8;margin:0 0 0 0;display:flex;flex-direction:row;"
+                style="
+                  font-size: 16px;
+                  color: #02b9b8;
+                  margin: 0 0 0 0;
+                  display: flex;
+                  flex-direction: row;
+                "
                 @click="showedudialog(list)"
               >
                 <i class="el-icon-delete"></i>删除
               </span>
               <span
-                style="font-size:16px;color:#02B9B8;margin:0 0 0 24px;display:flex;flex-direction:row;"
-                @click="showeducationalList(list,index)"
+                style="
+                  font-size: 16px;
+                  color: #02b9b8;
+                  margin: 0 0 0 24px;
+                  display: flex;
+                  flex-direction: row;
+                "
+                @click="showeducationalList(list, index)"
               >
                 <i class="el-icon-edit"></i>编辑
               </span>
             </span>
-            <div style="width:879px;margin:0 0 5px 0">
-              <educationexperience-From :fromData="list"></educationexperience-From>
+            <div style="width: 879px; margin: 0 0 5px 0">
+              <educationexperience-From
+                :fromData="list"
+              ></educationexperience-From>
             </div>
           </li>
         </ul>
@@ -1460,83 +2222,140 @@
         <!-- 工作经历 -->
         <div ref="work" class="main-content">
           <div class="main-content-first">
-            <span style="margin:18px 0 0 0;float:left;width:3px;height:15px;background:#02B9B8;"></span>
+            <span
+              style="
+                margin: 18px 0 0 0;
+                float: left;
+                width: 3px;
+                height: 15px;
+                background: #02b9b8;
+              "
+            ></span>
             <span>工作经历</span>
           </div>
           <div class="main-content-second" @click="work">
             <img :src="require('../assets/images/jia.png')" />
-            <span style="cursor:pointer">添加</span>
+            <span style="cursor: pointer">添加</span>
           </div>
         </div>
         <ul
           v-if="showworkperience"
-          style="margin:-15px 0 10px 52px"
+          style="margin: -15px 0 10px 52px"
           @mouseover="over(8)"
           @mouseleave="leave(8)"
         >
-          <li v-for="(list,index) in listwork" :key="index" class="ul-a">
+          <li v-for="(list, index) in listwork" :key="index" class="ul-a">
             <span
               class="actions-span"
-              style="margin:8px 16px 0 0;cursor:pointer;display:flex;flex-direction:row"
+              style="
+                margin: 8px 16px 0 0;
+                cursor: pointer;
+                display: flex;
+                flex-direction: row;
+              "
             >
               <span
-                style="font-size:16px;color:#02B9B8;margin:0 0 0 0;display:flex;flex-direction:row;"
+                style="
+                  font-size: 16px;
+                  color: #02b9b8;
+                  margin: 0 0 0 0;
+                  display: flex;
+                  flex-direction: row;
+                "
                 @click="showworkdialog(list)"
               >
                 <i class="el-icon-delete"></i>删除
               </span>
               <span
-                style="font-size:16px;color:#02B9B8;margin:0 0 0 24px;display:flex;flex-direction:row;"
+                style="
+                  font-size: 16px;
+                  color: #02b9b8;
+                  margin: 0 0 0 24px;
+                  display: flex;
+                  flex-direction: row;
+                "
                 @click="showworkperienceList(list)"
               >
                 <i class="el-icon-edit"></i>编辑
               </span>
             </span>
-            <div style="width:879px;margin:0 0 5px 0">
+            <div style="width: 879px; margin: 0 0 5px 0">
               <work-from :from-data="list"></work-from>
             </div>
           </li>
         </ul>
         <div v-if="showwork">
-          <work-experience @workEmit="workEmit(arguments)" :workDegree="this.resumesId" />
+          <work-experience
+            @workEmit="workEmit(arguments)"
+            :workDegree="this.resumesId"
+          />
         </div>
         <div class="content-line"></div>
         <!-- 项目经历 -->
         <div ref="progect" class="main-content">
           <div class="main-content-first">
-            <span style="margin:18px 0 0 0;float:left;width:3px;height:15px;background:#02B9B8;"></span>
+            <span
+              style="
+                margin: 18px 0 0 0;
+                float: left;
+                width: 3px;
+                height: 15px;
+                background: #02b9b8;
+              "
+            ></span>
             <span>项目经历</span>
           </div>
           <div class="main-content-second" @click="project">
             <img :src="require('../assets/images/jia.png')" />
-            <span style="cursor:pointer">添加</span>
+            <span style="cursor: pointer">添加</span>
           </div>
         </div>
         <ul
           v-if="showprogectperience"
-          style="margin:-15px 0 10px 52px"
+          style="margin: -15px 0 10px 52px"
           @mouseover="over(7)"
           @mouseleave="leave(7)"
         >
-          <li v-for="(list,index) in listprogectperience" :key="index" class="ul-a">
+          <li
+            v-for="(list, index) in listprogectperience"
+            :key="index"
+            class="ul-a"
+          >
             <span
               class="actions-span"
-              style="margin:8px 16px 0 0;cursor:pointer;display:flex;flex-direction:row;"
+              style="
+                margin: 8px 16px 0 0;
+                cursor: pointer;
+                display: flex;
+                flex-direction: row;
+              "
             >
               <span
-                style="font-size:16px;color:#02B9B8;margin:0 0 0 0;display:flex;flex-direction:row;"
+                style="
+                  font-size: 16px;
+                  color: #02b9b8;
+                  margin: 0 0 0 0;
+                  display: flex;
+                  flex-direction: row;
+                "
                 @click="showprojectdialog(list)"
               >
                 <i class="el-icon-delete"></i>删除
               </span>
               <span
-                style="font-size:16px;color:#02B9B8;margin:0 0 0 24px;display:flex;flex-direction:row;"
+                style="
+                  font-size: 16px;
+                  color: #02b9b8;
+                  margin: 0 0 0 24px;
+                  display: flex;
+                  flex-direction: row;
+                "
                 @click="showprogectperienceList(list)"
               >
                 <i class="el-icon-edit"></i>编辑
               </span>
             </span>
-            <div style="width:879px;margin:0 0 5px 0">
+            <div style="width: 879px; margin: 0 0 5px 0">
               <progect-from :from-data="list"></progect-from>
             </div>
           </li>
@@ -1551,83 +2370,136 @@
         <!-- 培训经历 -->
         <div ref="training" class="main-content">
           <div class="main-content-first">
-            <span style="margin:18px 0 0 0;float:left;width:3px;height:15px;background:#02B9B8;"></span>
+            <span
+              style="
+                margin: 18px 0 0 0;
+                float: left;
+                width: 3px;
+                height: 15px;
+                background: #02b9b8;
+              "
+            ></span>
             <span>培训经历</span>
           </div>
           <div class="main-content-second" @click="training">
             <img :src="require('../assets/images/jia.png')" />
-            <span style="cursor:pointer">添加</span>
+            <span style="cursor: pointer">添加</span>
           </div>
         </div>
         <ul
           v-if="showtrain"
-          style="margin:-15px 0 10px 52px"
+          style="margin: -15px 0 10px 52px"
           @mouseover="over(6)"
           @mouseleave="leave(6)"
         >
-          <li v-for="(list,index) in listtrain" :key="index" class="ul-a">
+          <li v-for="(list, index) in listtrain" :key="index" class="ul-a">
             <span
               class="actions-span"
-              style="margin:10px 16px 0 0;cursor:pointer;display:flex;flex-direction:row;"
+              style="
+                margin: 10px 16px 0 0;
+                cursor: pointer;
+                display: flex;
+                flex-direction: row;
+              "
             >
               <span
-                style="font-size:16px;color:#02B9B8;margin:0 0 0 0;display:flex;flex-direction:row;"
+                style="
+                  font-size: 16px;
+                  color: #02b9b8;
+                  margin: 0 0 0 0;
+                  display: flex;
+                  flex-direction: row;
+                "
                 @click="showtraindialog(list)"
               >
                 <i class="el-icon-delete"></i>删除
               </span>
               <span
-                style="font-size:16px;color:#02B9B8;margin:0 0 0 24px;display:flex;flex-direction:row;"
+                style="
+                  font-size: 16px;
+                  color: #02b9b8;
+                  margin: 0 0 0 24px;
+                  display: flex;
+                  flex-direction: row;
+                "
                 @click="showtrainList(list)"
               >
                 <i class="el-icon-edit"></i>编辑
               </span>
             </span>
-            <div style="width:879px;margin:0 0 5px 0">
+            <div style="width: 879px; margin: 0 0 5px 0">
               <training-from :from-data="list"></training-from>
             </div>
           </li>
         </ul>
         <div v-if="showtraining">
-          <training-experience @trainEmit="trainEmit(arguments)" :trainDegree="this.resumesId" />
+          <training-experience
+            @trainEmit="trainEmit(arguments)"
+            :trainDegree="this.resumesId"
+          />
         </div>
         <div class="content-line"></div>
         <!-- 语言能力 -->
         <div ref="language" class="main-content">
           <div class="main-content-first">
-            <span style="margin:18px 0 0 0;float:left;width:3px;height:15px;background:#02B9B8;"></span>
+            <span
+              style="
+                margin: 18px 0 0 0;
+                float: left;
+                width: 3px;
+                height: 15px;
+                background: #02b9b8;
+              "
+            ></span>
             <span>语言能力</span>
           </div>
           <div class="main-content-second" @click="language">
             <img :src="require('../assets/images/jia.png')" />
-            <span style="cursor:pointer">添加</span>
+            <span style="cursor: pointer">添加</span>
           </div>
         </div>
         <ul
           v-if="showlanguages"
-          style="margin:-15px 0 10px 52px"
+          style="margin: -15px 0 10px 52px"
           @mouseover="over(5)"
           @mouseleave="leave(5)"
         >
-          <li v-for="(list,index) in listlanguages" :key="index" class="ul-a">
+          <li v-for="(list, index) in listlanguages" :key="index" class="ul-a">
             <span
               class="actions-span"
-              style="margin:10px 16px 0 0;cursor:pointer;display:flex;flex-direction:row;"
+              style="
+                margin: 10px 16px 0 0;
+                cursor: pointer;
+                display: flex;
+                flex-direction: row;
+              "
             >
               <span
-                style="font-size:16px;color:#02B9B8;margin:0 0 0 0;display:flex;flex-direction:row;"
+                style="
+                  font-size: 16px;
+                  color: #02b9b8;
+                  margin: 0 0 0 0;
+                  display: flex;
+                  flex-direction: row;
+                "
                 @click="showlanguagedialog(list)"
               >
                 <i class="el-icon-delete"></i>删除
               </span>
               <span
-                style="font-size:16px;color:#02B9B8;margin:0 0 0 24px;display:flex;flex-direction:row;"
+                style="
+                  font-size: 16px;
+                  color: #02b9b8;
+                  margin: 0 0 0 24px;
+                  display: flex;
+                  flex-direction: row;
+                "
                 @click="showlanguagesList(list)"
               >
                 <i class="el-icon-edit"></i>编辑
               </span>
             </span>
-            <div style="width:879px;margin:0 0 5px 0">
+            <div style="width: 879px; margin: 0 0 5px 0">
               <language-from :from-data="list"></language-from>
             </div>
           </li>
@@ -1642,39 +2514,68 @@
         <!-- 职称等级 -->
         <div ref="professional" class="main-content">
           <div class="main-content-first">
-            <span style="margin:18px 0 0 0;float:left;width:3px;height:15px;background:#02B9B8;"></span>
+            <span
+              style="
+                margin: 18px 0 0 0;
+                float: left;
+                width: 3px;
+                height: 15px;
+                background: #02b9b8;
+              "
+            ></span>
             <span>职称等级</span>
           </div>
           <div class="main-content-second" @click="professional()">
             <img :src="require('../assets/images/jia.png')" />
-            <span style="cursor:pointer">添加</span>
+            <span style="cursor: pointer">添加</span>
           </div>
         </div>
         <ul
           v-if="showprofessionals"
-          style="margin:-15px 0 10px 52px"
+          style="margin: -15px 0 10px 52px"
           @mouseover="over(4)"
           @mouseleave="leave(4)"
         >
-          <li v-for="(list,index) in listprofessional" :key="index" class="ul-a">
+          <li
+            v-for="(list, index) in listprofessional"
+            :key="index"
+            class="ul-a"
+          >
             <span
               class="actions-span"
-              style="margin:10px 16px 0 0;cursor:pointer;display:flex;flex-direction:row;"
+              style="
+                margin: 10px 16px 0 0;
+                cursor: pointer;
+                display: flex;
+                flex-direction: row;
+              "
             >
               <span
-                style="font-size:16px;color:#02B9B8;margin:0 0 0 0;display:flex;flex-direction:row;"
+                style="
+                  font-size: 16px;
+                  color: #02b9b8;
+                  margin: 0 0 0 0;
+                  display: flex;
+                  flex-direction: row;
+                "
                 @click="showprofessionaldialog(list)"
               >
                 <i class="el-icon-delete"></i>删除
               </span>
               <span
-                style="font-size:16px;color:#02B9B8;margin:0 0 0 24px;display:flex;flex-direction:row;"
+                style="
+                  font-size: 16px;
+                  color: #02b9b8;
+                  margin: 0 0 0 24px;
+                  display: flex;
+                  flex-direction: row;
+                "
                 @click="showprofessionalList(list)"
               >
                 <i class="el-icon-edit"></i>编辑
               </span>
             </span>
-            <div style="width:879px;margin:0 0 5px 0">
+            <div style="width: 879px; margin: 0 0 5px 0">
               <professional-from :from-data="list"></professional-from>
             </div>
           </li>
@@ -1689,120 +2590,208 @@
         <!-- 专业技术 -->
         <div ref="personal_skill" class="main-content">
           <div class="main-content-first">
-            <span style="margin:18px 0 0 0;float:left;width:3px;height:15px;background:#02B9B8;"></span>
+            <span
+              style="
+                margin: 18px 0 0 0;
+                float: left;
+                width: 3px;
+                height: 15px;
+                background: #02b9b8;
+              "
+            ></span>
             <span>专业技能</span>
           </div>
           <div class="main-content-second" @click="personal_skill()">
             <img :src="require('../assets/images/jia.png')" />
-            <span style="cursor:pointer">添加</span>
+            <span style="cursor: pointer">添加</span>
           </div>
         </div>
         <ul
           v-if="showpersonalskills"
-          style="margin:-15px 0 10px 52px"
+          style="margin: -15px 0 10px 52px"
           @mouseover="over(3)"
           @mouseleave="leave(3)"
         >
-          <li v-for="(list,index) in listpersonalskill" :key="index" class="ul-a">
+          <li
+            v-for="(list, index) in listpersonalskill"
+            :key="index"
+            class="ul-a"
+          >
             <span
               class="actions-span"
-              style="margin:10px 16px 0 0;cursor:pointer;display:flex;flex-direction:row;"
+              style="
+                margin: 10px 16px 0 0;
+                cursor: pointer;
+                display: flex;
+                flex-direction: row;
+              "
             >
               <span
-                style="font-size:16px;color:#02B9B8;margin:0 0 0 0;display:flex;flex-direction:row;"
+                style="
+                  font-size: 16px;
+                  color: #02b9b8;
+                  margin: 0 0 0 0;
+                  display: flex;
+                  flex-direction: row;
+                "
                 @click="showskilldialog(list)"
               >
                 <i class="el-icon-delete"></i>删除
               </span>
               <span
-                style="font-size:16px;color:#02B9B8;margin:0 0 0 24px;display:flex;flex-direction:row;"
+                style="
+                  font-size: 16px;
+                  color: #02b9b8;
+                  margin: 0 0 0 24px;
+                  display: flex;
+                  flex-direction: row;
+                "
                 @click="editskill(list)"
               >
                 <i class="el-icon-edit"></i>编辑
               </span>
             </span>
-            <div style="width:879px;margin:0 0 5px 0">
-              <personalskill-from :from-data="list" :todo="resumesId"></personalskill-from>
+            <div style="width: 879px; margin: 0 0 5px 0">
+              <personalskill-from
+                :from-data="list"
+                :todo="resumesId"
+              ></personalskill-from>
             </div>
           </li>
         </ul>
         <div v-if="showpersonalskill">
-          <personal-skill @skillEmit="skillEmit(arguments)" :professionalDegree="this.resumesId" />
+          <personal-skill
+            @skillEmit="skillEmit(arguments)"
+            :professionalDegree="this.resumesId"
+          />
         </div>
         <div class="content-line"></div>
         <div ref="awards" class="main-content">
           <div class="main-content-first">
-            <span style="margin:18px 0 0 0;float:left;width:3px;height:15px;background:#02B9B8;"></span>
+            <span
+              style="
+                margin: 18px 0 0 0;
+                float: left;
+                width: 3px;
+                height: 15px;
+                background: #02b9b8;
+              "
+            ></span>
             <span>荣誉奖项</span>
           </div>
           <div class="main-content-second" @click="awards">
             <img :src="require('../assets/images/jia.png')" />
-            <span style="cursor:pointer">添加</span>
+            <span style="cursor: pointer">添加</span>
           </div>
         </div>
         <ul
           v-if="showaward"
-          style="margin:-15px 0 10px 52px"
+          style="margin: -15px 0 10px 52px"
           @mouseover="over(2)"
           @mouseleave="leave(2)"
         >
-          <li v-for="(list,index) in listaward" :key="index" class="ul-a">
+          <li v-for="(list, index) in listaward" :key="index" class="ul-a">
             <span
               class="actions-span"
-              style="margin:10px 16px 0 0;cursor:pointer;display:flex;flex-direction:row;"
+              style="
+                margin: 10px 16px 0 0;
+                cursor: pointer;
+                display: flex;
+                flex-direction: row;
+              "
             >
               <span
-                style="font-size:16px;color:#02B9B8;margin:0 0 0 0;display:flex;flex-direction:row;"
+                style="
+                  font-size: 16px;
+                  color: #02b9b8;
+                  margin: 0 0 0 0;
+                  display: flex;
+                  flex-direction: row;
+                "
                 @click="showawardsdialog(list)"
               >
                 <i class="el-icon-delete"></i>删除
               </span>
               <span
-                style="font-size:16px;color:#02B9B8;margin:0 0 0 24px;display:flex;flex-direction:row;"
+                style="
+                  font-size: 16px;
+                  color: #02b9b8;
+                  margin: 0 0 0 24px;
+                  display: flex;
+                  flex-direction: row;
+                "
                 @click="showawardList(list)"
               >
                 <i class="el-icon-edit"></i>编辑
               </span>
             </span>
-            <div style="width:879px;margin:0 0 5px 0">
+            <div style="width: 879px; margin: 0 0 5px 0">
               <awards-from :from-data="list" :todo="resumesId"></awards-from>
             </div>
           </li>
         </ul>
         <div v-if="showawards">
-          <Aw-Ards @awardsemit="awardsemit(arguments)" :professionalDegree="this.resumesId" />
+          <Aw-Ards
+            @awardsemit="awardsemit(arguments)"
+            :professionalDegree="this.resumesId"
+          />
         </div>
         <div class="content-line"></div>
         <div ref="self-appraisal" class="main-content">
           <div class="main-content-first">
-            <span style="margin:18px 0 0 0;float:left;width:3px;height:15px;background:#02B9B8;"></span>
+            <span
+              style="
+                margin: 18px 0 0 0;
+                float: left;
+                width: 3px;
+                height: 15px;
+                background: #02b9b8;
+              "
+            ></span>
             <span>自我评价</span>
           </div>
-          <div class="main-content-second" v-if="selfjoint" @click="selfappraisal">
+          <div
+            class="main-content-second"
+            v-if="selfjoint"
+            @click="selfappraisal"
+          >
             <img :src="require('../assets/images/jia.png')" />
-            <span style="cursor:pointer">添加</span>
+            <span style="cursor: pointer">添加</span>
           </div>
         </div>
         <ul
           v-if="showpersonappraisal"
-          style="margin:-15px 0 60px 52px"
+          style="margin: -15px 0 60px 52px"
           @mouseover="over(1)"
           @mouseleave="leave(1)"
         >
           <li class="ul-a">
             <span
               class="actions-span"
-              style="margin:10px 16px 0 0;cursor:pointer;display:flex;flex-direction:row;"
+              style="
+                margin: 10px 16px 0 0;
+                cursor: pointer;
+                display: flex;
+                flex-direction: row;
+              "
             >
               <span
-                style="font-size:16px;color:#02B9B8;margin:0 0 0 24px;display:flex;flex-direction:row;"
+                style="
+                  font-size: 16px;
+                  color: #02b9b8;
+                  margin: 0 0 0 24px;
+                  display: flex;
+                  flex-direction: row;
+                "
                 @click="showselfappraisalList(list)"
               >
                 <i class="el-icon-edit"></i>编辑
               </span>
             </span>
-            <div style="width:879px;margin:0 0 5px 0">
-              <selfappraisal-from :from-data="listpersonappraisal"></selfappraisal-from>
+            <div style="width: 879px; margin: 0 0 5px 0">
+              <selfappraisal-from
+                :from-data="listpersonappraisal"
+              ></selfappraisal-from>
             </div>
           </li>
         </ul>
@@ -1816,24 +2805,39 @@
 
       <div class="aside-body">
         <div class="aside" id="demo">
-          <div class="aside-nav" style="margin:0 0 70px 0">
+          <div class="aside-nav" style="margin: 0 0 70px 0">
             <div class="aside-foot">
               <div class="aside-foot-second">
                 <div
-                  style="display: flex;flex-direction: row;justify-content: space-between;line-height:30px;width:270px;margin:0 0 20px 0"
+                  style="
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    line-height: 30px;
+                    width: 270px;
+                    margin: 0 0 20px 0;
+                  "
                 >
                   <div class="aside-foot-first">附件简历</div>
                   <el-button
-                    style="font-family: PingFangSC-Regular;color: #02B9B8;font-size:12px;width:25px"
+                    style="
+                      font-family: PingFangSC-Regular;
+                      color: #02b9b8;
+                      font-size: 12px;
+                      width: 25px;
+                    "
                     type="text"
                     @click="addfile"
-                  >添加</el-button>
+                    >添加</el-button
+                  >
                 </div>
-                <div v-for="(item,index) in fileList" :key="index">
+                <div v-for="(item, index) in fileList" :key="index">
                   <div class="onResume">
                     <div>
                       <i class="el-icon-paperclip"></i>
-                      <span style="margin:0 0 0 5px">{{item.resumeName}}</span>
+                      <span style="margin: 0 0 0 5px">{{
+                        item.resumeName
+                      }}</span>
                     </div>
                     <div>
                       <el-dropdown>
@@ -1842,8 +2846,12 @@
                         </span>
                         <el-dropdown-menu slot="dropdown">
                           <!-- <el-dropdown-item @click.native="setDefault(item)">设为默认投递简历</el-dropdown-item> -->
-                          <el-dropdown-item @click.native="uploadFile(item)">下载</el-dropdown-item>
-                          <el-dropdown-item @click.native="deleteFile(item)">删除</el-dropdown-item>
+                          <el-dropdown-item @click.native="uploadFile(item)"
+                            >下载</el-dropdown-item
+                          >
+                          <el-dropdown-item @click.native="deleteFile(item)"
+                            >删除</el-dropdown-item
+                          >
                         </el-dropdown-menu>
                       </el-dropdown>
                     </div>
@@ -1861,12 +2869,16 @@
                 <el-progress
                   :percentage="this.compPercent"
                   class="progess"
-                  style="width:200px;padding:0 0 0 7px;height:9px"
+                  style="width: 200px; padding: 0 0 0 7px; height: 9px"
                 ></el-progress>
               </span>
             </div>
-            <div style="color:#f17130;font-size: 12px;margin: 10px 0 0 40px;">完整度超过66%可投递简历~</div>
-            <div class="aside-nav-third">最后更新：{{this.updatedTime|formatDateTwo}}</div>
+            <div style="color: #f17130; font-size: 12px; margin: 10px 0 0 40px">
+              完整度超过66%可投递简历~
+            </div>
+            <div class="aside-nav-third">
+              最后更新：{{ this.updatedTime | formatDateTwo }}
+            </div>
           </div>
         </div>
 
@@ -1876,67 +2888,92 @@
               <div class="tabulation">
                 <a @click="testRef('personalinformation')">
                   <img :src="require('../assets/images/ji.png')" />
-                  <span :style="active" class="tabulation-language">基本信息</span>
+                  <span :style="active" class="tabulation-language"
+                    >基本信息</span
+                  >
                 </a>
               </div>
               <div class="tabulation">
                 <a @click="testRef('jobintension')">
                   <img :src="require('../assets/images/qiuzhi.png')" />
-                  <span :style="activejobintension" class="tabulation-language">求职意向</span>
+                  <span :style="activejobintension" class="tabulation-language"
+                    >求职意向</span
+                  >
                 </a>
               </div>
               <div class="tabulation">
                 <a @click="testRef('educational')">
-                  <img class="tabulation-img" :src="require('../assets/images/edu.png')" />
-                  <span :style="activeeducation" class="tabulation-language">教育经历</span>
+                  <img
+                    class="tabulation-img"
+                    :src="require('../assets/images/edu.png')"
+                  />
+                  <span :style="activeeducation" class="tabulation-language"
+                    >教育经历</span
+                  >
                 </a>
               </div>
               <div class="tabulation">
                 <a @click="testRef('work')">
                   <img :src="require('../assets/images/work.png')" />
-                  <span :style="activework" class="tabulation-language">工作经历</span>
+                  <span :style="activework" class="tabulation-language"
+                    >工作经历</span
+                  >
                 </a>
               </div>
               <div class="tabulation">
                 <a @click="testRef('progect')">
                   <img :src="require('../assets/images/language.png')" />
-                  <span :style="activeproject" class="tabulation-language">项目经历</span>
+                  <span :style="activeproject" class="tabulation-language"
+                    >项目经历</span
+                  >
                 </a>
               </div>
               <div class="tabulation">
                 <a @click="testRef('training')">
                   <img :src="require('../assets/images/train.png')" />
-                  <span :style="activetraining" class="tabulation-language">培训经历</span>
+                  <span :style="activetraining" class="tabulation-language"
+                    >培训经历</span
+                  >
                 </a>
               </div>
               <div class="tabulation">
                 <a @click="testRef('language')">
                   <img :src="require('../assets/images/language.png')" />
-                  <span :style="activelanguage" class="tabulation-language">语言能力</span>
+                  <span :style="activelanguage" class="tabulation-language"
+                    >语言能力</span
+                  >
                 </a>
               </div>
               <div class="tabulation">
                 <a @click="testRef('professional')">
                   <img :src="require('../assets/images/zhicheng.png')" />
-                  <span :style="activeOne" class="tabulation-language">职称等级</span>
+                  <span :style="activeOne" class="tabulation-language"
+                    >职称等级</span
+                  >
                 </a>
               </div>
               <div class="tabulation">
                 <a @click="testRef('personal_skill')">
                   <img :src="require('../assets/images/zhuanye.png')" />
-                  <span :style="activeprofessional" class="tabulation-language">专业技能</span>
+                  <span :style="activeprofessional" class="tabulation-language"
+                    >专业技能</span
+                  >
                 </a>
               </div>
               <div class="tabulation">
                 <a @click="testRef('awards')">
                   <img :src="require('../assets/images/rong.png')" />
-                  <span :style="activeawards" class="tabulation-language">荣誉奖项</span>
+                  <span :style="activeawards" class="tabulation-language"
+                    >荣誉奖项</span
+                  >
                 </a>
               </div>
               <div class="tabulation">
                 <a @click="testRef('self-appraisal')">
                   <img :src="require('../assets/images/ziwo.png')" />
-                  <span :style="activeselfAppraisal" class="tabulation-language">自我介绍</span>
+                  <span :style="activeselfAppraisal" class="tabulation-language"
+                    >自我介绍</span
+                  >
                 </a>
               </div>
             </div>
@@ -2012,7 +3049,7 @@ import {
   // industry,
   // allpositionCatalog,
   // option,
-  progectkeep
+  progectkeep,
 } from "apis/account";
 export default {
   name: "Resumes",
@@ -2041,7 +3078,7 @@ export default {
     PersonalskillFrom,
     AwardsFrom,
     SelfappraisalFrom,
-    Affix
+    Affix,
   },
   data() {
     var validatePass2 = (rule, value, callback) => {
@@ -2061,19 +3098,19 @@ export default {
       videoFlag: false,
       videoUploadPercent: 0,
       uploadAward: {
-        label: "resume-cert"
+        label: "resume-cert",
       },
       uploadData: {
-        label: "resume-avatar"
+        label: "resume-avatar",
       },
       uploadfile: {
-        label: "resume-file"
+        label: "resume-file",
       },
       myHeaders: { "Auth-Token": Cookies.get("token") },
       monthPayList: [],
       optionList: [],
       isshowJob: false,
-      dialogVisible:false,
+      dialogVisible: false,
       joint: true,
       selfjoint: true,
       perId: "",
@@ -2090,7 +3127,7 @@ export default {
       propsOne: {
         value: "tag",
         label: "tag",
-        children: "children"
+        children: "children",
       },
       pickerOptions: {
         disabledDate(time) {
@@ -2098,27 +3135,27 @@ export default {
             time.getTime() >
             new Date().setFullYear(new Date().getFullYear() - 16)
           );
-        }
+        },
       },
       pickerOptionsOne: {
         disabledDate(time) {
           return time.getTime() < Date.now();
-        }
+        },
       },
       propsTwo: {
         value: "tag",
         label: "tag",
-        children: "children"
+        children: "children",
       },
       props: {
         value: "tag",
         label: "tag",
-        children: "children"
+        children: "children",
       },
       propss: {
         value: "code",
         label: "tag",
-        children: "children"
+        children: "children",
       },
       targeIdList: "",
       resumesId: "",
@@ -2214,7 +3251,7 @@ export default {
         educationName: "",
         educationTime: [],
         educationSpecialty: "",
-        general: ""
+        general: "",
       },
       formInformation: {
         name: "",
@@ -2229,7 +3266,7 @@ export default {
         politicCountenance: "",
         dutyTime: "",
         overseasAge: "",
-        graduate: ""
+        graduate: "",
       },
       formJobintension: {
         postType: [],
@@ -2238,7 +3275,7 @@ export default {
         scope: "",
         status: "",
         jobType: "",
-        reportTime: ""
+        reportTime: "",
       },
       formWork: {
         jobDescription: "",
@@ -2247,38 +3284,38 @@ export default {
         monthPay: "",
         branch: "",
         trade: "",
-        workTime: []
+        workTime: [],
       },
       formProject: {
         itemName: "",
         companyName: "",
         schoolTime: [],
         duty: "",
-        project: ""
+        project: "",
       },
       formtraining: {
         trainCourse: "",
         trainTime: [],
-        trainCours: ""
+        trainCours: "",
       },
       formlanguage: {
         languages: "",
         listenAbility: "",
-        readAbility: ""
+        readAbility: "",
       },
       formProfession: {
-        qual: ""
+        qual: "",
       },
       formPersonalskill: {
         technicalName: "",
-        level: ""
+        level: "",
       },
       formAwards: {
         prizeAward: "",
-        prizeTime: ""
+        prizeTime: "",
       },
       formSelfappraisal: {
-        personalDescription: ""
+        personalDescription: "",
       },
       activejobintension: "",
       active: "",
@@ -2294,62 +3331,62 @@ export default {
       edurules: {
         educationName: [
           { required: true, message: "请输入学校名称", trigger: "blur" },
-          { min: 0, max: 35, message: "长度在 0 到 35 个字", trigger: "blur" }
+          { min: 0, max: 35, message: "长度在 0 到 35 个字", trigger: "blur" },
           // { pattern:/^[a-zA-Z\u4e00-\u9fa5\s]{0,24}$/, message: '姓名仅支持中文汉字与英文字母', trigger: 'blur' },
         ],
         educationTime: [
-          { required: true, message: "请选择在校时间", trigger: "blur" }
+          { required: true, message: "请选择在校时间", trigger: "blur" },
         ],
         educationSpecialty: [
           {
             required: true,
             message: "请填写专业",
-            trigger: "change"
+            trigger: "change",
           },
-          { min: 0, max: 12, message: "长度在 0 到 12 个字", trigger: "blur" }
+          { min: 0, max: 12, message: "长度在 0 到 12 个字", trigger: "blur" },
         ],
         educationDegree: [
-          { required: true, message: "请选择学历", trigger: "change" }
-        ]
+          { required: true, message: "请选择学历", trigger: "change" },
+        ],
       },
       workrules: {
         companyName: [
           { required: true, message: "请输入公司名称", trigger: "blur" },
-          { min: 0, max: 36, message: "仅限36个字", trigger: "blur" }
+          { min: 0, max: 36, message: "仅限36个字", trigger: "blur" },
           // { pattern:/^[a-zA-Z\u4e00-\u9fa5\s]{0,24}$/, message: '姓名仅支持中文汉字与英文字母', trigger: 'blur' },
         ],
         postName: [
           { required: true, message: "请输入职位名称", trigger: "blur" },
-          { min: 0, max: 10, message: "仅限10个字", trigger: "blur" }
+          { min: 0, max: 10, message: "仅限10个字", trigger: "blur" },
         ],
         workTime: [
-          { required: true, message: "请选择在职时间", trigger: "blur" }
+          { required: true, message: "请选择在职时间", trigger: "blur" },
         ],
         monthPay: [
-          { min: 0, max: 5, message: "长度在 0 到 10 个字符", trigger: "blur" }
+          { min: 0, max: 5, message: "长度在 0 到 10 个字符", trigger: "blur" },
         ],
         jobDescription: [
           {
             min: 0,
             max: 800,
             message: "仅限800个字",
-            trigger: "blur"
+            trigger: "blur",
           },
-          { required: true, message: "请填写工作描述", trigger: "change" }
-        ]
+          { required: true, message: "请填写工作描述", trigger: "change" },
+        ],
       },
       progectrules: {
         itemName: [
           { required: true, message: "请输入项目名称", trigger: "blur" },
-          { min: 0, max: 36, message: "长度在 0 到 36 个字", trigger: "blur" }
+          { min: 0, max: 36, message: "长度在 0 到 36 个字", trigger: "blur" },
           // { pattern:/^[a-zA-Z\u4e00-\u9fa5\s]{0,24}$/, message: '姓名仅支持中文汉字与英文字母', trigger: 'blur' },
         ],
         companyName: [
           { required: true, message: "请输入公司名称", trigger: "blur" },
-          { min: 0, max: 36, message: "长度在 0 到 36 个字", trigger: "blur" }
+          { min: 0, max: 36, message: "长度在 0 到 36 个字", trigger: "blur" },
         ],
         schoolTime: [
-          { required: true, message: "请选择项目时间", trigger: "blur" }
+          { required: true, message: "请选择项目时间", trigger: "blur" },
         ],
         record: [{ required: true, message: "请选择学历", trigger: "blur" }],
         duty: [
@@ -2358,68 +3395,68 @@ export default {
             min: 0,
             max: 800,
             message: "长度在 0 到 800 个字",
-            trigger: "blur"
-          }
+            trigger: "blur",
+          },
         ],
         project: [
           {
             min: 0,
             max: 800,
             message: "长度在 0 到 800 个字",
-            trigger: "blur"
+            trigger: "blur",
           },
-          { required: true, message: "请填写项目介绍", trigger: "change" }
-        ]
+          { required: true, message: "请填写项目介绍", trigger: "change" },
+        ],
       },
       trainrules: {
         trainCourse: [
           { required: true, message: "请输入培训课程", trigger: "blur" },
-          { min: 0, max: 20, message: "长度在 0 到 20 个字", trigger: "blur" }
+          { min: 0, max: 20, message: "长度在 0 到 20 个字", trigger: "blur" },
           // { pattern:/^[a-zA-Z\u4e00-\u9fa5\s]{0,24}$/, message: '姓名仅支持中文汉字与英文字母', trigger: 'blur' },
         ],
         trainCours: [
           { required: true, message: "请输入培训机构", trigger: "blur" },
-          { min: 0, max: 20, message: "长度在 0 到 20 个字", trigger: "blur" }
+          { min: 0, max: 20, message: "长度在 0 到 20 个字", trigger: "blur" },
         ],
-        trainTime: []
+        trainTime: [],
       },
       languagerules: {
         languages: [
           { required: true, message: "请输入语种", trigger: "blur" },
-          { min: 0, max: 10, message: "长度在 0 到 10 个字", trigger: "blur" }
+          { min: 0, max: 10, message: "长度在 0 到 10 个字", trigger: "blur" },
           // { pattern:/^[a-zA-Z\u4e00-\u9fa5\s]{0,24}$/, message: '姓名仅支持中文汉字与英文字母', trigger: 'blur' },
         ],
         listenAbility: [
-          { required: true, message: "请选择听力能力", trigger: "blur" }
+          { required: true, message: "请选择听力能力", trigger: "blur" },
         ],
         readAbility: [
-          { required: true, message: "请选择读写能力", trigger: "blur" }
-        ]
+          { required: true, message: "请选择读写能力", trigger: "blur" },
+        ],
       },
       professionalrules: {
         qual: [
           { required: true, message: "请输入职称等级名称", trigger: "blur" },
-          { min: 0, max: 10, message: "长度在 0 到 10 个字", trigger: "blur" }
+          { min: 0, max: 10, message: "长度在 0 到 10 个字", trigger: "blur" },
           // { pattern:/^[a-zA-Z\u4e00-\u9fa5\s]{0,24}$/, message: '姓名仅支持中文汉字与英文字母', trigger: 'blur' },
-        ]
+        ],
       },
       skillrules: {
         technicalName: [
           { required: true, message: "请输入技能名称", trigger: "blur" },
-          { min: 0, max: 10, message: "长度在 0 到 10 个字", trigger: "blur" }
+          { min: 0, max: 10, message: "长度在 0 到 10 个字", trigger: "blur" },
           // { pattern:/^[a-zA-Z\u4e00-\u9fa5\s]{0,24}$/, message: '姓名仅支持中文汉字与英文字母', trigger: 'blur' },
         ],
-        level: [{ required: true, message: "请选择掌握程度", trigger: "blur" }]
+        level: [{ required: true, message: "请选择掌握程度", trigger: "blur" }],
       },
       awardsrules: {
         prizeAward: [
           { required: true, message: "请输入奖项名称", trigger: "blur" },
-          { min: 0, max: 10, message: "长度在 0 到 10 个字", trigger: "blur" }
+          { min: 0, max: 10, message: "长度在 0 到 10 个字", trigger: "blur" },
           // { pattern:/^[a-zA-Z\u4e00-\u9fa5\s]{0,24}$/, message: '姓名仅支持中文汉字与英文字母', trigger: 'blur' },
         ],
         prizeTime: [
-          { required: true, message: "请选择获奖时间", trigger: "blur" }
-        ]
+          { required: true, message: "请选择获奖时间", trigger: "blur" },
+        ],
       },
       selfappraisalrules: {
         personalDescription: [
@@ -2428,9 +3465,9 @@ export default {
             min: 0,
             max: 300,
             message: "长度在 0 到 300 个字",
-            trigger: "blur"
-          }
-        ]
+            trigger: "blur",
+          },
+        ],
       },
       personalrules: {
         name: [
@@ -2439,70 +3476,71 @@ export default {
             min: 0,
             max: 10,
             message: "长度在 0 到 10 个字",
-            trigger: "blur"
+            trigger: "blur",
           },
           {
             pattern: /^[a-zA-Z\u4e00-\u9fa5\s]{0,24}$/,
             message: "姓名仅支持中文汉字与英文字母",
-            trigger: "blur"
-          }
+            trigger: "blur",
+          },
         ],
         city: [{ required: true, message: "请选择城市", trigger: "blur" }],
         sex: [{ required: true, message: "请选择性别", trigger: "blur" }],
         graduate: [
-          { required: true, message: "请选择是否应届", trigger: "change" }
+          { required: true, message: "请选择是否应届", trigger: "change" },
         ],
         birthday: [
-          { required: true, message: "请选择日期", trigger: "change" }
+          { required: true, message: "请选择日期", trigger: "change" },
         ],
         educationLevel: [
-          { required: true, message: "请选择学历", trigger: "change" }
+          { required: true, message: "请选择学历", trigger: "change" },
         ],
         overseasAge: [{ validator: validatePass2, trigger: "change" }],
         workAge: [
-          { required: true, message: "请选择工作年限", trigger: "change" }
+          { required: true, message: "请选择工作年限", trigger: "change" },
         ],
         politicCountenance: [
-          { required: true, message: "请选择政治面貌", trigger: "change" }
+          { required: true, message: "请选择政治面貌", trigger: "change" },
         ],
         phone: [
           { required: true, message: "请填写手机号", trigger: "change" },
           {
             pattern: /^[1][356789][0-9]{9}$/,
             message: "请输入正确的手机号",
-            trigger: ["change", "blur"]
-          }
+            trigger: ["change", "blur"],
+          },
         ],
         email: [
           { required: true, message: "请填写邮箱", trigger: "change" },
           {
-            pattern: /^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+\.)+(com|cn|net|com.cn|com.tw|com.hk)$/,
+            pattern:
+              /^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+\.)+(com|cn|net|com.cn|com.tw|com.hk)$/,
             message: "邮箱格式错误",
-            trigger: ["change", "blur"]
-          }
-        ]
+            trigger: ["change", "blur"],
+          },
+        ],
       },
       jobintensionrules: {
         postType: [
-          { required: true, message: "请输入职位类型", trigger: "blur" }
+          { required: true, message: "请输入职位类型", trigger: "blur" },
         ],
         status: [
-          { required: true, message: "请选择求职状态", trigger: "change" }
+          { required: true, message: "请选择求职状态", trigger: "change" },
         ],
         reportTime: [
-          { required: true, message: "请选择到岗时间", trigger: "change" }
+          { required: true, message: "请选择到岗时间", trigger: "change" },
         ],
         trad: [
-          { required: true, message: "请选择企业行业", trigger: "change" }
+          { required: true, message: "请选择企业行业", trigger: "change" },
         ],
         scope: [
-          { required: true, message: "请选择薪资范围", trigger: "change" }
+          { required: true, message: "请选择薪资范围", trigger: "change" },
         ],
         city: [{ required: true, message: "请选择城市", trigger: "change" }],
         jobType: [
-          { required: true, message: "请选择工作类型", trigger: "change" }
-        ]
-      }
+          { required: true, message: "请选择工作类型", trigger: "change" },
+        ],
+      },
     };
   },
   //   watch: {
@@ -2523,12 +3561,12 @@ export default {
     setDefault(res) {
       this.$http
         .put(`/consumer-core/resume/setDefault/${res.id}`)
-        .then(res => {
+        .then((res) => {
           this.dialogSuccess = true;
           this.dialogsetDefault = true;
           this.allfile();
         })
-        .catch(error => {});
+        .catch((error) => {});
     },
     //删除附件简历
     deleteFile(res) {
@@ -2545,10 +3583,10 @@ export default {
     uploadFile(res) {
       this.dialogVisible = true;
       this.$http
-        .get(`/consumer-core/resume/download/${res.id}`,{
-          responseType: "blob"
+        .get(`/consumer-core/resume/download/${res.id}`, {
+          responseType: "blob",
         })
-        .then(res => {
+        .then((res) => {
           this.dialogVisible = false;
           const disposition = res.headers["content-disposition"];
           let fileName = disposition.substring(
@@ -2561,7 +3599,7 @@ export default {
           fileName = fileName.replace(/\"/g, "");
           const content = res.data;
           let blob = new Blob([res.data], {
-            type: "application/vnd.ms-excel"
+            type: "application/vnd.ms-excel",
           });
           console.log(blob);
           if (window.navigator.msSaveOrOpenBlob) {
@@ -2577,27 +3615,27 @@ export default {
             window.URL.revokeObjectURL(link.href);
           }
         })
-        .catch(error => {});
+        .catch((error) => {});
     },
     //确认删除附件简历
     keepDelete() {
       this.$http
         .delete(`/consumer-core/resume/${this.defaultId}/file`)
-        .then(res => {
+        .then((res) => {
           this.dialogResume = false;
           this.allfile();
           this.handleScrolles();
         })
-        .catch(error => {});
+        .catch((error) => {});
     },
     //获取所有附件简历
     allfile() {
       this.$http
         .get("/consumer-core/resume/file/list")
-        .then(res => {
+        .then((res) => {
           this.fileList = res.data.data;
         })
-        .catch(error => {});
+        .catch((error) => {});
     },
     //上传附件简历
     handleVideoSuccess(res, file) {
@@ -2610,7 +3648,7 @@ export default {
           expireTime: res.data.fileAccessVo.expireTime,
           ext: res.data.fileAccessVo.ext,
           size: res.data.fileAccessVo.size,
-          fileName: res.data.fileAccessVo.fileName
+          fileName: res.data.fileAccessVo.fileName,
         };
         var arr = JSON.stringify(params);
         let Logistics = this.$router.resolve(
@@ -2623,18 +3661,22 @@ export default {
       }
       let params = {
         file: res.data,
-        remark: "附件简历"
+        remark: "附件简历",
       };
       this.$http
         .post("/consumer-core/resume/file", params)
-        .then(res => {
+        .then((res) => {
           this.allfile();
           this.dialogDrag = false;
           this.handleScrolls();
         })
-        .catch(error => {
+        .catch((error) => {
           this.dialogDrag = false;
           this.dialogetx = false;
+          this.$notify.info({
+            title: "消息",
+            message: "附件格式错误，请上传doc/docx/pdf格式简历",
+          });
         });
     },
     //添加附件
@@ -2655,7 +3697,7 @@ export default {
     handleExceed(files, fileList) {
       this.$notify.info({
         title: "消息",
-        message: "这是一条错误的提示消息"
+        message: "这是一条错误的提示消息",
       });
     },
     handleChange(response, file, fileList) {
@@ -2663,7 +3705,7 @@ export default {
     },
     //求职意向保存
     jobintensionkeep(formName) {
-      this.$refs[formName].validate(valid => {
+      this.$refs[formName].validate((valid) => {
         if (valid) {
           switch (this.formJobintension.scope) {
             case 0:
@@ -2734,14 +3776,14 @@ export default {
               {
                 city: this.formJobintension.city[1],
                 district: this.formJobintension.city[2],
-                province: this.formJobintension.city[0]
-              }
+                province: this.formJobintension.city[0],
+              },
             ],
             industries: [
               {
                 first: this.formJobintension.trad[0],
-                secondary: this.formJobintension.trad[1]
-              }
+                secondary: this.formJobintension.trad[1],
+              },
             ],
             jobSearchStatus: timeUtil.jobSearchStatus(
               parseInt(this.formJobintension.status)
@@ -2753,20 +3795,20 @@ export default {
               {
                 first: this.formJobintension.postType[0],
                 secondary: this.formJobintension.postType[1],
-                third: this.formJobintension.postType[2]
-              }
+                third: this.formJobintension.postType[2],
+              },
             ],
             salaryMin: this.salaryMin,
-            salaryMax: this.salaryMax
+            salaryMax: this.salaryMax,
           };
           jobintensionkeep(this.resumesId, params)
-            .then(res => {
+            .then((res) => {
               if (res.data.code == 200) {
                 this.jobintensionouterVisible = false;
                 this.brief();
               }
             })
-            .catch(error => {});
+            .catch((error) => {});
         } else {
           return false;
         }
@@ -2774,7 +3816,7 @@ export default {
     },
     //个人信息
     informationkeep(formName) {
-      this.$refs[formName].validate(valid => {
+      this.$refs[formName].validate((valid) => {
         if (valid) {
           // if (this.formInformation.politicCountenance == "群众") {
           //   this.formInformation.politicCountenance = 0;
@@ -2813,7 +3855,7 @@ export default {
             [
               this.formInformation.city[0],
               this.formInformation.city[1],
-              this.formInformation.city[2]
+              this.formInformation.city[2],
             ],
             this.options
           );
@@ -2842,10 +3884,10 @@ export default {
             ),
             email: this.formInformation.email,
             phone: this.formInformation.phone,
-            isGraduate: this.formInformation.graduate === "0" ? true : false
+            isGraduate: this.formInformation.graduate === "0" ? true : false,
           };
           informationkeep(this.resumesId, params)
-            .then(res => {
+            .then((res) => {
               if (res.data.code == 200) {
                 this.informationouterVisible = false;
                 // window.location.reload();
@@ -2857,25 +3899,25 @@ export default {
                 );
               }
             })
-            .catch(error => {});
+            .catch((error) => {});
         }
       });
     },
     //自我介绍
     selfappraisalkeep(formName) {
-      this.$refs[formName].validate(valid => {
+      this.$refs[formName].validate((valid) => {
         if (valid) {
           let params = {
-            content: this.formSelfappraisal.personalDescription
+            content: this.formSelfappraisal.personalDescription,
           };
           selfappraisalkeep(this.resumesId, params)
-            .then(res => {
+            .then((res) => {
               if (res.data.code == 200) {
                 this.selfappraisalouterVisible = false;
                 this.resumeId();
               }
             })
-            .catch(error => {});
+            .catch((error) => {});
         } else {
           return false;
         }
@@ -2892,7 +3934,7 @@ export default {
     handleAvatarError(err, file, fileList) {
       this.$notify.info({
         title: "消息",
-        message: "图片上传失败，请重新上传"
+        message: "图片上传失败，请重新上传",
       });
     },
     handleAvatarSuccessOne(res, file) {
@@ -2901,16 +3943,16 @@ export default {
     },
     //荣誉奖项保存
     awardskeep(formName) {
-      this.$refs[formName].validate(valid => {
+      this.$refs[formName].validate((valid) => {
         if (valid) {
           let till = new Date(this.formAwards.prizeTime).getTime();
           let params = {
             award: this.formAwards.prizeAward,
             acquiredTime: till,
-            file: this.file == "" ? null : this.file
+            file: this.file == "" ? null : this.file,
           };
           awardskeep(this.resumesId, this.awardsId, params)
-            .then(res => {
+            .then((res) => {
               if (res.data.code == 200) {
                 this.awardsouterVisible = false;
                 this.resumeId();
@@ -2921,7 +3963,7 @@ export default {
                 // //     }).catch( => {});
               }
             })
-            .catch(error => {});
+            .catch((error) => {});
         } else {
           return false;
         }
@@ -2929,22 +3971,22 @@ export default {
     },
     //专业技能
     skillkeep(formName) {
-      this.$refs[formName].validate(valid => {
+      this.$refs[formName].validate((valid) => {
         if (valid) {
           let params = {
             level: timeUtil.levels(parseInt(this.formPersonalskill.level)),
             skill: this.formPersonalskill.technicalName,
-            file: this.fileSkill == "" ? null : this.fileSkill
+            file: this.fileSkill == "" ? null : this.fileSkill,
           };
           skillkeep(this.resumesId, this.skillId, params)
-            .then(res => {
+            .then((res) => {
               if (res.data.code == 200) {
                 this.personalskillouterVisible = false;
                 this.fileSkill == "";
                 this.resumeId();
               }
             })
-            .catch(error => {});
+            .catch((error) => {});
         } else {
           return false;
         }
@@ -2952,7 +3994,7 @@ export default {
     },
     //语言能力
     languagekeep(formName) {
-      this.$refs[formName].validate(valid => {
+      this.$refs[formName].validate((valid) => {
         if (valid) {
           let params = {
             language: this.formlanguage.languages,
@@ -2961,16 +4003,16 @@ export default {
             ),
             readAndWrite: timeUtil.levels(
               parseInt(this.formlanguage.readAbility)
-            )
+            ),
           };
           languagekeep(this.resumesId, this.languageId, params)
-            .then(res => {
+            .then((res) => {
               if (res.data.code == 200) {
                 this.languageouterVisible = false;
                 this.resumeId();
               }
             })
-            .catch(error => {});
+            .catch((error) => {});
         } else {
           return false;
         }
@@ -2978,19 +4020,19 @@ export default {
     },
     //职称等级
     professionkeep(formName) {
-      this.$refs[formName].validate(valid => {
+      this.$refs[formName].validate((valid) => {
         if (valid) {
           let params = {
-            qual: this.formProfession.qual
+            qual: this.formProfession.qual,
           };
           professionkeep(this.resumesId, this.qualId, params)
-            .then(res => {
+            .then((res) => {
               if (res.data.code == 200) {
                 this.professionouterVisible = false;
                 this.resumeId();
               }
             })
-            .catch(error => {});
+            .catch((error) => {});
         } else {
           return false;
         }
@@ -2998,7 +4040,7 @@ export default {
     },
     //培训经历保存
     trainingkeep(formName) {
-      this.$refs[formName].validate(valid => {
+      this.$refs[formName].validate((valid) => {
         let til = new Date(this.formtraining.trainTime[0]).getTime();
         let till = new Date(this.formtraining.trainTime[1]).getTime();
         let ti = this.$moment(till).format("YYYY-MM");
@@ -3013,16 +4055,16 @@ export default {
             lesson: this.formtraining.trainCourse,
             institution: this.formtraining.trainCours,
             beginTime: til,
-            endTime: eduTime
+            endTime: eduTime,
           };
           trainingkeep(this.resumesId, this.trainId, params)
-            .then(res => {
+            .then((res) => {
               if (res.data.code == 200) {
                 this.trainingouterVisible = false;
                 this.resumeId();
               }
             })
-            .catch(error => {});
+            .catch((error) => {});
         } else {
           return false;
         }
@@ -3030,7 +4072,7 @@ export default {
     },
     //项目经历保存
     progectkeep(formName) {
-      this.$refs[formName].validate(valid => {
+      this.$refs[formName].validate((valid) => {
         if (valid) {
           let til = new Date(this.formProject.schoolTime[0]).getTime();
           let till = new Date(this.formProject.schoolTime[1]).getTime();
@@ -3047,16 +4089,16 @@ export default {
             beginTime: til,
             company: this.formProject.companyName,
             description: this.formProject.project,
-            project: this.formProject.itemName
+            project: this.formProject.itemName,
           };
           progectkeep(this.resumesId, this.progectId, params)
-            .then(res => {
+            .then((res) => {
               if (res.data.code == 200) {
                 this.progectouterVisible = false;
                 this.resumeId();
               }
             })
-            .catch(error => {});
+            .catch((error) => {});
         } else {
           return false;
         }
@@ -3064,7 +4106,7 @@ export default {
     },
     //工作保存
     workkeep(formName) {
-      this.$refs[formName].validate(valid => {
+      this.$refs[formName].validate((valid) => {
         if (valid) {
           let til = new Date(this.formWork.workTime[0]).getTime();
           let till = new Date(this.formWork.workTime[1]).getTime();
@@ -3081,16 +4123,16 @@ export default {
             company: this.formWork.companyName,
             description: this.formWork.jobDescription,
             position: this.formWork.postName,
-            salaryBeforeTax: this.formWork.monthPay
+            salaryBeforeTax: this.formWork.monthPay,
           };
           workkeeped(this.resumesId, this.workId, params)
-            .then(res => {
+            .then((res) => {
               if (res.data.code == 200) {
                 this.workouterVisible = false;
                 this.resumeId();
               }
             })
-            .catch(error => {});
+            .catch((error) => {});
         } else {
           return false;
         }
@@ -3098,7 +4140,7 @@ export default {
     },
     //教育保存
     educationkeep(formName) {
-      this.$refs[formName].validate(valid => {
+      this.$refs[formName].validate((valid) => {
         if (valid) {
           if (this.formEducation.educationDegree == "高中") {
             this.formEducation.educationDegree = 2;
@@ -3133,16 +4175,16 @@ export default {
             degreeCode: parseInt(this.formEducation.educationDegree),
             major: this.formEducation.educationSpecialty,
             school: this.formEducation.educationName,
-            isUnified: this.formEducation.general === "0" ? true : false
+            isUnified: this.formEducation.general === "0" ? true : false,
           };
           educationkeep(this.resumesId, this.educationId, params)
-            .then(res => {
+            .then((res) => {
               if (res.data.code == 200) {
                 this.educationouterVisible = false;
                 this.resumeId();
               }
             })
-            .catch(error => {});
+            .catch((error) => {});
         } else {
           return false;
         }
@@ -3150,7 +4192,7 @@ export default {
     },
     //获取简历详情
     resumeId() {
-      resumeId(this.resumesId).then(res => {
+      resumeId(this.resumesId).then((res) => {
         if (res.data.code == 200) {
           this.$store.state.avatarUrl = res.data.data.base.avatarUrl;
           this.resumeIdList = res.data.data.base;
@@ -3213,7 +4255,7 @@ export default {
     brief() {
       this.$http
         .get("/consumer-core/resume/brief")
-        .then(res => {
+        .then((res) => {
           if (res.data.code == 200) {
             this.resumesId = res.data.data.defaultResumeId;
             this.resumeId();
@@ -3234,21 +4276,21 @@ export default {
             }
           }
         })
-        .catch(error => {
+        .catch((error) => {
           if (error.response.status === 404) {
             this.$notify.info({
               title: "消息",
-              message: "页面丢失，请重新加载"
+              message: "页面丢失，请重新加载",
             });
           } else if (error.response.status === 403) {
             this.$notify.info({
               title: "消息",
-              message: "登陆超时，请重新登录"
+              message: "登陆超时，请重新登录",
             });
           } else {
             this.$notify.info({
               title: "消息",
-              message: error.response.data.message
+              message: error.response.data.message,
             });
             this.$router.push({ path: "/login" });
             this.personalinformation = true;
@@ -3268,90 +4310,90 @@ export default {
     //专业技能删除
     deleteskill() {
       deleteskill(this.resumesId, this.skillId)
-        .then(res => {
+        .then((res) => {
           if (res.data.code == 204) {
             this.dialogskill = false;
             this.resumeId();
           }
         })
-        .catch(error => {});
+        .catch((error) => {});
     },
     //职称等级删除
     deleteprofession() {
       deleteprofession(this.resumesId, this.qualId)
-        .then(res => {
+        .then((res) => {
           if (res.data.code == 204) {
             this.dialogprofess = false;
             this.resumeId();
           }
         })
-        .catch(error => {});
+        .catch((error) => {});
     },
     //工作经历删除
     deletework() {
       deletework(this.resumesId, this.workId)
-        .then(res => {
+        .then((res) => {
           if (res.data.code == 204) {
             this.dialogwork = false;
             this.resumeId();
           }
         })
-        .catch(error => {});
+        .catch((error) => {});
     },
     //荣誉奖项删除
     deleteawards() {
       deleteawards(this.resumesId, this.awardsId)
-        .then(res => {
+        .then((res) => {
           if (res.data.code == 204) {
             this.dialogaward = false;
             this.resumeId();
           }
         })
-        .catch(error => {});
+        .catch((error) => {});
     },
     //教育经历删除
     deletedu() {
       deletedu(this.resumesId, this.educationId)
-        .then(res => {
+        .then((res) => {
           if (res.data.code == 204) {
             this.dialogedu = false;
             this.resumeId();
           }
         })
-        .catch(error => {});
+        .catch((error) => {});
     },
     //培训经历删除
     deletetrain() {
       deletetrain(this.resumesId, this.trainId)
-        .then(res => {
+        .then((res) => {
           if (res.data.code == 204) {
             this.dialogtrain = false;
             this.resumeId();
           }
         })
-        .catch(error => {});
+        .catch((error) => {});
     },
     //语言能力删除
     deletelanguage() {
       deletelanguage(this.resumesId, this.languageId)
-        .then(res => {
+        .then((res) => {
           if (res.data.code == 204) {
             this.dialoglanguage = false;
             this.resumeId();
           }
         })
-        .catch(error => {});
+        .catch((error) => {});
     },
     //项目经历删除
     deleteproject() {
       deleteproject(this.resumesId, this.progectId)
-        .then(res => {
+        .then((res) => {
           if (res.data.code == 204) {
             this.dialogproject = false;
             this.resumeId();
           }
         })
-        .catch(error => {});
+        .catch((error) => {});
     },
     //自我评价
     selfappraisalemit(c) {
@@ -3426,7 +4468,8 @@ export default {
     //自我介绍
     showselfappraisalList() {
       this.selfappraisalouterVisible = true;
-      this.formSelfappraisal.personalDescription = this.listpersonappraisal.content;
+      this.formSelfappraisal.personalDescription =
+        this.listpersonappraisal.content;
     },
     //荣誉奖项
     showawardList(list) {
@@ -3477,7 +4520,7 @@ export default {
       // }
       this.formtraining.trainTime = [
         this.$moment(list.beginTime).format("YYYY-MM-DD"),
-        this.$moment(list.endTime).format("YYYY-MM-DD")
+        this.$moment(list.endTime).format("YYYY-MM-DD"),
       ];
     },
     //项目经历编辑
@@ -3495,7 +4538,7 @@ export default {
       }
       this.formProject.schoolTime = [
         this.$moment(new Date(list.beginTime)).format("YYYY-MM"),
-        end
+        end,
       ];
     },
     showprofessionalList(list) {
@@ -3518,7 +4561,7 @@ export default {
       }
       this.formWork.workTime = [
         this.$moment(list.beginTime).format("YYYY-MM"),
-        end
+        end,
       ];
     },
     //教育经历编辑
@@ -3528,7 +4571,7 @@ export default {
       this.formEducation.educationSpecialty = list.major;
       this.formEducation.educationName = list.school;
       this.formEducation.educationDegree = list.degree;
-      if (list.isUnified == true) {
+      if (list.isUnified === true) {
         this.formEducation.general = "0";
       } else {
         this.formEducation.general = "1";
@@ -3536,13 +4579,16 @@ export default {
       if (list.endTime == null) {
         var date = new Date();
         var dataOne = new Date(list.endTime).getTime();
-        var end = this.$moment(date.getTime()).format("YYYY-MM");
+        var end = this.$moment(date.getTime()).format("YYYY-MM-DD");
       } else {
-        end = this.$moment(dataOne).format("YYYY-MM");
+        var end = this.$moment(new Date(list.endTime).getTime()).format(
+          "YYYY-MM-DD"
+        );
+        console.log(end);
       }
       this.formEducation.educationTime = [
-        this.$moment(list.beginTime).format("YYYY-MM"),
-        end
+        this.$moment(list.beginTime).format("YYYY-MM-DD"),
+        end,
       ];
     },
     //求职意向
@@ -3588,16 +4634,16 @@ export default {
       this.formJobintension.city = [
         this.listjobintension.cities[0].province,
         this.listjobintension.cities[0].city,
-        this.listjobintension.cities[0].district
+        this.listjobintension.cities[0].district,
       ];
       this.formJobintension.trad = [
         this.listjobintension.industries[0].first,
-        this.listjobintension.industries[0].secondary
+        this.listjobintension.industries[0].secondary,
       ];
       this.formJobintension.postType = [
         this.listjobintension.positionCatalogs[0].first,
         this.listjobintension.positionCatalogs[0].secondary,
-        this.listjobintension.positionCatalogs[0].third
+        this.listjobintension.positionCatalogs[0].third,
       ];
     },
     //个人信息编辑
@@ -3654,12 +4700,13 @@ export default {
       this.formInformation.workAge = this.$moment(work).format("YYYY-MM-DD");
       this.formInformation.email = this.resumeIdList.email;
       this.formInformation.phone = this.resumeIdList.phone;
-      this.formInformation.politicCountenance = this.resumeIdList.politicalStatus;
+      this.formInformation.politicCountenance =
+        this.resumeIdList.politicalStatus;
       this.formInformation.educationLevel = this.resumeIdList.degree;
       this.formInformation.city = [
         this.resumeIdList.provinceCode,
         this.resumeIdList.cityCode,
-        this.resumeIdList.districtCode
+        this.resumeIdList.districtCode,
       ];
     },
     testRef(ref) {
@@ -3871,7 +4918,7 @@ export default {
       offsetTop = Number(offsetHeight) - Number(scrollTop) - 40;
       document.querySelector("#searchBar").style.top = offsetTop + 80 + "px";
       document.querySelector("#searchBar").style.position = "fixed";
-    }
+    },
   },
 
   mounted() {
@@ -3909,7 +4956,7 @@ export default {
     uploadUrlOne() {
       // const {VUE_APP_SECRET,VUE_APP_DEV_MODE} = process.env
       return "/api/v3/file-service/files/upload";
-    }
+    },
   },
   filters: {
     level(level) {
@@ -3922,7 +4969,7 @@ export default {
           "",
           "酒店/餐饮",
           "旅游/度假",
-          "医疗/护理/美容/保健/卫生服务"
+          "医疗/护理/美容/保健/卫生服务",
         ];
         return map[industry];
       }
@@ -3936,7 +4983,7 @@ export default {
           "互联网/电子商务",
           "电子技术/半导体/集成电路",
           "通信、电信运营/增值服务",
-          "通信/电信/网络设备"
+          "通信/电信/网络设备",
         ];
         return map[industry];
       }
@@ -3946,7 +4993,7 @@ export default {
           "保险",
           "银行",
           "信托/担保/拍卖/典当",
-          "基金/证券/期货/投资"
+          "基金/证券/期货/投资",
         ];
         return map[industry];
       }
@@ -3957,7 +5004,7 @@ export default {
           "贸易/进出口",
           "快速消费品（食品/饮料/烟酒/日化）",
           "耐用消耗品",
-          "租赁服务"
+          "租赁服务",
         ];
         return map[industry];
       }
@@ -3966,7 +5013,7 @@ export default {
           "",
           "文体教育|工艺美术",
           "教育/培训/院校",
-          "礼品/玩具/工艺美术/收藏品/奢侈品"
+          "礼品/玩具/工艺美术/收藏品/奢侈品",
         ];
         return map[industry];
       }
@@ -3981,7 +5028,7 @@ export default {
           "大型设备/机电设备/重工业",
           "印刷/包装/造纸",
           "汽车/摩托车",
-          "仪器仪表及工业自动化"
+          "仪器仪表及工业自动化",
         ];
         return map[industry];
       }
@@ -3990,7 +5037,7 @@ export default {
           "",
           "房地产/建筑/建材/工程",
           "物业管理/商业中心",
-          "家居/室内设计/装饰装潢"
+          "家居/室内设计/装饰装潢",
         ];
         return map[industry];
       }
@@ -4001,7 +5048,7 @@ export default {
           "广告/会展/公关",
           "中介服务",
           "外包服务",
-          "检验/检测/认证"
+          "检验/检测/认证",
         ];
         return map[industry];
       }
@@ -4023,7 +5070,7 @@ export default {
           "环保",
           "石油/石化/化工",
           "能源/矿产/采掘/冶炼",
-          "电气/电力/水利"
+          "电气/电力/水利",
         ];
         return map[industry];
       }
@@ -4031,8 +5078,8 @@ export default {
         const map = ["", "学术/科研", "政府/公共事业/非盈利机构"];
         return map[industry];
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -4330,6 +5377,7 @@ export default {
   text-align: center;
   margin: 30px 0 30px 0;
 }
+
 .el-radio__input.is-checked .el-radio__inner {
   border-color: #02B9B8;
   background: #02B9B8;

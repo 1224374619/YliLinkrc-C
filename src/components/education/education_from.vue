@@ -26,9 +26,9 @@ export default {
     },
     Unified(Unified) {
       if(Unified === false) {
-        return '统招'
-      }else{
         return '非统招'
+      }else{
+        return '统招'
       }
     }
   },

@@ -107,7 +107,7 @@
                       v-else-if="item.registrationStatus === 'CANCELED'"
                       style="pointer-events: none;"
                       class="appraises-button"
-                    >取消已报名</button>
+                    >已取消报名</button>
                   </div>
                   <div v-if="item.activityRegistrationState === 'REGISTRATION_IS_UP'">
                     <div v-if="item.registrationStatus === 'REGISTERED'">
@@ -186,6 +186,11 @@
                       class="appraise-button"
                       @click="abolishEnlist(item)"
                     >取消报名</button>
+                    <button
+                      v-else-if="item.registrationStatus === 'CANCELED'"
+                      class="appraise-button"
+                      @click="abolishEnlist(item)"
+                    >已取消</button>
                   </div>
                   <div v-if="item.activityRegistrationState === 'REGISTRATION_IS_UP'">
                     <div v-if="item.registrationStatus === 'REGISTERED'">
@@ -311,12 +316,12 @@ export default {
   data() {
     return {
       rules: {
-        surname: [{ required: true, message: "请输入姓名", trigger: "blur" },{ min: 0, max: 12, message: "长度在 0 到 12 个字", trigger: "blur" },{ pattern:/^[a-zA-Z\u4e00-\u9fa5\s]{0,24}$/, message: '姓名仅支持中文汉字与英文字母', trigger: 'blur' },],
-        sex: [{ required: true, message: "请输入性别", trigger: "blur" },{ min: 0, max: 1, message: "长度在 0 到 1 个字", trigger: "blur" }],
-        age: [{ required: true, message: "请输入年龄", trigger: "blur" },{ min: 0, max: 1, message: "长度在 0 到 1 个字", trigger: "blur" }],
-        position: [{ required: true, message: "请输入", trigger: "blur" },{ min: 0, max: 10, message: "长度在 0 到 10 个字", trigger: "blur" }],
-        record: [{ required: true, message: "请输入", trigger: "blur" },{ min: 0, max: 10, message: "长度在 0 到 10 个字", trigger: "blur" }],
-        school: [{ required: true, message: "请输入学校", trigger: "blur" },{ min: 0, max: 10, message: "长度在 0 到 10 个字", trigger: "blur" }],
+        surname: [{ required: true, message: "请输入姓名", trigger: "blur" },{ min: 0, max: 24, message: "长度在 0 到 12 个字", trigger: "blur" },{ pattern:/^[a-zA-Z\u4e00-\u9fa5\s]{0,24}$/, message: '姓名仅支持中文汉字与英文字母', trigger: 'blur' },],
+        sex: [{ required: true, message: "请输入性别", trigger: "blur" },{ min: 0, max: 20, message: "长度在 0 到 10 个字", trigger: "blur" }],
+        age: [{ required: true, message: "请输入年龄", trigger: "blur" },{ min: 0, max: 20, message: "长度在 0 到 10 个字", trigger: "blur" }],
+        position: [{ required: true, message: "请输入", trigger: "blur" },{ min: 0, max: 20, message: "长度在 0 到 10 个字", trigger: "blur" }],
+        record: [{ required: true, message: "请输入", trigger: "blur" },{ min: 0, max: 20, message: "长度在 0 到 10 个字", trigger: "blur" }],
+        school: [{ required: true, message: "请输入学校", trigger: "blur" },{ min: 0, max: 20, message: "长度在 0 到 10 个字", trigger: "blur" }],
         major: [{ required: true, message: "请输入学历", trigger: "blur" },{ min: 0, max: 20, message: "长度在 5 到 20 个字", trigger: "blur" }],
         phone: [
           { required: true, message: "请输入", trigger: "blur" },
